@@ -2,3 +2,14 @@
 body {
   font-family: "Merriweather", serif !important;
 }
+// definition new style
+
+.flex {
+  display: flex;
+}
+.items-center {
+  align-items: center;
+}
+.j-space-between {
+  justify-content: space-between;
+}
