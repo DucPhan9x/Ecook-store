@@ -1,3 +1,3 @@
-import HomePage from "./Homepage";
+import HomePageClient from "./HomePageClient";
 
-export { HomePage };
+export { HomePageClient };

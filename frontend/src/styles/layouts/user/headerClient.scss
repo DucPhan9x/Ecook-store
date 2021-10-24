@@ -1,0 +1,90 @@
+.header-client {
+  height: 60px;
+  box-sizing: border-box;
+  background-color: orange;
+  &__inner {
+    height: 100%;
+    padding: 5px 10%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    &--left {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      h3 {
+        cursor: pointer;
+        color: white;
+        font-weight: bold;
+        margin: 0 16px 0 0;
+      }
+      .ant-input-affix-wrapper {
+        min-width: 260px;
+        border-radius: 5px;
+        border-color: orange !important;
+        .ant-input-prefix {
+          input {
+            color: rgb(167, 167, 167) !important;
+            box-shadow: none !important;
+            font-size: 13px;
+            height: 30px !important;
+            line-height: 34px;
+            outline: 0 !important;
+            width: 100%;
+            padding: 0 20px 0 50px;
+          }
+          .anticon-search {
+            svg {
+              path {
+                fill: rgb(156, 150, 138);
+              }
+            }
+          }
+        }
+      }
+    }
+    &--right {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      .favorite-items {
+        margin-right: 12px;
+        font-size: 24px;
+        cursor: pointer;
+        svg {
+          path {
+            fill: #db0a0a;
+          }
+        }
+      }
+      .btn--cart-item {
+        margin-right: 20px;
+        cursor: pointer;
+        img {
+          width: 30px;
+        }
+      }
+      .block--action-at-header {
+        border: 1px solid #fff;
+        border-radius: 40px;
+        color: #fff;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        height: 38px;
+        overflow: hidden;
+        padding: 5px 15px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        max-width: 175px;
+        cursor: pointer;
+        svg {
+          margin-right: 5px;
+        }
+      }
+      .hotline {
+        margin-right: 12px;
+      }
+    }
+  }
+}

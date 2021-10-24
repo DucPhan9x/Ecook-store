@@ -13,3 +13,9 @@ body {
 .j-space-between {
   justify-content: space-between;
 }
+
+.app {
+  &__body {
+    margin: 0 10%;
+  }
+}

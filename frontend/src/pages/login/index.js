@@ -1,3 +1,3 @@
-import Login from "./login";
+import LoginClient from "./loginClient";
 
-export { Login };
+export { LoginClient };

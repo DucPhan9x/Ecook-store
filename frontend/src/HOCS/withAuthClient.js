@@ -1,15 +1,15 @@
 import React from "react";
-import { getAuth } from "utils/helpers";
-import { Header, Footer } from "layouts/user";
+import { getAccessToken } from "utils/authUtils";
+import { HeaderClient, Footer } from "layouts";
 
 const withAuth =
   (Component, showLogo = true) =>
   (props) => {
     return (
       <div className="app">
-        {!(getAuth() && getAuth().token) && (
+        {!(getAccessToken() && getAccessToken().token) && (
           <>
-            <Header showLogo={showLogo} />
+            <HeaderClient showLogo={showLogo} />
             <div className="app__body">
               <div className="app__content">
                 <div className="app__content__inner">

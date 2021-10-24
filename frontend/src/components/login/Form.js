@@ -67,7 +67,7 @@ const Form = ({ handleSubmit }) => {
   return (
     <section onSubmit={handleSubmitForm} className="login">
       {loading && <SpinLoading />}
-      <i class="fab fa-facebook-square"></i>
+      <i className="fab fa-facebook-square"></i>
       <div className="">
         <ReForm className="">
           <div className="">
