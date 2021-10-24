@@ -8,6 +8,7 @@ import {
 } from "@ant-design/icons";
 import CartIcon from "assets/icons/shopping-cart.png";
 import { useHistory } from "react-router";
+import { Tooltip } from "antd";
 
 const HeaderClient = () => {
   const history = useHistory();
@@ -22,16 +23,21 @@ const HeaderClient = () => {
           />
         </div>
         <div className="header-client__inner--right">
-          <HeartTwoTone twoToneColor="#eb2f96" className="favorite-items" />
-          <div className="btn--cart-item">
-            <img src={CartIcon} alt="Cart item" />
-          </div>
+          <Tooltip title="Bộ sưu tập">
+            <HeartTwoTone twoToneColor="#eb2f96" className="favorite-items" />
+          </Tooltip>
+          <Tooltip title="Giỏ hàng">
+            <div className="btn--cart-item">
+              <img src={CartIcon} alt="Cart item" />
+            </div>
+          </Tooltip>
+
           <div className="block--action-at-header hotline">
             <PhoneOutlined />
             <span>1900 1005</span>
           </div>
           <div
-            className="block--action-at-header login"
+            className="block--action-at-header"
             onClick={() => history.push("/login")}
           >
             <UserOutlined />

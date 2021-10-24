@@ -1,51 +1,50 @@
 import React, { useEffect } from "react";
 import { FormBox } from "components/common";
 import { Form as ReForm } from "reactstrap";
-import { isEmpty, isEmail } from "validator";
+import { isEmpty } from "validator";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import SpinLoading from "components/common/SpinLoading";
-import { ROUTE_FORGOTPASSWORD } from "utils/routes";
 
 const Form = ({ handleSubmit }) => {
   const [error, setError] = React.useState({});
   const history = useHistory();
 
-  useEffect(() => {
-    document.title = "Đăng nhập | ECook";
-  }, []);
-
   const [form, setForm] = React.useState({
-    email: "",
+    code: "",
     password: "",
+    confirmPassword: "",
   });
-
-  const storeLogin = useSelector((store) => store.login);
-  const loading = storeLogin.loading;
+  const storeResetPassword = useSelector((store) => store.resetPassword);
+  const loading = storeResetPassword.loading;
   const validate = () => {
     const errorState = {};
     // check validate
-    if (isEmpty(form.email)) {
-      errorState.email = "Vui lòng nhập vào, không được để trống!";
-    } else {
-      if (!isEmail(form.email)) {
-        errorState.email = "Email không hợp lệ!";
-      }
+
+    if (isEmpty(form.code)) {
+      errorState.code = "Vui lòng nhập vào, không được để trống!";
     }
     if (isEmpty(form.password)) {
       errorState.password = "Vui lòng nhập vào, không được để trống!";
+    }
+    if (isEmpty(form.confirmPassword)) {
+      errorState.confirmPassword = "Vui lòng nhập vào, không được để trống!";
+    } else {
+      if (form.password !== form.confirmPassword) {
+        errorState.confirmPassword = "Mật khẩu xác nhận không khớp!";
+      }
     }
     return errorState;
   };
 
   useEffect(() => {
+    document.title = "Reset mật khẩu | ECook";
+  }, []);
+
+  useEffect(() => {
     if (!(history.location.state && history.location.state.email)) return;
-    setForm({
-      ...form,
-      email: history.location.state.email || "",
-      password: "",
-    });
-    setError({ ...error, email: "", password: "" });
+    setForm({ ...form, email: history.location.state.email || "" });
+    setError({ ...error, email: "" });
     // eslint-disable-next-line
   }, [history]);
   const handleSubmitForm = (event) => {
@@ -56,8 +55,9 @@ const Form = ({ handleSubmit }) => {
     }
 
     const formData = {
-      email: form.email,
+      code: form.code,
       password: form.password,
+      confirmPassword: form.confirmPassword,
     };
     handleSubmit(formData);
   };
@@ -76,41 +76,27 @@ const Form = ({ handleSubmit }) => {
     <section onSubmit={handleSubmitForm} className="login">
       {loading && <SpinLoading />}
       <div className="login-header">
-        <div
-          className={`login-header--item ${
-            window.location.pathname.endsWith("/login") ? "active" : ""
-          }`}
-        >
-          Đăng nhập
-        </div>
-        <div
-          className={`login-header--item ${
-            window.location.pathname.endsWith("/register") ? "active" : ""
-          }`}
-          onClick={() => history.push("/register")}
-        >
-          Đăng ký
-        </div>
+        <span>Reset mật khẩu</span>
       </div>
       <div className="login-body">
         <ReForm className="form--login">
           <FormBox
             propsInput={{
-              name: "email",
-              placeholder: "Email",
+              name: "code",
+              placeholder: "Mã xác thực",
               onChange: handleChange,
               onFocus: handleFocus,
-              value: form.email,
+              value: form.code,
               disabled: false,
             }}
-            error={error.email}
+            error={error.code}
           />
 
           <FormBox
             propsInput={{
               type: "password",
               name: "password",
-              placeholder: "Mật khẩu",
+              placeholder: "Mật khẩu mới",
               onChange: handleChange,
               onFocus: handleFocus,
               value: form.password,
@@ -118,15 +104,22 @@ const Form = ({ handleSubmit }) => {
             }}
             error={error.password}
           />
+          <FormBox
+            propsInput={{
+              type: "password",
+              name: "confirmPassword",
+              placeholder: "Xác nhận mật khẩu",
+              onChange: handleChange,
+              onFocus: handleFocus,
+              value: form.confirmPassword,
+              disabled: false,
+            }}
+            error={error.confirmPassword}
+          />
           <button disabled={loading} className="btn--login">
-            Đăng nhập
+            Xác nhận
           </button>
         </ReForm>
-      </div>
-      <div className="login-footer">
-        <span onClick={() => history.push(ROUTE_FORGOTPASSWORD)}>
-          Quên mật khẩu?
-        </span>
       </div>
     </section>
   );

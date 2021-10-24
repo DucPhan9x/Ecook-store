@@ -2,26 +2,24 @@ import React, { useEffect } from "react";
 import { FormBox } from "components/common";
 import { Form as ReForm } from "reactstrap";
 import { isEmpty, isEmail } from "validator";
-import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 import SpinLoading from "components/common/SpinLoading";
-import { ROUTE_FORGOTPASSWORD } from "utils/routes";
 
 const Form = ({ handleSubmit }) => {
   const [error, setError] = React.useState({});
   const history = useHistory();
 
   useEffect(() => {
-    document.title = "Đăng nhập | ECook";
+    document.title = "Quên mật khẩu | ECook";
   }, []);
 
   const [form, setForm] = React.useState({
     email: "",
-    password: "",
   });
+  const storeForgotPassword = useSelector((store) => store.forgotPassword);
+  const loading = storeForgotPassword.loading;
 
-  const storeLogin = useSelector((store) => store.login);
-  const loading = storeLogin.loading;
   const validate = () => {
     const errorState = {};
     // check validate
@@ -32,20 +30,13 @@ const Form = ({ handleSubmit }) => {
         errorState.email = "Email không hợp lệ!";
       }
     }
-    if (isEmpty(form.password)) {
-      errorState.password = "Vui lòng nhập vào, không được để trống!";
-    }
     return errorState;
   };
 
   useEffect(() => {
     if (!(history.location.state && history.location.state.email)) return;
-    setForm({
-      ...form,
-      email: history.location.state.email || "",
-      password: "",
-    });
-    setError({ ...error, email: "", password: "" });
+    setForm({ ...form, email: history.location.state.email || "" });
+    setError({ ...error, email: "" });
     // eslint-disable-next-line
   }, [history]);
   const handleSubmitForm = (event) => {
@@ -57,7 +48,6 @@ const Form = ({ handleSubmit }) => {
 
     const formData = {
       email: form.email,
-      password: form.password,
     };
     handleSubmit(formData);
   };
@@ -74,23 +64,8 @@ const Form = ({ handleSubmit }) => {
 
   return (
     <section onSubmit={handleSubmitForm} className="login">
-      {loading && <SpinLoading />}
       <div className="login-header">
-        <div
-          className={`login-header--item ${
-            window.location.pathname.endsWith("/login") ? "active" : ""
-          }`}
-        >
-          Đăng nhập
-        </div>
-        <div
-          className={`login-header--item ${
-            window.location.pathname.endsWith("/register") ? "active" : ""
-          }`}
-          onClick={() => history.push("/register")}
-        >
-          Đăng ký
-        </div>
+        <span>Quên mật khẩu</span>
       </div>
       <div className="login-body">
         <ReForm className="form--login">
@@ -105,29 +80,12 @@ const Form = ({ handleSubmit }) => {
             }}
             error={error.email}
           />
-
-          <FormBox
-            propsInput={{
-              type: "password",
-              name: "password",
-              placeholder: "Mật khẩu",
-              onChange: handleChange,
-              onFocus: handleFocus,
-              value: form.password,
-              disabled: false,
-            }}
-            error={error.password}
-          />
-          <button disabled={loading} className="btn--login">
-            Đăng nhập
+          <button className="btn--login" disabled={loading}>
+            Xác nhận
           </button>
         </ReForm>
       </div>
-      <div className="login-footer">
-        <span onClick={() => history.push(ROUTE_FORGOTPASSWORD)}>
-          Quên mật khẩu?
-        </span>
-      </div>
+      {loading && <SpinLoading />}
     </section>
   );
 };
