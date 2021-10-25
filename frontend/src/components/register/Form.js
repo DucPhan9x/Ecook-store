@@ -157,7 +157,10 @@ const Form = ({ handleSubmit }) => {
       <div className="login-footer">
         <span style={{ color: "gray", cursor: "unset" }}>
           Đăng ký thành viên như là đã đồng ý các
-          <Link className="privacy-text" to="/privacy">
+          <Link
+            className="privacy-text"
+            onClick={() => window.open("https://www.cooky.vn/terms")}
+          >
             {" "}
             điều khoản sử dụng{" "}
           </Link>
