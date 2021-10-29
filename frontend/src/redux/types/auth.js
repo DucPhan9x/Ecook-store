@@ -1,5 +1,3 @@
-// common
-// client
 export const LOGIN_API = "LOGIN_API";
 export const LOGIN_API_SUCCEED = "LOGIN_API_SUCCEED";
 export const LOGIN_API_FAIL = "LOGIN_API_FAIL";
@@ -15,3 +13,8 @@ export const RESET_PASSWORD_FAIL = "RESET_PASSWORD_FAIL";
 export const REGISTER = "REGISTER";
 export const REGISTER_SUCCEED = "REGISTER_SUCCEED";
 export const REGISTER_FAIL = "REGISTER_FAIL";
+
+// auth done
+export const GET_AUTH_USER = "GET_AUTH_USER";
+export const GET_AUTH_USER_SUCCESS = "GET_AUTH_USER_SUCCESS";
+export const GET_AUTH_USER_FAIL = "GET_AUTH_USER_FAIL";

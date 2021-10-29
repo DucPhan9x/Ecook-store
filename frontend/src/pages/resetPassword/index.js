@@ -1,3 +1,4 @@
-import ForgotPassword from "./resetPassword";
+import ResetPassword from "./resetPassword";
+import ResetPasswordAdmin from "./resetPasswordAdmin";
 
-export { ForgotPassword };
+export { ResetPassword, ResetPasswordAdmin };

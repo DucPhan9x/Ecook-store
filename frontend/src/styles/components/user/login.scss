@@ -4,7 +4,7 @@
   border-radius: 25px;
   overflow: hidden;
   max-width: 420px;
-  margin: 0px auto;
+  margin: 80px auto;
   box-shadow: 1px 6px 12px rgb(0 0 0 / 18%);
   &-header {
     span {
@@ -19,10 +19,21 @@
       font-size: 18px;
       text-transform: uppercase;
       cursor: pointer;
+      padding: 15px;
+      width: 50%;
+      text-align: center;
+      font-weight: bold;
+      &:hover {
+        background: rgb(241, 246, 248);
+        border-radius: 30px !important;
+        cursor: pointer;
+      }
     }
     .active {
       color: gray;
       cursor: unset;
+      background: rgb(241, 246, 248);
+      border-radius: 30px !important;
     }
   }
   &-body {

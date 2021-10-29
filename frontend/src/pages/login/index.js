@@ -1,3 +1,4 @@
 import LoginClient from "./loginClient";
+import LoginAdmin from "./loginAdmin";
 
-export { LoginClient };
+export { LoginClient, LoginAdmin };

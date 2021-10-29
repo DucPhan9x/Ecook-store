@@ -1,0 +1,46 @@
+.homepage-user {
+  margin-bottom: 36px;
+  &--section-1 {
+    background-image: url("/assets/images/bgImageHome.jpg");
+    background-size: cover;
+    background-position: center;
+    width: auto;
+    height: 280px;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+  }
+  &--section-2 {
+    margin-top: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .block-action-switch {
+      margin-left: auto;
+      margin-right: -12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      span {
+        margin-right: 8px;
+        margin-top: 8px;
+        font-weight: bolder;
+        color: rgb(96, 112, 96);
+      }
+      .icon--food {
+        path {
+          fill: rgb(218, 135, 2);
+        }
+      }
+      .icon--course {
+        path {
+          fill: rgb(6, 176, 228);
+        }
+      }
+      .MuiSvgIcon-root {
+        margin-right: 12px;
+        font-size: 28px;
+        cursor: pointer;
+      }
+    }
+  }
+}

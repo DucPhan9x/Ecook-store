@@ -11,11 +11,7 @@ const withAuth =
           <>
             <HeaderClient showLogo={showLogo} />
             <div className="app__body">
-              <div className="app__content">
-                <div className="app__content__inner">
-                  <Component {...props} />
-                </div>
-              </div>
+              <Component {...props} />
             </div>
             <Footer />
           </>

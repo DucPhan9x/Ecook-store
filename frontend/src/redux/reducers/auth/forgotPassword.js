@@ -1,4 +1,4 @@
-import * as types from "../constants";
+import * as types from "../../types/auth";
 
 const initialState = {
   data: {},
@@ -8,19 +8,19 @@ const initialState = {
 
 export default function reducer(state = initialState, actions) {
   switch (actions.type) {
-    case types.RESET_PASSWORD:
+    case types.FORGOT_PASSWORD:
       return {
         ...state,
         loading: true,
         error: {},
       };
-    case types.RESET_PASSWORD_SUCCEED:
+    case types.FORGOT_PASSWORD_SUCCEED:
       return {
         ...state,
         data: actions.payload,
         loading: false,
       };
-    case types.RESET_PASSWORD_FAIL:
+    case types.FORGOT_PASSWORD_FAIL:
       return {
         ...state,
         error: actions.payload,

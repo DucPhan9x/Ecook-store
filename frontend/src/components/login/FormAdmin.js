@@ -5,25 +5,26 @@ import { isEmpty, isEmail } from "validator";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import SpinLoading from "components/common/SpinLoading";
+import { ROUTE_FORGOT_PASSWORD_ADMIN } from "utils/routes";
 
-const Form = ({ handleSubmit }) => {
+const FormAdmin = ({ handleSubmit }) => {
   const [error, setError] = React.useState({});
   const history = useHistory();
 
+  useEffect(() => {
+    document.title = "Đăng nhập | ECook";
+  }, []);
+
   const [form, setForm] = React.useState({
-    userName: "",
     email: "",
     password: "",
-    confirmPassword: "",
   });
-  const storeRegister = useSelector((store) => store.register);
-  const loading = storeRegister.loading;
+
+  const storeLogin = useSelector((store) => store.login);
+  const loading = storeLogin.loading;
   const validate = () => {
     const errorState = {};
     // check validate
-    if (isEmpty(form.userName)) {
-      errorState.userName = "Vui lòng nhập vào, không được để trống!";
-    }
     if (isEmpty(form.email)) {
       errorState.email = "Vui lòng nhập vào, không được để trống!";
     } else {
@@ -34,24 +35,17 @@ const Form = ({ handleSubmit }) => {
     if (isEmpty(form.password)) {
       errorState.password = "Vui lòng nhập vào, không được để trống!";
     }
-    if (isEmpty(form.confirmPassword)) {
-      errorState.confirmPassword = "Vui lòng nhập vào, không được để trống!";
-    } else {
-      if (form.password !== form.confirmPassword) {
-        errorState.confirmPassword = "Mật khẩu xác nhận không khớp!";
-      }
-    }
     return errorState;
   };
 
   useEffect(() => {
-    document.title = "Đăng ký | ECook";
-  }, []);
-
-  useEffect(() => {
     if (!(history.location.state && history.location.state.email)) return;
-    setForm({ ...form, email: history.location.state.email });
-    setError({ ...error, email: "" });
+    setForm({
+      ...form,
+      email: history.location.state.email || "",
+      password: "",
+    });
+    setError({ ...error, email: "", password: "" });
     // eslint-disable-next-line
   }, [history]);
   const handleSubmitForm = (event) => {
@@ -62,10 +56,8 @@ const Form = ({ handleSubmit }) => {
     }
 
     const formData = {
-      userName: form.userName,
       email: form.email,
       password: form.password,
-      confirmPassword: form.confirmPassword,
     };
     handleSubmit(formData);
   };
@@ -88,32 +80,12 @@ const Form = ({ handleSubmit }) => {
           className={`login-header--item ${
             window.location.pathname.endsWith("/login") ? "active" : ""
           }`}
-          onClick={() => history.push("/login")}
         >
-          Đăng nhập
-        </div>
-        <div
-          className={`login-header--item ${
-            window.location.pathname.endsWith("/register") ? "active" : ""
-          }`}
-        >
-          Đăng ký
+          Quản trị viên
         </div>
       </div>
       <div className="login-body">
         <ReForm className="form--login">
-          <FormBox
-            propsInput={{
-              name: "userName",
-              placeholder: "Tên",
-              onChange: handleChange,
-              onFocus: handleFocus,
-              value: form.userName,
-              disabled: false,
-            }}
-            error={error.userName}
-          />
-
           <FormBox
             propsInput={{
               name: "email",
@@ -125,6 +97,7 @@ const Form = ({ handleSubmit }) => {
             }}
             error={error.email}
           />
+
           <FormBox
             propsInput={{
               type: "password",
@@ -137,38 +110,18 @@ const Form = ({ handleSubmit }) => {
             }}
             error={error.password}
           />
-          <FormBox
-            propsInput={{
-              type: "password",
-              name: "confirmPassword",
-              placeholder: "Xác nhận mật khẩu",
-              onChange: handleChange,
-              onFocus: handleFocus,
-              value: form.confirmPassword,
-              disabled: false,
-            }}
-            error={error.confirmPassword}
-          />
           <button disabled={loading} className="btn--login">
-            Đăng ký
+            Đăng nhập
           </button>
         </ReForm>
       </div>
       <div className="login-footer">
-        <span style={{ color: "gray", cursor: "unset" }}>
-          Đăng ký thành viên như là đã đồng ý các
-          <div
-            className="privacy-text"
-            onClick={() => window.open("https://www.cooky.vn/terms")}
-          >
-            {" "}
-            điều khoản sử dụng{" "}
-          </div>
-          tại ECook
+        <span onClick={() => history.push(ROUTE_FORGOT_PASSWORD_ADMIN)}>
+          Quên mật khẩu?
         </span>
       </div>
     </section>
   );
 };
 
-export default Form;
+export default FormAdmin;

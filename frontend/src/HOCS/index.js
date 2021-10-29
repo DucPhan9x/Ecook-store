@@ -1,3 +1,4 @@
 import withAuthClient from "./withAuthClient";
+import withAuthAdmin from "./withAuthAdmin";
 
-export { withAuthClient };
+export { withAuthClient, withAuthAdmin };

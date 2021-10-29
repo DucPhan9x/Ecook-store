@@ -1,3 +1,4 @@
 import Form from "./Form";
+import FormAdmin from "./FormAdmin";
 
-export { Form };
+export { Form, FormAdmin };

@@ -1,4 +1,4 @@
-import * as types from "../constants";
+import * as types from "../../types/auth";
 
 const initialState = {
   data: {},
@@ -8,19 +8,19 @@ const initialState = {
 
 export default function reducer(state = initialState, actions) {
   switch (actions.type) {
-    case types.LOGIN_API:
+    case types.REGISTER:
       return {
         ...state,
         loading: true,
         error: {},
       };
-    case types.LOGIN_API_SUCCEED:
+    case types.REGISTER_SUCCEED:
       return {
         ...state,
         data: actions.payload,
         loading: false,
       };
-    case types.LOGIN_API_FAIL:
+    case types.REGISTER_FAIL:
       return {
         ...state,
         error: actions.payload,
