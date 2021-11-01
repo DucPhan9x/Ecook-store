@@ -1,0 +1,25 @@
+.app-admin {
+  .sidebar-container {
+    height: 100vh;
+    .MuiPaper-root {
+      border-right: 1px solid gainsboro;
+      .header-sidebar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 12px;
+        & > img {
+          width: 200px;
+          height: 50px;
+          margin-left: -4px;
+          margin-top: 12px;
+        }
+        ul {
+          .MuiListItem-gutters {
+            margin-left: 24px !important;
+          }
+        }
+      }
+    }
+  }
+}

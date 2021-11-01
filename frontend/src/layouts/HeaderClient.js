@@ -9,15 +9,17 @@ import {
 import CartIcon from "assets/icons/shopping-cart.png";
 import { useHistory } from "react-router";
 import { Tooltip } from "antd";
+import Logo from "assets/images/clientLogo.png";
 
 const HeaderClient = () => {
   const history = useHistory();
-  console.log("aaaaaa");
   return (
     <div className="header-client">
       <div className="header-client__inner">
         <div className="header-client__inner--left">
-          <h3 onClick={() => history.push("/")}>ECook</h3>
+          <h3 onClick={() => history.push("/")}>
+            <img style={{ height: 70, width: 180 }} src={Logo} alt="" />
+          </h3>
           <Input
             placeholder="Tìm công thức hoặc sản phẩm"
             prefix={<SearchOutlined />}

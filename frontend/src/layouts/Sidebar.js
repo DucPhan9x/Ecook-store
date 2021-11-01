@@ -10,7 +10,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import Logo from "assets/images/adminLogoEcook.png";
 
-const drawerWidth = 240;
+const drawerWidth = 250;
 
 const useStyles = makeStyles((theme) => ({
   drawer: {
@@ -60,7 +60,14 @@ const Sidebar = () => {
         <img src={Logo} alt="Logo" />
       </div>
       <List>
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
+        {[
+          "Quan ly mat hang",
+          "Quan ly nhan vien",
+          "Quan ly giao vien",
+          "Quan ly khoa hoc",
+          "Quan ly khach hang",
+          "Thong ke",
+        ].map((text, index) => (
           <ListItem button key={text}>
             <ListItemIcon>
               <InboxIcon />
