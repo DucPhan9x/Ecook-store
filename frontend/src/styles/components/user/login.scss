@@ -88,11 +88,9 @@
         color: rgb(29, 29, 214);
       }
       .privacy-text {
-        text-decoration: none;
-        &:hover {
-          color: rgb(29, 29, 214);
-          cursor: pointer;
-        }
+        text-decoration: underline;
+        color: rgb(29, 29, 214);
+        cursor: pointer;
       }
     }
   }
