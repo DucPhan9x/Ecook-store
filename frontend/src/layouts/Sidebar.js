@@ -5,10 +5,13 @@ import ListItemText from "@material-ui/core/ListItemText";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
 import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import Logo from "assets/images/adminLogoEcook.png";
+import { IconButton } from "@material-ui/core";
+import { toggleSidebar } from "redux/actions/control";
+import { ArrowLeft } from "@material-ui/icons";
 
 const drawerWidth = 250;
 
@@ -40,6 +43,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Sidebar = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const { isOpenSidebar } = useSelector((store) => store.control);
 
   return (
@@ -58,6 +62,15 @@ const Sidebar = () => {
     >
       <div className="header-sidebar">
         <img src={Logo} alt="Logo" />
+        <IconButton
+          color="inherit"
+          aria-label="open drawer"
+          edge="start"
+          onClick={() => dispatch(toggleSidebar())}
+          className={`${clsx(classes.menuButton)} btn--menu`}
+        >
+          <ArrowLeft />
+        </IconButton>
       </div>
       <List>
         {[

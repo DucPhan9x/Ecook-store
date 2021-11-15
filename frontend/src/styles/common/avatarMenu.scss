@@ -1,0 +1,14 @@
+.btn-avatar-menu {
+  outline: unset;
+  background: rgb(245, 243, 235) !important;
+  box-shadow: unset !important;
+  border-radius: 16px !important;
+  padding: 6px 12px !important;
+  &--name {
+    margin: 0 8px;
+    font-size: 13px !important;
+    font-weight: bold;
+    color: #292929;
+    text-transform: capitalize;
+  }
+}

@@ -7,6 +7,9 @@ import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleSidebar } from "redux/actions/control";
+import AvatarMenu from "components/common/AvatarMenu";
+import Badge from "@material-ui/core/Badge";
+import NotificationsIcon from "@material-ui/icons/Notifications";
 
 const drawerWidth = 250;
 
@@ -47,16 +50,26 @@ const HeaderAdmin = () => {
         [classes.appBarShift]: isOpenSidebar,
       })} app-admin__app-bar`}
     >
-      <Toolbar>
-        <IconButton
-          color="inherit"
-          aria-label="open drawer"
-          edge="start"
-          onClick={() => dispatch(toggleSidebar())}
-          className={`${clsx(classes.menuButton)} btn--menu`}
-        >
-          <MenuIcon />
-        </IconButton>
+      <Toolbar className="toolbar-header">
+        {!isOpenSidebar && (
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+            onClick={() => dispatch(toggleSidebar())}
+            className={`${clsx(classes.menuButton)} btn--menu`}
+          >
+            <MenuIcon />
+          </IconButton>
+        )}
+        <div style={{ marginLeft: isOpenSidebar ? "auto" : "unset" }}>
+          <IconButton aria-label="show 17 new notifications" color="inherit">
+            <Badge badgeContent={17} color="secondary">
+              <NotificationsIcon color="action" />
+            </Badge>
+          </IconButton>
+          <AvatarMenu />
+        </div>
       </Toolbar>
     </AppBar>
   );

@@ -8,11 +8,24 @@
         align-items: center;
         justify-content: center;
         margin-bottom: 12px;
+        position: relative;
         & > img {
-          width: 200px;
+          width: 140px;
           height: 50px;
-          margin-left: -4px;
           margin-top: 12px;
+          margin-right: 50px;
+        }
+        .MuiButtonBase-root {
+          margin-top: 12px;
+          position: absolute;
+          right: 0;
+          .MuiIconButton-label {
+            color: rgb(119, 48, 0);
+            & > svg {
+              width: 36px;
+              height: 36px;
+            }
+          }
         }
         ul {
           .MuiListItem-gutters {
