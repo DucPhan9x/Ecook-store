@@ -2,6 +2,9 @@ import React, { useEffect } from "react";
 import AssignmentIcon from "@material-ui/icons/Assignment";
 import FastfoodIcon from "@material-ui/icons/Fastfood";
 import { Tooltip } from "antd";
+import MultipleSelect from "components/common/MultipleSelect";
+import { RECIPES_DATA } from "utils/dummyData";
+import RecipeCard from "components/common/RecipeCard";
 
 const HomePageClient = () => {
   useEffect(() => {
@@ -12,23 +15,38 @@ const HomePageClient = () => {
       <div className="homepage-user--section-1" />
       <div className="homepage-user--section-2">
         <div className="block-action-switch">
-          <span>Bạn muốn xem gì?</span>
-          <Tooltip title="Công thức và sản phẩm">
-            <FastfoodIcon className="icon--food" />
-          </Tooltip>
-          <Tooltip title="Khóa học nấu ăn">
-            <AssignmentIcon className="icon--course" />
-          </Tooltip>
+          <MultipleSelect />
+          <div className="block-action-switch--item">
+            <span>Bạn muốn xem gì?</span>
+            <Tooltip title="Công thức và sản phẩm">
+              <FastfoodIcon className="icon--food" />
+            </Tooltip>
+            <Tooltip title="Khóa học nấu ăn">
+              <AssignmentIcon className="icon--course" />
+            </Tooltip>
+          </div>
         </div>
       </div>
       <div className="homepage-user--section-3">
-        <div>
-          <span>Công thức hiện có</span>
-          <div></div>
+        <div className="block--product-list">
+          <div className="block--product-list--title">
+            <span>Công thức hiện có</span>
+            <span>Xem thêm</span>
+          </div>
+          <div className="block--product-list--showing">
+            {RECIPES_DATA.map((r) => (
+              <RecipeCard data={r} key={r.id} />
+            ))}
+          </div>
         </div>
-        <div>
-          <span>Các mặt hàng hiện có</span>
-          <div>
+
+        <div className="block--product-list">
+          <div className="block--product-list--title">
+            <span>Các mặt hàng hiện có</span>
+            <span>Xem thêm</span>
+          </div>
+
+          <div className="block--product-list--showing">
             <div>
               <span>Thịt bò, thịt heo</span>
               <div></div>
@@ -50,13 +68,20 @@ const HomePageClient = () => {
       </div>
 
       <div className="homepage-user--section-3">
-        <div>
-          <span>Khóa học nấu ăn hiện có</span>
-          <div></div>
+        <div className="block--product-list">
+          <div className="block--product-list--title">
+            <span> Khóa học nấu ăn hiện có</span>
+            <span>Xem thêm</span>
+          </div>
+          <div className="block--product-list--showing"></div>
         </div>
-        <div>
-          <span>Người hướng dẫn</span>
-          <div></div>
+
+        <div className="block--product-list">
+          <div className="block--product-list--title">
+            <span>Người hướng dẫn</span>
+            <span>Xem thêm</span>
+          </div>
+          <div className="block--product-list--showing"></div>
         </div>
       </div>
     </div>

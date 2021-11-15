@@ -15,31 +15,75 @@
     align-items: center;
     justify-content: space-between;
     .block-action-switch {
-      margin-left: auto;
-      margin-right: -12px;
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      justify-content: center;
-      span {
-        margin-right: 8px;
-        margin-top: 8px;
-        font-weight: bolder;
-        color: rgb(96, 112, 96);
-      }
-      .icon--food {
-        path {
-          fill: rgb(218, 135, 2);
+      width: 100%;
+      margin-left: -8px;
+      margin-bottom: 24px;
+      &--item {
+        display: flex;
+        align-items: center;
+        span {
+          font-weight: bolder;
+          color: rgb(96, 112, 96);
+          margin: 8px 16px 0 0;
+        }
+        .icon--food {
+          path {
+            fill: rgb(218, 135, 2);
+          }
+        }
+        .icon--course {
+          path {
+            fill: rgb(6, 176, 228);
+          }
+        }
+        .MuiSvgIcon-root {
+          font-size: 28px;
+          cursor: pointer;
+          margin-left: 12px;
+        }
+        &:last-child {
+          margin-right: -12px;
         }
       }
-      .icon--course {
-        path {
-          fill: rgb(6, 176, 228);
+    }
+  }
+  &--section-3 {
+    .block--product-list {
+      margin-bottom: 36px;
+      &--title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 6px;
+        span {
+          &:first-child {
+            font-size: 18px;
+            font-weight: bold;
+          }
+          &:last-child {
+            font-size: 17px;
+            cursor: pointer;
+            &:hover {
+              color: rgb(177, 74, 5);
+            }
+          }
         }
       }
-      .MuiSvgIcon-root {
-        margin-right: 12px;
-        font-size: 28px;
-        cursor: pointer;
+      &--showing {
+        display: flex;
+        align-items: center;
+        overflow: auto;
+        &--item {
+          &:not(:last-child) {
+            margin-right: 16px !important;
+          }
+        }
+        &::-webkit-scrollbar {
+          // display: none;
+        }
       }
     }
   }

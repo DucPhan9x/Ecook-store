@@ -61,14 +61,14 @@ const Sidebar = () => {
       </div>
       <List>
         {[
-          "Quan ly mat hang",
-          "Quan ly nhan vien",
-          "Quan ly giao vien",
-          "Quan ly khoa hoc",
-          "Quan ly khach hang",
-          "Thong ke",
+          "Quản lý hàng hóa",
+          "Quản lý nhân viên",
+          "Quản lý giáo viên",
+          "Quản lý khóa học",
+          "Quán lý khách hàng",
+          "Thống kê",
         ].map((text, index) => (
-          <ListItem button key={text}>
+          <ListItem button key={index}>
             <ListItemIcon>
               <InboxIcon />
             </ListItemIcon>
