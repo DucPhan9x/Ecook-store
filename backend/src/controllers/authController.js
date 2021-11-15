@@ -51,8 +51,9 @@ const registerCustomer = async (req, res, next) => {
     await UserDetail.create({
       userId: newUser._id,
       fullName,
-      phoneNumber,
-      address,
+      phoneNumber: "",
+      address: "",
+      imageUrl: "",
     });
     await Wishlist.create({
       userId: newUser._id,

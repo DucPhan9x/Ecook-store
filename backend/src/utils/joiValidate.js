@@ -1,4 +1,3 @@
-import { json } from "body-parser";
 import createHttpError from "http-errors";
 export const validateRequest = (req, schema, next) => {
   const options = {
