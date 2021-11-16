@@ -52,3 +52,9 @@ body {
     }
   }
 }
+// recipe card
+.MuiCardContent {
+  max-height: 100px !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

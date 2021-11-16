@@ -5,10 +5,8 @@ import CardHeader from "@material-ui/core/CardHeader";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
-import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-import { red } from "@material-ui/core/colors";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import Rating from "@material-ui/lab/Rating";
 import VisibilityIcon from "@material-ui/icons/Visibility";
@@ -17,6 +15,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     minWidth: 260,
     backgroundColor: "#f5ffca",
+    borderRadius: 16,
   },
   media: {
     height: 0,
@@ -32,8 +31,8 @@ const useStyles = makeStyles((theme) => ({
   expandOpen: {
     transform: "rotate(180deg)",
   },
-  avatar: {
-    backgroundColor: red[500],
+  action: {
+    color: "#292929",
   },
 }));
 
@@ -44,11 +43,6 @@ export default function RecipeCard({ data }) {
   return (
     <Card className={`block--product-list--showing--item ${classes.root}`}>
       <CardHeader
-        avatar={
-          <Avatar aria-label="recipe" className={classes.avatar}>
-            {title?.charAt(0)}
-          </Avatar>
-        }
         action={
           <IconButton aria-label="settings">
             <VisibilityIcon />
@@ -57,9 +51,14 @@ export default function RecipeCard({ data }) {
         title={title}
       />
       <CardMedia className={classes.media} image={imageUrl} title={title} />
-      <CardContent>
+      <CardContent style={{ maxHeight: 80, overflow: "hidden" }}>
         <Typography variant="body2" color="textSecondary" component="p">
           {description}
+        </Typography>
+      </CardContent>
+      <CardContent style={{ paddingTop: 0, paddingBottom: 0 }}>
+        <Typography variant="body2" color="textSecondary" component="p">
+          ...xem tiếp
         </Typography>
       </CardContent>
       <CardActions disableSpacing className="flex j-space-between">

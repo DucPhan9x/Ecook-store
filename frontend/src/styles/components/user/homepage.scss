@@ -22,8 +22,7 @@
       margin-left: -8px;
       margin-bottom: 24px;
       &--item {
-        display: flex;
-        align-items: center;
+        margin-left: auto;
         span {
           font-weight: bolder;
           color: rgb(96, 112, 96);
@@ -44,13 +43,28 @@
           cursor: pointer;
           margin-left: 12px;
         }
-        &:last-child {
-          margin-right: -12px;
-        }
       }
     }
   }
   &--section-3 {
+    .label-available-foods {
+      width: 100%;
+      & > h3 {
+        text-transform: capitalize;
+        text-align: center;
+        font-weight: bold;
+        margin: 0 4px;
+      }
+      display: flex;
+      justify-content: center;
+      .mh {
+        color: rgb(230, 144, 32);
+      }
+      .hc {
+        color: #292929;
+      }
+    }
+
     .block--product-list {
       margin-bottom: 36px;
       &--title {
@@ -60,7 +74,7 @@
         margin-bottom: 6px;
         span {
           &:first-child {
-            font-size: 18px;
+            font-size: 20px;
             font-weight: bold;
           }
           &:last-child {
@@ -82,7 +96,16 @@
           }
         }
         &::-webkit-scrollbar {
-          // display: none;
+          width: 12px;
+          height: 10px;
+        }
+        &::-webkit-scrollbar-track {
+          background-color: transparent;
+        }
+        &::-webkit-scrollbar-thumb {
+          background-color: #d6dee1;
+          border-radius: 20px;
+          border: 6px solid transparent;
         }
       }
     }

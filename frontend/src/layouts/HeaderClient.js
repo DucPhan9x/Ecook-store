@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Input } from "antd";
 import {
   SearchOutlined,
@@ -26,10 +26,10 @@ const HeaderClient = () => {
           />
         </div>
         <div className="header-client__inner--right">
-          <Tooltip title="Bộ sưu tập">
+          <Tooltip title="Bộ sưu tập" placement="bottom">
             <HeartTwoTone twoToneColor="#eb2f96" className="favorite-items" />
           </Tooltip>
-          <Tooltip title="Giỏ hàng">
+          <Tooltip title="Giỏ hàng" placement="bottom">
             <div className="btn--cart-item">
               <img src={CartIcon} alt="Cart item" />
             </div>
