@@ -7,6 +7,11 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import {
   ROUTE_ADMIN_DASHBOARD,
+  ROUTE_ADMIN_DASHBOARD_COURSES,
+  ROUTE_ADMIN_DASHBOARD_CUSTOMERS,
+  ROUTE_ADMIN_DASHBOARD_EMPLOYEES,
+  ROUTE_ADMIN_DASHBOARD_INSTRUCTORS,
+  ROUTE_ADMIN_DASHBOARD_STATISTICS,
   ROUTE_FORGOTPASSWORD,
   ROUTE_FORGOT_PASSWORD_ADMIN,
   ROUTE_LOGIN,
@@ -16,7 +21,14 @@ import {
   ROUTE_RESET_PASSWORD_ADMIN,
 } from "utils/routes";
 import { ResetPassword, ResetPasswordAdmin } from "pages/resetPassword";
-import ManageEmployee from "pages/admin/manageEmployee";
+import {
+  ManageCourse,
+  ManageCustomer,
+  ManageEmployee,
+  ManageFood,
+  ManageInstructor,
+  Statistics,
+} from "pages/admin";
 
 function App() {
   return (
@@ -58,7 +70,33 @@ function App() {
         />
         <Route
           path={ROUTE_ADMIN_DASHBOARD}
+          component={withAuthAdmin(ManageFood)}
+          exact
+        />
+        <Route
+          path={ROUTE_ADMIN_DASHBOARD_EMPLOYEES}
           component={withAuthAdmin(ManageEmployee)}
+          exact
+        />
+        <Route
+          path={ROUTE_ADMIN_DASHBOARD_INSTRUCTORS}
+          component={withAuthAdmin(ManageInstructor)}
+          exact
+        />
+
+        <Route
+          path={ROUTE_ADMIN_DASHBOARD_COURSES}
+          component={withAuthAdmin(ManageCourse)}
+          exact
+        />
+        <Route
+          path={ROUTE_ADMIN_DASHBOARD_CUSTOMERS}
+          component={withAuthAdmin(ManageCustomer)}
+          exact
+        />
+        <Route
+          path={ROUTE_ADMIN_DASHBOARD_STATISTICS}
+          component={withAuthAdmin(Statistics)}
           exact
         />
       </Switch>

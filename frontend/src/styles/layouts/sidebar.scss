@@ -19,6 +19,12 @@
           margin-top: 12px;
           position: absolute;
           right: 0;
+          .MuiListItemIcon-root {
+            img {
+              width: 36px;
+              min-width: 40px;
+            }
+          }
           .MuiIconButton-label {
             color: rgb(119, 48, 0);
             & > svg {
@@ -31,6 +37,40 @@
           .MuiListItem-gutters {
             margin-left: 24px !important;
           }
+        }
+      }
+      .list--icon {
+        margin: 24px 4px;
+        flex-grow: 1;
+        flex-shrink: 0;
+        max-height: 40px;
+        width: 230px;
+        border-radius: 20px;
+        .MuiListItemIcon-root {
+          img {
+            width: 20px;
+            height: 30px;
+            min-width: 36px;
+          }
+        }
+        .MuiListItemText-root {
+          .MuiTypography-root {
+            color: rgb(129, 125, 125);
+            font-weight: lighter;
+          }
+        }
+
+        &:hover {
+          background-image: linear-gradient(-90deg, #f5c04f 0%, orange 100%);
+          .MuiTypography-root {
+            color: white !important;
+          }
+        }
+      }
+      .active {
+        background-image: linear-gradient(-90deg, #f5c04f 0%, orange 100%);
+        .MuiTypography-root {
+          color: white !important;
         }
       }
     }

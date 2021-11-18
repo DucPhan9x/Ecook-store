@@ -18,7 +18,10 @@ export default function AvatarMenu() {
             {...bindTrigger(popupState)}
           >
             <Avatar alt="Remy Sharp" src="https://picsum.photos/200/300" />
-            <span className="btn-avatar-menu--name">Name admin</span>
+            <div className="flex flex-col align-flex-start block-infor-user">
+              <span className="block-infor-user--name">Trong Duc</span>
+              <span className="block-infor-user--role">Admin</span>
+            </div>
             <ArrowDropDown color="action" />
           </Button>
           <Menu {...bindMenu(popupState)}>

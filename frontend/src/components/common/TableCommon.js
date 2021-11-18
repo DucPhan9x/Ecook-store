@@ -198,7 +198,7 @@ const EnhancedTableToolbar = (props) => {
           id="tableTitle"
           component="div"
         >
-          Nutrition
+          Danh sách hàng hóa
         </Typography>
       )}
 

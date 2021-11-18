@@ -1,13 +1,13 @@
 import TableCommon from "components/common/TableCommon";
 import React from "react";
 
-const ManageEmployee = () => {
+const ManageCourse = () => {
   return (
     <div>
-      <h3>Quan ly nhan vien</h3>
+      <h3>Quan ly khoa hoc nau an</h3>
       <TableCommon />
     </div>
   );
 };
 
-export default ManageEmployee;
+export default ManageCourse;

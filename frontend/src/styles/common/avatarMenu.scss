@@ -4,11 +4,20 @@
   box-shadow: unset !important;
   border-radius: 16px !important;
   padding: 6px 12px !important;
-  &--name {
+  .block-infor-user {
     margin: 0 8px;
-    font-size: 13px !important;
-    font-weight: bold;
-    color: #292929;
-    text-transform: capitalize;
+    & > span {
+      margin: 0 8px;
+      font-size: 13px;
+      font-weight: bold;
+      color: #292929;
+      text-transform: capitalize;
+    }
+    &--name {
+      line-height: 16px;
+    }
+    &--role {
+      font-size: 11px !important;
+    }
   }
 }

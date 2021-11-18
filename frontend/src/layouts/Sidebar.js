@@ -2,7 +2,6 @@ import React from "react";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
 import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,6 +11,13 @@ import Logo from "assets/images/adminLogoEcook.png";
 import { IconButton } from "@material-ui/core";
 import { toggleSidebar } from "redux/actions/control";
 import { ArrowLeft } from "@material-ui/icons";
+import FoodIcon from "assets/icons/sidebarAdmin/food.png";
+import EmployeeIcon from "assets/icons/sidebarAdmin/employee.png";
+import InstructorIcon from "assets/icons/sidebarAdmin/chef.png";
+import CourseIcon from "assets/icons/sidebarAdmin/online-learning.png";
+import CustomerICon from "assets/icons/sidebarAdmin/target.png";
+import StatisticsIcon from "assets/icons/sidebarAdmin/statistics.png";
+import { useHistory } from "react-router";
 
 const drawerWidth = 250;
 
@@ -41,9 +47,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const LIST_ICON = [
+  FoodIcon,
+  EmployeeIcon,
+  InstructorIcon,
+  CourseIcon,
+  CustomerICon,
+  StatisticsIcon,
+];
+
 const Sidebar = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const history = useHistory();
   const { isOpenSidebar } = useSelector((store) => store.control);
 
   return (
@@ -74,18 +90,29 @@ const Sidebar = () => {
       </div>
       <List>
         {[
-          "Quản lý hàng hóa",
-          "Quản lý nhân viên",
-          "Quản lý giáo viên",
-          "Quản lý khóa học",
-          "Quán lý khách hàng",
-          "Thống kê",
+          { name: "Quản lý hàng hóa", pathName: "" },
+          { name: "Quản lý nhân viên", pathName: "/employees" },
+          { name: "Quản lý giáo viên", pathName: "/instructors" },
+          { name: "Quản lý khóa học", pathName: "/courses" },
+          { name: "Quán lý khách hàng", pathName: "/customers" },
+          { name: "Thống kê", pathName: "/statistics" },
         ].map((text, index) => (
-          <ListItem button key={index}>
+          <ListItem
+            onClick={() => history.push("/admin/dashboard" + text.pathName)}
+            button
+            key={index}
+            className={`list--icon ${
+              window.location.pathname.endsWith(
+                "/admin/dashboard" + text.pathName
+              )
+                ? "active"
+                : ""
+            }`}
+          >
             <ListItemIcon>
-              <InboxIcon />
+              <img src={LIST_ICON[index]} alt="" />
             </ListItemIcon>
-            <ListItemText primary={text} />
+            <ListItemText primary={text.name} />
           </ListItem>
         ))}
       </List>

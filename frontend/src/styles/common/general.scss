@@ -20,6 +20,13 @@ body {
 .flex {
   display: flex;
 }
+
+.flex-col {
+  flex-direction: column;
+}
+.align-flex-start {
+  align-items: flex-start;
+}
 .items-center {
   align-items: center;
 }
@@ -46,7 +53,7 @@ body {
 
   &__body {
     padding-top: 80px !important;
-    background-color: rgb(245, 243, 235);
+    background-color: rgb(255, 252, 211);
     &__inner {
       padding: 15px;
     }
