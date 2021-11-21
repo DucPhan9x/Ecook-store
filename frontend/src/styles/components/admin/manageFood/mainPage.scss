@@ -49,4 +49,15 @@
       }
     }
   }
+  .ant-modal-footer {
+    .ant-btn {
+      border-color: rgb(151, 101, 7) !important;
+      &:hover {
+        color: rgb(153, 101, 5);
+      }
+    }
+    .ant-btn-primary {
+      background-image: linear-gradient(-90deg, #f5c04f 0%, orange 100%);
+    }
+  }
 }

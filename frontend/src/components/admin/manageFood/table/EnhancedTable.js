@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableContainer from "@material-ui/core/TableContainer";
@@ -7,6 +7,7 @@ import Paper from "@material-ui/core/Paper";
 import HeaderContainer from "./HeaderContainer";
 import ToolbarContainer from "./ToolbarContainer";
 import BodyContainer from "./BodyContainer";
+import ModalUpdated from "../modal/ModalUpdated";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function EnhancedTable({ data }) {
+export default function EnhancedTable({ data, setData }) {
   const classes = useStyles();
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("createAt");
@@ -40,8 +41,10 @@ export default function EnhancedTable({ data }) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
-  // const [rows,setRows]=useState()
-  const rows = data;
+  const [rows, setRows] = useState([]);
+  useEffect(() => {
+    setRows(data);
+  }, [data]);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -51,7 +54,7 @@ export default function EnhancedTable({ data }) {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = rows.map((n) => n.uid);
+      const newSelecteds = rows.map((n) => n._id);
       setSelected(newSelecteds);
       return;
     }
@@ -67,10 +70,17 @@ export default function EnhancedTable({ data }) {
     setPage(0);
   };
 
+  const [itemSelected, setItemSelected] = useState("");
+
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        <ToolbarContainer numSelected={selected.length} />
+        <ToolbarContainer
+          selected={selected}
+          setRows={setRows}
+          rows={rows}
+          setSelected={setSelected}
+        />
         <TableContainer className="table-container">
           <Table
             className={classes.table}
@@ -95,6 +105,7 @@ export default function EnhancedTable({ data }) {
               setSelected={setSelected}
               page={page}
               rowsPerPage={rowsPerPage}
+              setItemSelected={setItemSelected}
             />
           </Table>
         </TableContainer>
@@ -108,6 +119,31 @@ export default function EnhancedTable({ data }) {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
+      <ModalUpdated
+        isModalVisible={itemSelected}
+        data={itemSelected}
+        handleSubmit={(formData) => {
+          // update rows by item selected // RUN API update, setRows
+          console.log(formData);
+          let temp = [...rows];
+          temp.forEach((item) => {
+            if (item._id === itemSelected._id) {
+              item.name = formData.name;
+              item.type = formData.type;
+              item.unitPrice = formData.unitPrice;
+              item.description = formData.description;
+              item.discountOff = formData.discountOff;
+              item.discountMaximum = formData.discountMaximum;
+              item.imageUrl = formData.imageUrl || "";
+            }
+          });
+          setRows(temp);
+          setItemSelected("");
+        }}
+        close={() => {
+          setItemSelected("");
+        }}
+      />
     </div>
   );
 }

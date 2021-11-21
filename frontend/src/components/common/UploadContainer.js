@@ -1,6 +1,6 @@
 import { Upload, Modal } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function getBase64(file) {
   return new Promise((resolve, reject) => {
@@ -10,6 +10,18 @@ function getBase64(file) {
     reader.onerror = (error) => reject(error);
   });
 }
+const toDataURL = (url) =>
+  fetch(url)
+    .then((response) => response.blob())
+    .then(
+      (blob) =>
+        new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onloadend = () => resolve(reader.result);
+          reader.onerror = reject;
+          reader.readAsDataURL(blob);
+        })
+    );
 
 const PicturesWall = ({ setImageUrl, form }) => {
   const [previewVisible, setPreviewVisible] = useState(false);
@@ -20,6 +32,12 @@ const PicturesWall = ({ setImageUrl, form }) => {
   const handleCancel = () => {
     setPreviewVisible(false);
   };
+
+  useEffect(() => {
+    toDataURL(form.imageUrl).then((dataUrl) => {
+      setFileImage([dataUrl]);
+    });
+  }, [form]);
 
   const handlePreview = async (file) => {
     if (!file.url && !file.preview) {
@@ -32,7 +50,7 @@ const PicturesWall = ({ setImageUrl, form }) => {
 
   const handleChange = ({ fileList }) => {
     setFileImage(fileList);
-    setImageUrl({ ...form, imageUrl: fileList });
+    setImageUrl({ ...form, imageUrl: fileList || "" });
   };
   const uploadButton = (
     <div>

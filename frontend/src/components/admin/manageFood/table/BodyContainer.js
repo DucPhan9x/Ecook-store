@@ -3,10 +3,16 @@ import moment from "moment";
 import React from "react";
 
 const BodyContainer = (props) => {
-  const { rows, order, orderBy, page, rowsPerPage, selected, setSelected } =
-    props;
-
-  console.log(rows);
+  const {
+    rows,
+    order,
+    orderBy,
+    page,
+    rowsPerPage,
+    selected,
+    setSelected,
+    setItemSelected,
+  } = props;
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
@@ -54,47 +60,61 @@ const BodyContainer = (props) => {
   };
 
   return (
-    <TableBody>
-      {stableSort(rows, getComparator(order, orderBy))
-        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-        .map((row, index) => {
-          const isItemSelected = isSelected(row._id);
-          const labelId = `enhanced-table-checkbox-${index}`;
+    <>
+      <TableBody>
+        {stableSort(rows, getComparator(order, orderBy))
+          .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+          .map((row, index) => {
+            const isItemSelected = isSelected(row._id);
+            const labelId = `enhanced-table-checkbox-${index}`;
 
-          return (
-            <TableRow
-              style={{ cursor: "pointer" }}
-              hover
-              role="checkbox"
-              aria-checked={isItemSelected}
-              tabIndex={-1}
-              key={row._id}
-              selected={isItemSelected}
-            >
-              <TableCell padding="checkbox">
-                <Checkbox
-                  onClick={(event) => handleClick(event, row._id)}
-                  checked={isItemSelected}
-                  inputProps={{ "aria-labelledby": labelId }}
-                />
-              </TableCell>
-              <TableCell component="th" id={labelId} scope="row" padding="none">
-                {row._id}
-              </TableCell>
-              <TableCell align="left">{row.name}</TableCell>
-              <TableCell align="left">{row.type}</TableCell>
-              <TableCell align="left">{row.unitPrice}</TableCell>
-              <TableCell align="left">{row.numOfStars}</TableCell>
-              <TableCell align="left">
-                {moment(row.createAt).format("DD/MM/YYYY")}
-              </TableCell>
-              <TableCell align="center">
-                <button className="btn-admin">Chỉnh sửa</button>
-              </TableCell>
-            </TableRow>
-          );
-        })}
-    </TableBody>
+            return (
+              <TableRow
+                style={{ cursor: "pointer" }}
+                hover
+                role="checkbox"
+                aria-checked={isItemSelected}
+                tabIndex={-1}
+                key={row._id}
+                selected={isItemSelected}
+              >
+                <TableCell padding="checkbox">
+                  <Checkbox
+                    onClick={(event) => handleClick(event, row._id)}
+                    checked={isItemSelected}
+                    inputProps={{ "aria-labelledby": labelId }}
+                  />
+                </TableCell>
+                <TableCell
+                  component="th"
+                  id={labelId}
+                  scope="row"
+                  padding="none"
+                >
+                  {row._id}
+                </TableCell>
+                <TableCell align="left">{row.name}</TableCell>
+                <TableCell align="left">{row.type}</TableCell>
+                <TableCell align="left">{row.unitPrice}</TableCell>
+                <TableCell align="left">{row.numOfStars}</TableCell>
+                <TableCell align="left">
+                  {moment(row.createAt).format("DD/MM/YYYY")}
+                </TableCell>
+                <TableCell align="center">
+                  <button
+                    className="btn-admin"
+                    onClick={() => {
+                      setItemSelected(row);
+                    }}
+                  >
+                    Chỉnh sửa
+                  </button>
+                </TableCell>
+              </TableRow>
+            );
+          })}
+      </TableBody>
+    </>
   );
 };
 

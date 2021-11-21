@@ -30,7 +30,8 @@ const useToolbarStyles = makeStyles((theme) => ({
 
 const ToolbarContainer = (props) => {
   const classes = useToolbarStyles();
-  const { numSelected } = props;
+  const { selected, setRows, rows, setSelected } = props;
+  const numSelected = selected.length;
 
   return (
     <Toolbar
@@ -62,7 +63,11 @@ const ToolbarContainer = (props) => {
         <Tooltip title="Delete">
           <IconButton
             aria-label="delete"
-            onClick={() => console.log({ numSelected })}
+            onClick={() => {
+              console.log("run api delete by selected: ", { selected });
+              setRows(rows.filter((item) => !selected.includes(item._id)));
+              setSelected([]);
+            }}
           >
             <DeleteIcon />
           </IconButton>

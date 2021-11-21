@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { EnhancedTable } from "components/admin/manageFood";
 import InputIcon from "@material-ui/icons/Input";
 import PrintIcon from "@material-ui/icons/Print";
@@ -10,6 +10,12 @@ import ModalCreated from "components/admin/manageFood/modal/ModalCreated";
 
 const ManageFood = () => {
   const [isOpenModalCreated, setIsOpenModalCreated] = useState(false);
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    // fetch data
+    setData(FOODS_DATA);
+  }, []);
   return (
     <div className="manage-food-page">
       <div className="manage-food-page-top">
@@ -45,11 +51,12 @@ const ManageFood = () => {
           </button>
         </div>
       </div>
-      <EnhancedTable data={FOODS_DATA} />
+      <EnhancedTable data={data} setData={setData} />
       <ModalCreated
         isModalVisible={isOpenModalCreated}
         handleSubmit={(formData) => {
           setIsOpenModalCreated(false);
+          // add formData into data ,setData
           console.log("data: ", formData);
         }}
         close={() => setIsOpenModalCreated(false)}
