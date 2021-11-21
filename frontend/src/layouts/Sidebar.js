@@ -105,9 +105,12 @@ const Sidebar = () => {
             button
             key={index}
             className={`list--icon ${
-              window.location.pathname.endsWith(
+              (window.location.pathname.startsWith(
                 "/admin/dashboard" + text.pathName
-              )
+              ) &&
+                text.pathName !== "") ||
+              (text.pathName === "" &&
+                window.location.pathname === "/admin/dashboard")
                 ? "active"
                 : ""
             }`}

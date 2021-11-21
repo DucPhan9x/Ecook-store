@@ -218,56 +218,200 @@ export const COURSES_DATA = [
   {
     _id: uuid(),
     name: "Món Á cơ bản",
-    price: 799999,
-    videoUrl:
-      "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-    author: "Mr.Duc",
-    videoAmount: 5,
+    unitPrice: 799999,
+    description: "abcdef",
+    videoUrls: [
+      {
+        title: "Mon Chau A",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: "30 phút",
+      },
+    ],
+    instructor: {
+      fullName: "Phan Trong Duc",
+      phoneNumber: "0984763232",
+      address: "abc",
+      imageUrl: "https://picsum.photos/200/300",
+      email: "trongduc@gmail.com",
+    },
+    createAt: Date.now(),
   },
   {
     _id: uuid(),
     name: "Món Á cơ bản",
-    price: 799999,
-    videoUrl:
-      "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-    author: "Mr.Duc",
-    videoAmount: 5,
+    unitPrice: 799999,
+    description: "abcdef",
+    videoUrls: [
+      {
+        title: "Mon Chau A",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: "30 phút",
+      },
+    ],
+    instructor: {
+      fullName: "Phan Trong Duc",
+      phoneNumber: "0984763232",
+      address: "abc",
+      imageUrl: "https://picsum.photos/200/300",
+      email: "trongduc@gmail.com",
+    },
+    createAt: Date.now(),
   },
   {
     _id: uuid(),
     name: "Món Á cơ bản",
-    price: 799999,
-    videoUrl:
-      "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-    author: "Mr.Duc",
-    videoAmount: 5,
+    unitPrice: 799999,
+    description: "abcdef",
+    videoUrls: [
+      {
+        title: "Mon Chau A",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: "30 phút",
+      },
+    ],
+    instructor: {
+      fullName: "Phan Trong Duc",
+      phoneNumber: "0984763232",
+      address: "abc",
+      imageUrl: "https://picsum.photos/200/300",
+      email: "trongduc@gmail.com",
+    },
+    createAt: Date.now(),
   },
   {
     _id: uuid(),
     name: "Món Á cơ bản",
-    price: 799999,
-    videoUrl:
-      "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-    author: "Mr.Duc",
-    videoAmount: 5,
+    unitPrice: 799999,
+    description: "abcdef",
+    videoUrls: [
+      {
+        title: "Mon Chau A",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: "30 phút",
+      },
+    ],
+    instructor: {
+      fullName: "Phan Trong Duc",
+      phoneNumber: "0984763232",
+      address: "abc",
+      imageUrl: "https://picsum.photos/200/300",
+      email: "trongduc@gmail.com",
+    },
+    createAt: Date.now(),
   },
   {
     _id: uuid(),
     name: "Món Á cơ bản",
-    price: 799999,
-    videoUrl:
-      "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-    author: "Mr.Duc",
-    videoAmount: 5,
+    unitPrice: 799999,
+    description: "abcdef",
+    videoUrls: [
+      {
+        title: "Mon Chau A",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: "30 phút",
+      },
+    ],
+    instructor: {
+      fullName: "Phan Trong Duc",
+      phoneNumber: "0984763232",
+      address: "abc",
+      imageUrl: "https://picsum.photos/200/300",
+      email: "trongduc@gmail.com",
+    },
+    createAt: Date.now(),
   },
   {
     _id: uuid(),
     name: "Món Á cơ bản",
-    price: 799999,
-    videoUrl:
-      "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-    author: "Mr.Duc",
-    videoAmount: 5,
+    unitPrice: 799999,
+    description: "abcdef",
+    videoUrls: [
+      {
+        title: "Mon Chau A",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: "30 phút",
+      },
+    ],
+    instructor: {
+      fullName: "Phan Trong Duc",
+      phoneNumber: "0984763232",
+      address: "abc",
+      imageUrl: "https://picsum.photos/200/300",
+      email: "trongduc@gmail.com",
+    },
+    createAt: Date.now(),
+  },
+  {
+    _id: uuid(),
+    name: "Món Á cơ bản",
+    unitPrice: 799999,
+    description: "abcdef",
+    videoUrls: [
+      {
+        title: "Mon Chau A",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: "30 phút",
+      },
+    ],
+    instructor: {
+      fullName: "Phan Trong Duc",
+      phoneNumber: "0984763232",
+      address: "abc",
+      imageUrl: "https://picsum.photos/200/300",
+      email: "trongduc@gmail.com",
+    },
+    createAt: Date.now(),
+  },
+  {
+    _id: uuid(),
+    name: "Món Á cơ bản",
+    unitPrice: 799999,
+    description: "abcdef",
+    videoUrls: [
+      {
+        title: "Mon Chau A",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: "30 phút",
+      },
+    ],
+    instructor: {
+      fullName: "Phan Trong Duc",
+      phoneNumber: "0984763232",
+      address: "abc",
+      imageUrl: "https://picsum.photos/200/300",
+      email: "trongduc@gmail.com",
+    },
+    createAt: Date.now(),
+  },
+  {
+    _id: uuid(),
+    name: "Món Á cơ bản",
+    unitPrice: 799999,
+    description: "abcdef",
+    videoUrls: [
+      {
+        title: "Mon Chau A",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: "30 phút",
+      },
+    ],
+    instructor: {
+      fullName: "Phan Trong Duc",
+      phoneNumber: "0984763232",
+      address: "abc",
+      imageUrl: "https://picsum.photos/200/300",
+      email: "trongduc@gmail.com",
+    },
+    createAt: Date.now(),
   },
 ];
 

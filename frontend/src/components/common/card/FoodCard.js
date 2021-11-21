@@ -5,7 +5,7 @@ import { IconButton, Tooltip } from "@material-ui/core";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 
 const FoodCard = ({ data }) => {
-  const { name, price, imageUrl } = data;
+  const { name, unitPrice, imageUrl } = data;
   return (
     <div className="food-card">
       <div className="food-card__inner">
@@ -14,7 +14,7 @@ const FoodCard = ({ data }) => {
         <div className="food-card__inner--information">
           <div className="block-title-price">
             <span className="f-title">{name}</span>
-            <span className="f-price">{price} đ</span>
+            <span className="f-price">{unitPrice} đ</span>
           </div>
           <div className="block-action-food">
             <IconButton aria-label="add to favorites">

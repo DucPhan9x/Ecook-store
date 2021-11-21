@@ -1,0 +1,98 @@
+.btn-add-course {
+  width: 200px;
+  margin-left: auto;
+  margin-bottom: 12px;
+}
+.edit-course-container {
+  display: flex;
+  justify-content: space-between;
+  &-left {
+    width: 63%;
+    .MuiPaper-root {
+      height: calc(100vh - 200px);
+      padding: 20px;
+      .title-information-course {
+        color: rgb(189, 159, 75);
+        font-weight: bold;
+        margin-bottom: 36px;
+      }
+      .block-input-info-course {
+        margin-bottom: 24px;
+        label {
+          font-weight: bold;
+          color: rgb(194, 107, 56);
+          margin-bottom: 6px;
+        }
+      }
+    }
+  }
+  &-right {
+    width: 35%;
+    .MuiPaper-root {
+      height: calc(100vh - 200px);
+      padding: 20px;
+      overflow: auto;
+      .block-video-course-added {
+        display: flex;
+        margin-bottom: 20px;
+        & > iframe {
+          width: 250px;
+          height: 150px;
+          margin-right: 12px;
+        }
+        &-right {
+          display: flex;
+          flex-direction: column;
+          & > div {
+            & > label {
+              color: rgb(161, 135, 87);
+              font-weight: bold;
+              margin-right: 6px;
+            }
+            & > span {
+              color: rgb(170, 111, 2);
+            }
+          }
+          .block-remove-video {
+            display: flex;
+            align-items: center;
+            margin-top: 12px;
+            margin-left: -6px;
+            width: fit-content;
+            cursor: pointer;
+            .MuiSvgIcon-root {
+              width: 22px;
+              & > path {
+                fill: rgb(195, 80, 80);
+              }
+            }
+            & > span {
+              color: rgb(184, 54, 54);
+            }
+            &:hover {
+              & > span {
+                color: rgb(241, 33, 33);
+              }
+            }
+          }
+        }
+      }
+      .block-action-add-video {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px dashed rgb(146, 95, 0);
+        width: 100%;
+        height: 150px;
+        & > span {
+          margin-left: 12px;
+          color: rgb(131, 119, 106);
+        }
+        &:hover {
+          background: rgb(255, 244, 207);
+        }
+      }
+    }
+  }
+}

@@ -8,6 +8,8 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import {
   ROUTE_ADMIN_DASHBOARD,
   ROUTE_ADMIN_DASHBOARD_COURSES,
+  ROUTE_ADMIN_DASHBOARD_COURSES_ADD,
+  ROUTE_ADMIN_DASHBOARD_COURSES_EDIT,
   ROUTE_ADMIN_DASHBOARD_CUSTOMERS,
   ROUTE_ADMIN_DASHBOARD_EMPLOYEES,
   ROUTE_ADMIN_DASHBOARD_INSTRUCTORS,
@@ -31,6 +33,8 @@ import {
   ManageRecipes,
   Statistics,
 } from "pages/admin";
+import AddCourse from "components/admin/manageCourse/AddCourse";
+import EditCourse from "components/admin/manageCourse/EditCourse";
 
 function App() {
   return (
@@ -93,6 +97,16 @@ function App() {
         <Route
           path={ROUTE_ADMIN_DASHBOARD_COURSES}
           component={withAuthAdmin(ManageCourse)}
+          exact
+        />
+        <Route
+          path={ROUTE_ADMIN_DASHBOARD_COURSES_ADD}
+          component={withAuthAdmin(AddCourse)}
+          exact
+        />
+        <Route
+          path={ROUTE_ADMIN_DASHBOARD_COURSES_EDIT}
+          component={withAuthAdmin(EditCourse)}
           exact
         />
         <Route

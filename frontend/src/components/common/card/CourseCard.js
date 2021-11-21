@@ -6,16 +6,16 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import YoutubeEmbed from "../YoutubeEmbed";
 
 const CourseCard = ({ data }) => {
-  const { _id, name, price, videoUrl } = data;
+  const { _id, name, unitPrice, videoUrls } = data;
   return (
     <div className="course-card">
       <div className="course-card__inner">
-        <YoutubeEmbed id={_id} videoUrl={videoUrl} />
+        <YoutubeEmbed id={_id} videoUrl={videoUrls[0].videoUrl} />
 
         <div className="course-card__inner--information">
           <div className="block-title-price">
             <span className="f-title">{name}</span>
-            <span className="f-price">{price} đ</span>
+            <span className="f-price">{unitPrice} đ</span>
           </div>
           <div className="block-action-food">
             <IconButton aria-label="add to favorites">
