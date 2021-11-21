@@ -50,7 +50,7 @@ const HomePageClient = () => {
             </div>
             <div className="block--product-list--showing">
               {RECIPES_DATA.map((r) => (
-                <RecipeCard data={r} key={r.id} />
+                <RecipeCard data={r} key={r._id} />
               ))}
             </div>
           </div>
@@ -67,7 +67,7 @@ const HomePageClient = () => {
             </div>
             <div className="block--product-list--showing">
               {FOODS_DATA.map((r) => (
-                <FoodCard data={r} key={r.id} />
+                <FoodCard data={r} key={r._id} />
               ))}
             </div>
           </div>
@@ -79,7 +79,7 @@ const HomePageClient = () => {
             </div>
             <div className="block--product-list--showing">
               {FOODS_DATA.map((r) => (
-                <FoodCard data={r} key={r.id} />
+                <FoodCard data={r} key={r._id} />
               ))}
             </div>
           </div>
@@ -91,7 +91,7 @@ const HomePageClient = () => {
             </div>
             <div className="block--product-list--showing">
               {FOODS_DATA.map((r) => (
-                <FoodCard data={r} key={r.id} />
+                <FoodCard data={r} key={r._id} />
               ))}
             </div>
           </div>
@@ -103,7 +103,7 @@ const HomePageClient = () => {
             </div>
             <div className="block--product-list--showing">
               {FOODS_DATA.map((r) => (
-                <FoodCard data={r} key={r.id} />
+                <FoodCard data={r} key={r._id} />
               ))}
             </div>
           </div>
@@ -117,7 +117,7 @@ const HomePageClient = () => {
             </div>
             <div className="block--product-list--showing">
               {COURSES_DATA.map((r) => (
-                <CourseCard data={r} key={r.id} />
+                <CourseCard data={r} key={r._id} />
               ))}
             </div>
           </div>
@@ -128,7 +128,7 @@ const HomePageClient = () => {
             </div>
             <div className="block--product-list--showing">
               {INSTRUCTORS_DATA.map((r) => (
-                <InstructorCard data={r} key={r.id} />
+                <InstructorCard data={r} key={r._id} />
               ))}
             </div>
           </div>

@@ -75,7 +75,7 @@ const ModalCreated = ({ isModalVisible, handleSubmit, close }) => {
   return (
     <Modal
       className="modal-container"
-      title="Thông tin sản phẩm"
+      title="Tạo mới sản phẩm"
       visible={isModalVisible}
       onOk={handleSubmitForm}
       onCancel={() => {

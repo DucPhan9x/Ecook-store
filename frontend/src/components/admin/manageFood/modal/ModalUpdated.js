@@ -80,7 +80,7 @@ const ModalUpdated = ({ isModalVisible, handleSubmit, close, data }) => {
   return (
     <Modal
       className="modal-container"
-      title="Thông tin sản phẩm"
+      title="Cập nhật thông tin sản phẩm"
       visible={isModalVisible}
       onOk={handleSubmitForm}
       onCancel={() => {

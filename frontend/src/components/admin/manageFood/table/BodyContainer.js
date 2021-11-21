@@ -12,6 +12,7 @@ const BodyContainer = (props) => {
     selected,
     setSelected,
     setItemSelected,
+    setItemSeeDetail,
   } = props;
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
@@ -70,6 +71,7 @@ const BodyContainer = (props) => {
 
             return (
               <TableRow
+                onClick={() => setItemSeeDetail(row)}
                 style={{ cursor: "pointer" }}
                 hover
                 role="checkbox"
@@ -103,7 +105,8 @@ const BodyContainer = (props) => {
                 <TableCell align="center">
                   <button
                     className="btn-admin"
-                    onClick={() => {
+                    onClick={(e) => {
+                      e.stopPropagation();
                       setItemSelected(row);
                     }}
                   >

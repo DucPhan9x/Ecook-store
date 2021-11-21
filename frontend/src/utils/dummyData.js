@@ -3,7 +3,7 @@ import { uuid } from "./stringUtils";
 //recipe
 export const RECIPES_DATA = [
   {
-    id: "a123",
+    _id: "a123",
     title: "Tôm rim",
     feedbacks: 5,
     description: `
@@ -16,7 +16,7 @@ Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm t
     imageUrl: "https://picsum.photos/200/300",
   },
   {
-    id: "a124",
+    _id: "a124",
     title: "Tôm rim",
     feedbacks: 5,
     description: `Bước 1:
@@ -28,7 +28,7 @@ Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm t
     imageUrl: "https://picsum.photos/200/300",
   },
   {
-    id: "a125",
+    _id: "a125",
     title: "Tôm rim",
     feedbacks: 5,
     description: `Bước 1:
@@ -40,7 +40,7 @@ Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm t
     imageUrl: "https://picsum.photos/200/300",
   },
   {
-    id: "a126",
+    _id: "a126",
     title: "Tôm rim",
     feedbacks: 5,
     description: `Bước 1:
@@ -52,7 +52,7 @@ Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm t
     imageUrl: "https://picsum.photos/200/300",
   },
   {
-    id: "a127",
+    _id: "a127",
     title: "Tôm rim",
     feedbacks: 5,
     description: `Bước 1:
@@ -64,7 +64,7 @@ Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm t
     imageUrl: "https://picsum.photos/200/300",
   },
   {
-    id: "a128",
+    _id: "a128",
     title: "Tôm rim",
     feedbacks: 5,
     description: `Bước 1:
@@ -216,7 +216,7 @@ export const FOODS_DATA = [
 // course
 export const COURSES_DATA = [
   {
-    id: uuid(),
+    _id: uuid(),
     name: "Món Á cơ bản",
     price: 799999,
     videoUrl:
@@ -225,7 +225,7 @@ export const COURSES_DATA = [
     videoAmount: 5,
   },
   {
-    id: uuid(),
+    _id: uuid(),
     name: "Món Á cơ bản",
     price: 799999,
     videoUrl:
@@ -234,7 +234,7 @@ export const COURSES_DATA = [
     videoAmount: 5,
   },
   {
-    id: uuid(),
+    _id: uuid(),
     name: "Món Á cơ bản",
     price: 799999,
     videoUrl:
@@ -243,7 +243,7 @@ export const COURSES_DATA = [
     videoAmount: 5,
   },
   {
-    id: uuid(),
+    _id: uuid(),
     name: "Món Á cơ bản",
     price: 799999,
     videoUrl:
@@ -252,7 +252,7 @@ export const COURSES_DATA = [
     videoAmount: 5,
   },
   {
-    id: uuid(),
+    _id: uuid(),
     name: "Món Á cơ bản",
     price: 799999,
     videoUrl:
@@ -261,7 +261,7 @@ export const COURSES_DATA = [
     videoAmount: 5,
   },
   {
-    id: uuid(),
+    _id: uuid(),
     name: "Món Á cơ bản",
     price: 799999,
     videoUrl:
@@ -273,7 +273,7 @@ export const COURSES_DATA = [
 
 export const INSTRUCTORS_DATA = [
   {
-    id: uuid(),
+    _id: uuid(),
     name: "Phan Trong Duc",
     imageUrl:
       "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
@@ -281,7 +281,7 @@ export const INSTRUCTORS_DATA = [
     expertise: "Mon Chau A",
   },
   {
-    id: uuid(),
+    _id: uuid(),
     name: "Phan Trong Duc",
     imageUrl:
       "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
@@ -289,7 +289,7 @@ export const INSTRUCTORS_DATA = [
     expertise: "Mon Chau A",
   },
   {
-    id: uuid(),
+    _id: uuid(),
     name: "Phan Trong Duc",
     imageUrl:
       "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
@@ -297,7 +297,7 @@ export const INSTRUCTORS_DATA = [
     expertise: "Mon Chau A",
   },
   {
-    id: uuid(),
+    _id: uuid(),
     name: "Phan Trong Duc",
     imageUrl:
       "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
@@ -305,7 +305,7 @@ export const INSTRUCTORS_DATA = [
     expertise: "Mon Chau A",
   },
   {
-    id: uuid(),
+    _id: uuid(),
     name: "Phan Trong Duc",
     imageUrl:
       "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
@@ -313,7 +313,7 @@ export const INSTRUCTORS_DATA = [
     expertise: "Mon Chau A",
   },
   {
-    id: uuid(),
+    _id: uuid(),
     name: "Phan Trong Duc",
     imageUrl:
       "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",

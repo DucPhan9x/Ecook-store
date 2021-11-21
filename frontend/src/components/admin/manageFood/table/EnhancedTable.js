@@ -8,6 +8,7 @@ import HeaderContainer from "./HeaderContainer";
 import ToolbarContainer from "./ToolbarContainer";
 import BodyContainer from "./BodyContainer";
 import ModalUpdated from "../modal/ModalUpdated";
+import ModalDetail from "../modal/ModalDetail";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -71,6 +72,7 @@ export default function EnhancedTable({ data, setData }) {
   };
 
   const [itemSelected, setItemSelected] = useState("");
+  const [itemSeeDetail, setItemSeeDetail] = useState("");
 
   return (
     <div className={classes.root}>
@@ -106,6 +108,7 @@ export default function EnhancedTable({ data, setData }) {
               page={page}
               rowsPerPage={rowsPerPage}
               setItemSelected={setItemSelected}
+              setItemSeeDetail={setItemSeeDetail}
             />
           </Table>
         </TableContainer>
@@ -142,6 +145,13 @@ export default function EnhancedTable({ data, setData }) {
         }}
         close={() => {
           setItemSelected("");
+        }}
+      />
+      <ModalDetail
+        isModalVisible={itemSeeDetail}
+        data={itemSeeDetail}
+        close={() => {
+          setItemSeeDetail("");
         }}
       />
     </div>
