@@ -1,0 +1,52 @@
+.manage-food-page {
+  &-top {
+    margin-bottom: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+    &-left {
+      & > button:first-child {
+        margin-right: 12px;
+      }
+    }
+    &-right {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      .search-field {
+        margin: 0 16px;
+      }
+      .dropdown-common {
+        height: 40px;
+      }
+    }
+  }
+}
+// modal created/updated
+.modal-container {
+  min-width: 650px;
+  .ant-modal-header {
+    padding: 16px 20px;
+    font-size: 18px;
+    .ant-modal-title {
+      color: rgb(214, 109, 10) !important;
+      font-weight: bold;
+    }
+  }
+  .ant-modal-body {
+    padding: 12px 20px;
+    .body-content-form {
+      &:not(:first-child, :last-child) {
+        margin: 18px 0 !important;
+      }
+      .block-label-input-modal {
+        width: 100%;
+        label {
+          color: rgb(88, 53, 18);
+          padding-bottom: 4px;
+        }
+      }
+    }
+  }
+}

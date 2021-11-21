@@ -1,13 +1,13 @@
 import EnhancedTable from "components/common/table";
 import React from "react";
 
-const ManageCourse = () => {
+const ManageRecipes = () => {
   return (
     <div>
-      <h3>Quan ly khoa hoc nau an</h3>
+      <h3>Quan ly cong thuc</h3>
       <EnhancedTable />
     </div>
   );
 };
 
-export default ManageCourse;
+export default ManageRecipes;

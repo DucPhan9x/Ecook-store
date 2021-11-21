@@ -4,6 +4,7 @@ import ManageInstructor from "./manageInstructor";
 import ManageCourse from "./manageCourse";
 import ManageCustomer from "./manageCustomer";
 import Statistics from "./manageStatistics";
+import ManageRecipes from "./manageRecipes";
 
 export {
   ManageFood,
@@ -12,4 +13,5 @@ export {
   ManageCourse,
   ManageCustomer,
   Statistics,
+  ManageRecipes,
 };

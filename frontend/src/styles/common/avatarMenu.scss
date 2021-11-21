@@ -2,10 +2,13 @@
   outline: unset;
   background: rgb(245, 243, 235) !important;
   box-shadow: unset !important;
-  border-radius: 16px !important;
-  padding: 6px 12px !important;
+  border-radius: 20px !important;
+  display: flex;
+  align-items: center;
+  height: 42px;
+  padding: 0px 12px !important;
   .block-infor-user {
-    margin: 0 8px;
+    margin: 0 4px;
     & > span {
       margin: 0 8px;
       font-size: 13px;
@@ -19,5 +22,12 @@
     &--role {
       font-size: 11px !important;
     }
+  }
+}
+.menu-header-admin,
+.menu-dropdown-common {
+  border-radius: 14px;
+  svg {
+    margin-right: 6px;
   }
 }

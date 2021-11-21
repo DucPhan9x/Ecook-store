@@ -1,4 +1,5 @@
-import { v4 as uuidv4 } from "uuid";
+import { uuid } from "./stringUtils";
+
 //recipe
 export const RECIPES_DATA = [
   {
@@ -78,66 +79,144 @@ Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm t
 //food
 export const FOODS_DATA = [
   {
-    id: "b123",
-    name: "Sườn Non Heo (Thịt Tươi)",
-    price: 12.023,
+    _id: uuid(),
+    type: "Thịt Tươi",
+    name: "Sườn Non Heo",
+    unitPrice: 12.023,
+    description: "Hang tuoi song",
     imageUrl: "https://picsum.photos/200/300",
-    type: "meat",
+    numOfStars: 5,
+    numOfFeedbacks: 12,
+    createAt: Date.now(),
+    updateAt: Date.now(),
   },
   {
-    id: "b124",
-    name: "Sườn Non Heo (Thịt Tươi)",
-    price: 12.012,
+    _id: uuid(),
+    type: "Thịt Tươi",
+    name: "Sườn Non Heo",
+    unitPrice: 12.023,
+    description: "Hang tuoi song",
     imageUrl: "https://picsum.photos/200/300",
-    type: "meat",
+    numOfStars: 5,
+    numOfFeedbacks: 12,
+    createAt: Date.now(),
+    updateAt: Date.now(),
   },
   {
-    id: "b125",
-    name: "Sườn Non Heo (Thịt Tươi)",
-    price: 1.012,
+    _id: uuid(),
+    type: "Thịt Tươi",
+    name: "Sườn Non Heo",
+    unitPrice: 12.023,
+    description: "Hang tuoi song",
     imageUrl: "https://picsum.photos/200/300",
-    type: "meat",
+    numOfStars: 5,
+    numOfFeedbacks: 12,
+    createAt: Date.now(),
+    updateAt: Date.now(),
   },
   {
-    id: "b126",
-    name: "Tôm rim",
-    price: 500.011,
+    _id: uuid(),
+    type: "Thịt Tươi",
+    name: "Sườn Non Heo",
+    unitPrice: 12.023,
+    description: "Hang tuoi song",
     imageUrl: "https://picsum.photos/200/300",
-    type: "meat",
+    numOfStars: 5,
+    numOfFeedbacks: 12,
+    createAt: Date.now(),
+    updateAt: Date.now(),
   },
   {
-    id: "b127",
-    name: "Sườn Non Heo (Thịt Tươi)",
-    price: 5.011,
+    _id: uuid(),
+    type: "Thịt Tươi",
+    name: "Sườn Non Heo",
+    unitPrice: 12.023,
+    description: "Hang tuoi song",
     imageUrl: "https://picsum.photos/200/300",
-    type: "meat",
+    numOfStars: 5,
+    numOfFeedbacks: 12,
+    createAt: Date.now(),
+    updateAt: Date.now(),
   },
   {
-    id: "b128",
-    name: "Sườn Non Heo (Thịt Tươi)",
-    price: 15.011,
+    _id: uuid(),
+    type: "Thịt Tươi",
+    name: "Sườn Non Heo",
+    unitPrice: 12.023,
+    description: "Hang tuoi song",
     imageUrl: "https://picsum.photos/200/300",
-    type: "meat",
+    numOfStars: 5,
+    numOfFeedbacks: 12,
+    createAt: Date.now(),
+    updateAt: Date.now(),
   },
   {
-    id: "b129",
-    name: "Sườn Non Heo (Thịt Tươi)",
-    price: 5.011,
+    _id: uuid(),
+    type: "Thịt Tươi",
+    name: "Sườn Non Heo",
+    unitPrice: 12.023,
+    description: "Hang tuoi song",
     imageUrl: "https://picsum.photos/200/300",
-    type: "meat",
+    numOfStars: 5,
+    numOfFeedbacks: 12,
+    createAt: Date.now(),
+    updateAt: Date.now(),
+  },
+
+  {
+    _id: uuid(),
+    type: "Thịt Tươi",
+    name: "Sườn Non Heo",
+    unitPrice: 12.023,
+    description: "Hang tuoi song",
+    imageUrl: "https://picsum.photos/200/300",
+    numOfStars: 5,
+    numOfFeedbacks: 12,
+    createAt: Date.now(),
+    updateAt: Date.now(),
   },
   {
-    id: uuidv4(),
-    name: "Sườn Non Heo (Thịt Tươi)",
-    price: 20.011,
+    _id: uuid(),
+    type: "Thịt Tươi",
+    name: "Sườn Non Heo",
+    unitPrice: 12.023,
+    description: "Hang tuoi song",
     imageUrl: "https://picsum.photos/200/300",
-    type: "meat",
+    numOfStars: 5,
+    numOfFeedbacks: 12,
+    createAt: Date.now(),
+    updateAt: Date.now(),
+  },
+  {
+    _id: uuid(),
+    type: "Thịt Tươi",
+    name: "Sườn Non Heo",
+    unitPrice: 12.023,
+    description: "Hang tuoi song",
+    imageUrl: "https://picsum.photos/200/300",
+    numOfStars: 5,
+    numOfFeedbacks: 12,
+    createAt: Date.now(),
+    updateAt: Date.now(),
+  },
+  {
+    _id: uuid(),
+    type: "Thịt Tươi",
+    name: "Sườn Non Heo",
+    unitPrice: 12.023,
+    description: "Hang tuoi song",
+    imageUrl: "https://picsum.photos/200/300",
+    numOfStars: 5,
+    numOfFeedbacks: 12,
+    createAt: Date.now(),
+    updateAt: Date.now(),
   },
 ];
+
 // course
 export const COURSES_DATA = [
   {
-    id: uuidv4(),
+    id: uuid(),
     name: "Món Á cơ bản",
     price: 700.001,
     videoUrl:
@@ -146,7 +225,7 @@ export const COURSES_DATA = [
     videoAmount: 5,
   },
   {
-    id: uuidv4(),
+    id: uuid(),
     name: "Món Á cơ bản",
     price: 700.001,
     videoUrl:
@@ -155,7 +234,7 @@ export const COURSES_DATA = [
     videoAmount: 5,
   },
   {
-    id: uuidv4(),
+    id: uuid(),
     name: "Món Á cơ bản",
     price: 700.001,
     videoUrl:
@@ -164,7 +243,7 @@ export const COURSES_DATA = [
     videoAmount: 5,
   },
   {
-    id: uuidv4(),
+    id: uuid(),
     name: "Món Á cơ bản",
     price: 700.001,
     videoUrl:
@@ -173,7 +252,7 @@ export const COURSES_DATA = [
     videoAmount: 5,
   },
   {
-    id: uuidv4(),
+    id: uuid(),
     name: "Món Á cơ bản",
     price: 700.001,
     videoUrl:
@@ -182,7 +261,7 @@ export const COURSES_DATA = [
     videoAmount: 5,
   },
   {
-    id: uuidv4(),
+    id: uuid(),
     name: "Món Á cơ bản",
     price: 700.001,
     videoUrl:
@@ -194,7 +273,7 @@ export const COURSES_DATA = [
 
 export const INSTRUCTORS_DATA = [
   {
-    id: uuidv4(),
+    id: uuid(),
     name: "Phan Trong Duc",
     imageUrl:
       "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
@@ -202,7 +281,7 @@ export const INSTRUCTORS_DATA = [
     expertise: "Mon Chau A",
   },
   {
-    id: uuidv4(),
+    id: uuid(),
     name: "Phan Trong Duc",
     imageUrl:
       "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
@@ -210,7 +289,7 @@ export const INSTRUCTORS_DATA = [
     expertise: "Mon Chau A",
   },
   {
-    id: uuidv4(),
+    id: uuid(),
     name: "Phan Trong Duc",
     imageUrl:
       "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
@@ -218,7 +297,7 @@ export const INSTRUCTORS_DATA = [
     expertise: "Mon Chau A",
   },
   {
-    id: uuidv4(),
+    id: uuid(),
     name: "Phan Trong Duc",
     imageUrl:
       "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
@@ -226,7 +305,7 @@ export const INSTRUCTORS_DATA = [
     expertise: "Mon Chau A",
   },
   {
-    id: uuidv4(),
+    id: uuid(),
     name: "Phan Trong Duc",
     imageUrl:
       "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
@@ -234,7 +313,7 @@ export const INSTRUCTORS_DATA = [
     expertise: "Mon Chau A",
   },
   {
-    id: uuidv4(),
+    id: uuid(),
     name: "Phan Trong Duc",
     imageUrl:
       "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",

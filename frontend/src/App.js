@@ -11,6 +11,7 @@ import {
   ROUTE_ADMIN_DASHBOARD_CUSTOMERS,
   ROUTE_ADMIN_DASHBOARD_EMPLOYEES,
   ROUTE_ADMIN_DASHBOARD_INSTRUCTORS,
+  ROUTE_ADMIN_DASHBOARD_RECIPES,
   ROUTE_ADMIN_DASHBOARD_STATISTICS,
   ROUTE_FORGOTPASSWORD,
   ROUTE_FORGOT_PASSWORD_ADMIN,
@@ -27,6 +28,7 @@ import {
   ManageEmployee,
   ManageFood,
   ManageInstructor,
+  ManageRecipes,
   Statistics,
 } from "pages/admin";
 
@@ -83,7 +85,11 @@ function App() {
           component={withAuthAdmin(ManageInstructor)}
           exact
         />
-
+        <Route
+          path={ROUTE_ADMIN_DASHBOARD_RECIPES}
+          component={withAuthAdmin(ManageRecipes)}
+          exact
+        />
         <Route
           path={ROUTE_ADMIN_DASHBOARD_COURSES}
           component={withAuthAdmin(ManageCourse)}

@@ -62,7 +62,10 @@ const HeaderAdmin = () => {
             <MenuIcon />
           </IconButton>
         )}
-        <div style={{ marginLeft: isOpenSidebar ? "auto" : "unset" }}>
+        <div
+          style={{ marginLeft: isOpenSidebar ? "auto" : "unset" }}
+          className="flex"
+        >
           <IconButton aria-label="show 17 new notifications" color="inherit">
             <Badge badgeContent={17} color="secondary">
               <NotificationsIcon color="action" />

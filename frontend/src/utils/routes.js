@@ -14,3 +14,4 @@ export const ROUTE_ADMIN_DASHBOARD_INSTRUCTORS = "/admin/dashboard/instructors";
 export const ROUTE_ADMIN_DASHBOARD_COURSES = "/admin/dashboard/courses"; // course manage
 export const ROUTE_ADMIN_DASHBOARD_CUSTOMERS = "/admin/dashboard/customers"; // customer manage
 export const ROUTE_ADMIN_DASHBOARD_STATISTICS = "/admin/dashboard/statistics"; // statistics manage
+export const ROUTE_ADMIN_DASHBOARD_RECIPES = "/admin/dashboard/recipes"; // recipes manage

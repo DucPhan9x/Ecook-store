@@ -36,7 +36,9 @@ body {
 .pointer {
   cursor: pointer;
 }
-
+.full-width {
+  width: 100%;
+}
 .app {
   display: flex;
   min-height: 100vh;
@@ -64,4 +66,69 @@ body {
   max-height: 100px !important;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+// search field
+.search-field {
+  border-radius: 20px;
+  background: rgb(245, 243, 235) !important;
+  color: rgb(219, 219, 219);
+  width: 350px;
+  border: 1px solid rgb(206, 202, 202) !important;
+  .MuiInput-underline {
+    &::after {
+      display: none;
+    }
+  }
+  .MuiInputBase-root {
+    &::before {
+      display: none !important;
+    }
+    & > input {
+      padding: 12px;
+    }
+    .MuiInputAdornment-root {
+      padding: 0 10px;
+      & > svg {
+        width: 28px;
+      }
+    }
+  }
+}
+// dropdown
+.dropdown-common {
+  outline: unset;
+  background: rgb(245, 243, 235) !important;
+  box-shadow: unset !important;
+  border-radius: 20px !important;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  &:hover,
+  &:focus {
+    color: #292929 !important;
+  }
+}
+.menu-dropdown-common {
+  color: #292929;
+}
+// upload image container
+.ant-upload-list-picture-card-container,
+.ant-upload,
+.ant-upload-select,
+.ant-upload-select-picture-card {
+  width: 100% !important;
+  height: 200px !important;
+}
+.ant-upload-list-picture-card,
+.ant-upload-list-item-error {
+  border-color: rgb(218, 160, 84) !important;
+}
+.error-message {
+  padding: 0 16px;
+  display: block;
+  font-size: 12px;
+  width: 100%;
+  margin-top: 0.25 rem;
+  color: #dc3545;
 }

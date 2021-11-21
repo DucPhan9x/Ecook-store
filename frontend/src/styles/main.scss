@@ -1,14 +1,17 @@
+//common
 @import "./common/general.scss";
 @import "./common/reset.scss";
 @import "./common/button.scss";
 @import "./common/avatarMenu.scss";
 @import "./common/foodCard.scss";
 @import "./common/courseCard.scss";
+@import "./common/commonTable.scss";
 
 // components
-
+// -user
 @import "./components/user/homepage.scss";
-@import "./components/user/login.scss";
+// -admin
+@import "./components/admin/manageFood/mainPage.scss";
 
 // layouts
 

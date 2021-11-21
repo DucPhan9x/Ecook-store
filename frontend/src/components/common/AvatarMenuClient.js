@@ -3,9 +3,11 @@ import { Dropdown, Button, Menu } from "antd";
 import { Avatar } from "antd";
 import { ArrowDropDown } from "@material-ui/icons";
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
+import HistoryIcon from "@material-ui/icons/History";
+import LocalMallIcon from "@material-ui/icons/LocalMall";
 import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
 
-export default function AvatarMenu() {
+export default function AvatarMenuClient() {
   const handleMenuClick = (e) => {
     console.log(e);
   };
@@ -16,11 +18,16 @@ export default function AvatarMenu() {
           {[
             {
               name: "Hồ sơ cá nhân",
-              icon: <AccountBoxIcon color="action" />,
+              icon: <AccountBoxIcon color="secondary" />,
             },
             {
+              name: "Lịch sử mua hàng",
+              icon: <HistoryIcon color="secondary" />,
+            },
+            { name: "Ví vouchers", icon: <LocalMallIcon color="secondary" /> },
+            {
               name: "Đăng xuất",
-              icon: <PowerSettingsNewIcon color="action" />,
+              icon: <PowerSettingsNewIcon color="secondary" />,
             },
           ].map((o, index) => (
             <Menu.Item key={index} className="flex">

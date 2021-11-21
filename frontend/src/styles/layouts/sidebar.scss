@@ -1,6 +1,7 @@
 .app-admin {
   .sidebar-container {
     height: 100vh;
+    z-index: 1000;
     .MuiPaper-root {
       border-right: 1px solid gainsboro;
       .header-sidebar {

@@ -17,6 +17,7 @@ import InstructorIcon from "assets/icons/sidebarAdmin/chef.png";
 import CourseIcon from "assets/icons/sidebarAdmin/online-learning.png";
 import CustomerICon from "assets/icons/sidebarAdmin/target.png";
 import StatisticsIcon from "assets/icons/sidebarAdmin/statistics.png";
+import RecipeIcon from "assets/icons/sidebarAdmin/recipes.png";
 import { useHistory } from "react-router";
 
 const drawerWidth = 250;
@@ -49,9 +50,10 @@ const useStyles = makeStyles((theme) => ({
 
 const LIST_ICON = [
   FoodIcon,
+  CourseIcon,
+  RecipeIcon,
   EmployeeIcon,
   InstructorIcon,
-  CourseIcon,
   CustomerICon,
   StatisticsIcon,
 ];
@@ -91,9 +93,10 @@ const Sidebar = () => {
       <List>
         {[
           { name: "Quản lý hàng hóa", pathName: "" },
+          { name: "Quản lý khóa học", pathName: "/courses" },
+          { name: "Quản lý công thức", pathName: "/recipes" },
           { name: "Quản lý nhân viên", pathName: "/employees" },
           { name: "Quản lý giáo viên", pathName: "/instructors" },
-          { name: "Quản lý khóa học", pathName: "/courses" },
           { name: "Quán lý khách hàng", pathName: "/customers" },
           { name: "Thống kê", pathName: "/statistics" },
         ].map((text, index) => (

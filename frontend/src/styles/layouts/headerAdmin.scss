@@ -2,6 +2,7 @@
   &__app-bar {
     background-color: #fff !important;
     box-shadow: none !important;
+    z-index: 1000 !important;
     .toolbar-header {
       display: flex;
       justify-content: space-between;
