@@ -7,13 +7,14 @@
 @import "./common/courseCard.scss";
 @import "./common/commonTable.scss";
 @import "./common/youtubeEmbedded.scss";
-
+@import "./components/user/login.scss";
 // components
 // -user
 @import "./components/user/homepage.scss";
 // -admin
 @import "./components/admin/manageFood/mainPage.scss";
 @import "./components/admin/manageCourse/editCourse.scss";
+@import "./components/admin/manageCourse/examinationCourse.scss";
 
 // layouts
 

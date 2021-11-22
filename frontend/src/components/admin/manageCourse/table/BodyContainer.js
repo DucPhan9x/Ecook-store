@@ -97,9 +97,21 @@ const BodyContainer = (props) => {
                 <TableCell align="center">
                   <button
                     className="btn-admin"
+                    style={{ marginRight: 12 }}
                     onClick={(e) => {
                       e.stopPropagation();
-                      history.push("/admin/dashboard/courses/edit/:courseID");
+                      history.push(
+                        `/admin/dashboard/courses/examination/${row._id}`
+                      );
+                    }}
+                  >
+                    Bài thi
+                  </button>
+                  <button
+                    className="btn-admin"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      history.push(`/admin/dashboard/courses/edit/${row._id}`);
                     }}
                   >
                     Chi tiết

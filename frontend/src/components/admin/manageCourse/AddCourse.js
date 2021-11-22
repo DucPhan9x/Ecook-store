@@ -8,10 +8,13 @@ import { isEmpty, isCurrency } from "validator";
 import isURL from "validator/lib/isURL";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import { FormBox } from "components/common";
+import { uuid } from "utils/stringUtils";
+import BackPreviousPage from "components/common/BackPreviousPage";
 
 const AddCourse = () => {
   const [videoUrls, setVideoUrls] = useState([
     {
+      _id: uuid(),
       title: "Món Châu Á",
       videoUrl: "https://www.youtube.com/embed/9xH3W0Q--60",
       duration: "30 phút",
@@ -28,6 +31,8 @@ const AddCourse = () => {
     unitPrice: "",
     description: "",
     examinationContent: "",
+    regulation: "",
+    criteria: "",
     createAt: Date.now(),
   });
   const validateVideo = () => {
@@ -51,6 +56,12 @@ const AddCourse = () => {
     }
     if (isEmpty(form.examinationContent)) {
       errorState.examinationContent = "Vui lòng nhập vào, không được để trống!";
+    }
+    if (isEmpty(form.regulation)) {
+      errorState.regulation = "Vui lòng nhập vào, không được để trống!";
+    }
+    if (isEmpty(form.criteria)) {
+      errorState.criteria = "Vui lòng nhập vào, không được để trống!";
     }
     if (!isCurrency(form.unitPrice)) {
       errorState.unitPrice = "Nhập mệnh giá hợp lệ!";
@@ -109,20 +120,23 @@ const AddCourse = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   return (
     <div className="flex flex-col">
-      <button className="btn-admin btn-add-course" onClick={handleSubmitForm}>
-        Tạo mới
-      </button>
+      <div className="flex j-space-between">
+        <BackPreviousPage />
+        <button className="btn-admin btn-add-course" onClick={handleSubmitForm}>
+          Tạo mới
+        </button>
+      </div>
+
       <div className="edit-course-container">
         <div className="edit-course-container-left">
           <Paper>
             <h3 className="title-information-course">Thông tin khóa học</h3>
             <ReForm>
               <div className="block-input-info-course">
-                <label>Ten khoa hoc</label>
+                <label>Tên khóa học</label>
                 <FormBox
                   propsInput={{
                     name: "name",
-                    placeholder: "Tên khóa học",
                     onChange: handleChange,
                     onFocus: handleFocus,
                     value: form.name,
@@ -138,7 +152,6 @@ const AddCourse = () => {
                     type: "number",
                     min: 0,
                     name: "unitPrice",
-                    placeholder: "Gia ca khoa hoc",
                     onChange: handleChange,
                     onFocus: handleFocus,
                     value: form.unitPrice,
@@ -153,7 +166,6 @@ const AddCourse = () => {
                   propsInput={{
                     type: "textarea",
                     name: "description",
-                    placeholder: "Nội dung mô tả",
                     onChange: handleChange,
                     onFocus: handleFocus,
                     value: form.description,
@@ -162,19 +174,47 @@ const AddCourse = () => {
                   error={error.description}
                 />
               </div>
+              <h3 className="title-information-course">Thông tin bài thi</h3>
               <div className="block-input-info-course">
-                <label>Đề bài và quy định bài thi cuối khóa</label>
+                <label>Đề bài thi cuối khóa</label>
                 <FormBox
                   propsInput={{
                     type: "textarea",
                     name: "examinationContent",
-                    placeholder: "Nội dung",
                     onChange: handleChange,
                     onFocus: handleFocus,
                     value: form.examinationContent,
                     disabled: false,
                   }}
                   error={error.examinationContent}
+                />
+              </div>
+              <div className="block-input-info-course">
+                <label>Quy định</label>
+                <FormBox
+                  propsInput={{
+                    type: "textarea",
+                    name: "regulation",
+                    onChange: handleChange,
+                    onFocus: handleFocus,
+                    value: form.regulation,
+                    disabled: false,
+                  }}
+                  error={error.regulation}
+                />
+              </div>
+              <div className="block-input-info-course">
+                <label>Tiêu chí chấm điểm</label>
+                <FormBox
+                  propsInput={{
+                    type: "textarea",
+                    name: "criteria",
+                    onChange: handleChange,
+                    onFocus: handleFocus,
+                    value: form.criteria,
+                    disabled: false,
+                  }}
+                  error={error.criteria}
                 />
               </div>
             </ReForm>
@@ -184,7 +224,7 @@ const AddCourse = () => {
           <Paper>
             {videoUrls.map((item, index) => (
               <div className="block-video-course-added">
-                <YoutubeEmbed videoUrl={item.videoUrl} />
+                <YoutubeEmbed videoUrl={item.videoUrl} id={item._id} />
                 <div className="block-video-course-added-right">
                   <div>
                     <label>Bài {index + 1}: </label>
@@ -217,6 +257,7 @@ const AddCourse = () => {
         </div>
       </div>
       <Modal
+        className="modal-add-video-course"
         title="Thông tin bài học"
         visible={isModalVisible}
         onOk={(e) => {
@@ -225,29 +266,34 @@ const AddCourse = () => {
         }}
         onCancel={() => setIsModalVisible(false)}
       >
-        <ReForm className="form--login">
-          <FormBox
-            propsInput={{
-              name: "videoUrl",
-              placeholder: "URL video",
-              onChange: handleChangeVideo,
-              onFocus: handleFocusVideo,
-              value: formVideo.videoUrl,
-              disabled: false,
-            }}
-            error={errorVideo.videoUrl}
-          />
-          <FormBox
-            propsInput={{
-              name: "title",
-              placeholder: "Tiêu đề",
-              onChange: handleChangeVideo,
-              onFocus: handleFocusVideo,
-              value: formVideo.title,
-              disabled: false,
-            }}
-            error={errorVideo.title}
-          />
+        <ReForm>
+          <div className="body-content-form-add-video">
+            <label>Đường dẫn video</label>
+            <FormBox
+              propsInput={{
+                name: "videoUrl",
+                placeholder: "https://...",
+                onChange: handleChangeVideo,
+                onFocus: handleFocusVideo,
+                value: formVideo.videoUrl,
+                disabled: false,
+              }}
+              error={errorVideo.videoUrl}
+            />
+          </div>
+          <div className="body-content-form-add-video">
+            <label>Tiêu đề</label>
+            <FormBox
+              propsInput={{
+                name: "title",
+                onChange: handleChangeVideo,
+                onFocus: handleFocusVideo,
+                value: formVideo.title,
+                disabled: false,
+              }}
+              error={errorVideo.title}
+            />
+          </div>
         </ReForm>
       </Modal>
     </div>

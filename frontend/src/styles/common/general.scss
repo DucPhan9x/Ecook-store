@@ -30,6 +30,12 @@ body {
 .items-center {
   align-items: center;
 }
+.btn-disabled {
+  background: rgb(187, 181, 181) !important;
+  color: white !important;
+  pointer-events: none !important;
+  cursor: not-allowed !important;
+}
 .j-space-between {
   justify-content: space-between;
 }
@@ -38,6 +44,17 @@ body {
 }
 .full-width {
   width: 100%;
+}
+.text-back-previous-page {
+  cursor: pointer;
+  color: rgb(128, 86, 4);
+  svg {
+    width: 24px;
+    margin-right: 4px;
+  }
+  &:hover {
+    color: rgb(180, 130, 38);
+  }
 }
 .app {
   display: flex;

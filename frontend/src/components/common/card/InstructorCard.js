@@ -2,7 +2,7 @@ import { Rating } from "@material-ui/lab";
 import React from "react";
 
 const InstructorCard = ({ data }) => {
-  const { name, expertise, imageUrl, feedbacks } = data;
+  const { fullName, expertise, imageUrl, feedbacks } = data;
   return (
     <div className="food-card">
       <div className="food-card__inner">
@@ -10,7 +10,7 @@ const InstructorCard = ({ data }) => {
 
         <div className="food-card__inner--information">
           <div className="block-title-price">
-            <span className="f-title">{name}</span>
+            <span className="f-title">{fullName}</span>
             <span className="f-price">Chuyên: {expertise}</span>
           </div>
           <div className="block-action-food">

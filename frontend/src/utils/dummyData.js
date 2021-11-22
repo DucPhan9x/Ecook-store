@@ -220,6 +220,9 @@ export const COURSES_DATA = [
     name: "Món Á cơ bản",
     unitPrice: 799999,
     description: "abcdef",
+    examinationContent: "aaaaa",
+    regulation: "aaaaaaaaaaaaaaaaaaa",
+    criteria: "An toan ve sinh thuc pham, trang tri dep mat",
     videoUrls: [
       {
         title: "Mon Chau A",
@@ -242,6 +245,10 @@ export const COURSES_DATA = [
     name: "Món Á cơ bản",
     unitPrice: 799999,
     description: "abcdef",
+    examinationContent: "aaaaa",
+    regulation: "aaaaaaaaaaaaaaaaaaa",
+    criteria: "An toan ve sinh thuc pham, trang tri dep mat",
+
     videoUrls: [
       {
         title: "Mon Chau A",
@@ -264,6 +271,10 @@ export const COURSES_DATA = [
     name: "Món Á cơ bản",
     unitPrice: 799999,
     description: "abcdef",
+    examinationContent: "aaaaa",
+    regulation: "aaaaaaaaaaaaaaaaaaa",
+    criteria: "An toan ve sinh thuc pham, trang tri dep mat",
+
     videoUrls: [
       {
         title: "Mon Chau A",
@@ -286,6 +297,10 @@ export const COURSES_DATA = [
     name: "Món Á cơ bản",
     unitPrice: 799999,
     description: "abcdef",
+    examinationContent: "aaaaa",
+    criteria: "An toan ve sinh thuc pham, trang tri dep mat",
+
+    regulation: "aaaaaaaaaaaaaaaaaaa",
     videoUrls: [
       {
         title: "Mon Chau A",
@@ -308,6 +323,10 @@ export const COURSES_DATA = [
     name: "Món Á cơ bản",
     unitPrice: 799999,
     description: "abcdef",
+    examinationContent: "aaaaa",
+    regulation: "aaaaaaaaaaaaaaaaaaa",
+    criteria: "An toan ve sinh thuc pham, trang tri dep mat",
+
     videoUrls: [
       {
         title: "Mon Chau A",
@@ -330,6 +349,10 @@ export const COURSES_DATA = [
     name: "Món Á cơ bản",
     unitPrice: 799999,
     description: "abcdef",
+    examinationContent: "aaaaa",
+    regulation: "aaaaaaaaaaaaaaaaaaa",
+    criteria: "An toan ve sinh thuc pham, trang tri dep mat",
+
     videoUrls: [
       {
         title: "Mon Chau A",
@@ -352,6 +375,10 @@ export const COURSES_DATA = [
     name: "Món Á cơ bản",
     unitPrice: 799999,
     description: "abcdef",
+    examinationContent: "aaaaa",
+    criteria: "An toan ve sinh thuc pham, trang tri dep mat",
+
+    regulation: "aaaaaaaaaaaaaaaaaaa",
     videoUrls: [
       {
         title: "Mon Chau A",
@@ -374,28 +401,10 @@ export const COURSES_DATA = [
     name: "Món Á cơ bản",
     unitPrice: 799999,
     description: "abcdef",
-    videoUrls: [
-      {
-        title: "Mon Chau A",
-        videoUrl:
-          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-        duration: "30 phút",
-      },
-    ],
-    instructor: {
-      fullName: "Phan Trong Duc",
-      phoneNumber: "0984763232",
-      address: "abc",
-      imageUrl: "https://picsum.photos/200/300",
-      email: "trongduc@gmail.com",
-    },
-    createAt: Date.now(),
-  },
-  {
-    _id: uuid(),
-    name: "Món Á cơ bản",
-    unitPrice: 799999,
-    description: "abcdef",
+    examinationContent: "aaaaa",
+    criteria: "An toan ve sinh thuc pham, trang tri dep mat",
+
+    regulation: "aaaaaaaaaaaaaaaaaaa",
     videoUrls: [
       {
         title: "Mon Chau A",
@@ -418,7 +427,9 @@ export const COURSES_DATA = [
 export const INSTRUCTORS_DATA = [
   {
     _id: uuid(),
-    name: "Phan Trong Duc",
+    fullName: "Phan Trong Duc",
+    phoneNumber: "0987675646",
+    address: "abc",
     imageUrl:
       "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
     feedbacks: 5,
@@ -426,7 +437,9 @@ export const INSTRUCTORS_DATA = [
   },
   {
     _id: uuid(),
-    name: "Phan Trong Duc",
+    fullName: "Phan Trong Duc",
+    phoneNumber: "0987675646",
+    address: "abc",
     imageUrl:
       "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
     feedbacks: 5,
@@ -434,7 +447,9 @@ export const INSTRUCTORS_DATA = [
   },
   {
     _id: uuid(),
-    name: "Phan Trong Duc",
+    fullName: "Phan Trong Duc",
+    phoneNumber: "0987675646",
+    address: "abc",
     imageUrl:
       "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
     feedbacks: 5,
@@ -442,7 +457,9 @@ export const INSTRUCTORS_DATA = [
   },
   {
     _id: uuid(),
-    name: "Phan Trong Duc",
+    fullName: "Phan Trong Duc",
+    phoneNumber: "0987675646",
+    address: "abc",
     imageUrl:
       "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
     feedbacks: 5,
@@ -450,18 +467,79 @@ export const INSTRUCTORS_DATA = [
   },
   {
     _id: uuid(),
-    name: "Phan Trong Duc",
+    fullName: "Phan Trong Duc",
+    phoneNumber: "0987675646",
+    address: "abc",
     imageUrl:
       "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
     feedbacks: 5,
     expertise: "Mon Chau A",
   },
+];
+
+export const EXAMINATIONS_DATA = [
   {
     _id: uuid(),
-    name: "Phan Trong Duc",
-    imageUrl:
-      "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
-    feedbacks: 5,
-    expertise: "Mon Chau A",
+    courseId: uuid(),
+    studentId: uuid(),
+    content: "Bò hầm rượu vang",
+    criteria:
+      "An toàn vệ sinh thực phẩm, trang trí đẹp mắt, thực hiện đúng các bước quy định",
+    regulation:
+      "Quay qui trình chuẩn bi nguyên liệu, sơ chế và chế biến món ăn theo đề bài được giao. Thời gian quy định 45 phút",
+    videoUrlSubmit:
+      "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+    createdAt: Date.now(),
+    isPass: false,
+    feedbacks: "Nhan xet ve quy trinh nau an",
+    evaluate: "Khong danh gia", // pass -> Gioi/Kha, fail-> Khong danh gia
+  },
+  {
+    _id: uuid(),
+    courseId: uuid(),
+    studentId: uuid(),
+    content: "Bò hầm rượu vang",
+    criteria:
+      "An toàn vệ sinh thực phẩm, trang trí đẹp mắt, thực hiện đúng các bước quy định",
+    regulation:
+      "Quay qui trình chuẩn bi nguyên liệu, sơ chế và chế biến món ăn theo đề bài được giao. Thời gian quy định 45 phút",
+    videoUrlSubmit:
+      "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+    createdAt: Date.now(),
+    isPass: false,
+    feedbacks: "Nhan xet ve quy trinh nau an",
+    evaluate: "Khong danh gia", // pass -> Gioi/Kha, fail-> Khong danh gia
+  },
+  {
+    _id: uuid(),
+    courseId: uuid(),
+    studentId: uuid(),
+    content: "Bò hầm rượu vang",
+    criteria:
+      "An toàn vệ sinh thực phẩm, trang trí đẹp mắt, thực hiện đúng các bước quy định",
+    regulation:
+      "Quay qui trình chuẩn bi nguyên liệu, sơ chế và chế biến món ăn theo đề bài được giao. Thời gian quy định 45 phút",
+    videoUrlSubmit:
+      "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+    createdAt: Date.now(),
+    isPass: false,
+    feedbacks: "Nhan xet ve quy trinh nau an",
+    evaluate: "Khong danh gia", // pass -> Gioi/Kha, fail-> Khong danh gia
+  },
+  {
+    _id: uuid(),
+    courseId: uuid(),
+    studentId: uuid(),
+    content: "Bò hầm rượu vang",
+    criteria:
+      "An toàn vệ sinh thực phẩm, trang trí đẹp mắt, thực hiện đúng các bước quy định",
+    regulation:
+      "Quay qui trình chuẩn bi nguyên liệu, sơ chế và chế biến món ăn theo đề bài được giao. Thời gian quy định 45 phút",
+    videoUrlSubmit:
+      "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+    createdAt: Date.now(),
+    isPass: false,
+    feedbacks: "Nhan xet ve quy trinh nau an",
+    evaluate: "Khong danh gia", // pass -> Gioi/Kha, fail-> Khong danh gia
   },
 ];

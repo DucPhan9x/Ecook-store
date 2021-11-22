@@ -1,0 +1,120 @@
+.examinations-course-container {
+  .title-examination-course {
+    color: rgb(189, 159, 75);
+    font-weight: bold;
+    margin-bottom: 36px;
+  }
+  &-top {
+    margin-bottom: 24px;
+    &-right {
+      & > div {
+        margin-left: 12px;
+      }
+      .dropdown-common,
+      .search-field {
+        height: 40px;
+      }
+    }
+  }
+  &-content {
+    padding: 8px 18px;
+    border-end-start-radius: unset !important;
+    border-end-end-radius: unset !important;
+    &-bottom {
+      display: flex;
+      flex-direction: column;
+      &-contents {
+        margin-bottom: 8px;
+        display: flex;
+        flex-direction: column;
+        label {
+          color: rgb(148, 117, 106);
+          font-weight: bold;
+          margin-bottom: 4px;
+          font-size: 16px;
+          svg {
+            margin-right: 2px;
+          }
+        }
+        span {
+          font-size: 15px;
+          color: rgb(160, 77, 0);
+        }
+      }
+    }
+  }
+  &-submit-video {
+    padding: 24px 36px;
+    margin: 12px 0;
+    background: rgb(248, 244, 203);
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    &-top {
+      display: flex;
+      flex-direction: column;
+      width: 300px;
+      .infor-icon-show-student {
+        color: #b17d0d;
+      }
+      .name-student {
+        font-weight: bold;
+        color: #906300;
+        font-size: 18px;
+        margin-bottom: 2px;
+      }
+      .time-submit {
+        margin-bottom: 12px;
+        color: gray;
+        font-size: 15px;
+      }
+    }
+    &-bottom {
+      display: flex;
+      justify-content: space-around;
+      &--left {
+        width: fit-content;
+        margin-right: 180px;
+        span {
+          font-size: 15px;
+          padding: 0 6px 6px 0;
+          color: rgb(82, 67, 41);
+        }
+      }
+      &--right {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        span {
+          font-size: 15px;
+          color: rgb(199, 80, 0);
+          padding-bottom: 24px;
+        }
+        .block-evaluate-exam {
+          display: flex;
+          justify-content: flex-start;
+          min-width: 400px;
+          label {
+            width: 100px;
+            padding-bottom: 2px;
+          }
+          textarea {
+            border-radius: 12px;
+          }
+        }
+        .btn-update-exam {
+          margin-top: 12px;
+        }
+        .btn-confirm-exam {
+          align-self: flex-start;
+          margin-left: auto;
+        }
+      }
+    }
+  }
+}
+.popover-container {
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+}

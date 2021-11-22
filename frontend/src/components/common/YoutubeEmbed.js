@@ -1,8 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const YoutubeEmbed = ({ videoUrl }) => (
+const YoutubeEmbed = ({ id, videoUrl }) => (
   <iframe
+    id={id}
     src={videoUrl}
     frameBorder="0"
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

@@ -9,8 +9,8 @@
   &-left {
     width: 63%;
     .MuiPaper-root {
-      height: calc(100vh - 200px);
       padding: 20px;
+      height: 900px;
       .title-information-course {
         color: rgb(189, 159, 75);
         font-weight: bold;
@@ -29,9 +29,9 @@
   &-right {
     width: 35%;
     .MuiPaper-root {
-      height: calc(100vh - 200px);
       padding: 20px;
       overflow: auto;
+      max-height: 900px;
       .block-video-course-added {
         display: flex;
         margin-bottom: 20px;
@@ -93,6 +93,34 @@
           background: rgb(255, 244, 207);
         }
       }
+    }
+  }
+}
+
+// modal add video course
+.modal-add-video-course {
+  .ant-modal-header {
+    .ant-modal-title {
+      color: rgb(214, 141, 5);
+      font-weight: bold;
+    }
+  }
+  .body-content-form-add-video {
+    margin-bottom: 12px;
+    label {
+      color: rgb(156, 111, 34);
+      margin-bottom: 4px;
+    }
+  }
+  .ant-modal-footer {
+    .ant-btn {
+      border-color: rgb(151, 101, 7) !important;
+      &:hover {
+        color: rgb(153, 101, 5);
+      }
+    }
+    .ant-btn-primary {
+      background-image: linear-gradient(-90deg, #f5c04f 0%, orange 100%);
     }
   }
 }

@@ -12,6 +12,7 @@ import {
   ROUTE_ADMIN_DASHBOARD_COURSES_EDIT,
   ROUTE_ADMIN_DASHBOARD_CUSTOMERS,
   ROUTE_ADMIN_DASHBOARD_EMPLOYEES,
+  ROUTE_ADMIN_DASHBOARD_EXAMINATION_COURSE,
   ROUTE_ADMIN_DASHBOARD_INSTRUCTORS,
   ROUTE_ADMIN_DASHBOARD_RECIPES,
   ROUTE_ADMIN_DASHBOARD_STATISTICS,
@@ -33,8 +34,11 @@ import {
   ManageRecipes,
   Statistics,
 } from "pages/admin";
-import AddCourse from "components/admin/manageCourse/AddCourse";
-import EditCourse from "components/admin/manageCourse/EditCourse";
+import {
+  AddCourse,
+  EditCourse,
+  ExaminationsCourse,
+} from "components/admin/manageCourse";
 
 function App() {
   return (
@@ -107,6 +111,11 @@ function App() {
         <Route
           path={ROUTE_ADMIN_DASHBOARD_COURSES_EDIT}
           component={withAuthAdmin(EditCourse)}
+          exact
+        />
+        <Route
+          path={ROUTE_ADMIN_DASHBOARD_EXAMINATION_COURSE}
+          component={withAuthAdmin(ExaminationsCourse)}
           exact
         />
         <Route

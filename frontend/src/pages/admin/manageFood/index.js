@@ -3,7 +3,6 @@ import { EnhancedTable } from "components/admin/manageFood";
 import InputIcon from "@material-ui/icons/Input";
 import PrintIcon from "@material-ui/icons/Print";
 import SearchField from "components/common/input/SearchField";
-import { DropdownCommon } from "components/common/dropdown";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import { FOODS_DATA } from "utils/dummyData";
 import ModalCreated from "components/admin/manageFood/modal/ModalCreated";
@@ -36,11 +35,6 @@ const ManageFood = () => {
           </button>
         </div>
         <div className="manage-food-page-top-right">
-          <DropdownCommon
-            label="Sắp xếp"
-            options={["Mới nhất", "Cũ nhất"]}
-            handleMenuClick={(e) => console.log(e)}
-          />
           <SearchField onChange={(e) => console.log(e.target.value)} />
           <button
             className="btn-admin"
