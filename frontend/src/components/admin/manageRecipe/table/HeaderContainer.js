@@ -15,8 +15,14 @@ const headCells = [
   { id: "title", numeric: false, disablePadding: false, label: "Tên" },
   { id: "contents", numeric: false, disablePadding: false, label: "Nội dung" },
   {
-    id: "feedbacks",
+    id: "material",
     numeric: true,
+    disablePadding: false,
+    label: "Nguyên liệu chính",
+  },
+  {
+    id: "feedbacks",
+    numeric: false,
     disablePadding: false,
     label: "Lượt đánh giá",
   },
@@ -24,7 +30,7 @@ const headCells = [
     id: "createAt",
     numeric: false,
     disablePadding: false,
-    label: "Ngày nhập hàng",
+    label: "Ngày tạo",
   },
   {
     id: "",

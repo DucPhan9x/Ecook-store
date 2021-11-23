@@ -15,6 +15,8 @@ import {
   ROUTE_ADMIN_DASHBOARD_EXAMINATION_COURSE,
   ROUTE_ADMIN_DASHBOARD_INSTRUCTORS,
   ROUTE_ADMIN_DASHBOARD_RECIPES,
+  ROUTE_ADMIN_DASHBOARD_RECIPES_ADD,
+  ROUTE_ADMIN_DASHBOARD_RECIPES_EDIT,
   ROUTE_ADMIN_DASHBOARD_STATISTICS,
   ROUTE_FORGOTPASSWORD,
   ROUTE_FORGOT_PASSWORD_ADMIN,
@@ -39,6 +41,7 @@ import {
   EditCourse,
   ExaminationsCourse,
 } from "components/admin/manageCourse";
+import { AddRecipe, EditRecipe } from "components/admin/manageRecipe";
 
 function App() {
   return (
@@ -96,6 +99,16 @@ function App() {
         <Route
           path={ROUTE_ADMIN_DASHBOARD_RECIPES}
           component={withAuthAdmin(ManageRecipes)}
+          exact
+        />
+        <Route
+          path={ROUTE_ADMIN_DASHBOARD_RECIPES_ADD}
+          component={withAuthAdmin(AddRecipe)}
+          exact
+        />
+        <Route
+          path={ROUTE_ADMIN_DASHBOARD_RECIPES_EDIT}
+          component={withAuthAdmin(EditRecipe)}
           exact
         />
         <Route

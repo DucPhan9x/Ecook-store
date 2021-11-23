@@ -3,15 +3,20 @@ import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import PaymentIcon from "@material-ui/icons/Payment";
 import { IconButton, Tooltip } from "@material-ui/core";
 import FavoriteIcon from "@material-ui/icons/Favorite";
-import YoutubeEmbed from "../YoutubeEmbed";
 
 const CourseCard = ({ data }) => {
   const { _id, name, unitPrice, videoUrls } = data;
   return (
     <div className="course-card">
       <div className="course-card__inner">
-        <YoutubeEmbed id={_id} videoUrl={videoUrls[0].videoUrl} />
-
+        <video
+          id={_id}
+          src={videoUrls[0].videoUrl}
+          frameBorder="0"
+          allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+          title="Embedded youtube"
+        />
         <div className="course-card__inner--information">
           <div className="block-title-price">
             <span className="f-title">{name}</span>

@@ -7,8 +7,6 @@ import Paper from "@material-ui/core/Paper";
 import HeaderContainer from "./HeaderContainer";
 import ToolbarContainer from "./ToolbarContainer";
 import BodyContainer from "./BodyContainer";
-import ModalUpdated from "../modal/ModalUpdated";
-import ModalDetail from "../modal/ModalDetail";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -71,9 +69,6 @@ export default function EnhancedTable({ data, setData }) {
     setPage(0);
   };
 
-  const [itemSelected, setItemSelected] = useState("");
-  const [itemSeeDetail, setItemSeeDetail] = useState("");
-
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
@@ -107,8 +102,6 @@ export default function EnhancedTable({ data, setData }) {
               setSelected={setSelected}
               page={page}
               rowsPerPage={rowsPerPage}
-              setItemSelected={setItemSelected}
-              setItemSeeDetail={setItemSeeDetail}
             />
           </Table>
         </TableContainer>
@@ -122,38 +115,6 @@ export default function EnhancedTable({ data, setData }) {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-      <ModalUpdated
-        isModalVisible={itemSelected}
-        data={itemSelected}
-        handleSubmit={(formData) => {
-          // update rows by item selected // RUN API update, setRows
-          console.log(formData);
-          let temp = [...rows];
-          temp.forEach((item) => {
-            if (item._id === itemSelected._id) {
-              item.name = formData.name;
-              item.type = formData.type;
-              item.unitPrice = formData.unitPrice;
-              item.description = formData.description;
-              item.discountOff = formData.discountOff;
-              item.discountMaximum = formData.discountMaximum;
-              item.imageUrl = formData.imageUrl || "";
-            }
-          });
-          setRows(temp);
-          setItemSelected("");
-        }}
-        close={() => {
-          setItemSelected("");
-        }}
-      />
-      <ModalDetail
-        isModalVisible={itemSeeDetail}
-        data={itemSeeDetail}
-        close={() => {
-          setItemSeeDetail("");
-        }}
-      />
     </div>
   );
 }

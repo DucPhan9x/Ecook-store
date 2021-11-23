@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function RecipeCard({ data }) {
   const classes = useStyles();
-  const { title, feedbacks, description, imageUrl } = data;
+  const { title, feedbacks, contents, imageUrl } = data;
 
   return (
     <Card className={`block--product-list--showing--item ${classes.root}`}>
@@ -53,7 +53,7 @@ export default function RecipeCard({ data }) {
       <CardMedia className={classes.media} image={imageUrl} title={title} />
       <CardContent style={{ maxHeight: 80, overflow: "hidden" }}>
         <Typography variant="body2" color="textSecondary" component="p">
-          {description}
+          {contents}
         </Typography>
       </CardContent>
       <CardContent style={{ paddingTop: 0, paddingBottom: 0 }}>

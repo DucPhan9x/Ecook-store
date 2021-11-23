@@ -1,0 +1,22 @@
+.add-edit-recipe-container {
+  &-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 24px;
+  }
+  &-bottom {
+    display: flex;
+    align-items: flex-start;
+    &--left {
+      width: 30%;
+      max-height: 300px;
+      margin-right: 20px;
+    }
+    &--right {
+      width: 70%;
+      height: 100vh;
+    }
+  }
+}

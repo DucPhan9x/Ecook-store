@@ -1,19 +1,13 @@
 import { Checkbox, TableBody, TableCell, TableRow } from "@material-ui/core";
 import moment from "moment";
 import React from "react";
+import { useHistory } from "react-router";
+import { ROUTE_ADMIN_DASHBOARD_RECIPES } from "utils/routes";
+import { Rate } from "antd";
 
 const BodyContainer = (props) => {
-  const {
-    rows,
-    order,
-    orderBy,
-    page,
-    rowsPerPage,
-    selected,
-    setSelected,
-    setItemSelected,
-    setItemSeeDetail,
-  } = props;
+  const { rows, order, orderBy, page, rowsPerPage, selected, setSelected } =
+    props;
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
@@ -59,6 +53,7 @@ const BodyContainer = (props) => {
     }
     setSelected(newSelected);
   };
+  const history = useHistory();
 
   return (
     <>
@@ -71,7 +66,6 @@ const BodyContainer = (props) => {
 
             return (
               <TableRow
-                onClick={() => setItemSeeDetail(row)}
                 style={{ cursor: "pointer" }}
                 hover
                 role="checkbox"
@@ -100,9 +94,24 @@ const BodyContainer = (props) => {
                   style={{ maxWidth: 200, maxHeight: 50 }}
                   align="left"
                 >
-                  {row.contents}
+                  {row?.contents[0]}
+                  (Xem chi tiết)
                 </TableCell>
-                <TableCell align="left">{row.feedbacks}</TableCell>
+                <TableCell align="left">
+                  {row.material.map((item) => (
+                    <div key={item._id}>
+                      {item.foodName +
+                        ": " +
+                        item.quantity +
+                        "(" +
+                        item.unit +
+                        ")"}
+                    </div>
+                  ))}
+                </TableCell>
+                <TableCell align="left">
+                  <Rate value={row.feedbacks} />
+                </TableCell>
                 <TableCell align="left">
                   {moment(row.createAt).format("DD/MM/YYYY")}
                 </TableCell>
@@ -111,10 +120,12 @@ const BodyContainer = (props) => {
                     className="btn-admin"
                     onClick={(e) => {
                       e.stopPropagation();
-                      setItemSelected(row);
+                      history.push(
+                        `${ROUTE_ADMIN_DASHBOARD_RECIPES}/edit/:${row._id}`
+                      );
                     }}
                   >
-                    Chỉnh sửa
+                    Chi tiết
                   </button>
                 </TableCell>
               </TableRow>

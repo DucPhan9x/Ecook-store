@@ -3,11 +3,12 @@ import { EnhancedTable } from "components/admin/manageRecipe";
 import SearchField from "components/common/input/SearchField";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import { RECIPES_DATA } from "utils/dummyData";
-import ModalCreated from "components/admin/manageRecipe/modal/ModalCreated";
+import { useHistory } from "react-router";
+import { ROUTE_ADMIN_DASHBOARD_RECIPES_ADD } from "utils/routes";
 
 const ManageRecipes = () => {
-  const [isOpenModalCreated, setIsOpenModalCreated] = useState(false);
   const [data, setData] = useState([]);
+  const history = useHistory();
 
   useEffect(() => {
     // fetch data
@@ -19,7 +20,7 @@ const ManageRecipes = () => {
         <div className="manage-food-page-top-right flex j-space-between full-width">
           <button
             className="btn-admin"
-            onClick={() => setIsOpenModalCreated(true)}
+            onClick={() => history.push(ROUTE_ADMIN_DASHBOARD_RECIPES_ADD)}
           >
             <AddCircleOutlineIcon color="action" />
             Tạo mới
@@ -28,15 +29,6 @@ const ManageRecipes = () => {
         </div>
       </div>
       <EnhancedTable data={data} setData={setData} />
-      <ModalCreated
-        isModalVisible={isOpenModalCreated}
-        handleSubmit={(formData) => {
-          setIsOpenModalCreated(false);
-          // add formData into data ,setData
-          console.log("data: ", formData);
-        }}
-        close={() => setIsOpenModalCreated(false)}
-      />
     </div>
   );
 };

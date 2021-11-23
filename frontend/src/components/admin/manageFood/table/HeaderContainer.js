@@ -31,7 +31,7 @@ const headCells = [
     id: "numOfStars",
     numeric: true,
     disablePadding: false,
-    label: "Đánh giá",
+    label: "Lượt đánh giá",
   },
   // { id: "numOfFeedbacks", numeric: true, disablePadding: false, label: "Protein (g)" },
   {

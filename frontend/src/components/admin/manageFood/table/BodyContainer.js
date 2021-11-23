@@ -1,4 +1,5 @@
 import { Checkbox, TableBody, TableCell, TableRow } from "@material-ui/core";
+import { Rate } from "antd";
 import moment from "moment";
 import React from "react";
 
@@ -98,7 +99,9 @@ const BodyContainer = (props) => {
                 <TableCell align="left">{row.name}</TableCell>
                 <TableCell align="left">{row.type}</TableCell>
                 <TableCell align="left">{row.unitPrice}</TableCell>
-                <TableCell align="left">{row.numOfStars}</TableCell>
+                <TableCell align="left">
+                  <Rate value={row.numOfStars} />
+                </TableCell>
                 <TableCell align="left">
                   {moment(row.createAt).format("DD/MM/YYYY")}
                 </TableCell>

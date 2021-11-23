@@ -3,80 +3,178 @@ import { uuid } from "./stringUtils";
 //recipe
 export const RECIPES_DATA = [
   {
-    _id: "a123",
-    title: "Tôm rim",
+    _id: uuid(),
+    title: "Gà xào xả ớt",
     feedbacks: 5,
-    contents: `
+    contents: [
+      `
     Bước 1:
-Rã đông sản phẩm ở nhiệt độ phòng
-Bước 2:
+Rã đông sản phẩm ở nhiệt độ phòng.`,
+      `Bước 2:
 Đặt nồi lên bếp, cho tôm thẻ rim mặn (ướp sẵn) vào nồi đảo nhẹ 2-3 phút cho săn, tiếp đến cho 200ml nước lọc vào nồi (lấy phần nước này cho vào hộp tôm để lấy hết phần sốt ướp trong hộp). Kho trên lửa nhỏ đến khi nước kho sệt lại, nêm nếm cho vừa ăn rồi tắt bếp
-Bước 3:
+`,
+      `Bước 3:
 Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm trắng.`,
-    imageUrl: "https://picsum.photos/200/300",
-  },
-  {
-    _id: "a124",
-    title: "Tôm rim",
-    feedbacks: 5,
-    contents: `Bước 1:
-Rã đông sản phẩm ở nhiệt độ phòng
-Bước 2:
-Đặt nồi lên bếp, cho tôm thẻ rim mặn (ướp sẵn) vào nồi đảo nhẹ 2-3 phút cho săn, tiếp đến cho 200ml nước lọc vào nồi (lấy phần nước này cho vào hộp tôm để lấy hết phần sốt ướp trong hộp). Kho trên lửa nhỏ đến khi nước kho sệt lại, nêm nếm cho vừa ăn rồi tắt bếp
-Bước 3:
-Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm trắng.`,
+    ],
+    material: [
+      { _id: uuid(), foodName: "Gà", unit: "kg", quantity: 0.5 },
+      { _id: uuid(), foodName: "Xả", unit: "g", quantity: 500 },
+      { _id: uuid(), foodName: "Ớt", unit: "g", quantity: 200 },
+    ],
     imageUrl: "https://picsum.photos/200/300",
     createAt: Date.now(),
   },
   {
-    _id: "a125",
-    title: "Tôm rim",
+    _id: uuid(),
+    title: "Gà xào xả ớt",
     feedbacks: 5,
-    contents: `Bước 1:
-Rã đông sản phẩm ở nhiệt độ phòng
-Bước 2:
+    contents: [
+      `
+    Bước 1:
+Rã đông sản phẩm ở nhiệt độ phòng.`,
+      `Bước 2:
 Đặt nồi lên bếp, cho tôm thẻ rim mặn (ướp sẵn) vào nồi đảo nhẹ 2-3 phút cho săn, tiếp đến cho 200ml nước lọc vào nồi (lấy phần nước này cho vào hộp tôm để lấy hết phần sốt ướp trong hộp). Kho trên lửa nhỏ đến khi nước kho sệt lại, nêm nếm cho vừa ăn rồi tắt bếp
-Bước 3:
+`,
+      `Bước 3:
 Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm trắng.`,
+    ],
+    material: [
+      { _id: uuid(), foodName: "Gà", unit: "kg", quantity: 0.5 },
+      { _id: uuid(), foodName: "Xả", unit: "g", quantity: 500 },
+      { _id: uuid(), foodName: "Ớt", unit: "g", quantity: 200 },
+    ],
     imageUrl: "https://picsum.photos/200/300",
     createAt: Date.now(),
   },
   {
-    _id: "a126",
-    title: "Tôm rim",
+    _id: uuid(),
+    title: "Gà xào xả ớt",
     feedbacks: 5,
-    contents: `Bước 1:
-Rã đông sản phẩm ở nhiệt độ phòng
-Bước 2:
+    contents: [
+      `
+    Bước 1:
+Rã đông sản phẩm ở nhiệt độ phòng.`,
+      `Bước 2:
 Đặt nồi lên bếp, cho tôm thẻ rim mặn (ướp sẵn) vào nồi đảo nhẹ 2-3 phút cho săn, tiếp đến cho 200ml nước lọc vào nồi (lấy phần nước này cho vào hộp tôm để lấy hết phần sốt ướp trong hộp). Kho trên lửa nhỏ đến khi nước kho sệt lại, nêm nếm cho vừa ăn rồi tắt bếp
-Bước 3:
+`,
+      `Bước 3:
 Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm trắng.`,
+    ],
+    material: [
+      { _id: uuid(), foodName: "Gà", unit: "kg", quantity: 0.5 },
+      { _id: uuid(), foodName: "Xả", unit: "g", quantity: 500 },
+      { _id: uuid(), foodName: "Ớt", unit: "g", quantity: 200 },
+    ],
     imageUrl: "https://picsum.photos/200/300",
     createAt: Date.now(),
   },
   {
-    _id: "a127",
-    title: "Tôm rim",
+    _id: uuid(),
+    title: "Gà xào xả ớt",
     feedbacks: 5,
-    contents: `Bước 1:
-Rã đông sản phẩm ở nhiệt độ phòng
-Bước 2:
+    contents: [
+      `
+    Bước 1:
+Rã đông sản phẩm ở nhiệt độ phòng.`,
+      `Bước 2:
 Đặt nồi lên bếp, cho tôm thẻ rim mặn (ướp sẵn) vào nồi đảo nhẹ 2-3 phút cho săn, tiếp đến cho 200ml nước lọc vào nồi (lấy phần nước này cho vào hộp tôm để lấy hết phần sốt ướp trong hộp). Kho trên lửa nhỏ đến khi nước kho sệt lại, nêm nếm cho vừa ăn rồi tắt bếp
-Bước 3:
+`,
+      `Bước 3:
 Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm trắng.`,
+    ],
+    material: [
+      { _id: uuid(), foodName: "Gà", unit: "kg", quantity: 0.5 },
+      { _id: uuid(), foodName: "Xả", unit: "g", quantity: 500 },
+      { _id: uuid(), foodName: "Ớt", unit: "g", quantity: 200 },
+    ],
     imageUrl: "https://picsum.photos/200/300",
     createAt: Date.now(),
   },
   {
-    _id: "a128",
-    title: "Tôm rim",
+    _id: uuid(),
+    title: "Gà xào xả ớt",
     feedbacks: 5,
-    contents: `Bước 1:
-Rã đông sản phẩm ở nhiệt độ phòng
-Bước 2:
+    contents: [
+      `
+    Bước 1:
+Rã đông sản phẩm ở nhiệt độ phòng.`,
+      `Bước 2:
 Đặt nồi lên bếp, cho tôm thẻ rim mặn (ướp sẵn) vào nồi đảo nhẹ 2-3 phút cho săn, tiếp đến cho 200ml nước lọc vào nồi (lấy phần nước này cho vào hộp tôm để lấy hết phần sốt ướp trong hộp). Kho trên lửa nhỏ đến khi nước kho sệt lại, nêm nếm cho vừa ăn rồi tắt bếp
-Bước 3:
+`,
+      `Bước 3:
 Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm trắng.`,
+    ],
+    material: [
+      { _id: uuid(), foodName: "Gà", unit: "kg", quantity: 0.5 },
+      { _id: uuid(), foodName: "Xả", unit: "g", quantity: 500 },
+      { _id: uuid(), foodName: "Ớt", unit: "g", quantity: 200 },
+    ],
+    imageUrl: "https://picsum.photos/200/300",
+    createAt: Date.now(),
+  },
+  {
+    _id: uuid(),
+    title: "Gà xào xả ớt",
+    feedbacks: 5,
+    contents: [
+      `
+    Bước 1:
+Rã đông sản phẩm ở nhiệt độ phòng.`,
+      `Bước 2:
+Đặt nồi lên bếp, cho tôm thẻ rim mặn (ướp sẵn) vào nồi đảo nhẹ 2-3 phút cho săn, tiếp đến cho 200ml nước lọc vào nồi (lấy phần nước này cho vào hộp tôm để lấy hết phần sốt ướp trong hộp). Kho trên lửa nhỏ đến khi nước kho sệt lại, nêm nếm cho vừa ăn rồi tắt bếp
+`,
+      `Bước 3:
+Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm trắng.`,
+    ],
+    material: [
+      { _id: uuid(), foodName: "Gà", unit: "kg", quantity: 0.5 },
+      { _id: uuid(), foodName: "Xả", unit: "g", quantity: 500 },
+      { _id: uuid(), foodName: "Ớt", unit: "g", quantity: 200 },
+    ],
+    imageUrl: "https://picsum.photos/200/300",
+    createAt: Date.now(),
+  },
+  {
+    _id: uuid(),
+    title: "Gà xào xả ớt",
+    feedbacks: 5,
+    contents: [
+      `
+    Bước 1:
+Rã đông sản phẩm ở nhiệt độ phòng.`,
+      `Bước 2:
+Đặt nồi lên bếp, cho tôm thẻ rim mặn (ướp sẵn) vào nồi đảo nhẹ 2-3 phút cho săn, tiếp đến cho 200ml nước lọc vào nồi (lấy phần nước này cho vào hộp tôm để lấy hết phần sốt ướp trong hộp). Kho trên lửa nhỏ đến khi nước kho sệt lại, nêm nếm cho vừa ăn rồi tắt bếp
+`,
+      `Bước 3:
+Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm trắng.`,
+    ],
+    material: [
+      { _id: uuid(), foodName: "Gà", unit: "kg", quantity: 0.5 },
+      { _id: uuid(), foodName: "Xả", unit: "g", quantity: 500 },
+      { _id: uuid(), foodName: "Ớt", unit: "g", quantity: 200 },
+    ],
+    imageUrl: "https://picsum.photos/200/300",
+    createAt: Date.now(),
+  },
+  {
+    _id: uuid(),
+    title: "Gà xào xả ớt",
+    feedbacks: 5,
+    contents: [
+      `
+    Bước 1:
+Rã đông sản phẩm ở nhiệt độ phòng.`,
+      `Bước 2:
+Đặt nồi lên bếp, cho tôm thẻ rim mặn (ướp sẵn) vào nồi đảo nhẹ 2-3 phút cho săn, tiếp đến cho 200ml nước lọc vào nồi (lấy phần nước này cho vào hộp tôm để lấy hết phần sốt ướp trong hộp). Kho trên lửa nhỏ đến khi nước kho sệt lại, nêm nếm cho vừa ăn rồi tắt bếp
+`,
+      `Bước 3:
+Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm trắng.`,
+    ],
+    material: [
+      { _id: uuid(), foodName: "Gà", unit: "kg", quantity: 0.5 },
+      { _id: uuid(), foodName: "Xả", unit: "g", quantity: 500 },
+      { _id: uuid(), foodName: "Ớt", unit: "g", quantity: 200 },
+    ],
     imageUrl: "https://picsum.photos/200/300",
     createAt: Date.now(),
   },
@@ -430,6 +528,46 @@ export const COURSES_DATA = [
 ];
 
 export const INSTRUCTORS_DATA = [
+  {
+    _id: uuid(),
+    fullName: "Phan Trong Duc",
+    phoneNumber: "0987675646",
+    address: "abc",
+    imageUrl:
+      "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
+    feedbacks: 5,
+    expertise: "Mon Chau A",
+  },
+  {
+    _id: uuid(),
+    fullName: "Phan Trong Duc",
+    phoneNumber: "0987675646",
+    address: "abc",
+    imageUrl:
+      "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
+    feedbacks: 5,
+    expertise: "Mon Chau A",
+  },
+  {
+    _id: uuid(),
+    fullName: "Phan Trong Duc",
+    phoneNumber: "0987675646",
+    address: "abc",
+    imageUrl:
+      "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
+    feedbacks: 5,
+    expertise: "Mon Chau A",
+  },
+  {
+    _id: uuid(),
+    fullName: "Phan Trong Duc",
+    phoneNumber: "0987675646",
+    address: "abc",
+    imageUrl:
+      "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
+    feedbacks: 5,
+    expertise: "Mon Chau A",
+  },
   {
     _id: uuid(),
     fullName: "Phan Trong Duc",

@@ -4,7 +4,8 @@
   border-radius: 12px;
   &__inner {
     padding: 8px 10px;
-    &--video {
+    &--video,
+    video {
       width: 240px;
       height: 160px;
       border-radius: 20px;
