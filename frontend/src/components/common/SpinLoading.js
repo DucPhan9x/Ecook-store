@@ -4,7 +4,9 @@ import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 
 const SpinLoading = () => {
-  const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+  const antIcon = (
+    <LoadingOutlined style={{ fontSize: 24, color: "orangered" }} spin />
+  );
   return (
     <>
       <SpinLoadingContainer className="spin_loading_container align__center">
@@ -31,6 +33,10 @@ const SpinLoadingContainer = styled.div`
   .modal__inner {
     margin: auto;
     opacity: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
     .ant-spin-spinning > span {
       font-size: 50px !important;
       font-weight: bold;

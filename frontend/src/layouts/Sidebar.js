@@ -98,6 +98,9 @@ const Sidebar = () => {
           { name: "Quản lý nhân viên", pathName: "/employees" },
           { name: "Quản lý giáo viên", pathName: "/instructors" },
           { name: "Quán lý khách hàng", pathName: "/customers" },
+          //           Quản lý chứng nhận
+          // Quản lý đơn hàng
+          // Quản lý vouchers
           { name: "Thống kê", pathName: "/statistics" },
         ].map((text, index) => (
           <ListItem

@@ -43,6 +43,7 @@ const BodyContainer = (props) => {
     return stabilizedThis.map((el) => el[0]);
   }
   const handleClick = (event, name) => {
+    event.stopPropagation();
     const selectedIndex = selected.indexOf(name);
     let newSelected = [];
 

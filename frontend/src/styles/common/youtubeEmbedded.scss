@@ -1,14 +1,6 @@
-.video-responsive {
-  overflow: hidden;
-  padding-bottom: 56.25%;
-  position: relative;
-  height: 0;
-}
-
-.video-responsive video {
-  left: 0;
-  top: 0;
+video {
+  // max-width: 350px;
+  // max-height: 250px;
   height: 100%;
   width: 100%;
-  position: absolute;
 }

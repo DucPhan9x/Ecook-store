@@ -149,3 +149,16 @@ body {
   margin-top: 0.25 rem;
   color: #dc3545;
 }
+
+// css upload container
+.fade-choice-avt {
+  cursor: pointer;
+  display: none;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(245, 245, 245);
+  border: 1px dashed gray;
+  left: 0;
+  position: absolute;
+}

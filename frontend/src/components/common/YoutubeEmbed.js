@@ -2,14 +2,16 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const YoutubeEmbed = ({ id, videoUrl }) => (
-  <iframe
-    id={id}
-    src={videoUrl}
-    frameBorder="0"
-    allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-    allowFullScreen
-    title="Embedded youtube"
-  />
+  <video id={id} controls>
+    <source src={videoUrl} />
+  </video>
+  // <iframe
+  // id={id}
+  // frameBorder="0"
+  // allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  // allowFullScreen
+  // title="Embedded youtube"
+  // />
 );
 
 YoutubeEmbed.propTypes = {

@@ -35,7 +35,8 @@
       .block-video-course-added {
         display: flex;
         margin-bottom: 20px;
-        & > iframe {
+        & > iframe,
+        video {
           width: 250px;
           height: 150px;
           margin-right: 12px;
