@@ -121,7 +121,7 @@ const BodyContainer = (props) => {
                     onClick={(e) => {
                       e.stopPropagation();
                       history.push(
-                        `${ROUTE_ADMIN_DASHBOARD_RECIPES}/edit/:${row._id}`
+                        `${ROUTE_ADMIN_DASHBOARD_RECIPES}/edit/${row._id}`
                       );
                     }}
                   >

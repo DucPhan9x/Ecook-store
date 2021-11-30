@@ -3,12 +3,11 @@ import { uuid } from "./stringUtils";
 //recipe
 export const RECIPES_DATA = [
   {
-    _id: uuid(),
+    _id: "recipe_123",
     title: "Gà xào xả ớt",
     feedbacks: 5,
     contents: [
-      `
-    Bước 1:
+      `Bước 1:
 Rã đông sản phẩm ở nhiệt độ phòng.`,
       `Bước 2:
 Đặt nồi lên bếp, cho tôm thẻ rim mặn (ướp sẵn) vào nồi đảo nhẹ 2-3 phút cho săn, tiếp đến cho 200ml nước lọc vào nồi (lấy phần nước này cho vào hộp tôm để lấy hết phần sốt ướp trong hộp). Kho trên lửa nhỏ đến khi nước kho sệt lại, nêm nếm cho vừa ăn rồi tắt bếp
@@ -29,8 +28,7 @@ Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm t
     title: "Gà xào xả ớt",
     feedbacks: 5,
     contents: [
-      `
-    Bước 1:
+      `Bước 1:
 Rã đông sản phẩm ở nhiệt độ phòng.`,
       `Bước 2:
 Đặt nồi lên bếp, cho tôm thẻ rim mặn (ướp sẵn) vào nồi đảo nhẹ 2-3 phút cho săn, tiếp đến cho 200ml nước lọc vào nồi (lấy phần nước này cho vào hộp tôm để lấy hết phần sốt ướp trong hộp). Kho trên lửa nhỏ đến khi nước kho sệt lại, nêm nếm cho vừa ăn rồi tắt bếp
@@ -51,8 +49,7 @@ Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm t
     title: "Gà xào xả ớt",
     feedbacks: 5,
     contents: [
-      `
-    Bước 1:
+      `Bước 1:
 Rã đông sản phẩm ở nhiệt độ phòng.`,
       `Bước 2:
 Đặt nồi lên bếp, cho tôm thẻ rim mặn (ướp sẵn) vào nồi đảo nhẹ 2-3 phút cho săn, tiếp đến cho 200ml nước lọc vào nồi (lấy phần nước này cho vào hộp tôm để lấy hết phần sốt ướp trong hộp). Kho trên lửa nhỏ đến khi nước kho sệt lại, nêm nếm cho vừa ăn rồi tắt bếp
@@ -73,8 +70,7 @@ Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm t
     title: "Gà xào xả ớt",
     feedbacks: 5,
     contents: [
-      `
-    Bước 1:
+      `Bước 1:
 Rã đông sản phẩm ở nhiệt độ phòng.`,
       `Bước 2:
 Đặt nồi lên bếp, cho tôm thẻ rim mặn (ướp sẵn) vào nồi đảo nhẹ 2-3 phút cho săn, tiếp đến cho 200ml nước lọc vào nồi (lấy phần nước này cho vào hộp tôm để lấy hết phần sốt ướp trong hộp). Kho trên lửa nhỏ đến khi nước kho sệt lại, nêm nếm cho vừa ăn rồi tắt bếp
@@ -95,8 +91,7 @@ Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm t
     title: "Gà xào xả ớt",
     feedbacks: 5,
     contents: [
-      `
-    Bước 1:
+      `Bước 1:
 Rã đông sản phẩm ở nhiệt độ phòng.`,
       `Bước 2:
 Đặt nồi lên bếp, cho tôm thẻ rim mặn (ướp sẵn) vào nồi đảo nhẹ 2-3 phút cho săn, tiếp đến cho 200ml nước lọc vào nồi (lấy phần nước này cho vào hộp tôm để lấy hết phần sốt ướp trong hộp). Kho trên lửa nhỏ đến khi nước kho sệt lại, nêm nếm cho vừa ăn rồi tắt bếp
@@ -117,8 +112,7 @@ Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm t
     title: "Gà xào xả ớt",
     feedbacks: 5,
     contents: [
-      `
-    Bước 1:
+      `Bước 1:
 Rã đông sản phẩm ở nhiệt độ phòng.`,
       `Bước 2:
 Đặt nồi lên bếp, cho tôm thẻ rim mặn (ướp sẵn) vào nồi đảo nhẹ 2-3 phút cho săn, tiếp đến cho 200ml nước lọc vào nồi (lấy phần nước này cho vào hộp tôm để lấy hết phần sốt ướp trong hộp). Kho trên lửa nhỏ đến khi nước kho sệt lại, nêm nếm cho vừa ăn rồi tắt bếp
@@ -139,8 +133,7 @@ Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm t
     title: "Gà xào xả ớt",
     feedbacks: 5,
     contents: [
-      `
-    Bước 1:
+      `Bước 1:
 Rã đông sản phẩm ở nhiệt độ phòng.`,
       `Bước 2:
 Đặt nồi lên bếp, cho tôm thẻ rim mặn (ướp sẵn) vào nồi đảo nhẹ 2-3 phút cho săn, tiếp đến cho 200ml nước lọc vào nồi (lấy phần nước này cho vào hộp tôm để lấy hết phần sốt ướp trong hộp). Kho trên lửa nhỏ đến khi nước kho sệt lại, nêm nếm cho vừa ăn rồi tắt bếp
@@ -161,8 +154,7 @@ Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm t
     title: "Gà xào xả ớt",
     feedbacks: 5,
     contents: [
-      `
-    Bước 1:
+      `Bước 1:
 Rã đông sản phẩm ở nhiệt độ phòng.`,
       `Bước 2:
 Đặt nồi lên bếp, cho tôm thẻ rim mặn (ướp sẵn) vào nồi đảo nhẹ 2-3 phút cho săn, tiếp đến cho 200ml nước lọc vào nồi (lấy phần nước này cho vào hộp tôm để lấy hết phần sốt ướp trong hộp). Kho trên lửa nhỏ đến khi nước kho sệt lại, nêm nếm cho vừa ăn rồi tắt bếp

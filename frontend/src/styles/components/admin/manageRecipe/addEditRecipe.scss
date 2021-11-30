@@ -38,20 +38,49 @@
       .block-input-info-course {
         margin-bottom: 24px;
         label {
-          color: rgb(97, 67, 10);
+          color: rgb(141, 95, 8);
           margin-bottom: 4px;
+          font-weight: bold;
+        }
+        .block-material-input {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin: 6px 0;
+          & > div {
+            input,
+            .ant-select-selector {
+              margin: 0;
+              height: 35px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            }
+            &:nth-child(2) {
+              margin: 0 6px;
+            }
+            &:first-child {
+              width: 100%;
+            }
+          }
+        }
+        input {
+          height: 35px;
+          margin: 6px 0;
         }
         .btn-add-input {
-          margin: 12px 0;
-          padding: 6px;
+          margin: 8px 0;
+          padding: 2px;
           display: flex;
           align-items: center;
           justify-content: center;
           background: none;
           outline: none;
-          border: 1px dashed goldenrod;
+          border: 1px dashed rgb(134, 131, 124);
           width: 100%;
           svg {
+            width: 28px;
+            height: 28px;
             margin-right: 8px;
           }
           &:hover {

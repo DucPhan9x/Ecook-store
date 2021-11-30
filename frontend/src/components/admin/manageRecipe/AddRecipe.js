@@ -7,6 +7,9 @@ import { isEmpty } from "validator";
 import WallpaperIcon from "@material-ui/icons/Wallpaper";
 import UploadImage from "components/common/UploadImage";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
+import { Select } from "antd";
+
+const { Option } = Select;
 
 const AddRecipe = () => {
   const [error, setError] = React.useState({});
@@ -14,9 +17,24 @@ const AddRecipe = () => {
   const [form, setForm] = useState({
     name: "",
     contents: ["a", "b"],
-    materials: ["a", "b"],
+    materials: [
+      {
+        foodName: "a",
+        quantity: 0.5,
+        unit: "kg",
+      },
+    ],
     imageUrl: "",
   });
+
+  function onChange(value, index) {
+    let temp = [...form.materials];
+    temp[index].unit = value;
+    setForm({
+      ...form,
+      materials: [...temp],
+    });
+  }
 
   const validate = () => {
     const errorState = {};
@@ -24,6 +42,23 @@ const AddRecipe = () => {
     if (isEmpty(form.name)) {
       errorState.name = "Vui lòng nhập vào, không được để trống!";
     }
+    form.materials.forEach((m) => {
+      if (
+        isEmpty(m.foodName) ||
+        isEmpty(String(m.quantity)) ||
+        isEmpty(m.unit)
+      ) {
+        errorState.materials = "Vui lòng nhập đầy đủ thông tin!";
+        return;
+      }
+    });
+
+    form.contents.forEach((c) => {
+      if (isEmpty(c)) {
+        errorState.contents = "Vui lòng nhập đầy đủ thông tin!";
+        return;
+      }
+    });
     return errorState;
   };
 
@@ -44,7 +79,8 @@ const AddRecipe = () => {
     if (Object.keys(errorState).length > 0) {
       return setError(errorState);
     }
-    // API add couse
+    // API add recipe
+    console.log({ form });
   };
 
   const handleChangeImage = (e) => {
@@ -78,6 +114,7 @@ const AddRecipe = () => {
               <label>Tên công thức</label>
               <FormBox
                 propsInput={{
+                  placeholder: "Nhập tên",
                   name: "name",
                   onChange: handleChange,
                   onFocus: handleFocus,
@@ -90,42 +127,103 @@ const AddRecipe = () => {
             <div className="block-input-info-course">
               <label>Danh sách nguyên liệu chính</label>
               {form.materials.map((m, index) => (
-                <FormBox
-                  propsInput={{
-                    name: "materials",
-                    onChange: (e) => {
-                      let temp = [...form.materials];
-                      temp[index] = e.target.value;
-                      setForm({
-                        ...form,
-                        materials: [...temp],
+                <div key={index} className="block-material-input">
+                  <FormBox
+                    propsInput={{
+                      placeholder: "Tên nguyên liệu",
+                      name: "materials",
+                      onChange: (e) => {
+                        let temp = [...form.materials];
+                        temp[index].foodName = e.target.value;
+                        setForm({
+                          ...form,
+                          materials: [...temp],
+                        });
+                      },
+                      onFocus: handleFocus,
+                      value: m.foodName,
+                      disabled: false,
+                    }}
+                  />
+                  <FormBox
+                    propsInput={{
+                      placeholder: "Số lượng",
+                      name: "materials",
+                      type: "number",
+                      min: 0,
+                      step: 0.5,
+                      onChange: (e) => {
+                        let temp = [...form.materials];
+                        temp[index].quantity = e.target.value;
+                        setForm({
+                          ...form,
+                          materials: [...temp],
+                        });
+                      },
+                      onFocus: handleFocus,
+                      value: m.quantity,
+                      disabled: false,
+                    }}
+                  />
+                  <Select
+                    showSearch
+                    style={{ width: 200 }}
+                    placeholder="Đơn vị"
+                    onFocus={() => {
+                      setError({
+                        ...error,
+                        materials: "",
                       });
-                    },
-                    onFocus: handleFocus,
-                    value: m,
-                    disabled: false,
-                  }}
-                  error={error.m}
-                />
+                    }}
+                    value={m.unit}
+                    optionFilterProp="children"
+                    onChange={(value) => onChange(value, index)}
+                    filterOption={(input, option) =>
+                      option?.children
+                        .toLowerCase()
+                        .indexOf(input.toLowerCase()) >= 0
+                    }
+                  >
+                    <Option value="kg">kg</Option>
+                    <Option value="g">g</Option>
+                    <Option value="l">l</Option>
+                    <Option value="ml">ml</Option>
+                    <Option value="others">Khác(tự ghi chú)</Option>
+                  </Select>
+                </div>
               ))}
+              {error.materials && (
+                <span className="invalid-feedback-error">
+                  {error.materials}
+                </span>
+              )}
               <button
                 className="btn-add-input"
                 onClick={(e) => {
                   e.preventDefault();
                   setForm({
                     ...form,
-                    materials: [...form.materials, ""],
+                    materials: [
+                      ...form.materials,
+                      {
+                        foodName: "",
+                        unit: "",
+                        quantity: "",
+                      },
+                    ],
                   });
                 }}
               >
-                <AddCircleOutlineIcon color="action" /> Thêm
+                <AddCircleOutlineIcon color="action" />
               </button>
             </div>
             <div className="block-input-info-course">
               <label>Quy trình thực hiện(ghi rõ từng bước)</label>
               {form.contents.map((c, idx) => (
                 <FormBox
+                  key={idx}
                   propsInput={{
+                    placeholder: `Bước ${idx + 1}`,
                     name: "contents",
                     onChange: (e) => {
                       let temp = [...form.contents];
@@ -139,9 +237,11 @@ const AddRecipe = () => {
                     value: c,
                     disabled: false,
                   }}
-                  error={error.c}
                 />
               ))}
+              {error.contents && (
+                <span className="invalid-feedback-error">{error.contents}</span>
+              )}
               <button
                 className="btn-add-input"
                 onClick={(e) => {
@@ -152,13 +252,14 @@ const AddRecipe = () => {
                   });
                 }}
               >
-                <AddCircleOutlineIcon color="action" /> Thêm
+                <AddCircleOutlineIcon color="action" />
               </button>
             </div>
             <div className="block-input-info-course">
-              <label>Mô tả</label>
+              <label>Mô tả/chú thích thêm</label>
               <FormBox
                 propsInput={{
+                  placeholder: "Nội dung",
                   type: "textarea",
                   name: "description",
                   onChange: handleChange,
