@@ -843,3 +843,62 @@ export const EXAMINATIONS_DATA = [
     evaluate: "Khong danh gia", // pass -> Gioi/Kha, fail-> Khong danh gia
   },
 ];
+
+export const CUSTOMERS_DATA = [
+  {
+    _id: uuid(),
+    fullName: "Phan Trong Duc",
+    dateOfBirth: Date.now(),
+    phoneNumber: "09873678265",
+    address: "TT.La Hai - H.Dong Xuan - T. Phu Yen",
+    imageUrl:
+      "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
+    feedbacks: [],
+  },
+];
+
+export const CERTIFICATIONS_DATA = [
+  {
+    _id: uuid(),
+    student: {
+      fullName: "Phan Trong Duc",
+    },
+    course: {
+      courseName: "Mon Chau A",
+    },
+    startDate: Date.now(),
+    endDate: Date.now(),
+    createAt: Date.now(),
+    positionCreate: "Da Nang",
+  },
+];
+
+export const ORDERS_DATA = [
+  {
+    _id: uuid(),
+    customers: {},
+    employee: {},
+    createdAt: Date.now(),
+    address: "62/07 Dong Ke - Hoa Khanh Bac - Lien Chieu - Da Nang",
+    orderStatus: {
+      id: 1,
+      description: "Chua nhan giao",
+    },
+    paymentMethod: "Truc tiep or Momo",
+    shipmentFee: 5000,
+    merchandiseSubtotal: 20000, // tien san pham chua tinh ship
+    total: 25000,
+    items: [
+      {
+        _id: uuid(),
+        food: {
+          _id: uuid(),
+          name: "Cam",
+        },
+        unitPrice: 20000,
+        unitType: "kg",
+        quantity: 0.5,
+      },
+    ],
+  },
+];
