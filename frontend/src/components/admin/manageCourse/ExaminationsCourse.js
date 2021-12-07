@@ -1,4 +1,4 @@
-import { IconButton, Paper } from "@material-ui/core";
+import { IconButton, Input, Paper } from "@material-ui/core";
 import {
   BackPreviousPage,
   PopoverStickOnHover,
@@ -6,7 +6,7 @@ import {
 } from "components/common";
 import { DropdownCommon } from "components/common/dropdown";
 import SearchField from "components/common/input/SearchField";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { EXAMINATIONS_DATA } from "utils/dummyData";
 import moment from "moment";
 import FlareIcon from "@material-ui/icons/Flare";
@@ -15,17 +15,30 @@ import { Form as ReForm } from "reactstrap";
 import { FormBox } from "components/common";
 import Button from "@restart/ui/esm/Button";
 import { uuid } from "utils/stringUtils";
+import Radio from "@material-ui/core/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormControl from "@material-ui/core/FormControl";
+import PhoneAndroidIcon from "@material-ui/icons/PhoneAndroid";
+import MailOutlineIcon from "@material-ui/icons/MailOutline";
+import BusinessIcon from "@material-ui/icons/Business";
+import { Modal } from "antd";
+import SignaturePad from "react-signature-canvas";
+import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 
 const ExaminationsCourse = () => {
   const [data, setData] = useState([]);
   const [error, setError] = React.useState({});
+  const [openModalCertification, setOpenModalCertification] = useState(false);
+  // fetch course by id course
   const courseSelected = {
     _id: uuid(),
     name: "Món Á cơ bản",
     unitPrice: 799999,
-    description: "abcdef",
-    examinationContent: "aaaaa",
-    regulation: "aaaaaaaaaaaaaaaaaaa",
+    description: "Đây là khóa học chủ yếu tập trung vào các món ăn Châu Á.",
+    examinationContent: "Bò hầm tiêu xanh",
+    regulation:
+      "Thời gian 45 phút, quay video từ khâu sơ chế đến khi thành phẩm.",
     criteria: "An toan ve sinh thuc pham, trang tri dep mat",
     videoUrls: [
       {
@@ -38,17 +51,15 @@ const ExaminationsCourse = () => {
     instructor: {
       fullName: "Phan Trong Duc",
       phoneNumber: "0984763232",
-      address: "abc",
+      address: "TT. La Hai - H.Dong Xuan - T.Phu Yen",
       imageUrl: "https://picsum.photos/200/300",
       email: "trongduc@gmail.com",
     },
     createAt: Date.now(),
   };
-  const [form, setForm] = useState({
-    isPass: true,
-    evaluate: "",
-  });
+
   useEffect(() => {
+    // fetch examination by course id
     const temp = EXAMINATIONS_DATA.map((item) => ({
       ...item,
     }));
@@ -56,7 +67,7 @@ const ExaminationsCourse = () => {
   }, []);
 
   const handleChange = (event) => {
-    setForm({ ...form, [event.target.name]: event.target.value });
+    setData({ ...data, [event.target.name]: event.target.value });
   };
 
   const handleFocus = (event) => {
@@ -66,10 +77,26 @@ const ExaminationsCourse = () => {
     });
   };
 
+  const handleSubmitCertification = () => {
+    console.log("Submit, Call API post certification");
+  };
+
+  let padRef = useRef(null);
+
+  function handleClear() {
+    padRef?.current?.clear();
+  }
+
+  useEffect(() => {
+    if (padRef) {
+      handleClear();
+    }
+  }, [padRef]);
+
   return (
     <div className="examinations-course-container">
       <h3 className="title-examination-course">
-        Danh sách các bài thi cuối khóa học: {courseSelected.name}
+        Danh sách các bài thi cuối khóa học: {courseSelected.content}
       </h3>
       <div className="examinations-course-container-top flex j-space-between">
         <BackPreviousPage />
@@ -108,13 +135,22 @@ const ExaminationsCourse = () => {
         >
           <div className="examinations-course-container-submit-video-top">
             <div>
-              <span className="name-student">{c?.studentId}</span>
+              <span className="name-student">{c?.student.fullName}</span>
               <PopoverStickOnHover
                 component={
-                  <div className="popover-container">
-                    <span>Phone number</span>
-                    <span>Email</span>
-                    <span>Address</span>
+                  <div className="popover-show-info-student-container">
+                    <div className="popover-show-info-student-container--item">
+                      <PhoneAndroidIcon />
+                      <span>{c?.student.phoneNumber}</span>
+                    </div>
+                    <div className="popover-show-info-student-container--item">
+                      <MailOutlineIcon />
+                      <span>{c?.student.email}</span>
+                    </div>
+                    <div className="popover-show-info-student-container--item">
+                      <BusinessIcon />
+                      <span>{c?.student.address}</span>
+                    </div>
                   </div>
                 }
                 placement="top"
@@ -141,54 +177,54 @@ const ExaminationsCourse = () => {
             <div className="examinations-course-container-submit-video-bottom--right flex">
               <div className="flex flex-col">
                 <span>Đánh giá và chấm bài thi</span>
-                <ReForm>
-                  <div className="flex block-evaluate-exam">
-                    <FormBox
-                      propsInput={{
-                        type: "checkbox",
-                        name: "name",
-                        onChange: handleChange,
-                        onFocus: handleFocus,
-                        checked: form.isPass,
-                        disabled: false,
-                      }}
-                      error={error.isPass}
-                    />
-                    <label style={{ color: "blue", marginLeft: 12 }}>Đạt</label>
-                  </div>
-                  <div className="flex block-evaluate-exam">
-                    <FormBox
-                      propsInput={{
-                        type: "checkbox",
-                        name: "name",
-                        onChange: handleChange,
-                        onFocus: handleFocus,
-                        checked: !form.isPass,
-                        disabled: false,
-                      }}
-                      error={error.isPass}
-                    />
-                    <label style={{ color: "red", marginLeft: 12 }}>
-                      Chưa đạt
-                    </label>
-                  </div>
-                  <div
-                    className="flex block-evaluate-exam flex-col"
-                    style={{ marginTop: 12 }}
+                <FormControl component="fieldset">
+                  <RadioGroup
+                    aria-label="evaluate"
+                    name="evaluate"
+                    value={c.isPass ? "pass" : "fail"}
+                    onChange={(e) => {
+                      let temp = [...data];
+                      temp.forEach((item) => {
+                        if (item._id === c._id) {
+                          item.isPass = e.target.value === "pass";
+                        }
+                      });
+                      setData(temp);
+                    }}
+                    className="flex flex-row"
                   >
-                    <label style={{ color: "rgb(82, 67, 41)" }}>Nhận xét</label>
-                    <FormBox
-                      propsInput={{
-                        type: "textarea",
-                        name: "feedbacks",
-                        onChange: handleChange,
-                        onFocus: handleFocus,
-                        value: form.feedbacks,
-                        disabled: false,
-                      }}
-                      error={error.feedbacks}
+                    <FormControlLabel
+                      style={{ color: "blue" }}
+                      value="pass"
+                      control={<Radio />}
+                      label="Đạt"
                     />
-                  </div>
+                    <FormControlLabel
+                      style={{ color: "red" }}
+                      value="fail"
+                      control={<Radio />}
+                      label="Chưa đạt"
+                    />
+                  </RadioGroup>
+                </FormControl>
+                <div
+                  className="flex block-evaluate-exam flex-col"
+                  style={{ marginTop: 12 }}
+                >
+                  <label style={{ color: "rgb(82, 67, 41)" }}>Nhận xét</label>
+                  <FormBox
+                    propsInput={{
+                      type: "textarea",
+                      name: "feedbacks",
+                      onChange: handleChange,
+                      onFocus: handleFocus,
+                      value: c.feedbacks,
+                      disabled: false,
+                    }}
+                    error={error.feedbacks}
+                  />
+                </div>
+                <ReForm>
                   <Button className="btn-admin btn-update-exam">
                     Cập nhật
                   </Button>
@@ -197,9 +233,10 @@ const ExaminationsCourse = () => {
 
               <Button
                 className={`btn-admin btn-confirm-exam ${
-                  !form.isPass ? "btn-disabled" : ""
+                  !c.isPass ? "btn-disabled" : ""
                 }`}
-                disabled={!form.isPass}
+                disabled={!c.isPass}
+                onClick={() => setOpenModalCertification(true)}
               >
                 Cấp chứng nhận
               </Button>
@@ -207,6 +244,66 @@ const ExaminationsCourse = () => {
           </div>
         </Paper>
       ))}
+      <Modal
+        className="certification-form-container"
+        title="Chứng nhận nấu ăn"
+        visible={openModalCertification}
+        onOk={handleSubmitCertification}
+        onCancel={() => {
+          setOpenModalCertification(false);
+        }}
+      >
+        <div className="certification-form"></div>
+        <div className="block--signature-certification">
+          <div className="block--signature-certification--title">
+            <FormControl>
+              <Input
+                id="standard-adornment-weight"
+                value=""
+                // onChange={}
+              />
+            </FormControl>
+            <span>,</span>
+            <span>ngày</span>
+            <FormControl>
+              <Input
+                id="standard-adornment-weight"
+                value=""
+                // onChange={}
+              />
+            </FormControl>
+            <span>tháng</span>
+            <FormControl>
+              <Input
+                id="standard-adornment-weight"
+                value=""
+                // onChange={}
+              />
+            </FormControl>
+            <span>năm</span>
+            <FormControl>
+              <Input
+                id="standard-adornment-weight"
+                value=""
+                // onChange={}
+              />
+            </FormControl>
+          </div>
+          <div className="flex">
+            <SignaturePad
+              ref={padRef}
+              canvasProps={{
+                width: "100%",
+                height: "100%",
+                className: "sigCanvas",
+              }}
+            />
+            <IconButton onClick={handleClear}>
+              <DeleteOutlineIcon />
+            </IconButton>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 };

@@ -1,0 +1,69 @@
+.card-employee {
+  min-height: 180px;
+  padding: 10px 25px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  justify-content: space-between;
+  &:hover {
+    border: 1px solid rgb(158, 158, 246);
+  }
+  .avatar-employee {
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    background-color: sandybrown;
+  }
+  .block-information-employee {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    &--full-name {
+      font-size: 17px;
+      font-weight: 600;
+      color: rgb(14, 47, 4);
+      margin-bottom: 4px;
+    }
+    &--role {
+      font-weight: 600;
+      text-transform: capitalize;
+      font-size: 14px;
+      font-style: italic;
+    }
+    &--phone-number {
+      margin: 2px 0;
+      font-size: 14px;
+      color: teal;
+      svg {
+        width: 20px;
+        height: 20px;
+        margin-right: 2px;
+        path {
+          fill: rgb(10, 104, 104);
+        }
+      }
+    }
+    &--email {
+      margin: 2px 0;
+      font-size: 14px;
+      color: rgb(8, 65, 20);
+      svg {
+        width: 20px;
+        height: 20px;
+        margin-right: 2px;
+        path {
+          fill: rgb(8, 65, 20);
+        }
+      }
+    }
+    &--view-details {
+      cursor: pointer;
+      margin-top: 6px;
+      font-size: 15px;
+      color: blue;
+      &:hover {
+        color: rgb(6, 6, 116);
+      }
+    }
+  }
+}

@@ -6,11 +6,12 @@ const YoutubeEmbed = ({ id, videoUrl }) => (
     <source src={videoUrl} />
   </video>
   // <iframe
-  // id={id}
-  // frameBorder="0"
-  // allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-  // allowFullScreen
-  // title="Embedded youtube"
+  //   id={id}
+  //   frameBorder="0"
+  //   allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  //   allowFullScreen
+  //   src={videoUrl}
+  //   title="Embedded youtube"
   // />
 );
 

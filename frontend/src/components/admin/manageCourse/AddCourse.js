@@ -8,18 +8,10 @@ import { isEmpty, isCurrency } from "validator";
 import isURL from "validator/lib/isURL";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import { FormBox } from "components/common";
-import { uuid } from "utils/stringUtils";
 import BackPreviousPage from "components/common/BackPreviousPage";
 
 const AddCourse = () => {
-  const [videoUrls, setVideoUrls] = useState([
-    {
-      _id: uuid(),
-      title: "Món Châu Á",
-      videoUrl: "https://www.youtube.com/embed/9xH3W0Q--60",
-      duration: "30 phút",
-    },
-  ]);
+  const [videoUrls, setVideoUrls] = useState([]);
   const [errorVideo, setErrorVideo] = React.useState({});
   const [error, setError] = React.useState({});
   const [formVideo, setFormVideo] = useState({

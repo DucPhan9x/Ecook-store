@@ -1,0 +1,17 @@
+.manage-employee-container {
+  &-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+  }
+}
+// modal add
+.field-input-information-employee {
+  margin-bottom: 8px;
+  label {
+    color: rgb(143, 118, 5);
+    margin-bottom: 4px;
+    font-weight: 600;
+  }
+}

@@ -87,8 +87,6 @@
         justify-content: space-between;
         span {
           font-size: 15px;
-          color: rgb(199, 80, 0);
-          padding-bottom: 24px;
         }
         .block-evaluate-exam {
           display: flex;
@@ -117,4 +115,84 @@
   padding: 5px;
   display: flex;
   flex-direction: column;
+}
+// certification container
+.certification-form-container {
+  .ant-modal-content {
+    min-width: 700px;
+    .ant-modal-header {
+      .ant-modal-title {
+        color: rgb(248, 137, 10);
+        font-weight: bold;
+      }
+    }
+    .certification-form {
+      min-width: 650px;
+      min-height: 600px;
+      background-image: url("/assets/images/background_certification_cook.jpg");
+      background-size: cover;
+      background-position: center;
+      width: 100%;
+      height: 100%;
+    }
+    .block--signature-certification {
+      position: absolute;
+      bottom: 100px;
+      right: 200px;
+      width: 200px;
+      height: 100px;
+      &--title {
+        display: flex;
+        align-items: center;
+        span {
+          align-self: end;
+          margin: 0 4px;
+        }
+        .MuiFormControl-root {
+          &:first-child {
+            min-width: 100px;
+          }
+          min-width: 50px;
+        }
+        input,
+        input:focus,
+        input:hover {
+          border-bottom: 1px dashed black;
+          &::after {
+            display: none;
+          }
+        }
+      }
+      & > div {
+        canvas {
+          margin-left: 160px;
+          cursor: pointer;
+          margin-top: 12px;
+          border: 1px dashed gray;
+        }
+      }
+    }
+  }
+}
+
+.popover-show-info-student-container {
+  padding: 10px 6px;
+  background: rgb(255, 254, 246);
+  border-radius: 16px;
+  &--item {
+    &:not(:last-child) {
+      margin-bottom: 5px;
+    }
+    span {
+      color: rgb(15, 71, 75);
+    }
+    svg {
+      margin-right: 4px;
+      width: 18px;
+      height: 18px;
+      path {
+        fill: rgb(46, 102, 223);
+      }
+    }
+  }
 }

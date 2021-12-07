@@ -314,9 +314,10 @@ export const COURSES_DATA = [
     _id: uuid(),
     name: "Món Á cơ bản",
     unitPrice: 799999,
-    description: "abcdef",
-    examinationContent: "aaaaa",
-    regulation: "aaaaaaaaaaaaaaaaaaa",
+    description: "Đây là khóa học chủ yếu tập trung vào các món ăn Châu Á.",
+    examinationContent: "Bò hầm tiêu xanh",
+    regulation:
+      "Thời gian 45 phút, quay video từ khâu sơ chế đến khi thành phẩm.",
     criteria: "An toan ve sinh thuc pham, trang tri dep mat",
     videoUrls: [
       {
@@ -329,7 +330,7 @@ export const COURSES_DATA = [
     instructor: {
       fullName: "Phan Trong Duc",
       phoneNumber: "0984763232",
-      address: "abc",
+      address: "TT. La Hai - H.Dong Xuan - T.Phu Yen",
       imageUrl: "https://picsum.photos/200/300",
       email: "trongduc@gmail.com",
     },
@@ -339,9 +340,10 @@ export const COURSES_DATA = [
     _id: uuid(),
     name: "Món Á cơ bản",
     unitPrice: 799999,
-    description: "abcdef",
-    examinationContent: "aaaaa",
-    regulation: "aaaaaaaaaaaaaaaaaaa",
+    description: "Đây là khóa học chủ yếu tập trung vào các món ăn Châu Á.",
+    examinationContent: "Bò hầm tiêu xanh",
+    regulation:
+      "Thời gian 45 phút, quay video từ khâu sơ chế đến khi thành phẩm.",
     criteria: "An toan ve sinh thuc pham, trang tri dep mat",
 
     videoUrls: [
@@ -355,7 +357,7 @@ export const COURSES_DATA = [
     instructor: {
       fullName: "Phan Trong Duc",
       phoneNumber: "0984763232",
-      address: "abc",
+      address: "TT. La Hai - H.Dong Xuan - T.Phu Yen",
       imageUrl: "https://picsum.photos/200/300",
       email: "trongduc@gmail.com",
     },
@@ -365,9 +367,10 @@ export const COURSES_DATA = [
     _id: uuid(),
     name: "Món Á cơ bản",
     unitPrice: 799999,
-    description: "abcdef",
-    examinationContent: "aaaaa",
-    regulation: "aaaaaaaaaaaaaaaaaaa",
+    description: "Đây là khóa học chủ yếu tập trung vào các món ăn Châu Á.",
+    examinationContent: "Bò hầm tiêu xanh",
+    regulation:
+      "Thời gian 45 phút, quay video từ khâu sơ chế đến khi thành phẩm.",
     criteria: "An toan ve sinh thuc pham, trang tri dep mat",
 
     videoUrls: [
@@ -381,7 +384,7 @@ export const COURSES_DATA = [
     instructor: {
       fullName: "Phan Trong Duc",
       phoneNumber: "0984763232",
-      address: "abc",
+      address: "TT. La Hai - H.Dong Xuan - T.Phu Yen",
       imageUrl: "https://picsum.photos/200/300",
       email: "trongduc@gmail.com",
     },
@@ -391,11 +394,12 @@ export const COURSES_DATA = [
     _id: uuid(),
     name: "Món Á cơ bản",
     unitPrice: 799999,
-    description: "abcdef",
-    examinationContent: "aaaaa",
+    description: "Đây là khóa học chủ yếu tập trung vào các món ăn Châu Á.",
+    examinationContent: "Bò hầm tiêu xanh",
     criteria: "An toan ve sinh thuc pham, trang tri dep mat",
 
-    regulation: "aaaaaaaaaaaaaaaaaaa",
+    regulation:
+      "Thời gian 45 phút, quay video từ khâu sơ chế đến khi thành phẩm.",
     videoUrls: [
       {
         title: "Mon Chau A",
@@ -407,7 +411,7 @@ export const COURSES_DATA = [
     instructor: {
       fullName: "Phan Trong Duc",
       phoneNumber: "0984763232",
-      address: "abc",
+      address: "TT. La Hai - H.Dong Xuan - T.Phu Yen",
       imageUrl: "https://picsum.photos/200/300",
       email: "trongduc@gmail.com",
     },
@@ -417,35 +421,10 @@ export const COURSES_DATA = [
     _id: uuid(),
     name: "Món Á cơ bản",
     unitPrice: 799999,
-    description: "abcdef",
-    examinationContent: "aaaaa",
-    regulation: "aaaaaaaaaaaaaaaaaaa",
-    criteria: "An toan ve sinh thuc pham, trang tri dep mat",
-
-    videoUrls: [
-      {
-        title: "Mon Chau A",
-        videoUrl:
-          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-        duration: "30 phút",
-      },
-    ],
-    instructor: {
-      fullName: "Phan Trong Duc",
-      phoneNumber: "0984763232",
-      address: "abc",
-      imageUrl: "https://picsum.photos/200/300",
-      email: "trongduc@gmail.com",
-    },
-    createAt: Date.now(),
-  },
-  {
-    _id: uuid(),
-    name: "Món Á cơ bản",
-    unitPrice: 799999,
-    description: "abcdef",
-    examinationContent: "aaaaa",
-    regulation: "aaaaaaaaaaaaaaaaaaa",
+    description: "Đây là khóa học chủ yếu tập trung vào các món ăn Châu Á.",
+    examinationContent: "Bò hầm tiêu xanh",
+    regulation:
+      "Thời gian 45 phút, quay video từ khâu sơ chế đến khi thành phẩm.",
     criteria: "An toan ve sinh thuc pham, trang tri dep mat",
 
     videoUrls: [
@@ -459,7 +438,7 @@ export const COURSES_DATA = [
     instructor: {
       fullName: "Phan Trong Duc",
       phoneNumber: "0984763232",
-      address: "abc",
+      address: "TT. La Hai - H.Dong Xuan - T.Phu Yen",
       imageUrl: "https://picsum.photos/200/300",
       email: "trongduc@gmail.com",
     },
@@ -469,11 +448,12 @@ export const COURSES_DATA = [
     _id: uuid(),
     name: "Món Á cơ bản",
     unitPrice: 799999,
-    description: "abcdef",
-    examinationContent: "aaaaa",
+    description: "Đây là khóa học chủ yếu tập trung vào các món ăn Châu Á.",
+    examinationContent: "Bò hầm tiêu xanh",
+    regulation:
+      "Thời gian 45 phút, quay video từ khâu sơ chế đến khi thành phẩm.",
     criteria: "An toan ve sinh thuc pham, trang tri dep mat",
 
-    regulation: "aaaaaaaaaaaaaaaaaaa",
     videoUrls: [
       {
         title: "Mon Chau A",
@@ -485,7 +465,7 @@ export const COURSES_DATA = [
     instructor: {
       fullName: "Phan Trong Duc",
       phoneNumber: "0984763232",
-      address: "abc",
+      address: "TT. La Hai - H.Dong Xuan - T.Phu Yen",
       imageUrl: "https://picsum.photos/200/300",
       email: "trongduc@gmail.com",
     },
@@ -495,11 +475,12 @@ export const COURSES_DATA = [
     _id: uuid(),
     name: "Món Á cơ bản",
     unitPrice: 799999,
-    description: "abcdef",
-    examinationContent: "aaaaa",
+    description: "Đây là khóa học chủ yếu tập trung vào các món ăn Châu Á.",
+    examinationContent: "Bò hầm tiêu xanh",
     criteria: "An toan ve sinh thuc pham, trang tri dep mat",
 
-    regulation: "aaaaaaaaaaaaaaaaaaa",
+    regulation:
+      "Thời gian 45 phút, quay video từ khâu sơ chế đến khi thành phẩm.",
     videoUrls: [
       {
         title: "Mon Chau A",
@@ -511,7 +492,34 @@ export const COURSES_DATA = [
     instructor: {
       fullName: "Phan Trong Duc",
       phoneNumber: "0984763232",
-      address: "abc",
+      address: "TT. La Hai - H.Dong Xuan - T.Phu Yen",
+      imageUrl: "https://picsum.photos/200/300",
+      email: "trongduc@gmail.com",
+    },
+    createAt: Date.now(),
+  },
+  {
+    _id: uuid(),
+    name: "Món Á cơ bản",
+    unitPrice: 799999,
+    description: "Đây là khóa học chủ yếu tập trung vào các món ăn Châu Á.",
+    examinationContent: "Bò hầm tiêu xanh",
+    criteria: "An toan ve sinh thuc pham, trang tri dep mat",
+
+    regulation:
+      "Thời gian 45 phút, quay video từ khâu sơ chế đến khi thành phẩm.",
+    videoUrls: [
+      {
+        title: "Mon Chau A",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: "30 phút",
+      },
+    ],
+    instructor: {
+      fullName: "Phan Trong Duc",
+      phoneNumber: "0984763232",
+      address: "TT. La Hai - H.Dong Xuan - T.Phu Yen",
       imageUrl: "https://picsum.photos/200/300",
       email: "trongduc@gmail.com",
     },
@@ -522,9 +530,11 @@ export const COURSES_DATA = [
 export const INSTRUCTORS_DATA = [
   {
     _id: uuid(),
+    role: "instructor",
     fullName: "Phan Trong Duc",
+    email: "duc@gmail.com",
     phoneNumber: "0987675646",
-    address: "abc",
+    address: "TT.La Hai - H.Dong Xuan - T.Phu Yen",
     imageUrl:
       "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
     feedbacks: 5,
@@ -532,9 +542,11 @@ export const INSTRUCTORS_DATA = [
   },
   {
     _id: uuid(),
+    role: "instructor",
     fullName: "Phan Trong Duc",
+    email: "duc@gmail.com",
     phoneNumber: "0987675646",
-    address: "abc",
+    address: "TT. La Hai - H.Dong Xuan - T.Phu Yen",
     imageUrl:
       "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
     feedbacks: 5,
@@ -542,9 +554,11 @@ export const INSTRUCTORS_DATA = [
   },
   {
     _id: uuid(),
+    role: "instructor",
     fullName: "Phan Trong Duc",
+    email: "duc@gmail.com",
     phoneNumber: "0987675646",
-    address: "abc",
+    address: "TT. La Hai - H.Dong Xuan - T.Phu Yen",
     imageUrl:
       "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
     feedbacks: 5,
@@ -552,9 +566,11 @@ export const INSTRUCTORS_DATA = [
   },
   {
     _id: uuid(),
+    role: "instructor",
     fullName: "Phan Trong Duc",
+    email: "duc@gmail.com",
     phoneNumber: "0987675646",
-    address: "abc",
+    address: "TT. La Hai - H.Dong Xuan - T.Phu Yen",
     imageUrl:
       "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
     feedbacks: 5,
@@ -562,9 +578,11 @@ export const INSTRUCTORS_DATA = [
   },
   {
     _id: uuid(),
+    role: "instructor",
     fullName: "Phan Trong Duc",
+    email: "duc@gmail.com",
     phoneNumber: "0987675646",
-    address: "abc",
+    address: "TT. La Hai - H.Dong Xuan - T.Phu Yen",
     imageUrl:
       "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
     feedbacks: 5,
@@ -572,9 +590,11 @@ export const INSTRUCTORS_DATA = [
   },
   {
     _id: uuid(),
+    role: "instructor",
     fullName: "Phan Trong Duc",
+    email: "duc@gmail.com",
     phoneNumber: "0987675646",
-    address: "abc",
+    address: "TT. La Hai - H.Dong Xuan - T.Phu Yen",
     imageUrl:
       "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
     feedbacks: 5,
@@ -582,9 +602,11 @@ export const INSTRUCTORS_DATA = [
   },
   {
     _id: uuid(),
+    role: "instructor",
     fullName: "Phan Trong Duc",
+    email: "duc@gmail.com",
     phoneNumber: "0987675646",
-    address: "abc",
+    address: "TT. La Hai - H.Dong Xuan - T.Phu Yen",
     imageUrl:
       "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
     feedbacks: 5,
@@ -592,9 +614,11 @@ export const INSTRUCTORS_DATA = [
   },
   {
     _id: uuid(),
+    role: "instructor",
     fullName: "Phan Trong Duc",
+    email: "duc@gmail.com",
     phoneNumber: "0987675646",
-    address: "abc",
+    address: "TT. La Hai - H.Dong Xuan - T.Phu Yen",
     imageUrl:
       "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
     feedbacks: 5,
@@ -602,13 +626,126 @@ export const INSTRUCTORS_DATA = [
   },
   {
     _id: uuid(),
+    role: "instructor",
     fullName: "Phan Trong Duc",
+    email: "duc@gmail.com",
     phoneNumber: "0987675646",
-    address: "abc",
+    address: "TT. La Hai - H.Dong Xuan - T.Phu Yen",
     imageUrl:
       "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
     feedbacks: 5,
     expertise: "Mon Chau A",
+  },
+];
+
+export const EMPLOYEES_DATA = [
+  {
+    _id: uuid(),
+    role: "employee",
+    fullName: "Phan Trong Duc",
+    phoneNumber: "0987675646",
+    email: "duc@gmail.com",
+
+    address: "TT. La Hai - H.Dong Xuan - T.Phu Yen",
+    imageUrl:
+      "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
+    feedbacks: 5,
+  },
+  {
+    _id: uuid(),
+    role: "employee",
+    email: "duc@gmail.com",
+
+    fullName: "Phan Trong Duc",
+    phoneNumber: "0987675646",
+    address: "TT. La Hai - H.Dong Xuan - T.Phu Yen",
+    imageUrl:
+      "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
+    feedbacks: 5,
+  },
+  {
+    _id: uuid(),
+    role: "employee",
+    email: "duc@gmail.com",
+
+    fullName: "Phan Trong Duc",
+    phoneNumber: "0987675646",
+    address: "TT. La Hai - H.Dong Xuan - T.Phu Yen",
+    imageUrl:
+      "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
+    feedbacks: 5,
+  },
+  {
+    _id: uuid(),
+    role: "employee",
+    email: "duc@gmail.com",
+
+    fullName: "Phan Trong Duc",
+    phoneNumber: "0987675646",
+    address: "TT. La Hai - H.Dong Xuan - T.Phu Yen",
+    imageUrl:
+      "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
+    feedbacks: 5,
+  },
+  {
+    _id: uuid(),
+    role: "employee",
+    email: "duc@gmail.com",
+
+    fullName: "Phan Trong Duc",
+    phoneNumber: "0987675646",
+    address: "TT. La Hai - H.Dong Xuan - T.Phu Yen",
+    imageUrl:
+      "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
+    feedbacks: 5,
+  },
+  {
+    _id: uuid(),
+    role: "employee",
+    email: "duc@gmail.com",
+
+    fullName: "Phan Trong Duc",
+    phoneNumber: "0987675646",
+    address: "TT. La Hai - H.Dong Xuan - T.Phu Yen",
+    imageUrl:
+      "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
+    feedbacks: 5,
+  },
+  {
+    _id: uuid(),
+    role: "employee",
+    email: "duc@gmail.com",
+
+    fullName: "Phan Trong Duc",
+    phoneNumber: "0987675646",
+    address: "TT. La Hai - H.Dong Xuan - T.Phu Yen",
+    imageUrl:
+      "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
+    feedbacks: 5,
+  },
+  {
+    _id: uuid(),
+    role: "employee",
+    email: "duc@gmail.com",
+
+    fullName: "Phan Trong Duc",
+    phoneNumber: "0987675646",
+    address: "TT. La Hai - H.Dong Xuan - T.Phu Yen",
+    imageUrl:
+      "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
+    feedbacks: 5,
+  },
+  {
+    _id: uuid(),
+    role: "employee",
+    email: "duc@gmail.com",
+
+    fullName: "Phan Trong Duc",
+    phoneNumber: "0987675646",
+    address: "TT. La Hai - H.Dong Xuan - T.Phu Yen",
+    imageUrl:
+      "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
+    feedbacks: 5,
   },
 ];
 
@@ -617,6 +754,13 @@ export const EXAMINATIONS_DATA = [
     _id: uuid(),
     courseId: uuid(),
     studentId: uuid(),
+    student: {
+      email: "duc@gmail.com",
+
+      fullName: "Phan Trong Duc",
+      phoneNumber: "0987675646",
+      address: "TT. La Hai - H.Dong Xuan - T.Phu Yen",
+    },
     content: "Bò hầm rượu vang",
     criteria:
       "An toàn vệ sinh thực phẩm, trang trí đẹp mắt, thực hiện đúng các bước quy định",
@@ -626,13 +770,20 @@ export const EXAMINATIONS_DATA = [
       "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
     createdAt: Date.now(),
     isPass: false,
-    feedbacks: "Nhan xet ve quy trinh nau an",
+    feedbacks: "",
     evaluate: "Khong danh gia", // pass -> Gioi/Kha, fail-> Khong danh gia
   },
   {
     _id: uuid(),
     courseId: uuid(),
     studentId: uuid(),
+    student: {
+      email: "duc@gmail.com",
+
+      fullName: "Phan Trong Duc",
+      phoneNumber: "0987675646",
+      address: "TT. La Hai - H.Dong Xuan - T.Phu Yen",
+    },
     content: "Bò hầm rượu vang",
     criteria:
       "An toàn vệ sinh thực phẩm, trang trí đẹp mắt, thực hiện đúng các bước quy định",
@@ -642,13 +793,20 @@ export const EXAMINATIONS_DATA = [
       "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
     createdAt: Date.now(),
     isPass: false,
-    feedbacks: "Nhan xet ve quy trinh nau an",
+    feedbacks: "",
     evaluate: "Khong danh gia", // pass -> Gioi/Kha, fail-> Khong danh gia
   },
   {
     _id: uuid(),
     courseId: uuid(),
     studentId: uuid(),
+    student: {
+      email: "duc@gmail.com",
+
+      fullName: "Phan Trong Duc",
+      phoneNumber: "0987675646",
+      address: "TT. La Hai - H.Dong Xuan - T.Phu Yen",
+    },
     content: "Bò hầm rượu vang",
     criteria:
       "An toàn vệ sinh thực phẩm, trang trí đẹp mắt, thực hiện đúng các bước quy định",
@@ -658,13 +816,20 @@ export const EXAMINATIONS_DATA = [
       "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
     createdAt: Date.now(),
     isPass: false,
-    feedbacks: "Nhan xet ve quy trinh nau an",
+    feedbacks: "",
     evaluate: "Khong danh gia", // pass -> Gioi/Kha, fail-> Khong danh gia
   },
   {
     _id: uuid(),
     courseId: uuid(),
     studentId: uuid(),
+    student: {
+      email: "duc@gmail.com",
+
+      fullName: "Phan Trong Duc",
+      phoneNumber: "0987675646",
+      address: "TT. La Hai - H.Dong Xuan - T.Phu Yen",
+    },
     content: "Bò hầm rượu vang",
     criteria:
       "An toàn vệ sinh thực phẩm, trang trí đẹp mắt, thực hiện đúng các bước quy định",
@@ -674,7 +839,7 @@ export const EXAMINATIONS_DATA = [
       "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
     createdAt: Date.now(),
     isPass: false,
-    feedbacks: "Nhan xet ve quy trinh nau an",
+    feedbacks: "",
     evaluate: "Khong danh gia", // pass -> Gioi/Kha, fail-> Khong danh gia
   },
 ];

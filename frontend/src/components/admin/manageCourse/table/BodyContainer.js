@@ -101,7 +101,7 @@ const BodyContainer = (props) => {
                     onClick={(e) => {
                       e.stopPropagation();
                       history.push(
-                        `/admin/dashboard/courses/examination/${row._id}`
+                        `/admin/dashboard/courses/${row._id}/examinations`
                       );
                     }}
                   >

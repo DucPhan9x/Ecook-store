@@ -13,10 +13,12 @@ import { toggleSidebar } from "redux/actions/control";
 import { ArrowLeft } from "@material-ui/icons";
 import FoodIcon from "assets/icons/sidebarAdmin/food.png";
 import EmployeeIcon from "assets/icons/sidebarAdmin/employee.png";
-import InstructorIcon from "assets/icons/sidebarAdmin/chef.png";
 import CourseIcon from "assets/icons/sidebarAdmin/online-learning.png";
 import CustomerICon from "assets/icons/sidebarAdmin/target.png";
 import StatisticsIcon from "assets/icons/sidebarAdmin/statistics.png";
+import CertificateIcon from "assets/icons/sidebarAdmin/certificate.png";
+import OrderIcon from "assets/icons/sidebarAdmin/form.png";
+import VoucherIcon from "assets/icons/sidebarAdmin/voucher.png";
 import RecipeIcon from "assets/icons/sidebarAdmin/recipes.png";
 import { useHistory } from "react-router";
 
@@ -53,8 +55,10 @@ const LIST_ICON = [
   CourseIcon,
   RecipeIcon,
   EmployeeIcon,
-  InstructorIcon,
   CustomerICon,
+  CertificateIcon,
+  OrderIcon,
+  VoucherIcon,
   StatisticsIcon,
 ];
 
@@ -96,11 +100,10 @@ const Sidebar = () => {
           { name: "Quản lý khóa học", pathName: "/courses" },
           { name: "Quản lý công thức", pathName: "/recipes" },
           { name: "Quản lý nhân viên", pathName: "/employees" },
-          { name: "Quản lý giáo viên", pathName: "/instructors" },
           { name: "Quán lý khách hàng", pathName: "/customers" },
-          //           Quản lý chứng nhận
-          // Quản lý đơn hàng
-          // Quản lý vouchers
+          { name: "Quản lý chứng nhận", pathName: "/certifications" },
+          { name: "Quản lý đơn hàng", pathName: "/orders" },
+          { name: "Quản lý vouchers", pathName: "/vouchers" },
           { name: "Thống kê", pathName: "/statistics" },
         ].map((text, index) => (
           <ListItem

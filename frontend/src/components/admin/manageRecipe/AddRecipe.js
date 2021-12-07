@@ -16,14 +16,8 @@ const AddRecipe = () => {
 
   const [form, setForm] = useState({
     name: "",
-    contents: ["a", "b"],
-    materials: [
-      {
-        foodName: "a",
-        quantity: 0.5,
-        unit: "kg",
-      },
-    ],
+    contents: [],
+    materials: [],
     imageUrl: "",
   });
 

@@ -4,7 +4,7 @@ const UploadImage = ({ onChangeImage }) => {
   return (
     <>
       <label className="fade-choice-avt" htmlFor="file">
-        Upload ảnh sản phẩm
+        Upload ảnh
       </label>
       <input
         id="file"
