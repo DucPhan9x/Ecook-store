@@ -1,7 +1,6 @@
 import { Checkbox, TableBody, TableCell, TableRow } from "@material-ui/core";
 import moment from "moment";
 import React from "react";
-import { useHistory } from "react-router";
 
 const BodyContainer = (props) => {
   const { rows, order, orderBy, page, rowsPerPage, selected, setSelected } =
@@ -52,8 +51,6 @@ const BodyContainer = (props) => {
     setSelected(newSelected);
   };
 
-  const history = useHistory();
-
   return (
     <>
       <TableBody>
@@ -92,8 +89,9 @@ const BodyContainer = (props) => {
                 <TableCell align="left">
                   {moment(row.dateOfBirth).format("DD/MM/YYYY")}
                 </TableCell>
-                <TableCell align="left">{row.gender ? "Nu" : "Nam"}</TableCell>
                 <TableCell align="left">{row.phoneNumber}</TableCell>
+                <TableCell align="left">{row.email}</TableCell>
+                <TableCell align="left">{row.gender ? "Nu" : "Nam"}</TableCell>
                 <TableCell align="left">{row.address}</TableCell>
                 <TableCell align="center">
                   <button
@@ -109,7 +107,6 @@ const BodyContainer = (props) => {
                     className="btn-admin"
                     onClick={(e) => {
                       e.stopPropagation();
-                      history.push(`/admin/dashboard/customer/${row._id}`);
                     }}
                   >
                     Chi tiết

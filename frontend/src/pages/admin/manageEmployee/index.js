@@ -10,6 +10,9 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import ModalAdd from "components/admin/manageEmployee/ModalAdd";
 import ModalEdit from "components/admin/manageEmployee/ModalEdit";
+import { RemoveCircle } from "@material-ui/icons";
+import DialogConfirm from "components/common/DialogConform";
+import useNotification from "hooks/useNotification";
 
 const ManageEmployee = () => {
   const [employees, setEmployees] = useState([]);
@@ -34,7 +37,12 @@ const ManageEmployee = () => {
   }, [employees]);
 
   useEffect(() => {
-    setEmployees(EMPLOYEES_DATA.concat(INSTRUCTORS_DATA));
+    setEmployees(
+      EMPLOYEES_DATA.concat(INSTRUCTORS_DATA).map((item) => ({
+        ...item,
+        isSelected: false,
+      }))
+    );
   }, []);
 
   const handleSubmit = (formData) => {
@@ -43,10 +51,29 @@ const ManageEmployee = () => {
 
   const [cardSelected, setCardSelected] = useState("");
 
+  const [openDialogConfirm, setOpenDialogConfirm] = useState(false);
+
   return (
     <div className="manage-employee-container">
       <div className="manage-employee-container-top">
-        <SearchField onChange={(e) => console.log(e.target.value)} />
+        <div className="flex items-center">
+          <SearchField onChange={(e) => console.log(e.target.value)} />
+          <button
+            style={{ marginLeft: 12 }}
+            className={`btn-admin ${
+              filterData.filter((item) => item.isSelected)?.length > 0
+                ? ""
+                : "btn-disabled"
+            }`}
+            onClick={() => {
+              if (!filterData.filter((item) => item.isSelected)?.length) return;
+              setOpenDialogConfirm(true);
+            }}
+          >
+            <RemoveCircle color="secondary" />
+            Xóa
+          </button>
+        </div>
         <FormControl component="fieldset">
           <RadioGroup
             aria-label="role"
@@ -81,12 +108,17 @@ const ManageEmployee = () => {
             xs={6}
             md={4}
             lg={3}
-            onClick={() => {
+            onClick={(e) => {
+              if (e.target.type === "checkbox") return;
               setCardSelected(em);
               setOpenModalEdit(true);
             }}
           >
-            <CardEmployee data={em} />
+            <CardEmployee
+              data={em}
+              filterData={filterData}
+              setFilterData={setFilterData}
+            />
           </Grid>
         ))}
       </Grid>
@@ -100,6 +132,20 @@ const ManageEmployee = () => {
         handleSubmit={handleSubmit}
         close={() => setOpenModalEdit(false)}
         selectedItem={cardSelected}
+      />
+      <DialogConfirm
+        open={openDialogConfirm}
+        handleClose={() => setOpenDialogConfirm(false)}
+        message="xóa"
+        handleSubmit={() => {
+          console.log(filterData.filter((item) => item.isSelected));
+          // call API
+          useNotification.Error({
+            title: "Setup company error",
+            message: "aaaaaaaaaaaaa",
+          });
+          setOpenDialogConfirm(false);
+        }}
       />
     </div>
   );

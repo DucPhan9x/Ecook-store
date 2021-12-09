@@ -849,15 +849,74 @@ export const CUSTOMERS_DATA = [
     _id: uuid(),
     fullName: "Phan Trong Duc",
     dateOfBirth: Date.now(),
+    email: "trongduc@gmail.com",
     phoneNumber: "09873678265",
     address: "TT.La Hai - H.Dong Xuan - T. Phu Yen",
     imageUrl:
       "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
-    feedbacks: [],
+  },
+  {
+    _id: uuid(),
+    fullName: "Phan Trong Duc",
+    dateOfBirth: Date.now(),
+    email: "trongduc@gmail.com",
+    phoneNumber: "09873678265",
+    address: "TT.La Hai - H.Dong Xuan - T. Phu Yen",
+    imageUrl:
+      "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
+  },
+  {
+    _id: uuid(),
+    fullName: "Phan Trong Duc",
+    dateOfBirth: Date.now(),
+    email: "trongduc@gmail.com",
+    phoneNumber: "09873678265",
+    address: "TT.La Hai - H.Dong Xuan - T. Phu Yen",
+    imageUrl:
+      "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
   },
 ];
 
 export const CERTIFICATIONS_DATA = [
+  {
+    _id: uuid(),
+    student: {
+      fullName: "Phan Trong Duc",
+    },
+    course: {
+      courseName: "Mon Chau A",
+    },
+    startDate: Date.now(),
+    endDate: Date.now(),
+    createAt: Date.now(),
+    positionCreate: "Da Nang",
+  },
+  {
+    _id: uuid(),
+    student: {
+      fullName: "Phan Trong Duc",
+    },
+    course: {
+      courseName: "Mon Chau A",
+    },
+    startDate: Date.now(),
+    endDate: Date.now(),
+    createAt: Date.now(),
+    positionCreate: "Da Nang",
+  },
+  {
+    _id: uuid(),
+    student: {
+      fullName: "Phan Trong Duc",
+    },
+    course: {
+      courseName: "Mon Chau A",
+    },
+    startDate: Date.now(),
+    endDate: Date.now(),
+    createAt: Date.now(),
+    positionCreate: "Da Nang",
+  },
   {
     _id: uuid(),
     student: {

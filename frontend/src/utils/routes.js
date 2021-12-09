@@ -19,7 +19,7 @@ export const ROUTE_ADMIN_DASHBOARD_EXAMINATION_COURSE =
 export const ROUTE_ADMIN_DASHBOARD_COURSES_ADD = "/admin/dashboard/courses/add"; // course manage
 export const ROUTE_ADMIN_DASHBOARD_CUSTOMERS = "/admin/dashboard/customers"; // customer manage
 export const ROUTE_ADMIN_DASHBOARD_CUSTOMER_DETAIL =
-  "/admin/dashboard/customer/:customerID"; // customer manage
+  "/admin/dashboard/customers/:customerID"; // customer manage
 export const ROUTE_ADMIN_DASHBOARD_STATISTICS = "/admin/dashboard/statistics"; // statistics manage
 export const ROUTE_ADMIN_DASHBOARD_RECIPES = "/admin/dashboard/recipes"; // recipes manage
 export const ROUTE_ADMIN_DASHBOARD_RECIPES_ADD =

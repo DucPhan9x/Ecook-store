@@ -2,8 +2,9 @@ import { Paper } from "@material-ui/core";
 import React from "react";
 import PhoneIcon from "@material-ui/icons/Phone";
 import MailOutlineIcon from "@material-ui/icons/MailOutline";
+import Checkbox from "@material-ui/core/Checkbox";
 
-const CardEmployee = ({ data }) => {
+const CardEmployee = ({ data, filterData, setFilterData }) => {
   return (
     <Paper className="card-employee">
       <img className="avatar-employee" src={data?.imageUrl} alt="" />
@@ -26,10 +27,21 @@ const CardEmployee = ({ data }) => {
         <span className="block-information-employee--email">
           <MailOutlineIcon /> {data?.email}
         </span>
-        {/* <span className="block-information-employee--view-details">
-          Xem chi tiết
-        </span> */}
       </div>
+      <Checkbox
+        className="radio-checked-container"
+        checked={data?.isSelected}
+        onChange={(e) => {
+          e.stopPropagation();
+          let temp = [...filterData];
+          temp.forEach((item) => {
+            if (item._id === data._id) {
+              item.isSelected = e.target.checked;
+            }
+          });
+          setFilterData(temp);
+        }}
+      />
     </Paper>
   );
 };

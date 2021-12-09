@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { Form as ReForm } from "reactstrap";
 import { FormBox } from "components/common";
 import { isEmpty } from "validator";
-import WallpaperIcon from "@material-ui/icons/Wallpaper";
+import NoImage from "assets/images/notImage.png";
 import UploadImage from "components/common/UploadImage";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import { Select } from "antd";
@@ -92,14 +92,7 @@ const AddRecipe = () => {
       </div>
       <div className="add-edit-recipe-container-bottom">
         <Paper className="add-edit-recipe-container-bottom--left">
-          {form?.imageUrl ? (
-            <img src={form?.imageUrl} alt="avatar" />
-          ) : (
-            <WallpaperIcon
-              style={{ width: "70%", height: "70%" }}
-              color="action"
-            />
-          )}
+          <img src={form?.imageUrl || NoImage} alt="avatar" />
           <UploadImage onChangeImage={handleChangeImage} />
         </Paper>
         <Paper className="add-edit-recipe-container-bottom--right">

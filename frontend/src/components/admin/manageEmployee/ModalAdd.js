@@ -4,8 +4,8 @@ import { FormBox } from "components/common";
 import { Form as ReForm } from "reactstrap";
 import { isEmpty, isMobilePhone, isEmail } from "validator";
 import UploadImage from "components/common/UploadImage";
-import WallpaperIcon from "@material-ui/icons/Wallpaper";
 import { Paper } from "@material-ui/core";
+import NoImage from "assets/images/notImage.png";
 
 const ModalAdd = ({ isModalVisible, handleSubmit, close }) => {
   const [error, setError] = React.useState({});
@@ -95,14 +95,7 @@ const ModalAdd = ({ isModalVisible, handleSubmit, close }) => {
           className="add-edit-recipe-container-bottom--left"
           style={{ width: "40%", height: 200 }}
         >
-          {form?.imageUrl ? (
-            <img src={form?.imageUrl} alt="avatar" />
-          ) : (
-            <WallpaperIcon
-              style={{ width: "70%", height: "70%" }}
-              color="action"
-            />
-          )}
+          <img src={form?.imageUrl || NoImage} alt="avatar" />
           <UploadImage onChangeImage={handleChangeImage} />
         </Paper>
         <div style={{ width: "60%" }}>

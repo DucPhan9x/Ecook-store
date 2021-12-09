@@ -4,8 +4,8 @@ import { FormBox } from "components/common";
 import { Form as ReForm } from "reactstrap";
 import { isEmpty, isMobilePhone, isEmail } from "validator";
 import UploadImage from "components/common/UploadImage";
-import WallpaperIcon from "@material-ui/icons/Wallpaper";
 import { Paper } from "@material-ui/core";
+import NoImage from "assets/images/notImage.png";
 
 const ModalEdit = ({ isModalVisible, handleSubmit, close, selectedItem }) => {
   const [error, setError] = React.useState({});
@@ -63,17 +63,17 @@ const ModalEdit = ({ isModalVisible, handleSubmit, close, selectedItem }) => {
     });
   };
 
-  const handleReset = () => {
-    setForm({
-      fullName: "",
-      phoneNumber: "",
-      email: "",
-      password: "",
-      address: "",
-      imageUrl: "",
-    });
-    setError({});
-  };
+  // const handleReset = () => {
+  //   setForm({
+  //     fullName: "",
+  //     phoneNumber: "",
+  //     email: "",
+  //     password: "",
+  //     address: "",
+  //     imageUrl: "",
+  //   });
+  //   setError({});
+  // };
 
   const handleChangeImage = (e) => {
     const temp = URL.createObjectURL(e.target.files[0]);
@@ -88,7 +88,7 @@ const ModalEdit = ({ isModalVisible, handleSubmit, close, selectedItem }) => {
       onOk={handleSubmitForm}
       onCancel={() => {
         close();
-        handleReset();
+        // handleReset();
       }}
     >
       <ReForm className="flex">
@@ -96,14 +96,7 @@ const ModalEdit = ({ isModalVisible, handleSubmit, close, selectedItem }) => {
           className="add-edit-recipe-container-bottom--left"
           style={{ width: "40%", height: 200 }}
         >
-          {form?.imageUrl ? (
-            <img src={form?.imageUrl} alt="avatar" />
-          ) : (
-            <WallpaperIcon
-              style={{ width: "70%", height: "70%" }}
-              color="action"
-            />
-          )}
+          <img src={form?.imageUrl || NoImage} alt="avatar" />
           <UploadImage onChangeImage={handleChangeImage} />
         </Paper>
         <div style={{ width: "60%" }}>
