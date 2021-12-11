@@ -7,6 +7,7 @@ import Paper from "@material-ui/core/Paper";
 import HeaderContainer from "./HeaderContainer";
 import ToolbarContainer from "./ToolbarContainer";
 import BodyContainer from "./BodyContainer";
+import ModalCustomerDetail from "../ModalCustomerDetail";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -69,6 +70,9 @@ export default function EnhancedTable({ data, setData }) {
     setPage(0);
   };
 
+  const [isOpenModalDetail, setIsOpenModalDetail] = useState(false);
+  const [selectedCustomer, setSelectedCustomer] = useState({});
+
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
@@ -102,6 +106,8 @@ export default function EnhancedTable({ data, setData }) {
               setSelected={setSelected}
               page={page}
               rowsPerPage={rowsPerPage}
+              setSelectedCustomer={setSelectedCustomer}
+              setIsOpenModalDetail={setIsOpenModalDetail}
             />
           </Table>
         </TableContainer>
@@ -115,6 +121,11 @@ export default function EnhancedTable({ data, setData }) {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
+      <ModalCustomerDetail
+        isModalVisible={isOpenModalDetail}
+        close={() => setIsOpenModalDetail(false)}
+        data={selectedCustomer}
+      />
     </div>
   );
 }
