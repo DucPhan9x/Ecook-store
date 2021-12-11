@@ -27,7 +27,7 @@ const ModalDetail = ({ isModalVisible, close, data }) => {
       onCancel={close}
       footer={false}
     >
-      <ReForm>
+      <ReForm className="flex">
         <div className="block-label-input-modal">
           <img
             style={{ width: "100%", maxHeight: 200 }}
@@ -35,38 +35,43 @@ const ModalDetail = ({ isModalVisible, close, data }) => {
             alt="image_product"
           />
         </div>
-        <div className="flex full-width j-space-between body-content-form">
-          <div className="block-label-input-modal" style={{ marginRight: 12 }}>
-            <label>Tên sản phẩm: </label>
-            <span className="value-content">{form.name}</span>
+        <div style={{ marginLeft: 48 }}>
+          <div className="flex flex-col full-width j-space-between body-content-form">
+            <div
+              className="block-label-input-modal"
+              style={{ marginRight: 12 }}
+            >
+              <label>Tên sản phẩm: </label>
+              <span className="value-content">{form.name}</span>
+            </div>
+            <div className="block-label-input-modal">
+              <label>Loại sản phẩm: </label>
+              <span className="value-content">{form.type}</span>
+            </div>
           </div>
-          <div className="block-label-input-modal" style={{ marginLeft: 12 }}>
-            <label>Loại sản phẩm: </label>
-            <span className="value-content">{form.type}</span>
+          <div className="flex full-width j-space-between body-content-form">
+            <div className="block-label-input-modal">
+              <label>Giá cả (VNĐ): </label>
+              <span className="value-content">{form.unitPrice}</span>
+            </div>
+            <div className="block-label-input-modal flex flex-col">
+              <label>Giảm giá (%): </label>
+              <span className="value-content">{form.discountOff || 0}</span>
+            </div>
           </div>
-        </div>
-        <div className="flex full-width j-space-between body-content-form">
-          <div className="block-label-input-modal" style={{ marginRight: 12 }}>
-            <label>Giá cả (VNĐ): </label>
-            <span className="value-content">{form.unitPrice}</span>
+          <div className="flex full-width j-space-between body-content-form">
+            <div className="block-label-input-modal">
+              <label>Mức giảm tối đa (VNĐ): </label>
+              <span className="value-content">{form.discountMaximum || 0}</span>
+            </div>
           </div>
-          <div className="block-label-input-modal" style={{ marginLeft: 12 }}>
-            <label>Giảm giá (%): </label>
-            <span className="value-content">{form.discountOff || 0}</span>
-          </div>
-        </div>
-        <div className="flex full-width j-space-between body-content-form">
-          <div className="block-label-input-modal">
-            <label>Mức giảm tối đa (VNĐ): </label>
-            <span className="value-content">{form.discountMaximum || 0}</span>
-          </div>
-        </div>
-        <div className="flex full-width j-space-between body-content-form">
-          <div className="block-label-input-modal">
-            <label>Mô tả sản phẩm: </label>
-            <span className="value-content">
-              {form.description || "Chưa có"}
-            </span>
+          <div className="flex full-width j-space-between body-content-form">
+            <div className="block-label-input-modal">
+              <label>Mô tả sản phẩm: </label>
+              <span className="value-content">
+                {form.description || "Chưa có"}
+              </span>
+            </div>
           </div>
         </div>
       </ReForm>

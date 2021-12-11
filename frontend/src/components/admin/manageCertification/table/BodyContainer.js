@@ -3,8 +3,17 @@ import moment from "moment";
 import React from "react";
 
 const BodyContainer = (props) => {
-  const { rows, order, orderBy, page, rowsPerPage, selected, setSelected } =
-    props;
+  const {
+    rows,
+    order,
+    orderBy,
+    page,
+    rowsPerPage,
+    selected,
+    setSelected,
+    setCertificationSelected,
+    setOpenModalCertification,
+  } = props;
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
@@ -102,6 +111,8 @@ const BodyContainer = (props) => {
                     className="btn-admin"
                     onClick={(e) => {
                       e.stopPropagation();
+                      setCertificationSelected(row);
+                      setOpenModalCertification(true);
                     }}
                   >
                     Chi tiết

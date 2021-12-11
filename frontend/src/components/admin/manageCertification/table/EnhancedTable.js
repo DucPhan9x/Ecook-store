@@ -7,6 +7,9 @@ import Paper from "@material-ui/core/Paper";
 import HeaderContainer from "./HeaderContainer";
 import ToolbarContainer from "./ToolbarContainer";
 import BodyContainer from "./BodyContainer";
+import FormControl from "@material-ui/core/FormControl";
+import { Modal } from "antd";
+import moment from "moment";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -69,6 +72,9 @@ export default function EnhancedTable({ data, setData }) {
     setPage(0);
   };
 
+  const [openModalCertification, setOpenModalCertification] = useState(false);
+  const [certificationSelected, setCertificationSelected] = useState({});
+
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
@@ -102,6 +108,8 @@ export default function EnhancedTable({ data, setData }) {
               setSelected={setSelected}
               page={page}
               rowsPerPage={rowsPerPage}
+              setCertificationSelected={setCertificationSelected}
+              setOpenModalCertification={setOpenModalCertification}
             />
           </Table>
         </TableContainer>
@@ -115,6 +123,129 @@ export default function EnhancedTable({ data, setData }) {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
+      <Modal
+        className="certification-form-container"
+        title="Chứng nhận nấu ăn"
+        footer={false}
+        visible={openModalCertification}
+        onOk={() => setOpenModalCertification(false)}
+        onCancel={() => {
+          setOpenModalCertification(false);
+        }}
+      >
+        <div className="certification-form">
+          <div className="certification-form--title flex flex-col items-center">
+            <span>CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</span>
+            <span>Độc lập - Tự do - Hạnh phúc</span>
+          </div>
+          <div className="certification-form-people-sent flex flex-col items-center">
+            <span>Hệ thống đào tạo hướng dẫn nấu ăn</span>
+            <span>ECook</span>
+          </div>
+          <div className="chung-chi-title">GIẤY CHỨNG NHẬN</div>
+          <div className="certification-form--body">
+            <div
+              className="add-edit-recipe-container-bottom--left"
+              style={{ width: "25%", height: 180, border: "1px dashed gray" }}
+            >
+              <img
+                src={certificationSelected?.student?.imageUrl}
+                alt="avatar"
+              />
+            </div>
+            <div className="certification-form--body-main">
+              <div className="block-input-info-student-course">
+                <label>Học viên:</label>
+                <FormControl>
+                  <span>{certificationSelected?.student?.fullName}</span>
+                </FormControl>
+              </div>
+              <div className="block-input-info-student-course">
+                <label>Sinh ngày:</label>
+                <FormControl>
+                  <span>
+                    {moment(certificationSelected?.student?.dayOfBirth).format(
+                      "DD/MM/YYYY"
+                    )}
+                  </span>
+                </FormControl>
+              </div>
+              <div className="block-input-info-student-course">
+                <label>Đã hoàn thành khóa học:</label>
+                <FormControl>
+                  <span>{certificationSelected?.course?.courseName}</span>
+                </FormControl>
+              </div>
+              <div className="block-input-info-student-course">
+                <div className="flex">
+                  <label>Từ ngày</label>
+                  <FormControl>
+                    <span>
+                      {moment(certificationSelected.startDate).format(
+                        "DD/MM/YYYY"
+                      )}
+                    </span>
+                  </FormControl>
+                </div>
+                <div className="flex">
+                  <label style={{ padding: "0 8px" }}>đến ngày</label>
+                  <FormControl>
+                    <span>
+                      {moment(certificationSelected.endDate).format(
+                        "DD/MM/YYYY"
+                      )}
+                    </span>
+                  </FormControl>
+                </div>
+              </div>
+              <div className="block-input-info-student-course">
+                <label>Xếp loại:</label>
+                <FormControl>
+                  <span>{certificationSelected.evaluate}</span>
+                </FormControl>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          className="block--signature-certification"
+          style={{ marginTop: 48 }}
+        >
+          <div className="block--signature-certification--title">
+            <FormControl>
+              <span>{certificationSelected.positionCreate}</span>
+            </FormControl>
+            <span>,</span>
+            <span>ngày</span>
+            <FormControl>
+              <span>{moment(certificationSelected?.createAt).get("date")}</span>
+            </FormControl>
+            <span>tháng</span>
+            <FormControl>
+              <span>
+                {moment(certificationSelected?.createAt).get("month") + 1}
+              </span>
+            </FormControl>
+            <span>năm</span>
+            <FormControl>
+              <span>{moment(certificationSelected?.createAt).get("year")}</span>
+            </FormControl>
+          </div>
+          {/* <div className="flex">
+            <SignaturePad
+              ref={padRef}
+              canvasProps={{
+                width: "100%",
+                height: "100%",
+                className: "sigCanvas",
+              }}
+            />
+            <IconButton onClick={handleClear} style={{ alignSelf: "center" }}>
+              <DeleteOutlineIcon />
+            </IconButton>
+          </div> */}
+        </div>
+      </Modal>
     </div>
   );
 }

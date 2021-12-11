@@ -37,6 +37,7 @@ const EditRecipe = () => {
       name: data?.title,
       contents: data?.contents,
       materials: data?.material,
+      imageUrl: data?.imageUrl,
     });
   }, [recipeID]);
 

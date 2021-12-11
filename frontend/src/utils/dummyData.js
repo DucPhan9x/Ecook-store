@@ -1,4 +1,5 @@
 import { uuid } from "./stringUtils";
+import GaXaoXaOt from "assets/recipes/ga_xao_xa_ot.jpg";
 
 //recipe
 export const RECIPES_DATA = [
@@ -20,7 +21,7 @@ Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm t
       { _id: uuid(), foodName: "Xả", unit: "g", quantity: 500 },
       { _id: uuid(), foodName: "Ớt", unit: "g", quantity: 200 },
     ],
-    imageUrl: "https://picsum.photos/200/300",
+    imageUrl: GaXaoXaOt,
     createAt: Date.now(),
   },
   {
@@ -41,7 +42,7 @@ Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm t
       { _id: uuid(), foodName: "Xả", unit: "g", quantity: 500 },
       { _id: uuid(), foodName: "Ớt", unit: "g", quantity: 200 },
     ],
-    imageUrl: "https://picsum.photos/200/300",
+    imageUrl: GaXaoXaOt,
     createAt: Date.now(),
   },
   {
@@ -62,7 +63,7 @@ Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm t
       { _id: uuid(), foodName: "Xả", unit: "g", quantity: 500 },
       { _id: uuid(), foodName: "Ớt", unit: "g", quantity: 200 },
     ],
-    imageUrl: "https://picsum.photos/200/300",
+    imageUrl: GaXaoXaOt,
     createAt: Date.now(),
   },
   {
@@ -83,7 +84,7 @@ Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm t
       { _id: uuid(), foodName: "Xả", unit: "g", quantity: 500 },
       { _id: uuid(), foodName: "Ớt", unit: "g", quantity: 200 },
     ],
-    imageUrl: "https://picsum.photos/200/300",
+    imageUrl: GaXaoXaOt,
     createAt: Date.now(),
   },
   {
@@ -104,7 +105,7 @@ Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm t
       { _id: uuid(), foodName: "Xả", unit: "g", quantity: 500 },
       { _id: uuid(), foodName: "Ớt", unit: "g", quantity: 200 },
     ],
-    imageUrl: "https://picsum.photos/200/300",
+    imageUrl: GaXaoXaOt,
     createAt: Date.now(),
   },
   {
@@ -125,7 +126,7 @@ Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm t
       { _id: uuid(), foodName: "Xả", unit: "g", quantity: 500 },
       { _id: uuid(), foodName: "Ớt", unit: "g", quantity: 200 },
     ],
-    imageUrl: "https://picsum.photos/200/300",
+    imageUrl: GaXaoXaOt,
     createAt: Date.now(),
   },
   {
@@ -146,7 +147,7 @@ Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm t
       { _id: uuid(), foodName: "Xả", unit: "g", quantity: 500 },
       { _id: uuid(), foodName: "Ớt", unit: "g", quantity: 200 },
     ],
-    imageUrl: "https://picsum.photos/200/300",
+    imageUrl: GaXaoXaOt,
     createAt: Date.now(),
   },
   {
@@ -167,7 +168,7 @@ Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm t
       { _id: uuid(), foodName: "Xả", unit: "g", quantity: 500 },
       { _id: uuid(), foodName: "Ớt", unit: "g", quantity: 200 },
     ],
-    imageUrl: "https://picsum.photos/200/300",
+    imageUrl: GaXaoXaOt,
     createAt: Date.now(),
   },
 ];
@@ -179,7 +180,8 @@ export const FOODS_DATA = [
     name: "Sườn Non Heo",
     unitPrice: 120000,
     description: "Hang tuoi song",
-    imageUrl: "https://picsum.photos/200/300",
+    imageUrl:
+      "https://res.cloudinary.com/duc/image/upload/v1639206902/ecook/suon_heo_ssbldm.jpg",
     numOfStars: 5,
     numOfFeedbacks: 12,
     createAt: Date.now(),
@@ -191,7 +193,8 @@ export const FOODS_DATA = [
     name: "Sườn Non Heo",
     unitPrice: 120000,
     description: "Hang tuoi song",
-    imageUrl: "https://picsum.photos/200/300",
+    imageUrl:
+      "https://res.cloudinary.com/duc/image/upload/v1639206902/ecook/suon_heo_ssbldm.jpg",
     numOfStars: 5,
     numOfFeedbacks: 12,
     createAt: Date.now(),
@@ -203,7 +206,8 @@ export const FOODS_DATA = [
     name: "Sườn Non Heo",
     unitPrice: 120000,
     description: "Hang tuoi song",
-    imageUrl: "https://picsum.photos/200/300",
+    imageUrl:
+      "https://res.cloudinary.com/duc/image/upload/v1639206902/ecook/suon_heo_ssbldm.jpg",
     numOfStars: 5,
     numOfFeedbacks: 12,
     createAt: Date.now(),
@@ -215,7 +219,8 @@ export const FOODS_DATA = [
     name: "Sườn Non Heo",
     unitPrice: 120000,
     description: "Hang tuoi song",
-    imageUrl: "https://picsum.photos/200/300",
+    imageUrl:
+      "https://res.cloudinary.com/duc/image/upload/v1639206902/ecook/suon_heo_ssbldm.jpg",
     numOfStars: 5,
     numOfFeedbacks: 12,
     createAt: Date.now(),
@@ -227,7 +232,8 @@ export const FOODS_DATA = [
     name: "Sườn Non Heo",
     unitPrice: 120000,
     description: "Hang tuoi song",
-    imageUrl: "https://picsum.photos/200/300",
+    imageUrl:
+      "https://res.cloudinary.com/duc/image/upload/v1639206902/ecook/suon_heo_ssbldm.jpg",
     numOfStars: 5,
     numOfFeedbacks: 12,
     createAt: Date.now(),
@@ -239,7 +245,8 @@ export const FOODS_DATA = [
     name: "Sườn Non Heo",
     unitPrice: 120000,
     description: "Hang tuoi song",
-    imageUrl: "https://picsum.photos/200/300",
+    imageUrl:
+      "https://res.cloudinary.com/duc/image/upload/v1639206902/ecook/suon_heo_ssbldm.jpg",
     numOfStars: 5,
     numOfFeedbacks: 12,
     createAt: Date.now(),
@@ -251,7 +258,8 @@ export const FOODS_DATA = [
     name: "Sườn Non Heo",
     unitPrice: 120000,
     description: "Hang tuoi song",
-    imageUrl: "https://picsum.photos/200/300",
+    imageUrl:
+      "https://res.cloudinary.com/duc/image/upload/v1639206902/ecook/suon_heo_ssbldm.jpg",
     numOfStars: 5,
     numOfFeedbacks: 12,
     createAt: Date.now(),
@@ -264,7 +272,8 @@ export const FOODS_DATA = [
     name: "Sườn Non Heo",
     unitPrice: 120000,
     description: "Hang tuoi song",
-    imageUrl: "https://picsum.photos/200/300",
+    imageUrl:
+      "https://res.cloudinary.com/duc/image/upload/v1639206902/ecook/suon_heo_ssbldm.jpg",
     numOfStars: 5,
     numOfFeedbacks: 12,
     createAt: Date.now(),
@@ -276,7 +285,8 @@ export const FOODS_DATA = [
     name: "Sườn Non Heo",
     unitPrice: 120000,
     description: "Hang tuoi song",
-    imageUrl: "https://picsum.photos/200/300",
+    imageUrl:
+      "https://res.cloudinary.com/duc/image/upload/v1639206902/ecook/suon_heo_ssbldm.jpg",
     numOfStars: 5,
     numOfFeedbacks: 12,
     createAt: Date.now(),
@@ -288,7 +298,8 @@ export const FOODS_DATA = [
     name: "Sườn Non Heo",
     unitPrice: 120000,
     description: "Hang tuoi song",
-    imageUrl: "https://picsum.photos/200/300",
+    imageUrl:
+      "https://res.cloudinary.com/duc/image/upload/v1639206902/ecook/suon_heo_ssbldm.jpg",
     numOfStars: 5,
     numOfFeedbacks: 12,
     createAt: Date.now(),
@@ -300,7 +311,8 @@ export const FOODS_DATA = [
     name: "Sườn Non Heo",
     unitPrice: 120000,
     description: "Hang tuoi song",
-    imageUrl: "https://picsum.photos/200/300",
+    imageUrl:
+      "https://res.cloudinary.com/duc/image/upload/v1639206902/ecook/suon_heo_ssbldm.jpg",
     numOfStars: 5,
     numOfFeedbacks: 12,
     createAt: Date.now(),
@@ -882,6 +894,9 @@ export const CERTIFICATIONS_DATA = [
     _id: uuid(),
     student: {
       fullName: "Phan Trong Duc",
+      dayOfBirth: Date.now(),
+      imageUrl:
+        "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
     },
     course: {
       courseName: "Mon Chau A",
@@ -890,11 +905,15 @@ export const CERTIFICATIONS_DATA = [
     endDate: Date.now(),
     createAt: Date.now(),
     positionCreate: "Da Nang",
+    evaluate: "Gioi",
   },
   {
     _id: uuid(),
     student: {
       fullName: "Phan Trong Duc",
+      dayOfBirth: Date.now(),
+      imageUrl:
+        "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
     },
     course: {
       courseName: "Mon Chau A",
@@ -903,11 +922,15 @@ export const CERTIFICATIONS_DATA = [
     endDate: Date.now(),
     createAt: Date.now(),
     positionCreate: "Da Nang",
+    evaluate: "Gioi",
   },
   {
     _id: uuid(),
     student: {
       fullName: "Phan Trong Duc",
+      dayOfBirth: Date.now(),
+      imageUrl:
+        "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
     },
     course: {
       courseName: "Mon Chau A",
@@ -915,12 +938,17 @@ export const CERTIFICATIONS_DATA = [
     startDate: Date.now(),
     endDate: Date.now(),
     createAt: Date.now(),
+    evaluate: "Gioi",
+
     positionCreate: "Da Nang",
   },
   {
     _id: uuid(),
     student: {
       fullName: "Phan Trong Duc",
+      dayOfBirth: Date.now(),
+      imageUrl:
+        "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
     },
     course: {
       courseName: "Mon Chau A",
@@ -928,6 +956,7 @@ export const CERTIFICATIONS_DATA = [
     startDate: Date.now(),
     endDate: Date.now(),
     createAt: Date.now(),
+    evaluate: "Gioi",
     positionCreate: "Da Nang",
   },
 ];

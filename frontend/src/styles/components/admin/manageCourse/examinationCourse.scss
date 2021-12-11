@@ -219,6 +219,7 @@
         input,
         input:focus,
         input:hover {
+          text-align: center;
           border-bottom: 1px dashed black;
           &::after {
             display: none;
