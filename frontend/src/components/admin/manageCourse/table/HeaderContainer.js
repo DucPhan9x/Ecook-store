@@ -20,7 +20,12 @@ const headCells = [
     label: "Giá cả (khóa học)",
   },
   { id: "instructor", numeric: false, disablePadding: false, label: "Tác giả" },
-  // { id: "numOfFeedbacks", numeric: true, disablePadding: false, label: "Protein (g)" },
+  {
+    id: "amountStudent",
+    numeric: true,
+    disablePadding: false,
+    label: "Số lượng người mua",
+  },
   {
     id: "createAt",
     numeric: false,

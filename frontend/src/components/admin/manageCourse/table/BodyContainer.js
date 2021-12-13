@@ -2,6 +2,7 @@ import { Checkbox, TableBody, TableCell, TableRow } from "@material-ui/core";
 import moment from "moment";
 import React from "react";
 import { useHistory } from "react-router";
+import SupervisorAccountIcon from "@material-ui/icons/SupervisorAccount";
 
 const BodyContainer = (props) => {
   const { rows, order, orderBy, page, rowsPerPage, selected, setSelected } =
@@ -91,6 +92,10 @@ const BodyContainer = (props) => {
                 <TableCell align="left">{row.name}</TableCell>
                 <TableCell align="left">{row.unitPrice}</TableCell>
                 <TableCell align="left">{row.instructor.fullName}</TableCell>
+                <TableCell align="left">
+                  {row.amountStudent}
+                  <SupervisorAccountIcon style={{ marginLeft: 8 }} />
+                </TableCell>
                 <TableCell align="left">
                   {moment(row.createAt).format("DD/MM/YYYY")}
                 </TableCell>

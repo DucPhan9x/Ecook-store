@@ -1,0 +1,16 @@
+.manage-orders-container {
+  &-top {
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+  }
+}
+// modal edit
+.block_field-modal-edit-order {
+  display: flex;
+  label {
+    font-weight: 600;
+    font-size: 15px;
+    margin-right: 12px;
+  }
+}

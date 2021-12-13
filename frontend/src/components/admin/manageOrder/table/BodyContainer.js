@@ -1,11 +1,19 @@
 import { Checkbox, TableBody, TableCell, TableRow } from "@material-ui/core";
 import moment from "moment";
 import React from "react";
-import { useHistory } from "react-router";
 
 const BodyContainer = (props) => {
-  const { rows, order, orderBy, page, rowsPerPage, selected, setSelected } =
-    props;
+  const {
+    rows,
+    order,
+    orderBy,
+    page,
+    rowsPerPage,
+    selected,
+    setSelected,
+    setSelectedItem,
+    setIsOpenModal,
+  } = props;
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
@@ -52,8 +60,6 @@ const BodyContainer = (props) => {
     setSelected(newSelected);
   };
 
-  const history = useHistory();
-
   return (
     <>
       <TableBody>
@@ -88,30 +94,25 @@ const BodyContainer = (props) => {
                 >
                   {row._id}
                 </TableCell>
-                <TableCell align="left">{row.name}</TableCell>
-                <TableCell align="left">{row.unitPrice}</TableCell>
-                <TableCell align="left">{row.instructor.fullName}</TableCell>
+                <TableCell align="left">{row.customer?.name}</TableCell>
+                <TableCell align="left">
+                  {row.orderStatus?.description}
+                </TableCell>
+                <TableCell align="left">
+                  {row.employee?.name || "Chưa có"}
+                </TableCell>
+                <TableCell align="left">{row.paymentMethod}</TableCell>
+                <TableCell align="left">{row.total}</TableCell>
                 <TableCell align="left">
                   {moment(row.createAt).format("DD/MM/YYYY")}
                 </TableCell>
                 <TableCell align="center">
                   <button
                     className="btn-admin"
-                    style={{ marginRight: 12 }}
                     onClick={(e) => {
                       e.stopPropagation();
-                      history.push(
-                        `/admin/dashboard/courses/${row._id}/examinations`
-                      );
-                    }}
-                  >
-                    Bài thi
-                  </button>
-                  <button
-                    className="btn-admin"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      history.push(`/admin/dashboard/courses/edit/${row._id}`);
+                      setSelectedItem(row);
+                      setIsOpenModal(true);
                     }}
                   >
                     Chi tiết

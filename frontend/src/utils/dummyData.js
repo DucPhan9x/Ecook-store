@@ -346,6 +346,7 @@ export const COURSES_DATA = [
       imageUrl: "https://picsum.photos/200/300",
       email: "trongduc@gmail.com",
     },
+    amountStudent: 12,
     createAt: Date.now(),
   },
   {
@@ -374,6 +375,7 @@ export const COURSES_DATA = [
       email: "trongduc@gmail.com",
     },
     createAt: Date.now(),
+    amountStudent: 12,
   },
   {
     _id: uuid(),
@@ -401,6 +403,7 @@ export const COURSES_DATA = [
       email: "trongduc@gmail.com",
     },
     createAt: Date.now(),
+    amountStudent: 12,
   },
   {
     _id: uuid(),
@@ -428,6 +431,7 @@ export const COURSES_DATA = [
       email: "trongduc@gmail.com",
     },
     createAt: Date.now(),
+    amountStudent: 12,
   },
   {
     _id: uuid(),
@@ -455,6 +459,7 @@ export const COURSES_DATA = [
       email: "trongduc@gmail.com",
     },
     createAt: Date.now(),
+    amountStudent: 12,
   },
   {
     _id: uuid(),
@@ -482,6 +487,7 @@ export const COURSES_DATA = [
       email: "trongduc@gmail.com",
     },
     createAt: Date.now(),
+    amountStudent: 12,
   },
   {
     _id: uuid(),
@@ -509,6 +515,7 @@ export const COURSES_DATA = [
       email: "trongduc@gmail.com",
     },
     createAt: Date.now(),
+    amountStudent: 12,
   },
   {
     _id: uuid(),
@@ -536,6 +543,7 @@ export const COURSES_DATA = [
       email: "trongduc@gmail.com",
     },
     createAt: Date.now(),
+    amountStudent: 12,
   },
 ];
 
@@ -964,28 +972,231 @@ export const CERTIFICATIONS_DATA = [
 export const ORDERS_DATA = [
   {
     _id: uuid(),
-    customers: {},
+    customer: {
+      _id: uuid(),
+      name: "Phan Trong Duc",
+      email: "trongduc@gmail.com",
+      phoneNumber: "0987675646",
+    },
     employee: {},
     createdAt: Date.now(),
-    address: "62/07 Dong Ke - Hoa Khanh Bac - Lien Chieu - Da Nang",
+    address: "62/07 Đồng Kè - Hòa Khánh Bắc - Liên Chiểu - Đà Nẵng",
     orderStatus: {
       id: 1,
-      description: "Chua nhan giao",
+      description: "Chưa giao hàng",
     },
-    paymentMethod: "Truc tiep or Momo",
-    shipmentFee: 5000,
+    isPaid: true,
+    paymentMethod: "Tiền mặt", // Momo
+    shipmentFee: 5000, // tinh theo dia chi dat don mua
     merchandiseSubtotal: 20000, // tien san pham chua tinh ship
-    total: 25000,
+    total: 25000, // tong tien bao gom ship fee
+    voucher: {
+      _id: uuid(),
+      name: "VUIVECUOITUAN",
+      discount: "15000",
+    },
     items: [
       {
         _id: uuid(),
-        food: {
-          _id: uuid(),
-          name: "Cam",
-        },
+        foodId: uuid(), // to see details the other information
+        foodName: "Cam",
         unitPrice: 20000,
         unitType: "kg",
         quantity: 0.5,
+      },
+    ],
+  },
+  {
+    _id: uuid(),
+    customer: {
+      _id: uuid(),
+      name: "Phan Trong Duc",
+      email: "trongduc@gmail.com",
+      phoneNumber: "0987675646",
+    },
+    isPaid: true,
+    employee: {},
+    createdAt: Date.now(),
+    address: "62/07 Đồng Kè - Hòa Khánh Bắc - Liên Chiểu - Đà Nẵng",
+    orderStatus: {
+      id: 1,
+      description: "Chưa giao hàng",
+    },
+    paymentMethod: "Tiền mặt", // Momo
+    shipmentFee: 5000, // tinh theo dia chi dat don mua
+    merchandiseSubtotal: 20000, // tien san pham chua tinh ship
+    total: 25000, // tong tien bao gom ship fee
+    voucher: {
+      _id: uuid(),
+      name: "VUIVECUOITUAN",
+      discount: "15000",
+    },
+    items: [
+      {
+        _id: uuid(),
+        foodId: uuid(), // to see details the other information
+        foodName: "Cam",
+        unitPrice: 20000,
+        unitType: "kg",
+        quantity: 0.5,
+      },
+    ],
+  },
+  {
+    _id: uuid(),
+    customer: {
+      _id: uuid(),
+      name: "Phan Trong Duc",
+      email: "trongduc@gmail.com",
+      phoneNumber: "0987675646",
+    },
+    employee: {},
+    isPaid: true,
+    createdAt: Date.now(),
+    address: "62/07 Đồng Kè - Hòa Khánh Bắc - Liên Chiểu - Đà Nẵng",
+    orderStatus: {
+      id: 1,
+      description: "Chưa giao hàng",
+    },
+    paymentMethod: "Tiền mặt", // Momo
+    shipmentFee: 5000, // tinh theo dia chi dat don mua
+    merchandiseSubtotal: 20000, // tien san pham chua tinh ship
+    total: 25000, // tong tien bao gom ship fee
+    voucher: {
+      _id: uuid(),
+      name: "VUIVECUOITUAN",
+      discount: "15000",
+    },
+    items: [
+      {
+        _id: uuid(),
+        foodId: uuid(), // to see details the other information
+        foodName: "Cam",
+        unitPrice: 20000,
+        unitType: "kg",
+        quantity: 0.5,
+      },
+    ],
+  },
+  {
+    _id: uuid(),
+    customer: {
+      _id: uuid(),
+      name: "Phan Trong Duc",
+      email: "trongduc@gmail.com",
+      phoneNumber: "0987675646",
+    },
+    employee: {},
+    isPaid: true,
+    createdAt: Date.now(),
+    address: "62/07 Đồng Kè - Hòa Khánh Bắc - Liên Chiểu - Đà Nẵng",
+    orderStatus: {
+      id: 1,
+      description: "Chưa giao hàng",
+    },
+    paymentMethod: "Tiền mặt", // Momo
+    shipmentFee: 5000, // tinh theo dia chi dat don mua
+    merchandiseSubtotal: 10000, // tien san pham chua tinh ship
+    total: 25000, // tong tien bao gom ship fee
+    voucher: {
+      _id: uuid(),
+      name: "VUIVECUOITUAN",
+      discount: "15000",
+    },
+    items: [
+      {
+        _id: uuid(),
+        foodId: uuid(), // to see details the other information
+        foodName: "Cam",
+        unitPrice: 20000,
+        unitType: "kg",
+        quantity: 0.5,
+      },
+    ],
+  },
+];
+
+export const PAYMENT_COURSES_DATA = [
+  {
+    _id: uuid(),
+    customer: {
+      _id: uuid(),
+      name: "Phan Trong Duc",
+      email: "trongduc@gmail.com",
+      phoneNumber: "0987675646",
+    },
+    createdAt: Date.now(),
+    address: "62/07 Đồng Kè - Hòa Khánh Bắc - Liên Chiểu - Đà Nẵng",
+    orderStatus: {
+      id: 1,
+      description: "Chưa giao hàng",
+    },
+    paymentMethod: "Momo", // always Momo
+    shipmentFee: 0, // Khong tinh phi
+    merchandiseSubtotal: 20000, // tien san pham chua tinh ship
+    total: 20000, // tong tien bao gom ship fee
+    items: [
+      {
+        _id: uuid(),
+        courseId: uuid(), // to see details the other information
+        courseName: "Món Châu Á",
+        unitPrice: 700000,
+        unitType: "Khóa", // always Khóa
+        quantity: 1, // always 1
+      },
+    ],
+  },
+  {
+    _id: uuid(),
+    customer: {
+      _id: uuid(),
+      name: "Phan Trong Duc",
+    },
+    createdAt: Date.now(),
+    address: "62/07 Đồng Kè - Hòa Khánh Bắc - Liên Chiểu - Đà Nẵng",
+    orderStatus: {
+      id: 1,
+      description: "Chưa giao hàng",
+    },
+    paymentMethod: "Momo", // always Momo
+    shipmentFee: 0, // Khong tinh phi
+    merchandiseSubtotal: 20000, // tien san pham chua tinh ship
+    total: 20000, // tong tien bao gom ship fee
+    items: [
+      {
+        _id: uuid(),
+        courseId: uuid(), // to see details the other information
+        courseName: "Món Châu Á",
+        unitPrice: 700000,
+        unitType: "Khóa", // always Khóa
+        quantity: 1, // always 1
+      },
+    ],
+  },
+  {
+    _id: uuid(),
+    customer: {
+      _id: uuid(),
+      name: "Phan Trong Duc",
+    },
+    createdAt: Date.now(),
+    address: "62/07 Đồng Kè - Hòa Khánh Bắc - Liên Chiểu - Đà Nẵng",
+    orderStatus: {
+      id: 1,
+      description: "Chưa giao hàng",
+    },
+    paymentMethod: "Momo", // always Momo
+    shipmentFee: 0, // Khong tinh phi
+    merchandiseSubtotal: 20000, // tien san pham chua tinh ship
+    total: 20000, // tong tien bao gom ship fee
+    items: [
+      {
+        _id: uuid(),
+        courseId: uuid(), // to see details the other information
+        courseName: "Món Châu Á",
+        unitPrice: 700000,
+        unitType: "Khóa", // always Khóa
+        quantity: 1, // always 1
       },
     ],
   },

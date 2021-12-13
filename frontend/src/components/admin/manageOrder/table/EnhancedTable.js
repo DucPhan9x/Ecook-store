@@ -7,6 +7,7 @@ import Paper from "@material-ui/core/Paper";
 import HeaderContainer from "./HeaderContainer";
 import ToolbarContainer from "./ToolbarContainer";
 import BodyContainer from "./BodyContainer";
+import ModalEdit from "../ModalEdit";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -69,6 +70,9 @@ export default function EnhancedTable({ data, setData }) {
     setPage(0);
   };
 
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [selectedItem, setSelectedItem] = useState({});
+
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
@@ -102,6 +106,8 @@ export default function EnhancedTable({ data, setData }) {
               setSelected={setSelected}
               page={page}
               rowsPerPage={rowsPerPage}
+              setSelectedItem={setSelectedItem}
+              setIsOpenModal={setIsOpenModal}
             />
           </Table>
         </TableContainer>
@@ -115,6 +121,14 @@ export default function EnhancedTable({ data, setData }) {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
+      <ModalEdit
+        close={() => setIsOpenModal(false)}
+        isModalVisible={isOpenModal}
+        selectedItem={selectedItem}
+        handleSubmit={(formData) => {
+          console.log({ formData });
+        }}
+      />
     </div>
   );
 }
