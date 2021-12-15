@@ -1,17 +1,13 @@
 import React from "react";
 import styled from "styled-components";
-import { Spin } from "antd";
-import { LoadingOutlined } from "@ant-design/icons";
+import BurgerLoaderIcon from "assets/gif/loadingFood.gif";
 
 const SpinLoading = () => {
-  const antIcon = (
-    <LoadingOutlined style={{ fontSize: 24, color: "orangered" }} spin />
-  );
   return (
     <>
       <SpinLoadingContainer className="spin_loading_container align__center">
         <div className="modal__inner">
-          <Spin indicator={antIcon} />
+          <img style={{ width: "350px" }} src={BurgerLoaderIcon} alt="" />
         </div>
       </SpinLoadingContainer>
     </>
@@ -23,13 +19,13 @@ const SpinLoadingContainer = styled.div`
   height: 100%;
 
   position: fixed;
-  top: 0;
+  top: -25%;
   left: 0;
   z-index: 9999;
 
-  background: #00000043 0% 0% no-repeat padding-box;
+  background: #00000003 0% 0% no-repeat padding-box;
   opacity: 1;
-  backdrop-filter: blur(2px);
+  backdrop-filter: blur(1px);
   .modal__inner {
     margin: auto;
     opacity: 1;

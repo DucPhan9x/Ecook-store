@@ -185,7 +185,9 @@ const ModalEdit = ({ isModalVisible, handleSubmit, close, selectedItem }) => {
               </label>
               <span
                 style={{
-                  background: "#f4f4f4",
+                  background: "#de1596",
+                  color: "white",
+                  borderRadius: "12px",
                   padding: "5px",
                   width: "fit-content",
                 }}
@@ -198,7 +200,7 @@ const ModalEdit = ({ isModalVisible, handleSubmit, close, selectedItem }) => {
               <span
                 style={{
                   padding: "5px",
-                  color: "#292929",
+                  color: "white",
                   borderRadius: "5px",
                   background: "#579de4",
                   fontSize: 17,

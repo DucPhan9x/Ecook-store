@@ -1209,3 +1209,56 @@ export const PAYMENT_COURSES_DATA = [
     ],
   },
 ];
+
+export const VOUCHERS_DATA = [
+  {
+    _id: uuid(),
+    name: "VUIVECUOITHANG",
+    discountOff: 50, // percent (%)
+    content: "Giảm 50% tổng bill tối đa 50k (đơn tối thiểu 250k)",
+    remainingSlot: 10,
+    maxDiscountOff: 50000,
+    minOrder: 250000,
+    expiredDate: Date.now(),
+  },
+  {
+    _id: uuid(),
+    name: "VUIVECUOITHANG",
+    discountOff: 50, // percent (%)
+    content: "Giảm 50% tổng bill tối đa 50k (đơn tối thiểu 250k)",
+    remainingSlot: 10,
+    maxDiscountOff: 50000,
+    minOrder: 250000,
+    expiredDate: Date.now(),
+  },
+  {
+    _id: uuid(),
+    name: "VUIVECUOITHANG",
+    discountOff: 50, // percent (%)
+    content: "Giảm 50% tổng bill tối đa 50k (đơn tối thiểu 250k)",
+    remainingSlot: 10,
+    maxDiscountOff: 50000,
+    minOrder: 250000,
+    expiredDate: Date.now(),
+  },
+  {
+    _id: uuid(),
+    name: "VUIVECUOITHANG",
+    discountOff: 50, // percent (%)
+    content: "Giảm 50% tổng bill tối đa 50k (đơn tối thiểu 250k)",
+    remainingSlot: 10,
+    maxDiscountOff: 50000,
+    minOrder: 250000,
+    expiredDate: Date.now(),
+  },
+  {
+    _id: uuid(),
+    name: "VUIVECUOITHANG",
+    discountOff: 50, // percent (%)
+    content: "Giảm 50% tổng bill tối đa 50k (đơn tối thiểu 250k)",
+    remainingSlot: 10,
+    maxDiscountOff: 50000,
+    minOrder: 250000,
+    expiredDate: Date.now(),
+  },
+];
