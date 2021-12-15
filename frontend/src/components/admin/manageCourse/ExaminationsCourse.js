@@ -90,7 +90,7 @@ const ExaminationsCourse = () => {
     startDate: "",
     endDate: "",
     evaluate: "",
-    studentDayOfBirth: Date.now(),
+    studentDayOfBirth: "",
     positionCreate: "",
     createAt_date: moment(Date.now()).get("date"),
     createAt_month: moment(Date.now()).get("month"),
@@ -346,7 +346,7 @@ const ExaminationsCourse = () => {
                     type="date"
                     name="studentDayOfBirth"
                     id="standard-adornment-weight"
-                    value={moment(form.studentDayOfBirth).format("DD/MM/YYYY")}
+                    value={form.studentDayOfBirth}
                     onChange={handleChange}
                     onFocus={handleFocus}
                   />

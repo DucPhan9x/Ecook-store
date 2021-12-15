@@ -6,11 +6,37 @@
   }
 }
 // modal edit
-.block_field-modal-edit-order {
-  display: flex;
-  label {
-    font-weight: 600;
-    font-size: 15px;
-    margin-right: 12px;
+.modal-container-edit-order {
+  min-width: 1100px;
+  .ant-modal-header {
+    padding: 16px 20px;
+    font-size: 18px;
+    .ant-modal-title {
+      color: rgb(214, 109, 10) !important;
+      font-weight: bold;
+      font-size: 20px;
+    }
+  }
+  .gg-map-order-manage {
+    width: 40%;
+    margin-right: 24px;
+  }
+  .modal-detail-order-right {
+    width: 60%;
+    .block_field-modal-edit-order {
+      margin: 2px 0;
+      display: flex;
+      align-items: center;
+      label {
+        color: rgb(206, 129, 15);
+        font-weight: 600;
+        font-size: 16px;
+        margin-right: 12px;
+      }
+      span {
+        font-size: 16px;
+        color: rgb(78, 61, 42);
+      }
+    }
   }
 }

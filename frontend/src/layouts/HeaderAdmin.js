@@ -56,6 +56,7 @@ const HeaderAdmin = () => {
             color="inherit"
             aria-label="open drawer"
             edge="start"
+            style={{ marginLeft: "-3px" }}
             onClick={() => dispatch(toggleSidebar())}
             className={`${clsx(classes.menuButton)} btn--menu`}
           >

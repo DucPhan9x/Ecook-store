@@ -977,6 +977,8 @@ export const ORDERS_DATA = [
       name: "Phan Trong Duc",
       email: "trongduc@gmail.com",
       phoneNumber: "0987675646",
+      imageUrl:
+        "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
     },
     employee: {},
     createdAt: Date.now(),
@@ -1013,6 +1015,8 @@ export const ORDERS_DATA = [
       name: "Phan Trong Duc",
       email: "trongduc@gmail.com",
       phoneNumber: "0987675646",
+      imageUrl:
+        "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
     },
     isPaid: true,
     employee: {},
@@ -1049,6 +1053,8 @@ export const ORDERS_DATA = [
       name: "Phan Trong Duc",
       email: "trongduc@gmail.com",
       phoneNumber: "0987675646",
+      imageUrl:
+        "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
     },
     employee: {},
     isPaid: true,
@@ -1085,6 +1091,8 @@ export const ORDERS_DATA = [
       name: "Phan Trong Duc",
       email: "trongduc@gmail.com",
       phoneNumber: "0987675646",
+      imageUrl:
+        "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
     },
     employee: {},
     isPaid: true,

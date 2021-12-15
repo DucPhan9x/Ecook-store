@@ -4,7 +4,9 @@ import { FormBox } from "components/common";
 import { Form as ReForm } from "reactstrap";
 import { isEmpty, isCurrency } from "validator";
 import { Select } from "antd";
-import PicturesWall from "components/common/UploadContainer";
+import UploadImage from "components/common/UploadImage";
+import { Paper } from "@material-ui/core";
+import NoImage from "assets/images/notImage.png";
 
 const { Option } = Select;
 const ModalUpdated = ({ isModalVisible, handleSubmit, close, data }) => {
@@ -76,6 +78,10 @@ const ModalUpdated = ({ isModalVisible, handleSubmit, close, data }) => {
     });
     setError({});
   };
+  const handleChangeImage = (e) => {
+    const temp = URL.createObjectURL(e.target.files[0]);
+    setForm({ ...form, imageUrl: temp });
+  };
 
   return (
     <Modal
@@ -89,10 +95,13 @@ const ModalUpdated = ({ isModalVisible, handleSubmit, close, data }) => {
       }}
     >
       <ReForm>
-        <div className="block-label-input-modal">
-          <label>Ảnh sản phẩm</label>
-          <PicturesWall setImageUrl={setForm} form={form} />
-        </div>
+        <Paper
+          className="add-edit-recipe-container-bottom--left"
+          style={{ width: "100%", height: 200 }}
+        >
+          <img src={form?.imageUrl || NoImage} alt="avatar" />
+          <UploadImage onChangeImage={handleChangeImage} />
+        </Paper>
         <div className="flex full-width j-space-between body-content-form">
           <div className="block-label-input-modal" style={{ marginRight: 12 }}>
             <label>Tên sản phẩm</label>
