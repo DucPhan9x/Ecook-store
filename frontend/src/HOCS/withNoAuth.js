@@ -3,12 +3,13 @@ import { getAccessToken } from "utils/authUtils";
 import { HeaderClient, Footer } from "layouts";
 import { Redirect } from "react-router-dom";
 
-const withAuth =
-  (Component, showFooter = false, isFullHeight = false) =>
+const withNoAuth =
+  (Component, showFooter = false) =>
   (props) => {
+    const isHomepage = window.location.pathname === "/";
     return (
-      <div className="app" style={{ minHeight: isFullHeight ? "100vh" : "" }}>
-        {getAccessToken() ? (
+      <div className="app" style={{ minHeight: "100vh" }}>
+        {!getAccessToken() || isHomepage ? (
           <>
             <HeaderClient />
             <div className="app__body">
@@ -17,10 +18,10 @@ const withAuth =
             {showFooter && <Footer />}
           </>
         ) : (
-          <Redirect to="/login" />
+          <Redirect to="/" />
         )}
       </div>
     );
   };
 
-export default withAuth;
+export default withNoAuth;

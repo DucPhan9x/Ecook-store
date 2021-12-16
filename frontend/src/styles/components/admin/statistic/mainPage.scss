@@ -1,0 +1,104 @@
+.statistic-container {
+  &__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    &--item {
+      min-width: 22%;
+      min-height: 160px;
+      background: gray;
+      border-radius: 8px;
+      &__inner {
+        padding: 24px 20px;
+        & > span {
+          font-size: 19px;
+          color: whitesmoke;
+          font-weight: 600;
+          text-align: center;
+        }
+        & > div {
+          margin-top: 12px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          img {
+            width: 44px;
+            height: 44px;
+          }
+          span {
+            font-weight: bold;
+            font-size: 20px;
+            color: white;
+          }
+        }
+      }
+    }
+    .turnover {
+      background: linear-gradient(
+        to bottom right,
+        #35d8c2 0%,
+        #34d4a5 50%,
+        #52e9a8 100%
+      );
+    }
+    .number-users {
+      background: linear-gradient(
+        to bottom right,
+        #ab61ff 0%,
+        #be60ee 50%,
+        #e48aee 100%
+      );
+    }
+    .number-orders {
+      background: linear-gradient(
+        to bottom right,
+        #ff956b 0%,
+        #f99355 50%,
+        #ffa85d 100%
+      );
+    }
+    .number-courses-sell {
+      background: linear-gradient(
+        to bottom right,
+        #43abfa 0%,
+        #57b5fd 50%,
+        #80c5f7 100%
+      );
+    }
+  }
+  &__bottom {
+    margin-top: 36px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    &-left {
+      width: 60%;
+    }
+    &-right {
+      margin-left: 24px;
+      width: 40%;
+      height: 100%;
+      // tabs
+
+      .body-tabs-statistic {
+        .item-favorite-block {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 12px;
+        }
+        &::-webkit-scrollbar {
+          width: 6px;
+        }
+        &::-webkit-scrollbar-track {
+          background-color: transparent;
+        }
+        &::-webkit-scrollbar-thumb {
+          background-color: #d6dee1;
+          border-radius: 20px;
+          border: 6px solid transparent;
+        }
+      }
+    }
+  }
+}

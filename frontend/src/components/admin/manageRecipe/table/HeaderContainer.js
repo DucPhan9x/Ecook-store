@@ -21,6 +21,12 @@ const headCells = [
     label: "Nguyên liệu chính",
   },
   {
+    id: "quantitatif",
+    numeric: true,
+    disablePadding: false,
+    label: "Định lượng",
+  },
+  {
     id: "feedbacks",
     numeric: false,
     disablePadding: false,

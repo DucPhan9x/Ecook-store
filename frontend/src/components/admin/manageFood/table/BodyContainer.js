@@ -2,6 +2,8 @@ import { Checkbox, TableBody, TableCell, TableRow } from "@material-ui/core";
 import { Rate } from "antd";
 import moment from "moment";
 import React from "react";
+import LockOpenIcon from "@material-ui/icons/LockOpen";
+import LockIcon from "@material-ui/icons/Lock";
 
 const BodyContainer = (props) => {
   const {
@@ -14,6 +16,7 @@ const BodyContainer = (props) => {
     setSelected,
     setItemSelected,
     setItemSeeDetail,
+    setRows,
   } = props;
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
@@ -107,6 +110,36 @@ const BodyContainer = (props) => {
                   {moment(row.createAt).format("DD/MM/YYYY")}
                 </TableCell>
                 <TableCell align="center">
+                  <button
+                    className="btn-admin"
+                    style={{
+                      marginRight: 12,
+                      background: row.isRemoveTemp && "#5cdd3e",
+                    }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      let temp = [...rows];
+                      temp.forEach((item) => {
+                        if (item._id === row._id) {
+                          item.isRemoveTemp = !item.isRemoveTemp;
+                        }
+                      });
+                      setRows(temp);
+                    }}
+                  >
+                    {row.isRemoveTemp ? "Mở khóa" : "Khóa tạm thời"}
+                    {!row.isRemoveTemp ? (
+                      <LockOpenIcon
+                        color="action"
+                        style={{ marginBottom: 4, marginLeft: 4 }}
+                      />
+                    ) : (
+                      <LockIcon
+                        color="action"
+                        style={{ marginBottom: 4, marginLeft: 4 }}
+                      />
+                    )}
+                  </button>
                   <button
                     className="btn-admin"
                     onClick={(e) => {

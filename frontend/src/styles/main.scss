@@ -12,6 +12,7 @@
 // components
 // -user
 @import "./components/user/homepage.scss";
+@import "./components/user/recipe/recipeDetail.scss";
 // -admin
 @import "./components/admin/manageFood/mainPage.scss";
 @import "./components/admin/manageCourse/editCourse.scss";
@@ -23,9 +24,9 @@
 @import "./components/admin/manageCertification/mainPage.scss";
 @import "./components/admin/manageOrder/mainPage.scss";
 @import "./components/admin/manageVoucher/mainPage.scss";
+@import "./components/admin/statistic/mainPage.scss";
 
 // layouts
-
 @import "./layouts/headerAdmin.scss";
 @import "./layouts/headerClient.scss";
 @import "./layouts/sidebar.scss";

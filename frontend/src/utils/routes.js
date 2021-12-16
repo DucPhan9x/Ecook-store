@@ -30,3 +30,5 @@ export const ROUTE_ADMIN_DASHBOARD_CERTIFICATIONS =
   "/admin/dashboard/certifications"; // course manage
 export const ROUTE_ADMIN_DASHBOARD_ORDERS = "/admin/dashboard/orders"; // course manage
 export const ROUTE_ADMIN_DASHBOARD_VOUCHERS = "/admin/dashboard/vouchers"; // course manage
+// user
+export const ROUTE_CLIENT_RECIPE_DETAIL = "/recipe"; // course manage

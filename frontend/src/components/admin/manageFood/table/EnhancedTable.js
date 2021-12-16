@@ -106,6 +106,7 @@ export default function EnhancedTable({ data, setData }) {
               selected={selected}
               setSelected={setSelected}
               page={page}
+              setRows={setRows}
               rowsPerPage={rowsPerPage}
               setItemSelected={setItemSelected}
               setItemSeeDetail={setItemSeeDetail}

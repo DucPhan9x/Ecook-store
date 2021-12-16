@@ -7,6 +7,7 @@ export const RECIPES_DATA = [
     _id: "recipe_123",
     title: "Gà xào xả ớt",
     feedbacks: 5,
+    quantitatif: 5, // so nguoi an
     contents: [
       `Bước 1:
 Rã đông sản phẩm ở nhiệt độ phòng.`,
@@ -27,6 +28,7 @@ Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm t
   {
     _id: uuid(),
     title: "Gà xào xả ớt",
+    quantitatif: 5, // so nguoi an
     feedbacks: 5,
     contents: [
       `Bước 1:
@@ -48,6 +50,7 @@ Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm t
   {
     _id: uuid(),
     title: "Gà xào xả ớt",
+    quantitatif: 5, // so nguoi an
     feedbacks: 5,
     contents: [
       `Bước 1:
@@ -69,6 +72,7 @@ Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm t
   {
     _id: uuid(),
     title: "Gà xào xả ớt",
+    quantitatif: 5, // so nguoi an
     feedbacks: 5,
     contents: [
       `Bước 1:
@@ -90,6 +94,7 @@ Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm t
   {
     _id: uuid(),
     title: "Gà xào xả ớt",
+    quantitatif: 5, // so nguoi an
     feedbacks: 5,
     contents: [
       `Bước 1:
@@ -111,6 +116,7 @@ Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm t
   {
     _id: uuid(),
     title: "Gà xào xả ớt",
+    quantitatif: 5, // so nguoi an
     feedbacks: 5,
     contents: [
       `Bước 1:
@@ -132,6 +138,7 @@ Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm t
   {
     _id: uuid(),
     title: "Gà xào xả ớt",
+    quantitatif: 5, // so nguoi an
     feedbacks: 5,
     contents: [
       `Bước 1:
@@ -153,6 +160,7 @@ Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm t
   {
     _id: uuid(),
     title: "Gà xào xả ớt",
+    quantitatif: 5, // so nguoi an
     feedbacks: 5,
     contents: [
       `Bước 1:
@@ -186,6 +194,7 @@ export const FOODS_DATA = [
     numOfFeedbacks: 12,
     createAt: Date.now(),
     updateAt: Date.now(),
+    isRemoveTemp: false,
   },
   {
     _id: uuid(),
@@ -199,6 +208,7 @@ export const FOODS_DATA = [
     numOfFeedbacks: 12,
     createAt: Date.now(),
     updateAt: Date.now(),
+    isRemoveTemp: false,
   },
   {
     _id: uuid(),
@@ -212,6 +222,7 @@ export const FOODS_DATA = [
     numOfFeedbacks: 12,
     createAt: Date.now(),
     updateAt: Date.now(),
+    isRemoveTemp: false,
   },
   {
     _id: uuid(),
@@ -225,6 +236,7 @@ export const FOODS_DATA = [
     numOfFeedbacks: 12,
     createAt: Date.now(),
     updateAt: Date.now(),
+    isRemoveTemp: false,
   },
   {
     _id: uuid(),
@@ -238,6 +250,7 @@ export const FOODS_DATA = [
     numOfFeedbacks: 12,
     createAt: Date.now(),
     updateAt: Date.now(),
+    isRemoveTemp: false,
   },
   {
     _id: uuid(),
@@ -251,6 +264,7 @@ export const FOODS_DATA = [
     numOfFeedbacks: 12,
     createAt: Date.now(),
     updateAt: Date.now(),
+    isRemoveTemp: false,
   },
   {
     _id: uuid(),
@@ -264,6 +278,7 @@ export const FOODS_DATA = [
     numOfFeedbacks: 12,
     createAt: Date.now(),
     updateAt: Date.now(),
+    isRemoveTemp: false,
   },
 
   {
@@ -278,6 +293,7 @@ export const FOODS_DATA = [
     numOfFeedbacks: 12,
     createAt: Date.now(),
     updateAt: Date.now(),
+    isRemoveTemp: false,
   },
   {
     _id: uuid(),
@@ -291,6 +307,7 @@ export const FOODS_DATA = [
     numOfFeedbacks: 12,
     createAt: Date.now(),
     updateAt: Date.now(),
+    isRemoveTemp: false,
   },
   {
     _id: uuid(),
@@ -304,6 +321,7 @@ export const FOODS_DATA = [
     numOfFeedbacks: 12,
     createAt: Date.now(),
     updateAt: Date.now(),
+    isRemoveTemp: false,
   },
   {
     _id: uuid(),
@@ -317,6 +335,7 @@ export const FOODS_DATA = [
     numOfFeedbacks: 12,
     createAt: Date.now(),
     updateAt: Date.now(),
+    isRemoveTemp: false,
   },
 ];
 
@@ -871,6 +890,7 @@ export const CUSTOMERS_DATA = [
     dateOfBirth: Date.now(),
     email: "trongduc@gmail.com",
     phoneNumber: "09873678265",
+    isBlock: false,
     address: "TT.La Hai - H.Dong Xuan - T. Phu Yen",
     imageUrl:
       "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
@@ -881,6 +901,8 @@ export const CUSTOMERS_DATA = [
     dateOfBirth: Date.now(),
     email: "trongduc@gmail.com",
     phoneNumber: "09873678265",
+    isBlock: false,
+
     address: "TT.La Hai - H.Dong Xuan - T. Phu Yen",
     imageUrl:
       "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
@@ -890,6 +912,8 @@ export const CUSTOMERS_DATA = [
     fullName: "Phan Trong Duc",
     dateOfBirth: Date.now(),
     email: "trongduc@gmail.com",
+    isBlock: false,
+
     phoneNumber: "09873678265",
     address: "TT.La Hai - H.Dong Xuan - T. Phu Yen",
     imageUrl:

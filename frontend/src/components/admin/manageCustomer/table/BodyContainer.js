@@ -1,6 +1,8 @@
 import { Checkbox, TableBody, TableCell, TableRow } from "@material-ui/core";
 import moment from "moment";
 import React from "react";
+import LockOpenIcon from "@material-ui/icons/LockOpen";
+import LockIcon from "@material-ui/icons/Lock";
 
 const BodyContainer = (props) => {
   const {
@@ -13,6 +15,7 @@ const BodyContainer = (props) => {
     setSelected,
     setSelectedCustomer,
     setIsOpenModalDetail,
+    setRows,
   } = props;
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
@@ -105,12 +108,33 @@ const BodyContainer = (props) => {
                 <TableCell align="center">
                   <button
                     className="btn-admin"
-                    style={{ marginRight: 12 }}
+                    style={{
+                      marginRight: 12,
+                      background: row.isBlock && "#5cdd3e",
+                    }}
                     onClick={(e) => {
                       e.stopPropagation();
+                      let temp = [...rows];
+                      temp.forEach((item) => {
+                        if (item._id === row._id) {
+                          item.isBlock = !item.isBlock;
+                        }
+                      });
+                      setRows(temp);
                     }}
                   >
-                    Khóa tài khoản
+                    {row.isBlock ? "Mở khóa" : "Khóa"}
+                    {!row.isBlock ? (
+                      <LockOpenIcon
+                        color="action"
+                        style={{ marginBottom: 4, marginLeft: 4 }}
+                      />
+                    ) : (
+                      <LockIcon
+                        color="action"
+                        style={{ marginBottom: 4, marginLeft: 4 }}
+                      />
+                    )}
                   </button>
                   <button
                     className="btn-admin"

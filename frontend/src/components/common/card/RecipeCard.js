@@ -10,6 +10,10 @@ import Typography from "@material-ui/core/Typography";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import Rating from "@material-ui/lab/Rating";
 import VisibilityIcon from "@material-ui/icons/Visibility";
+import { useHistory } from "react-router-dom";
+import { getAccessToken } from "utils/authUtils";
+import ModalConfirm from "../ModalConfirm";
+import { useState } from "react";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,35 +43,58 @@ const useStyles = makeStyles((theme) => ({
 export default function RecipeCard({ data }) {
   const classes = useStyles();
   const { title, feedbacks, contents, imageUrl } = data;
+  const history = useHistory();
+
+  const [isOpenModalConfirm, setIsOpenModalConfirm] = useState(false);
 
   return (
-    <Card className={`block--product-list--showing--item ${classes.root}`}>
-      <CardHeader
-        action={
-          <IconButton aria-label="settings">
-            <VisibilityIcon />
-          </IconButton>
-        }
-        title={title}
-      />
-      <CardMedia className={classes.media} image={imageUrl} title={title} />
-      <CardContent style={{ maxHeight: 80, overflow: "hidden" }}>
-        <Typography variant="body2" color="textSecondary" component="p">
-          {contents}
-        </Typography>
-      </CardContent>
-      <CardContent style={{ paddingTop: 0, paddingBottom: 0 }}>
-        <Typography variant="body2" color="textSecondary" component="p">
-          ...xem tiếp
-        </Typography>
-      </CardContent>
-      <CardActions disableSpacing className="flex j-space-between">
-        <Rating name="customized-10" defaultValue={feedbacks} max={5} />
+    <>
+      <Card className={`block--product-list--showing--item ${classes.root}`}>
+        <CardHeader
+          action={
+            <IconButton
+              aria-label="settings"
+              onClick={() => {
+                if (getAccessToken()) {
+                  history.push(`/recipe?id=${data?._id}`);
+                } else {
+                  setIsOpenModalConfirm(true);
+                }
+              }}
+            >
+              <VisibilityIcon />
+            </IconButton>
+          }
+          title={title}
+        />
+        <CardMedia className={classes.media} image={imageUrl} title={title} />
+        <CardContent style={{ maxHeight: 80, overflow: "hidden" }}>
+          <Typography variant="body2" color="textSecondary" component="p">
+            {contents}
+          </Typography>
+        </CardContent>
+        <CardContent style={{ paddingTop: 0, paddingBottom: 0 }}>
+          <Typography variant="body2" color="textSecondary" component="p">
+            ...xem tiếp
+          </Typography>
+        </CardContent>
+        <CardActions disableSpacing className="flex j-space-between">
+          <Rating name="customized-10" defaultValue={feedbacks} max={5} />
 
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
-      </CardActions>
-    </Card>
+          <IconButton aria-label="add to favorites">
+            <FavoriteIcon />
+          </IconButton>
+        </CardActions>
+      </Card>
+      <ModalConfirm
+        title="Thông báo"
+        message="Bạn cần đăng nhập để tiếp tục, bạn muốn tiếp tục ?"
+        isOpenModal={isOpenModalConfirm}
+        close={() => setIsOpenModalConfirm(false)}
+        handleOk={() => {
+          history.push("/login");
+        }}
+      />
+    </>
   );
 }

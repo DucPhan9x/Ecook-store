@@ -19,6 +19,7 @@ const AddRecipe = () => {
     contents: [],
     materials: [],
     imageUrl: "",
+    quantitatif: 0,
   });
 
   function onChange(value, index) {
@@ -35,6 +36,9 @@ const AddRecipe = () => {
     // check validate
     if (isEmpty(form.name)) {
       errorState.name = "Vui lòng nhập vào, không được để trống!";
+    }
+    if (!form.quantitatif) {
+      errorState.quantitatif = "Vui lòng nhập vào!";
     }
     form.materials.forEach((m) => {
       if (
@@ -241,6 +245,21 @@ const AddRecipe = () => {
               >
                 <AddCircleOutlineIcon color="action" />
               </button>
+            </div>
+            <div className="block-input-info-course">
+              <label>Định lượng (số người ăn)</label>
+              <FormBox
+                propsInput={{
+                  placeholder: "Định lượng",
+                  type: "number",
+                  name: "quantitatif",
+                  onChange: handleChange,
+                  onFocus: handleFocus,
+                  value: form.quantitatif,
+                  disabled: false,
+                }}
+                error={error.quantitatif}
+              />
             </div>
             <div className="block-input-info-course">
               <label>Mô tả/chú thích thêm</label>

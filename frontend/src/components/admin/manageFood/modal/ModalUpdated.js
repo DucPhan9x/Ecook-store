@@ -51,7 +51,6 @@ const ModalUpdated = ({ isModalVisible, handleSubmit, close, data }) => {
       return setError(errorState);
     }
     handleSubmit({ ...form, imageUrl: form.imageUrl[0]?.thumbUrl });
-    handleReset();
   };
   const handleChange = (event) => {
     setForm({ ...form, [event.target.name]: event.target.value });
@@ -64,20 +63,6 @@ const ModalUpdated = ({ isModalVisible, handleSubmit, close, data }) => {
     });
   };
 
-  const handleReset = () => {
-    setForm({
-      name: "",
-      type: "",
-      unitPrice: 0,
-      description: "",
-      discountOff: 0,
-      discountMaximum: 0,
-      imageUrl: "",
-      numOfStars: 0,
-      numOfFeedbacks: 0,
-    });
-    setError({});
-  };
   const handleChangeImage = (e) => {
     const temp = URL.createObjectURL(e.target.files[0]);
     setForm({ ...form, imageUrl: temp });
@@ -91,7 +76,6 @@ const ModalUpdated = ({ isModalVisible, handleSubmit, close, data }) => {
       onOk={handleSubmitForm}
       onCancel={() => {
         close();
-        handleReset();
       }}
     >
       <ReForm>

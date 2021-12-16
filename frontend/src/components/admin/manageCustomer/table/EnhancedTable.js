@@ -106,6 +106,7 @@ export default function EnhancedTable({ data, setData }) {
               setSelected={setSelected}
               page={page}
               rowsPerPage={rowsPerPage}
+              setRows={setRows}
               setSelectedCustomer={setSelectedCustomer}
               setIsOpenModalDetail={setIsOpenModalDetail}
             />

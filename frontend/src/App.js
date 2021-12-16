@@ -21,6 +21,7 @@ import {
   ROUTE_ADMIN_DASHBOARD_RECIPES_EDIT,
   ROUTE_ADMIN_DASHBOARD_STATISTICS,
   ROUTE_ADMIN_DASHBOARD_VOUCHERS,
+  ROUTE_CLIENT_RECIPE_DETAIL,
   ROUTE_FORGOTPASSWORD,
   ROUTE_FORGOT_PASSWORD_ADMIN,
   ROUTE_LOGIN,
@@ -48,31 +49,33 @@ import { AddRecipe, EditRecipe } from "components/admin/manageRecipe";
 import ManageCertifications from "pages/admin/manageCertifications";
 import ManageOrders from "pages/admin/manageOrders";
 import ManageVouchers from "pages/admin/manageVouchers";
+import RecipeDetail from "pages/user/recipe/RecipeDetail";
+import withNoAuth from "HOCS/withNoAuth";
 
 function App() {
   return (
     <Router>
       <Switch>
         {/* client */}
-        <Route path="/" component={withAuthClient(HomePageClient)} exact />
+        <Route path="/" component={withNoAuth(HomePageClient, true)} exact />
         <Route
           path={ROUTE_LOGIN}
-          component={withAuthClient(LoginClient)}
+          component={withNoAuth(LoginClient, true)}
           exact
         />
         <Route
           path={ROUTE_REGISTER}
-          component={withAuthClient(Register)}
+          component={withNoAuth(Register, true)}
           exact
         />
         <Route
           path={ROUTE_FORGOTPASSWORD}
-          component={withAuthClient(ForgotPassword)}
+          component={withNoAuth(ForgotPassword, true)}
           exact
         />
         <Route
           path={ROUTE_RESETPASSWORD}
-          component={withAuthClient(ResetPassword)}
+          component={withNoAuth(ResetPassword, true)}
           exact
         />
         {/* admin */}
@@ -160,6 +163,12 @@ function App() {
         <Route
           path={ROUTE_ADMIN_DASHBOARD_STATISTICS}
           component={withAuthAdmin(Statistics)}
+          exact
+        />
+        {/* users */}
+        <Route
+          path={ROUTE_CLIENT_RECIPE_DETAIL}
+          component={withAuthClient(RecipeDetail)}
           exact
         />
       </Switch>
