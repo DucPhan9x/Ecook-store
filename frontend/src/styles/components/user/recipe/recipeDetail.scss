@@ -1,2 +1,71 @@
 .recipe-detail-container {
+  margin: 20px 0;
+  &-top {
+    display: flex;
+    justify-content: space-between;
+    &__left {
+      width: 40%;
+      margin-right: 48px;
+      img {
+        border-radius: 6px;
+      }
+      .minor-image {
+        width: 100%;
+        justify-content: center;
+        margin-top: 8px;
+        img {
+          border: 1px solid rgb(228, 173, 23);
+          width: 160px;
+          height: 120px;
+          border-radius: 6px;
+        }
+      }
+    }
+    &__right {
+      width: 60%;
+      &--title {
+        font-weight: 600;
+        margin-right: 20px;
+        margin-bottom: 36px;
+      }
+      &--quantitatif {
+        margin-bottom: 12px;
+        & > span {
+          font-weight: bold;
+        }
+      }
+      &--materials {
+        margin-bottom: 20px;
+        &-label {
+          font-weight: bold;
+          margin-bottom: 4px;
+        }
+        &-body {
+          width: 800px;
+          border-radius: 6px;
+          padding: 14px;
+          background: #f0f0f0;
+        }
+      }
+      &--contents {
+        margin-bottom: 12px;
+        &-label {
+          font-weight: bold;
+          margin-bottom: 4px;
+        }
+        &-body {
+          width: 800px;
+          border-radius: 6px;
+          padding: 14px;
+          background: #f0f0f0;
+          &--item {
+            margin-bottom: 6px;
+          }
+        }
+      }
+    }
+  }
+  &-bottom {
+    margin-top: 24px;
+  }
 }

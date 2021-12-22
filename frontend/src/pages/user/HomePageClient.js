@@ -12,6 +12,7 @@ import RecipeCard from "components/common/card/RecipeCard";
 import FoodCard from "components/common/card/FoodCard";
 import CourseCard from "components/common/card/CourseCard";
 import InstructorCard from "components/common/card/InstructorCard";
+import ScrollToTop from "components/common/ScrollToTop";
 
 const HomePageClient = () => {
   const [isFoodShow, setIsFoodShow] = useState(true);
@@ -134,6 +135,7 @@ const HomePageClient = () => {
           </div>
         </div>
       )}
+      <ScrollToTop />
     </div>
   );
 };

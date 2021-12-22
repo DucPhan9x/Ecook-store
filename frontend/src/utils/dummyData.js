@@ -6,7 +6,7 @@ export const RECIPES_DATA = [
   {
     _id: "recipe_123",
     title: "Gà xào xả ớt",
-    feedbacks: 5,
+    feedbacks: 3, //trung binh cong all feedbacks
     quantitatif: 5, // so nguoi an
     contents: [
       `Bước 1:
@@ -24,6 +24,30 @@ Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm t
     ],
     imageUrl: GaXaoXaOt,
     createAt: Date.now(),
+    feedbacksList: [
+      {
+        _id: "feedback_123",
+        itemId: "recipe_123", // recipe id
+        user: {
+          userId: "user_1", // user feedback
+          fullName: "Phan Trong Duc",
+          imageUrl:
+            "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
+        },
+        numOfStars: 4,
+        content: "Cong thuc hay qua",
+        createdAt: Date.now(),
+        feedbackType: 1, // 1: recipe, 2: food, 3:course
+        reply: [
+          // Reply cua he thong, phan hoi lai khach hang
+          {
+            _id: uuid(),
+            feedbackId: "feedback_123",
+            content: "Cam on ban da phan hoi",
+          },
+        ],
+      },
+    ],
   },
   {
     _id: uuid(),
@@ -46,6 +70,30 @@ Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm t
     ],
     imageUrl: GaXaoXaOt,
     createAt: Date.now(),
+    feedbacksList: [
+      {
+        _id: "feedback_123",
+        itemId: "recipe_123", // recipe id
+        user: {
+          userId: "user_1", // user feedback
+          fullName: "Phan Trong Duc",
+          imageUrl:
+            "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
+        },
+        numOfStars: 4,
+        content: "Cong thuc hay qua",
+        createdAt: Date.now(),
+        feedbackType: 1, // 1: recipe, 2: food, 3:course
+        reply: [
+          // Reply cua he thong, phan hoi lai khach hang
+          {
+            _id: uuid(),
+            feedbackId: "feedback_123",
+            content: "Cam on ban da phan hoi",
+          },
+        ],
+      },
+    ],
   },
   {
     _id: uuid(),
@@ -68,6 +116,30 @@ Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm t
     ],
     imageUrl: GaXaoXaOt,
     createAt: Date.now(),
+    feedbacksList: [
+      {
+        _id: "feedback_123",
+        itemId: "recipe_123", // recipe id
+        user: {
+          userId: "user_1", // user feedback
+          fullName: "Phan Trong Duc",
+          imageUrl:
+            "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
+        },
+        numOfStars: 4,
+        content: "Cong thuc hay qua",
+        createdAt: Date.now(),
+        feedbackType: 1, // 1: recipe, 2: food, 3:course
+        reply: [
+          // Reply cua he thong, phan hoi lai khach hang
+          {
+            _id: uuid(),
+            feedbackId: "feedback_123",
+            content: "Cam on ban da phan hoi",
+          },
+        ],
+      },
+    ],
   },
   {
     _id: uuid(),
@@ -90,6 +162,30 @@ Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm t
     ],
     imageUrl: GaXaoXaOt,
     createAt: Date.now(),
+    feedbacksList: [
+      {
+        _id: uuid(),
+        itemId: uuid(), // recipe id
+        user: {
+          userId: "user_1", // user feedback
+          fullName: "Phan Trong Duc",
+          imageUrl:
+            "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
+        },
+        numOfStars: 4,
+        content: "Cong thuc hay qua",
+        createdAt: Date.now(),
+        feedbackType: 1, // 1: recipe, 2: food, 3:course
+        reply: [
+          // Reply cua he thong, phan hoi lai khach hang
+          {
+            _id: uuid(),
+            feedbackId: uuid(),
+            content: "Cam on ban da phan hoi",
+          },
+        ],
+      },
+    ],
   },
   {
     _id: uuid(),
@@ -112,6 +208,30 @@ Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm t
     ],
     imageUrl: GaXaoXaOt,
     createAt: Date.now(),
+    feedbacksList: [
+      {
+        _id: uuid(),
+        itemId: uuid(), // recipe id
+        user: {
+          userId: "user_1", // user feedback
+          fullName: "Phan Trong Duc",
+          imageUrl:
+            "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
+        },
+        numOfStars: 4,
+        content: "Cong thuc hay qua",
+        createdAt: Date.now(),
+        feedbackType: 1, // 1: recipe, 2: food, 3:course
+        reply: [
+          // Reply cua he thong, phan hoi lai khach hang
+          {
+            _id: uuid(),
+            feedbackId: uuid(),
+            content: "Cam on ban da phan hoi",
+          },
+        ],
+      },
+    ],
   },
   {
     _id: uuid(),
@@ -134,6 +254,30 @@ Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm t
     ],
     imageUrl: GaXaoXaOt,
     createAt: Date.now(),
+    feedbacksList: [
+      {
+        _id: uuid(),
+        itemId: uuid(), // recipe id
+        user: {
+          userId: "user_1", // user feedback
+          fullName: "Phan Trong Duc",
+          imageUrl:
+            "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
+        },
+        numOfStars: 4,
+        content: "Cong thuc hay qua",
+        createdAt: Date.now(),
+        feedbackType: 1, // 1: recipe, 2: food, 3:course
+        reply: [
+          // Reply cua he thong, phan hoi lai khach hang
+          {
+            _id: uuid(),
+            feedbackId: uuid(),
+            content: "Cam on ban da phan hoi",
+          },
+        ],
+      },
+    ],
   },
   {
     _id: uuid(),
@@ -156,6 +300,30 @@ Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm t
     ],
     imageUrl: GaXaoXaOt,
     createAt: Date.now(),
+    feedbacksList: [
+      {
+        _id: uuid(),
+        itemId: uuid(), // recipe id
+        user: {
+          userId: "user_1", // user feedback
+          fullName: "Phan Trong Duc",
+          imageUrl:
+            "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
+        },
+        numOfStars: 4,
+        content: "Cong thuc hay qua",
+        createdAt: Date.now(),
+        feedbackType: 1, // 1: recipe, 2: food, 3:course
+        reply: [
+          // Reply cua he thong, phan hoi lai khach hang
+          {
+            _id: uuid(),
+            feedbackId: uuid(),
+            content: "Cam on ban da phan hoi",
+          },
+        ],
+      },
+    ],
   },
   {
     _id: uuid(),
@@ -178,6 +346,30 @@ Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm t
     ],
     imageUrl: GaXaoXaOt,
     createAt: Date.now(),
+    feedbacksList: [
+      {
+        _id: uuid(),
+        itemId: uuid(), // recipe id
+        user: {
+          userId: "user_1", // user feedback
+          fullName: "Phan Trong Duc",
+          imageUrl:
+            "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
+        },
+        numOfStars: 4,
+        content: "Cong thuc hay qua",
+        createdAt: Date.now(),
+        feedbackType: 1, // 1: recipe, 2: food, 3:course
+        reply: [
+          // Reply cua he thong, phan hoi lai khach hang
+          {
+            _id: uuid(),
+            feedbackId: uuid(),
+            content: "Cam on ban da phan hoi",
+          },
+        ],
+      },
+    ],
   },
 ];
 //food
@@ -195,6 +387,30 @@ export const FOODS_DATA = [
     createAt: Date.now(),
     updateAt: Date.now(),
     isRemoveTemp: false,
+    feedbacksList: [
+      {
+        _id: uuid(),
+        itemId: uuid(), // recipe id
+        user: {
+          userId: "user_1", // user feedback
+          fullName: "Phan Trong Duc",
+          imageUrl:
+            "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
+        },
+        numOfStars: 4,
+        content: "Cong thuc hay qua",
+        createdAt: Date.now(),
+        feedbackType: 1, // 1: recipe, 2: food, 3:course
+        reply: [
+          // Reply cua he thong, phan hoi lai khach hang
+          {
+            _id: uuid(),
+            feedbackId: uuid(),
+            content: "Cam on ban da phan hoi",
+          },
+        ],
+      },
+    ],
   },
   {
     _id: uuid(),
@@ -209,6 +425,30 @@ export const FOODS_DATA = [
     createAt: Date.now(),
     updateAt: Date.now(),
     isRemoveTemp: false,
+    feedbacksList: [
+      {
+        _id: uuid(),
+        itemId: uuid(), // recipe id
+        user: {
+          userId: "user_1", // user feedback
+          fullName: "Phan Trong Duc",
+          imageUrl:
+            "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
+        },
+        numOfStars: 4,
+        content: "Cong thuc hay qua",
+        createdAt: Date.now(),
+        feedbackType: 1, // 1: recipe, 2: food, 3:course
+        reply: [
+          // Reply cua he thong, phan hoi lai khach hang
+          {
+            _id: uuid(),
+            feedbackId: uuid(),
+            content: "Cam on ban da phan hoi",
+          },
+        ],
+      },
+    ],
   },
   {
     _id: uuid(),
@@ -223,6 +463,30 @@ export const FOODS_DATA = [
     createAt: Date.now(),
     updateAt: Date.now(),
     isRemoveTemp: false,
+    feedbacksList: [
+      {
+        _id: uuid(),
+        itemId: uuid(), // recipe id
+        user: {
+          userId: "user_1", // user feedback
+          fullName: "Phan Trong Duc",
+          imageUrl:
+            "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
+        },
+        numOfStars: 4,
+        content: "Cong thuc hay qua",
+        createdAt: Date.now(),
+        feedbackType: 1, // 1: recipe, 2: food, 3:course
+        reply: [
+          // Reply cua he thong, phan hoi lai khach hang
+          {
+            _id: uuid(),
+            feedbackId: uuid(),
+            content: "Cam on ban da phan hoi",
+          },
+        ],
+      },
+    ],
   },
   {
     _id: uuid(),
@@ -237,6 +501,30 @@ export const FOODS_DATA = [
     createAt: Date.now(),
     updateAt: Date.now(),
     isRemoveTemp: false,
+    feedbacksList: [
+      {
+        _id: uuid(),
+        itemId: uuid(), // recipe id
+        user: {
+          userId: "user_1", // user feedback
+          fullName: "Phan Trong Duc",
+          imageUrl:
+            "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
+        },
+        numOfStars: 4,
+        content: "Cong thuc hay qua",
+        createdAt: Date.now(),
+        feedbackType: 1, // 1: recipe, 2: food, 3:course
+        reply: [
+          // Reply cua he thong, phan hoi lai khach hang
+          {
+            _id: uuid(),
+            feedbackId: uuid(),
+            content: "Cam on ban da phan hoi",
+          },
+        ],
+      },
+    ],
   },
   {
     _id: uuid(),
@@ -251,6 +539,30 @@ export const FOODS_DATA = [
     createAt: Date.now(),
     updateAt: Date.now(),
     isRemoveTemp: false,
+    feedbacksList: [
+      {
+        _id: uuid(),
+        itemId: uuid(), // recipe id
+        user: {
+          userId: "user_1", // user feedback
+          fullName: "Phan Trong Duc",
+          imageUrl:
+            "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
+        },
+        numOfStars: 4,
+        content: "Cong thuc hay qua",
+        createdAt: Date.now(),
+        feedbackType: 1, // 1: recipe, 2: food, 3:course
+        reply: [
+          // Reply cua he thong, phan hoi lai khach hang
+          {
+            _id: uuid(),
+            feedbackId: uuid(),
+            content: "Cam on ban da phan hoi",
+          },
+        ],
+      },
+    ],
   },
   {
     _id: uuid(),
@@ -265,6 +577,30 @@ export const FOODS_DATA = [
     createAt: Date.now(),
     updateAt: Date.now(),
     isRemoveTemp: false,
+    feedbacksList: [
+      {
+        _id: uuid(),
+        itemId: uuid(), // recipe id
+        user: {
+          userId: "user_1", // user feedback
+          fullName: "Phan Trong Duc",
+          imageUrl:
+            "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
+        },
+        numOfStars: 4,
+        content: "Cong thuc hay qua",
+        createdAt: Date.now(),
+        feedbackType: 1, // 1: recipe, 2: food, 3:course
+        reply: [
+          // Reply cua he thong, phan hoi lai khach hang
+          {
+            _id: uuid(),
+            feedbackId: uuid(),
+            content: "Cam on ban da phan hoi",
+          },
+        ],
+      },
+    ],
   },
   {
     _id: uuid(),
@@ -279,6 +615,30 @@ export const FOODS_DATA = [
     createAt: Date.now(),
     updateAt: Date.now(),
     isRemoveTemp: false,
+    feedbacksList: [
+      {
+        _id: uuid(),
+        itemId: uuid(), // recipe id
+        user: {
+          userId: "user_1", // user feedback
+          fullName: "Phan Trong Duc",
+          imageUrl:
+            "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
+        },
+        numOfStars: 4,
+        content: "Cong thuc hay qua",
+        createdAt: Date.now(),
+        feedbackType: 1, // 1: recipe, 2: food, 3:course
+        reply: [
+          // Reply cua he thong, phan hoi lai khach hang
+          {
+            _id: uuid(),
+            feedbackId: uuid(),
+            content: "Cam on ban da phan hoi",
+          },
+        ],
+      },
+    ],
   },
 
   {
@@ -294,6 +654,30 @@ export const FOODS_DATA = [
     createAt: Date.now(),
     updateAt: Date.now(),
     isRemoveTemp: false,
+    feedbacksList: [
+      {
+        _id: uuid(),
+        itemId: uuid(), // recipe id
+        user: {
+          userId: "user_1", // user feedback
+          fullName: "Phan Trong Duc",
+          imageUrl:
+            "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
+        },
+        numOfStars: 4,
+        content: "Cong thuc hay qua",
+        createdAt: Date.now(),
+        feedbackType: 1, // 1: recipe, 2: food, 3:course
+        reply: [
+          // Reply cua he thong, phan hoi lai khach hang
+          {
+            _id: uuid(),
+            feedbackId: uuid(),
+            content: "Cam on ban da phan hoi",
+          },
+        ],
+      },
+    ],
   },
   {
     _id: uuid(),
@@ -308,6 +692,30 @@ export const FOODS_DATA = [
     createAt: Date.now(),
     updateAt: Date.now(),
     isRemoveTemp: false,
+    feedbacksList: [
+      {
+        _id: uuid(),
+        itemId: uuid(), // recipe id
+        user: {
+          userId: "user_1", // user feedback
+          fullName: "Phan Trong Duc",
+          imageUrl:
+            "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
+        },
+        numOfStars: 4,
+        content: "Cong thuc hay qua",
+        createdAt: Date.now(),
+        feedbackType: 1, // 1: recipe, 2: food, 3:course
+        reply: [
+          // Reply cua he thong, phan hoi lai khach hang
+          {
+            _id: uuid(),
+            feedbackId: uuid(),
+            content: "Cam on ban da phan hoi",
+          },
+        ],
+      },
+    ],
   },
   {
     _id: uuid(),
@@ -322,6 +730,30 @@ export const FOODS_DATA = [
     createAt: Date.now(),
     updateAt: Date.now(),
     isRemoveTemp: false,
+    feedbacksList: [
+      {
+        _id: uuid(),
+        itemId: uuid(), // recipe id
+        user: {
+          userId: "user_1", // user feedback
+          fullName: "Phan Trong Duc",
+          imageUrl:
+            "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
+        },
+        numOfStars: 4,
+        content: "Cong thuc hay qua",
+        createdAt: Date.now(),
+        feedbackType: 1, // 1: recipe, 2: food, 3:course
+        reply: [
+          // Reply cua he thong, phan hoi lai khach hang
+          {
+            _id: uuid(),
+            feedbackId: uuid(),
+            content: "Cam on ban da phan hoi",
+          },
+        ],
+      },
+    ],
   },
   {
     _id: uuid(),
@@ -336,6 +768,30 @@ export const FOODS_DATA = [
     createAt: Date.now(),
     updateAt: Date.now(),
     isRemoveTemp: false,
+    feedbacksList: [
+      {
+        _id: uuid(),
+        itemId: uuid(), // recipe id
+        user: {
+          userId: "user_1", // user feedback
+          fullName: "Phan Trong Duc",
+          imageUrl:
+            "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
+        },
+        numOfStars: 4,
+        content: "Cong thuc hay qua",
+        createdAt: Date.now(),
+        feedbackType: 1, // 1: recipe, 2: food, 3:course
+        reply: [
+          // Reply cua he thong, phan hoi lai khach hang
+          {
+            _id: uuid(),
+            feedbackId: uuid(),
+            content: "Cam on ban da phan hoi",
+          },
+        ],
+      },
+    ],
   },
 ];
 
@@ -367,6 +823,30 @@ export const COURSES_DATA = [
     },
     amountStudent: 12,
     createAt: Date.now(),
+    feedbacksList: [
+      {
+        _id: uuid(),
+        itemId: uuid(), // recipe id
+        user: {
+          userId: "user_1", // user feedback
+          fullName: "Phan Trong Duc",
+          imageUrl:
+            "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
+        },
+        numOfStars: 4,
+        content: "Cong thuc hay qua",
+        createdAt: Date.now(),
+        feedbackType: 1, // 1: recipe, 2: food, 3:course
+        reply: [
+          // Reply cua he thong, phan hoi lai khach hang
+          {
+            _id: uuid(),
+            feedbackId: uuid(),
+            content: "Cam on ban da phan hoi",
+          },
+        ],
+      },
+    ],
   },
   {
     _id: uuid(),
@@ -395,6 +875,30 @@ export const COURSES_DATA = [
     },
     createAt: Date.now(),
     amountStudent: 12,
+    feedbacksList: [
+      {
+        _id: uuid(),
+        itemId: uuid(), // recipe id
+        user: {
+          userId: "user_1", // user feedback
+          fullName: "Phan Trong Duc",
+          imageUrl:
+            "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
+        },
+        numOfStars: 4,
+        content: "Cong thuc hay qua",
+        createdAt: Date.now(),
+        feedbackType: 1, // 1: recipe, 2: food, 3:course
+        reply: [
+          // Reply cua he thong, phan hoi lai khach hang
+          {
+            _id: uuid(),
+            feedbackId: uuid(),
+            content: "Cam on ban da phan hoi",
+          },
+        ],
+      },
+    ],
   },
   {
     _id: uuid(),
@@ -422,6 +926,186 @@ export const COURSES_DATA = [
       email: "trongduc@gmail.com",
     },
     createAt: Date.now(),
+    amountStudent: 12,
+    feedbacksList: [
+      {
+        _id: uuid(),
+        itemId: uuid(), // recipe id
+        user: {
+          userId: "user_1", // user feedback
+          fullName: "Phan Trong Duc",
+          imageUrl:
+            "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
+        },
+        numOfStars: 4,
+        content: "Cong thuc hay qua",
+        createdAt: Date.now(),
+        feedbackType: 1, // 1: recipe, 2: food, 3:course
+        reply: [
+          // Reply cua he thong, phan hoi lai khach hang
+          {
+            _id: uuid(),
+            feedbackId: uuid(),
+            content: "Cam on ban da phan hoi",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    _id: uuid(),
+    name: "Món Á cơ bản",
+    unitPrice: 799999,
+    description: "Đây là khóa học chủ yếu tập trung vào các món ăn Châu Á.",
+    examinationContent: "Bò hầm tiêu xanh",
+    criteria: "An toan ve sinh thuc pham, trang tri dep mat",
+
+    regulation:
+      "Thời gian 45 phút, quay video từ khâu sơ chế đến khi thành phẩm.",
+    videoUrls: [
+      {
+        title: "Mon Chau A",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: "30 phút",
+      },
+    ],
+    instructor: {
+      fullName: "Phan Trong Duc",
+      phoneNumber: "0984763232",
+      address: "TT. La Hai - H.Dong Xuan - T.Phu Yen",
+      imageUrl: "https://picsum.photos/200/300",
+      email: "trongduc@gmail.com",
+    },
+    createAt: Date.now(),
+    amountStudent: 12,
+    feedbacksList: [
+      {
+        _id: uuid(),
+        itemId: uuid(), // recipe id
+        user: {
+          userId: "user_1", // user feedback
+          fullName: "Phan Trong Duc",
+          imageUrl:
+            "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
+        },
+        numOfStars: 4,
+        content: "Cong thuc hay qua",
+        createdAt: Date.now(),
+        feedbackType: 1, // 1: recipe, 2: food, 3:course
+        reply: [
+          // Reply cua he thong, phan hoi lai khach hang
+          {
+            _id: uuid(),
+            feedbackId: uuid(),
+            content: "Cam on ban da phan hoi",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    _id: uuid(),
+    name: "Món Á cơ bản",
+    unitPrice: 799999,
+    description: "Đây là khóa học chủ yếu tập trung vào các món ăn Châu Á.",
+    examinationContent: "Bò hầm tiêu xanh",
+    regulation:
+      "Thời gian 45 phút, quay video từ khâu sơ chế đến khi thành phẩm.",
+    criteria: "An toan ve sinh thuc pham, trang tri dep mat",
+
+    videoUrls: [
+      {
+        title: "Mon Chau A",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: "30 phút",
+      },
+    ],
+    instructor: {
+      fullName: "Phan Trong Duc",
+      phoneNumber: "0984763232",
+      address: "TT. La Hai - H.Dong Xuan - T.Phu Yen",
+      imageUrl: "https://picsum.photos/200/300",
+      email: "trongduc@gmail.com",
+    },
+    createAt: Date.now(),
+    amountStudent: 12,
+    feedbacksList: [
+      {
+        _id: uuid(),
+        itemId: uuid(), // recipe id
+        user: {
+          userId: "user_1", // user feedback
+          fullName: "Phan Trong Duc",
+          imageUrl:
+            "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
+        },
+        numOfStars: 4,
+        content: "Cong thuc hay qua",
+        createdAt: Date.now(),
+        feedbackType: 1, // 1: recipe, 2: food, 3:course
+        reply: [
+          // Reply cua he thong, phan hoi lai khach hang
+          {
+            _id: uuid(),
+            feedbackId: uuid(),
+            content: "Cam on ban da phan hoi",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    _id: uuid(),
+    name: "Món Á cơ bản",
+    unitPrice: 799999,
+    description: "Đây là khóa học chủ yếu tập trung vào các món ăn Châu Á.",
+    examinationContent: "Bò hầm tiêu xanh",
+    regulation:
+      "Thời gian 45 phút, quay video từ khâu sơ chế đến khi thành phẩm.",
+    criteria: "An toan ve sinh thuc pham, trang tri dep mat",
+
+    videoUrls: [
+      {
+        title: "Mon Chau A",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: "30 phút",
+      },
+    ],
+    instructor: {
+      fullName: "Phan Trong Duc",
+      phoneNumber: "0984763232",
+      address: "TT. La Hai - H.Dong Xuan - T.Phu Yen",
+      imageUrl: "https://picsum.photos/200/300",
+      email: "trongduc@gmail.com",
+    },
+    createAt: Date.now(),
+    feedbacksList: [
+      {
+        _id: uuid(),
+        itemId: uuid(), // recipe id
+        user: {
+          userId: "user_1", // user feedback
+          fullName: "Phan Trong Duc",
+          imageUrl:
+            "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
+        },
+        numOfStars: 4,
+        content: "Cong thuc hay qua",
+        createdAt: Date.now(),
+        feedbackType: 1, // 1: recipe, 2: food, 3:course
+        reply: [
+          // Reply cua he thong, phan hoi lai khach hang
+          {
+            _id: uuid(),
+            feedbackId: uuid(),
+            content: "Cam on ban da phan hoi",
+          },
+        ],
+      },
+    ],
     amountStudent: 12,
   },
   {
@@ -451,62 +1135,30 @@ export const COURSES_DATA = [
     },
     createAt: Date.now(),
     amountStudent: 12,
-  },
-  {
-    _id: uuid(),
-    name: "Món Á cơ bản",
-    unitPrice: 799999,
-    description: "Đây là khóa học chủ yếu tập trung vào các món ăn Châu Á.",
-    examinationContent: "Bò hầm tiêu xanh",
-    regulation:
-      "Thời gian 45 phút, quay video từ khâu sơ chế đến khi thành phẩm.",
-    criteria: "An toan ve sinh thuc pham, trang tri dep mat",
-
-    videoUrls: [
+    feedbacksList: [
       {
-        title: "Mon Chau A",
-        videoUrl:
-          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-        duration: "30 phút",
+        _id: uuid(),
+        itemId: uuid(), // recipe id
+        user: {
+          userId: "user_1", // user feedback
+          fullName: "Phan Trong Duc",
+          imageUrl:
+            "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
+        },
+        numOfStars: 4,
+        content: "Cong thuc hay qua",
+        createdAt: Date.now(),
+        feedbackType: 1, // 1: recipe, 2: food, 3:course
+        reply: [
+          // Reply cua he thong, phan hoi lai khach hang
+          {
+            _id: uuid(),
+            feedbackId: uuid(),
+            content: "Cam on ban da phan hoi",
+          },
+        ],
       },
     ],
-    instructor: {
-      fullName: "Phan Trong Duc",
-      phoneNumber: "0984763232",
-      address: "TT. La Hai - H.Dong Xuan - T.Phu Yen",
-      imageUrl: "https://picsum.photos/200/300",
-      email: "trongduc@gmail.com",
-    },
-    createAt: Date.now(),
-    amountStudent: 12,
-  },
-  {
-    _id: uuid(),
-    name: "Món Á cơ bản",
-    unitPrice: 799999,
-    description: "Đây là khóa học chủ yếu tập trung vào các món ăn Châu Á.",
-    examinationContent: "Bò hầm tiêu xanh",
-    regulation:
-      "Thời gian 45 phút, quay video từ khâu sơ chế đến khi thành phẩm.",
-    criteria: "An toan ve sinh thuc pham, trang tri dep mat",
-
-    videoUrls: [
-      {
-        title: "Mon Chau A",
-        videoUrl:
-          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-        duration: "30 phút",
-      },
-    ],
-    instructor: {
-      fullName: "Phan Trong Duc",
-      phoneNumber: "0984763232",
-      address: "TT. La Hai - H.Dong Xuan - T.Phu Yen",
-      imageUrl: "https://picsum.photos/200/300",
-      email: "trongduc@gmail.com",
-    },
-    createAt: Date.now(),
-    amountStudent: 12,
   },
   {
     _id: uuid(),
@@ -535,34 +1187,30 @@ export const COURSES_DATA = [
     },
     createAt: Date.now(),
     amountStudent: 12,
-  },
-  {
-    _id: uuid(),
-    name: "Món Á cơ bản",
-    unitPrice: 799999,
-    description: "Đây là khóa học chủ yếu tập trung vào các món ăn Châu Á.",
-    examinationContent: "Bò hầm tiêu xanh",
-    criteria: "An toan ve sinh thuc pham, trang tri dep mat",
-
-    regulation:
-      "Thời gian 45 phút, quay video từ khâu sơ chế đến khi thành phẩm.",
-    videoUrls: [
+    feedbacksList: [
       {
-        title: "Mon Chau A",
-        videoUrl:
-          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-        duration: "30 phút",
+        _id: uuid(),
+        itemId: uuid(), // recipe id
+        user: {
+          userId: "user_1", // user feedback
+          fullName: "Phan Trong Duc",
+          imageUrl:
+            "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
+        },
+        numOfStars: 4,
+        content: "Cong thuc hay qua",
+        createdAt: Date.now(),
+        feedbackType: 1, // 1: recipe, 2: food, 3:course
+        reply: [
+          // Reply cua he thong, phan hoi lai khach hang
+          {
+            _id: uuid(),
+            feedbackId: uuid(),
+            content: "Cam on ban da phan hoi",
+          },
+        ],
       },
     ],
-    instructor: {
-      fullName: "Phan Trong Duc",
-      phoneNumber: "0984763232",
-      address: "TT. La Hai - H.Dong Xuan - T.Phu Yen",
-      imageUrl: "https://picsum.photos/200/300",
-      email: "trongduc@gmail.com",
-    },
-    createAt: Date.now(),
-    amountStudent: 12,
   },
 ];
 

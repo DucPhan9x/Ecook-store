@@ -79,7 +79,7 @@ export default function RecipeCard({ data }) {
           </Typography>
         </CardContent>
         <CardActions disableSpacing className="flex j-space-between">
-          <Rating name="customized-10" defaultValue={feedbacks} max={5} />
+          <Rating defaultValue={feedbacks} max={5} readOnly />
 
           <IconButton aria-label="add to favorites">
             <FavoriteIcon />
