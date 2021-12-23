@@ -18,7 +18,7 @@ const FoodCard = ({ data }) => {
           </div>
           <div className="block-action-food">
             <IconButton aria-label="add to favorites">
-              <FavoriteIcon />
+              <FavoriteIcon color="secondary" />
             </IconButton>
             <div>
               <Tooltip title="Mua ngay" placement="top">

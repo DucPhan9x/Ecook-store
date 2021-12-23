@@ -7,6 +7,7 @@ import Paper from "@material-ui/core/Paper";
 import HeaderContainer from "./HeaderContainer";
 import ToolbarContainer from "./ToolbarContainer";
 import BodyContainer from "./BodyContainer";
+import ModalManageFeedback from "components/common/modal/ModalManageFeedback";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -69,6 +70,8 @@ export default function EnhancedTable({ data, setData }) {
     setPage(0);
   };
 
+  const [feedbackItemSelected, setFeedbackItemSelected] = useState("");
+
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
@@ -102,6 +105,7 @@ export default function EnhancedTable({ data, setData }) {
               setSelected={setSelected}
               page={page}
               rowsPerPage={rowsPerPage}
+              setFeedbackItemSelected={setFeedbackItemSelected}
             />
           </Table>
         </TableContainer>
@@ -115,6 +119,11 @@ export default function EnhancedTable({ data, setData }) {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
+      <ModalManageFeedback
+        isModalVisible={feedbackItemSelected}
+        close={() => setFeedbackItemSelected("")}
+        data={feedbackItemSelected}
+      />
     </div>
   );
 }

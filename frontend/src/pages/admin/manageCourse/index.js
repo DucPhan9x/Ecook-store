@@ -17,13 +17,16 @@ const ManageCourse = () => {
     <div className="manage-food-page">
       <div className="manage-food-page-top">
         <div className="manage-food-page-top-right full-width flex j-space-between">
-          <button
-            className="btn-admin"
-            onClick={() => history.push("/admin/dashboard/courses/add")}
-          >
-            <AddCircleOutlineIcon color="action" />
-            Tạo khóa học
-          </button>
+          <div className="flex items-center">
+            <button
+              className="btn-admin"
+              onClick={() => history.push("/admin/dashboard/courses/add")}
+            >
+              <AddCircleOutlineIcon color="action" />
+              Tạo khóa học
+            </button>
+          </div>
+
           <SearchField onChange={(e) => console.log(e.target.value)} />
         </div>
       </div>

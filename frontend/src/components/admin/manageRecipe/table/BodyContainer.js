@@ -1,13 +1,28 @@
-import { Checkbox, TableBody, TableCell, TableRow } from "@material-ui/core";
+import {
+  Checkbox,
+  IconButton,
+  TableBody,
+  TableCell,
+  TableRow,
+} from "@material-ui/core";
 import moment from "moment";
 import React from "react";
 import { useHistory } from "react-router";
 import { ROUTE_ADMIN_DASHBOARD_RECIPES } from "utils/routes";
 import { Rate } from "antd";
+import FeedbackIcon from "@material-ui/icons/Feedback";
 
 const BodyContainer = (props) => {
-  const { rows, order, orderBy, page, rowsPerPage, selected, setSelected } =
-    props;
+  const {
+    rows,
+    order,
+    orderBy,
+    page,
+    rowsPerPage,
+    selected,
+    setSelected,
+    setFeedbackItemSelected,
+  } = props;
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
@@ -98,16 +113,18 @@ const BodyContainer = (props) => {
                   (Xem chi tiết)
                 </TableCell>
                 <TableCell align="left">
-                  {row.material.map((item) => (
-                    <div key={item._id}>
-                      {item.foodName +
-                        ": " +
-                        item.quantity +
-                        "(" +
-                        item.unit +
-                        ")"}
-                    </div>
-                  ))}
+                  {row.material
+                    .filter((item, index) => index < 3)
+                    .map((item) => (
+                      <div key={item._id}>
+                        {item.foodName +
+                          ": " +
+                          item.quantity +
+                          "(" +
+                          item.unit +
+                          ")"}
+                      </div>
+                    ))}
                 </TableCell>
                 <TableCell align="left">{row.quantitatif} người ăn</TableCell>
                 <TableCell align="left">
@@ -128,6 +145,15 @@ const BodyContainer = (props) => {
                   >
                     Chi tiết
                   </button>
+                  <IconButton
+                    style={{ marginLeft: 12 }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setFeedbackItemSelected(row);
+                    }}
+                  >
+                    <FeedbackIcon color="primary" />
+                  </IconButton>
                 </TableCell>
               </TableRow>
             );

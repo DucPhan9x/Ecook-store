@@ -9,6 +9,7 @@ import ToolbarContainer from "./ToolbarContainer";
 import BodyContainer from "./BodyContainer";
 import ModalUpdated from "../modal/ModalUpdated";
 import ModalDetail from "../modal/ModalDetail";
+import ModalManageFeedback from "components/common/modal/ModalManageFeedback";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -73,6 +74,7 @@ export default function EnhancedTable({ data, setData }) {
 
   const [itemSelected, setItemSelected] = useState("");
   const [itemSeeDetail, setItemSeeDetail] = useState("");
+  const [feedbackItemSelected, setFeedbackItemSelected] = useState("");
 
   return (
     <div className={classes.root}>
@@ -110,6 +112,7 @@ export default function EnhancedTable({ data, setData }) {
               rowsPerPage={rowsPerPage}
               setItemSelected={setItemSelected}
               setItemSeeDetail={setItemSeeDetail}
+              setFeedbackItemSelected={setFeedbackItemSelected}
             />
           </Table>
         </TableContainer>
@@ -154,6 +157,11 @@ export default function EnhancedTable({ data, setData }) {
         close={() => {
           setItemSeeDetail("");
         }}
+      />
+      <ModalManageFeedback
+        isModalVisible={feedbackItemSelected}
+        close={() => setFeedbackItemSelected("")}
+        data={feedbackItemSelected}
       />
     </div>
   );

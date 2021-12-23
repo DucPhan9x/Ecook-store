@@ -1,9 +1,16 @@
-import { Checkbox, TableBody, TableCell, TableRow } from "@material-ui/core";
+import {
+  Checkbox,
+  IconButton,
+  TableBody,
+  TableCell,
+  TableRow,
+} from "@material-ui/core";
 import { Rate } from "antd";
 import moment from "moment";
 import React from "react";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
 import LockIcon from "@material-ui/icons/Lock";
+import FeedbackIcon from "@material-ui/icons/Feedback";
 
 const BodyContainer = (props) => {
   const {
@@ -17,6 +24,7 @@ const BodyContainer = (props) => {
     setItemSelected,
     setItemSeeDetail,
     setRows,
+    setFeedbackItemSelected,
   } = props;
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
@@ -149,6 +157,15 @@ const BodyContainer = (props) => {
                   >
                     Chỉnh sửa
                   </button>
+                  <IconButton
+                    style={{ marginLeft: 12 }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setFeedbackItemSelected(row);
+                    }}
+                  >
+                    <FeedbackIcon color="primary" />
+                  </IconButton>
                 </TableCell>
               </TableRow>
             );

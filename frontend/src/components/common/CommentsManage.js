@@ -1,9 +1,10 @@
-import { Comment, Avatar, Form, Button, List, Input } from "antd";
+import { Comment, Avatar, Form, List, Input } from "antd";
 import moment from "moment";
 import "moment/locale/vi";
 import { useEffect, useState } from "react";
 import { uuid } from "utils/stringUtils";
 import ReplyIcon from "@material-ui/icons/Reply";
+import ECookIcon from "assets/images/logoECook.png";
 
 const { TextArea } = Input;
 
@@ -115,36 +116,14 @@ const CommentList = ({ comments, setComments, onSubmit, currentUser }) => {
   );
 };
 
-const Editor = ({ onChange, onSubmit, submitting, value, formFeedback }) => (
-  <>
-    <Form.Item>
-      <TextArea rows={3} onChange={onChange} value={value} />
-    </Form.Item>
-    <Form.Item>
-      <Button
-        htmlType="submit"
-        loading={submitting}
-        onClick={onSubmit}
-        type="primary"
-        disabled={formFeedback?.rating < 3}
-      >
-        Đánh giá
-      </Button>
-    </Form.Item>
-  </>
-);
-
-const Comments = ({ handleFeedback, data, formFeedback, handleReply }) => {
+const CommentsManage = ({ data, handleReply }) => {
   const [comments, setComments] = useState([]);
-  const [submitting, setSubmitting] = useState(false);
-  const [value, setValue] = useState("");
 
   // fetch API get current user
   const currentUser = {
     userId: uuid(), // user feedback
     fullName: "Duc Trong",
-    imageUrl:
-      "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
+    imageUrl: ECookIcon,
   };
 
   useEffect(() => {
@@ -163,49 +142,6 @@ const Comments = ({ handleFeedback, data, formFeedback, handleReply }) => {
     // eslint-disable-next-line
   }, [data]);
 
-  const handleChange = (e) => {
-    setValue(e.target.value);
-  };
-
-  const handleSubmit = () => {
-    if (!value) {
-      return;
-    }
-
-    setSubmitting(true);
-    setTimeout(() => {
-      setSubmitting(false);
-      setValue("");
-      setComments([
-        ...comments,
-        {
-          author: currentUser.fullName,
-          avatar: currentUser.imageUrl,
-          content: <p>{value}</p>,
-          datetime: moment(Date.now() - 365 * 24 * 3600 * 1000).fromNow(),
-          openReply: false,
-          feedbackId: uuid(),
-          replyList: [],
-        },
-      ]);
-      handleFeedback([
-        ...comments.map((item) => ({
-          ...item,
-          content: item.content.props.children,
-        })),
-        {
-          author: currentUser.fullName,
-          avatar: currentUser.imageUrl,
-          content: value,
-          datetime: moment(Date.now() - 365 * 24 * 3600 * 1000).fromNow(),
-          openReply: false,
-          feedbackId: uuid(),
-          replyList: [],
-        },
-      ]);
-    }, 1000);
-  };
-
   return (
     <>
       {comments.length > 0 && (
@@ -216,20 +152,8 @@ const Comments = ({ handleFeedback, data, formFeedback, handleReply }) => {
           currentUser={currentUser}
         />
       )}
-      <Comment
-        avatar={<Avatar src={currentUser.imageUrl} alt="Han Solo" />}
-        content={
-          <Editor
-            formFeedback={formFeedback}
-            onChange={handleChange}
-            onSubmit={handleSubmit}
-            submitting={submitting}
-            value={value}
-          />
-        }
-      />
     </>
   );
 };
 
-export default Comments;
+export default CommentsManage;

@@ -21,7 +21,6 @@ import {
   ROUTE_ADMIN_DASHBOARD_RECIPES_EDIT,
   ROUTE_ADMIN_DASHBOARD_STATISTICS,
   ROUTE_ADMIN_DASHBOARD_VOUCHERS,
-  ROUTE_CLIENT_RECIPE_DETAIL,
   ROUTE_FORGOTPASSWORD,
   ROUTE_FORGOT_PASSWORD_ADMIN,
   ROUTE_LOGIN,
@@ -167,7 +166,7 @@ function App() {
         />
         {/* users */}
         <Route
-          path={ROUTE_CLIENT_RECIPE_DETAIL}
+          path={"/recipe"}
           component={withAuthClient(RecipeDetail)}
           exact
         />

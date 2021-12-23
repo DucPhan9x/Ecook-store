@@ -21,9 +21,7 @@ const DialogConfirm = ({ open, handleClose, message, handleSubmit }) => {
       aria-labelledby="alert-dialog-slide-title"
       aria-describedby="alert-dialog-slide-description"
     >
-      <DialogContent
-        style={{ textAlign: "center", minWidth: 380, minHeight: 70 }}
-      >
+      <DialogContent>
         <DialogContentText id="alert-dialog-slide-description flex items-center">
           <WarningIcon /> Bạn có chắc muốn {message} ?
         </DialogContentText>

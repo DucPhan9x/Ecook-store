@@ -1,12 +1,27 @@
-import { Checkbox, TableBody, TableCell, TableRow } from "@material-ui/core";
+import {
+  Checkbox,
+  IconButton,
+  TableBody,
+  TableCell,
+  TableRow,
+} from "@material-ui/core";
 import moment from "moment";
 import React from "react";
 import { useHistory } from "react-router";
 import SupervisorAccountIcon from "@material-ui/icons/SupervisorAccount";
+import FeedbackIcon from "@material-ui/icons/Feedback";
 
 const BodyContainer = (props) => {
-  const { rows, order, orderBy, page, rowsPerPage, selected, setSelected } =
-    props;
+  const {
+    rows,
+    order,
+    orderBy,
+    page,
+    rowsPerPage,
+    selected,
+    setSelected,
+    setFeedbackItemSelected,
+  } = props;
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
@@ -121,6 +136,15 @@ const BodyContainer = (props) => {
                   >
                     Chi tiết
                   </button>
+                  <IconButton
+                    style={{ marginLeft: 12 }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setFeedbackItemSelected(row);
+                    }}
+                  >
+                    <FeedbackIcon color="primary" />
+                  </IconButton>
                 </TableCell>
               </TableRow>
             );

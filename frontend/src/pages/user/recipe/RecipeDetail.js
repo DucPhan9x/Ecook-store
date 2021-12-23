@@ -1,5 +1,7 @@
 import { Rating } from "@material-ui/lab";
+import { BackPreviousPage } from "components/common";
 import Comments from "components/common/Comments";
+import useNotification from "hooks/useNotification";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -25,6 +27,7 @@ const RecipeDetail = () => {
 
   return (
     <div className="recipe-detail-container">
+      <BackPreviousPage />
       <div className="recipe-detail-container-top">
         <div className="recipe-detail-container-top__left">
           <img src={recipe?.imageUrl} alt="" />
@@ -84,8 +87,7 @@ const RecipeDetail = () => {
             Đánh giá & Nhận xét
           </span>
           <Rating
-            defaultValue={0}
-            value={0}
+            value={formFeedback.rating}
             onChange={(e, value) =>
               setFormFeedback({ ...formFeedback, rating: value })
             }
@@ -93,12 +95,22 @@ const RecipeDetail = () => {
         </div>
         <Comments
           data={recipe.feedbacksList}
+          formFeedback={formFeedback}
+          handleReply={(replyList) => {
+            // create reply , call API
+            console.log(replyList);
+          }}
           handleFeedback={(comment) => {
             // check if stars > 3 => call API send feedback
             if (formFeedback.rating > 2) {
               setFormFeedback({ ...formFeedback, comment });
               console.log({ ...formFeedback, comment });
               // CALL API add feedback for this recipe id
+            } else {
+              useNotification.Warning({
+                title: "Message",
+                message: "Bạn không thể bình luận vì đánh giá quá thấp",
+              });
             }
           }}
         />

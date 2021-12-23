@@ -82,7 +82,7 @@ export default function RecipeCard({ data }) {
           <Rating defaultValue={feedbacks} max={5} readOnly />
 
           <IconButton aria-label="add to favorites">
-            <FavoriteIcon />
+            <FavoriteIcon color="secondary" />
           </IconButton>
         </CardActions>
       </Card>

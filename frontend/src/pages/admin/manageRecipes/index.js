@@ -18,13 +18,16 @@ const ManageRecipes = () => {
     <div className="manage-food-page">
       <div className="manage-food-page-top">
         <div className="manage-food-page-top-right flex j-space-between full-width">
-          <button
-            className="btn-admin"
-            onClick={() => history.push(ROUTE_ADMIN_DASHBOARD_RECIPES_ADD)}
-          >
-            <AddCircleOutlineIcon color="action" />
-            Tạo mới
-          </button>
+          <div className="flex items-center">
+            <button
+              className="btn-admin"
+              onClick={() => history.push(ROUTE_ADMIN_DASHBOARD_RECIPES_ADD)}
+            >
+              <AddCircleOutlineIcon color="action" />
+              Tạo mới
+            </button>
+          </div>
+
           <SearchField onChange={(e) => console.log(e.target.value)} />
         </div>
       </div>
