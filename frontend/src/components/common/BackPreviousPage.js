@@ -3,13 +3,13 @@ import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 
 const BackPreviousPage = () => {
   return (
-    <span
+    <div
       className="text-back-previous-page"
       onClick={() => window.history.back()}
     >
       <ArrowBackIcon />
       Quay lại trang trước
-    </span>
+    </div>
   );
 };
 export default BackPreviousPage;

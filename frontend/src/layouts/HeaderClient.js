@@ -20,10 +20,7 @@ const HeaderClient = () => {
           <h3 onClick={() => history.push("/")}>
             <img style={{ height: 70, width: 180 }} src={Logo} alt="" />
           </h3>
-          <Input
-            placeholder="Tìm công thức hoặc sản phẩm"
-            prefix={<SearchOutlined />}
-          />
+          <Input placeholder="Tìm kiếm thông tin" prefix={<SearchOutlined />} />
         </div>
         <div className="header-client__inner--right">
           <Tooltip title="Bộ sưu tập" placement="bottom">

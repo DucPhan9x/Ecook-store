@@ -409,14 +409,18 @@ Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm t
 export const FOODS_DATA = [
   {
     _id: uuid(),
-    type: "Thịt Tươi",
+    type: "Thịt",
+    unit: "kg",
+    quantity: 1,
     name: "Sườn Non Heo",
     unitPrice: 120000,
-    description: "Hang tuoi song",
+    discountOff: 20, // percent %,
+    discountMaximum: 20000, //vnd
+    description: "Hàng tươi sống",
     imageUrl:
       "https://res.cloudinary.com/duc/image/upload/v1639206902/ecook/suon_heo_ssbldm.jpg",
     numOfStars: 5,
-    numOfFeedbacks: 12,
+    numOfFeedbacks: 12, // feedbacks.length
     createAt: Date.now(),
     updateAt: Date.now(),
     isRemoveTemp: false,
@@ -474,13 +478,167 @@ export const FOODS_DATA = [
         ],
       },
     ],
+    recipesRelated: [
+      {
+        _id: uuid(),
+        title: "Sườn xào chua ngọt",
+        quantitatif: 5, // so nguoi an
+        feedbacks: 5,
+        contents: [
+          `Bước 1:
+    Rã đông sản phẩm ở nhiệt độ phòng.`,
+          `Bước 2:
+    Đặt nồi lên bếp, cho tôm thẻ rim mặn (ướp sẵn) vào nồi đảo nhẹ 2-3 phút cho săn, tiếp đến cho 200ml nước lọc vào nồi (lấy phần nước này cho vào hộp tôm để lấy hết phần sốt ướp trong hộp). Kho trên lửa nhỏ đến khi nước kho sệt lại, nêm nếm cho vừa ăn rồi tắt bếp
+    `,
+          `Bước 3:
+    Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm trắng.`,
+        ],
+        material: [
+          { _id: uuid(), foodName: "Gà", unit: "kg", quantity: 0.5 },
+          { _id: uuid(), foodName: "Xả", unit: "g", quantity: 500 },
+          { _id: uuid(), foodName: "Ớt", unit: "g", quantity: 200 },
+        ],
+        imageUrl: GaXaoXaOt,
+        createAt: Date.now(),
+        feedbacksList: [
+          {
+            _id: "feedback_123",
+            itemId: "recipe_123", // recipe id
+            user: {
+              userId: "user_1", // user feedback
+              fullName: "Phan Trong Duc",
+              imageUrl:
+                "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
+            },
+            numOfStars: 4,
+            content: "Cong thuc hay qua",
+            createdAt: Date.now(),
+            feedbackType: 1, // 1: recipe, 2: food, 3:course
+            reply: [
+              // Reply cua he thong, phan hoi lai khach hang
+              {
+                _id: uuid(),
+                feedbackId: uuid(),
+                user: {
+                  _id: uuid(),
+                  imageUrl: ECookIcon,
+                },
+                content: "Cam on ban da phan hoi",
+              },
+            ],
+          },
+        ],
+      },
+    ],
   },
   {
     _id: uuid(),
-    type: "Thịt Tươi",
+    type: "Thịt",
+    unit: "kg",
+    quantity: 1,
     name: "Sườn Non Heo",
     unitPrice: 120000,
-    description: "Hang tuoi song",
+    description: "Hàng tươi sống",
+    imageUrl:
+      "https://res.cloudinary.com/duc/image/upload/v1639206902/ecook/suon_heo_ssbldm.jpg",
+    numOfStars: 5,
+    numOfFeedbacks: 12,
+    discountOff: 20, // percent %,
+    discountMaximum: 20000, //vnd
+    createAt: Date.now(),
+    updateAt: Date.now(),
+    isRemoveTemp: false,
+    feedbacksList: [
+      {
+        _id: uuid(),
+        itemId: uuid(), // recipe id
+        user: {
+          userId: "user_1", // user feedback
+          fullName: "Phan Trong Duc",
+          imageUrl:
+            "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
+        },
+        numOfStars: 4,
+        content: "Cong thuc hay qua",
+        createdAt: Date.now(),
+        feedbackType: 1, // 1: recipe, 2: food, 3:course
+        reply: [
+          // Reply cua he thong, phan hoi lai khach hang
+          {
+            _id: uuid(),
+            feedbackId: uuid(),
+            user: {
+              _id: uuid(),
+              imageUrl: ECookIcon,
+            },
+            content: "Cam on ban da phan hoi",
+          },
+        ],
+      },
+    ],
+    recipesRelated: [
+      {
+        _id: uuid(),
+        title: "Sườn xào chua ngọt",
+        quantitatif: 5, // so nguoi an
+        feedbacks: 5,
+        contents: [
+          `Bước 1:
+    Rã đông sản phẩm ở nhiệt độ phòng.`,
+          `Bước 2:
+    Đặt nồi lên bếp, cho tôm thẻ rim mặn (ướp sẵn) vào nồi đảo nhẹ 2-3 phút cho săn, tiếp đến cho 200ml nước lọc vào nồi (lấy phần nước này cho vào hộp tôm để lấy hết phần sốt ướp trong hộp). Kho trên lửa nhỏ đến khi nước kho sệt lại, nêm nếm cho vừa ăn rồi tắt bếp
+    `,
+          `Bước 3:
+    Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm trắng.`,
+        ],
+        material: [
+          { _id: uuid(), foodName: "Gà", unit: "kg", quantity: 0.5 },
+          { _id: uuid(), foodName: "Xả", unit: "g", quantity: 500 },
+          { _id: uuid(), foodName: "Ớt", unit: "g", quantity: 200 },
+        ],
+        imageUrl: GaXaoXaOt,
+        createAt: Date.now(),
+        feedbacksList: [
+          {
+            _id: "feedback_123",
+            itemId: "recipe_123", // recipe id
+            user: {
+              userId: "user_1", // user feedback
+              fullName: "Phan Trong Duc",
+              imageUrl:
+                "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
+            },
+            numOfStars: 4,
+            content: "Cong thuc hay qua",
+            createdAt: Date.now(),
+            feedbackType: 1, // 1: recipe, 2: food, 3:course
+            reply: [
+              // Reply cua he thong, phan hoi lai khach hang
+              {
+                _id: uuid(),
+                feedbackId: uuid(),
+                user: {
+                  _id: uuid(),
+                  imageUrl: ECookIcon,
+                },
+                content: "Cam on ban da phan hoi",
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    _id: uuid(),
+    type: "Thịt",
+    unit: "kg",
+    quantity: 1,
+    name: "Sườn Non Heo",
+    unitPrice: 120000,
+    description: "Hàng tươi sống",
+    discountOff: 20, // percent %,
+    discountMaximum: 20000, //vnd
     imageUrl:
       "https://res.cloudinary.com/duc/image/upload/v1639206902/ecook/suon_heo_ssbldm.jpg",
     numOfStars: 5,
@@ -516,13 +674,69 @@ export const FOODS_DATA = [
         ],
       },
     ],
+    recipesRelated: [
+      {
+        _id: uuid(),
+        title: "Sườn xào chua ngọt",
+        quantitatif: 5, // so nguoi an
+        feedbacks: 5,
+        contents: [
+          `Bước 1:
+    Rã đông sản phẩm ở nhiệt độ phòng.`,
+          `Bước 2:
+    Đặt nồi lên bếp, cho tôm thẻ rim mặn (ướp sẵn) vào nồi đảo nhẹ 2-3 phút cho săn, tiếp đến cho 200ml nước lọc vào nồi (lấy phần nước này cho vào hộp tôm để lấy hết phần sốt ướp trong hộp). Kho trên lửa nhỏ đến khi nước kho sệt lại, nêm nếm cho vừa ăn rồi tắt bếp
+    `,
+          `Bước 3:
+    Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm trắng.`,
+        ],
+        material: [
+          { _id: uuid(), foodName: "Gà", unit: "kg", quantity: 0.5 },
+          { _id: uuid(), foodName: "Xả", unit: "g", quantity: 500 },
+          { _id: uuid(), foodName: "Ớt", unit: "g", quantity: 200 },
+        ],
+        imageUrl: GaXaoXaOt,
+        createAt: Date.now(),
+        feedbacksList: [
+          {
+            _id: "feedback_123",
+            itemId: "recipe_123", // recipe id
+            user: {
+              userId: "user_1", // user feedback
+              fullName: "Phan Trong Duc",
+              imageUrl:
+                "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
+            },
+            numOfStars: 4,
+            content: "Cong thuc hay qua",
+            createdAt: Date.now(),
+            feedbackType: 1, // 1: recipe, 2: food, 3:course
+            reply: [
+              // Reply cua he thong, phan hoi lai khach hang
+              {
+                _id: uuid(),
+                feedbackId: uuid(),
+                user: {
+                  _id: uuid(),
+                  imageUrl: ECookIcon,
+                },
+                content: "Cam on ban da phan hoi",
+              },
+            ],
+          },
+        ],
+      },
+    ],
   },
   {
     _id: uuid(),
-    type: "Thịt Tươi",
+    type: "Thịt",
+    unit: "kg",
+    quantity: 1,
     name: "Sườn Non Heo",
     unitPrice: 120000,
-    description: "Hang tuoi song",
+    description: "Hàng tươi sống",
+    discountOff: 20, // percent %,
+    discountMaximum: 20000, //vnd
     imageUrl:
       "https://res.cloudinary.com/duc/image/upload/v1639206902/ecook/suon_heo_ssbldm.jpg",
     numOfStars: 5,
@@ -558,13 +772,69 @@ export const FOODS_DATA = [
         ],
       },
     ],
+    recipesRelated: [
+      {
+        _id: uuid(),
+        title: "Sườn xào chua ngọt",
+        quantitatif: 5, // so nguoi an
+        feedbacks: 5,
+        contents: [
+          `Bước 1:
+    Rã đông sản phẩm ở nhiệt độ phòng.`,
+          `Bước 2:
+    Đặt nồi lên bếp, cho tôm thẻ rim mặn (ướp sẵn) vào nồi đảo nhẹ 2-3 phút cho săn, tiếp đến cho 200ml nước lọc vào nồi (lấy phần nước này cho vào hộp tôm để lấy hết phần sốt ướp trong hộp). Kho trên lửa nhỏ đến khi nước kho sệt lại, nêm nếm cho vừa ăn rồi tắt bếp
+    `,
+          `Bước 3:
+    Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm trắng.`,
+        ],
+        material: [
+          { _id: uuid(), foodName: "Gà", unit: "kg", quantity: 0.5 },
+          { _id: uuid(), foodName: "Xả", unit: "g", quantity: 500 },
+          { _id: uuid(), foodName: "Ớt", unit: "g", quantity: 200 },
+        ],
+        imageUrl: GaXaoXaOt,
+        createAt: Date.now(),
+        feedbacksList: [
+          {
+            _id: "feedback_123",
+            itemId: "recipe_123", // recipe id
+            user: {
+              userId: "user_1", // user feedback
+              fullName: "Phan Trong Duc",
+              imageUrl:
+                "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
+            },
+            numOfStars: 4,
+            content: "Cong thuc hay qua",
+            createdAt: Date.now(),
+            feedbackType: 1, // 1: recipe, 2: food, 3:course
+            reply: [
+              // Reply cua he thong, phan hoi lai khach hang
+              {
+                _id: uuid(),
+                feedbackId: uuid(),
+                user: {
+                  _id: uuid(),
+                  imageUrl: ECookIcon,
+                },
+                content: "Cam on ban da phan hoi",
+              },
+            ],
+          },
+        ],
+      },
+    ],
   },
   {
     _id: uuid(),
-    type: "Thịt Tươi",
+    type: "Thịt",
+    unit: "kg",
+    quantity: 1,
     name: "Sườn Non Heo",
     unitPrice: 120000,
-    description: "Hang tuoi song",
+    discountOff: 20, // percent %,
+    discountMaximum: 20000, //vnd
+    description: "Hàng tươi sống",
     imageUrl:
       "https://res.cloudinary.com/duc/image/upload/v1639206902/ecook/suon_heo_ssbldm.jpg",
     numOfStars: 5,
@@ -600,13 +870,69 @@ export const FOODS_DATA = [
         ],
       },
     ],
+    recipesRelated: [
+      {
+        _id: uuid(),
+        title: "Sườn xào chua ngọt",
+        quantitatif: 5, // so nguoi an
+        feedbacks: 5,
+        contents: [
+          `Bước 1:
+    Rã đông sản phẩm ở nhiệt độ phòng.`,
+          `Bước 2:
+    Đặt nồi lên bếp, cho tôm thẻ rim mặn (ướp sẵn) vào nồi đảo nhẹ 2-3 phút cho săn, tiếp đến cho 200ml nước lọc vào nồi (lấy phần nước này cho vào hộp tôm để lấy hết phần sốt ướp trong hộp). Kho trên lửa nhỏ đến khi nước kho sệt lại, nêm nếm cho vừa ăn rồi tắt bếp
+    `,
+          `Bước 3:
+    Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm trắng.`,
+        ],
+        material: [
+          { _id: uuid(), foodName: "Gà", unit: "kg", quantity: 0.5 },
+          { _id: uuid(), foodName: "Xả", unit: "g", quantity: 500 },
+          { _id: uuid(), foodName: "Ớt", unit: "g", quantity: 200 },
+        ],
+        imageUrl: GaXaoXaOt,
+        createAt: Date.now(),
+        feedbacksList: [
+          {
+            _id: "feedback_123",
+            itemId: "recipe_123", // recipe id
+            user: {
+              userId: "user_1", // user feedback
+              fullName: "Phan Trong Duc",
+              imageUrl:
+                "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
+            },
+            numOfStars: 4,
+            content: "Cong thuc hay qua",
+            createdAt: Date.now(),
+            feedbackType: 1, // 1: recipe, 2: food, 3:course
+            reply: [
+              // Reply cua he thong, phan hoi lai khach hang
+              {
+                _id: uuid(),
+                feedbackId: uuid(),
+                user: {
+                  _id: uuid(),
+                  imageUrl: ECookIcon,
+                },
+                content: "Cam on ban da phan hoi",
+              },
+            ],
+          },
+        ],
+      },
+    ],
   },
   {
     _id: uuid(),
-    type: "Thịt Tươi",
+    type: "Thịt",
+    unit: "kg",
+    quantity: 1,
     name: "Sườn Non Heo",
     unitPrice: 120000,
-    description: "Hang tuoi song",
+    discountOff: 20, // percent %,
+    discountMaximum: 20000, //vnd
+    description: "Hàng tươi sống",
     imageUrl:
       "https://res.cloudinary.com/duc/image/upload/v1639206902/ecook/suon_heo_ssbldm.jpg",
     numOfStars: 5,
@@ -642,13 +968,69 @@ export const FOODS_DATA = [
         ],
       },
     ],
+    recipesRelated: [
+      {
+        _id: uuid(),
+        title: "Sườn xào chua ngọt",
+        quantitatif: 5, // so nguoi an
+        feedbacks: 5,
+        contents: [
+          `Bước 1:
+    Rã đông sản phẩm ở nhiệt độ phòng.`,
+          `Bước 2:
+    Đặt nồi lên bếp, cho tôm thẻ rim mặn (ướp sẵn) vào nồi đảo nhẹ 2-3 phút cho săn, tiếp đến cho 200ml nước lọc vào nồi (lấy phần nước này cho vào hộp tôm để lấy hết phần sốt ướp trong hộp). Kho trên lửa nhỏ đến khi nước kho sệt lại, nêm nếm cho vừa ăn rồi tắt bếp
+    `,
+          `Bước 3:
+    Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm trắng.`,
+        ],
+        material: [
+          { _id: uuid(), foodName: "Gà", unit: "kg", quantity: 0.5 },
+          { _id: uuid(), foodName: "Xả", unit: "g", quantity: 500 },
+          { _id: uuid(), foodName: "Ớt", unit: "g", quantity: 200 },
+        ],
+        imageUrl: GaXaoXaOt,
+        createAt: Date.now(),
+        feedbacksList: [
+          {
+            _id: "feedback_123",
+            itemId: "recipe_123", // recipe id
+            user: {
+              userId: "user_1", // user feedback
+              fullName: "Phan Trong Duc",
+              imageUrl:
+                "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
+            },
+            numOfStars: 4,
+            content: "Cong thuc hay qua",
+            createdAt: Date.now(),
+            feedbackType: 1, // 1: recipe, 2: food, 3:course
+            reply: [
+              // Reply cua he thong, phan hoi lai khach hang
+              {
+                _id: uuid(),
+                feedbackId: uuid(),
+                user: {
+                  _id: uuid(),
+                  imageUrl: ECookIcon,
+                },
+                content: "Cam on ban da phan hoi",
+              },
+            ],
+          },
+        ],
+      },
+    ],
   },
   {
     _id: uuid(),
-    type: "Thịt Tươi",
+    type: "Thịt",
+    unit: "kg",
+    quantity: 1,
     name: "Sườn Non Heo",
     unitPrice: 120000,
-    description: "Hang tuoi song",
+    description: "Hàng tươi sống",
+    discountOff: 20, // percent %,
+    discountMaximum: 20000, //vnd
     imageUrl:
       "https://res.cloudinary.com/duc/image/upload/v1639206902/ecook/suon_heo_ssbldm.jpg",
     numOfStars: 5,
@@ -684,44 +1066,54 @@ export const FOODS_DATA = [
         ],
       },
     ],
-  },
-  {
-    _id: uuid(),
-    type: "Thịt Tươi",
-    name: "Sườn Non Heo",
-    unitPrice: 120000,
-    description: "Hang tuoi song",
-    imageUrl:
-      "https://res.cloudinary.com/duc/image/upload/v1639206902/ecook/suon_heo_ssbldm.jpg",
-    numOfStars: 5,
-    numOfFeedbacks: 12,
-    createAt: Date.now(),
-    updateAt: Date.now(),
-    isRemoveTemp: false,
-    feedbacksList: [
+    recipesRelated: [
       {
         _id: uuid(),
-        itemId: uuid(), // recipe id
-        user: {
-          userId: "user_1", // user feedback
-          fullName: "Phan Trong Duc",
-          imageUrl:
-            "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
-        },
-        numOfStars: 4,
-        content: "Cong thuc hay qua",
-        createdAt: Date.now(),
-        feedbackType: 1, // 1: recipe, 2: food, 3:course
-        reply: [
-          // Reply cua he thong, phan hoi lai khach hang
+        title: "Sườn xào chua ngọt",
+        quantitatif: 5, // so nguoi an
+        feedbacks: 5,
+        contents: [
+          `Bước 1:
+    Rã đông sản phẩm ở nhiệt độ phòng.`,
+          `Bước 2:
+    Đặt nồi lên bếp, cho tôm thẻ rim mặn (ướp sẵn) vào nồi đảo nhẹ 2-3 phút cho săn, tiếp đến cho 200ml nước lọc vào nồi (lấy phần nước này cho vào hộp tôm để lấy hết phần sốt ướp trong hộp). Kho trên lửa nhỏ đến khi nước kho sệt lại, nêm nếm cho vừa ăn rồi tắt bếp
+    `,
+          `Bước 3:
+    Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm trắng.`,
+        ],
+        material: [
+          { _id: uuid(), foodName: "Gà", unit: "kg", quantity: 0.5 },
+          { _id: uuid(), foodName: "Xả", unit: "g", quantity: 500 },
+          { _id: uuid(), foodName: "Ớt", unit: "g", quantity: 200 },
+        ],
+        imageUrl: GaXaoXaOt,
+        createAt: Date.now(),
+        feedbacksList: [
           {
-            _id: uuid(),
-            feedbackId: uuid(),
+            _id: "feedback_123",
+            itemId: "recipe_123", // recipe id
             user: {
-              _id: uuid(),
-              imageUrl: ECookIcon,
+              userId: "user_1", // user feedback
+              fullName: "Phan Trong Duc",
+              imageUrl:
+                "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
             },
-            content: "Cam on ban da phan hoi",
+            numOfStars: 4,
+            content: "Cong thuc hay qua",
+            createdAt: Date.now(),
+            feedbackType: 1, // 1: recipe, 2: food, 3:course
+            reply: [
+              // Reply cua he thong, phan hoi lai khach hang
+              {
+                _id: uuid(),
+                feedbackId: uuid(),
+                user: {
+                  _id: uuid(),
+                  imageUrl: ECookIcon,
+                },
+                content: "Cam on ban da phan hoi",
+              },
+            ],
           },
         ],
       },
@@ -730,10 +1122,14 @@ export const FOODS_DATA = [
 
   {
     _id: uuid(),
-    type: "Thịt Tươi",
+    type: "Thịt",
+    unit: "kg",
+    quantity: 1,
     name: "Sườn Non Heo",
     unitPrice: 120000,
-    description: "Hang tuoi song",
+    description: "Hàng tươi sống",
+    discountOff: 20, // percent %,
+    discountMaximum: 20000, //vnd
     imageUrl:
       "https://res.cloudinary.com/duc/image/upload/v1639206902/ecook/suon_heo_ssbldm.jpg",
     numOfStars: 5,
@@ -769,13 +1165,69 @@ export const FOODS_DATA = [
         ],
       },
     ],
+    recipesRelated: [
+      {
+        _id: uuid(),
+        title: "Sườn xào chua ngọt",
+        quantitatif: 5, // so nguoi an
+        feedbacks: 5,
+        contents: [
+          `Bước 1:
+    Rã đông sản phẩm ở nhiệt độ phòng.`,
+          `Bước 2:
+    Đặt nồi lên bếp, cho tôm thẻ rim mặn (ướp sẵn) vào nồi đảo nhẹ 2-3 phút cho săn, tiếp đến cho 200ml nước lọc vào nồi (lấy phần nước này cho vào hộp tôm để lấy hết phần sốt ướp trong hộp). Kho trên lửa nhỏ đến khi nước kho sệt lại, nêm nếm cho vừa ăn rồi tắt bếp
+    `,
+          `Bước 3:
+    Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm trắng.`,
+        ],
+        material: [
+          { _id: uuid(), foodName: "Gà", unit: "kg", quantity: 0.5 },
+          { _id: uuid(), foodName: "Xả", unit: "g", quantity: 500 },
+          { _id: uuid(), foodName: "Ớt", unit: "g", quantity: 200 },
+        ],
+        imageUrl: GaXaoXaOt,
+        createAt: Date.now(),
+        feedbacksList: [
+          {
+            _id: "feedback_123",
+            itemId: "recipe_123", // recipe id
+            user: {
+              userId: "user_1", // user feedback
+              fullName: "Phan Trong Duc",
+              imageUrl:
+                "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
+            },
+            numOfStars: 4,
+            content: "Cong thuc hay qua",
+            createdAt: Date.now(),
+            feedbackType: 1, // 1: recipe, 2: food, 3:course
+            reply: [
+              // Reply cua he thong, phan hoi lai khach hang
+              {
+                _id: uuid(),
+                feedbackId: uuid(),
+                user: {
+                  _id: uuid(),
+                  imageUrl: ECookIcon,
+                },
+                content: "Cam on ban da phan hoi",
+              },
+            ],
+          },
+        ],
+      },
+    ],
   },
   {
     _id: uuid(),
-    type: "Thịt Tươi",
+    type: "Thịt",
+    unit: "kg",
+    quantity: 1,
     name: "Sườn Non Heo",
     unitPrice: 120000,
-    description: "Hang tuoi song",
+    description: "Hàng tươi sống",
+    discountOff: 20, // percent %,
+    discountMaximum: 20000, //vnd
     imageUrl:
       "https://res.cloudinary.com/duc/image/upload/v1639206902/ecook/suon_heo_ssbldm.jpg",
     numOfStars: 5,
@@ -811,13 +1263,167 @@ export const FOODS_DATA = [
         ],
       },
     ],
+    recipesRelated: [
+      {
+        _id: uuid(),
+        title: "Sườn xào chua ngọt",
+        quantitatif: 5, // so nguoi an
+        feedbacks: 5,
+        contents: [
+          `Bước 1:
+    Rã đông sản phẩm ở nhiệt độ phòng.`,
+          `Bước 2:
+    Đặt nồi lên bếp, cho tôm thẻ rim mặn (ướp sẵn) vào nồi đảo nhẹ 2-3 phút cho săn, tiếp đến cho 200ml nước lọc vào nồi (lấy phần nước này cho vào hộp tôm để lấy hết phần sốt ướp trong hộp). Kho trên lửa nhỏ đến khi nước kho sệt lại, nêm nếm cho vừa ăn rồi tắt bếp
+    `,
+          `Bước 3:
+    Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm trắng.`,
+        ],
+        material: [
+          { _id: uuid(), foodName: "Gà", unit: "kg", quantity: 0.5 },
+          { _id: uuid(), foodName: "Xả", unit: "g", quantity: 500 },
+          { _id: uuid(), foodName: "Ớt", unit: "g", quantity: 200 },
+        ],
+        imageUrl: GaXaoXaOt,
+        createAt: Date.now(),
+        feedbacksList: [
+          {
+            _id: "feedback_123",
+            itemId: "recipe_123", // recipe id
+            user: {
+              userId: "user_1", // user feedback
+              fullName: "Phan Trong Duc",
+              imageUrl:
+                "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
+            },
+            numOfStars: 4,
+            content: "Cong thuc hay qua",
+            createdAt: Date.now(),
+            feedbackType: 1, // 1: recipe, 2: food, 3:course
+            reply: [
+              // Reply cua he thong, phan hoi lai khach hang
+              {
+                _id: uuid(),
+                feedbackId: uuid(),
+                user: {
+                  _id: uuid(),
+                  imageUrl: ECookIcon,
+                },
+                content: "Cam on ban da phan hoi",
+              },
+            ],
+          },
+        ],
+      },
+    ],
   },
   {
     _id: uuid(),
-    type: "Thịt Tươi",
+    type: "Thịt",
+    unit: "kg",
+    quantity: 1,
     name: "Sườn Non Heo",
     unitPrice: 120000,
-    description: "Hang tuoi song",
+    description: "Hàng tươi sống",
+    imageUrl:
+      "https://res.cloudinary.com/duc/image/upload/v1639206902/ecook/suon_heo_ssbldm.jpg",
+    numOfStars: 5,
+    discountOff: 20, // percent %,
+    discountMaximum: 20000, //vnd
+    numOfFeedbacks: 12,
+    createAt: Date.now(),
+    updateAt: Date.now(),
+    isRemoveTemp: false,
+    feedbacksList: [
+      {
+        _id: uuid(),
+        itemId: uuid(), // recipe id
+        user: {
+          userId: "user_1", // user feedback
+          fullName: "Phan Trong Duc",
+          imageUrl:
+            "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
+        },
+        numOfStars: 4,
+        content: "Cong thuc hay qua",
+        createdAt: Date.now(),
+        feedbackType: 1, // 1: recipe, 2: food, 3:course
+        reply: [
+          // Reply cua he thong, phan hoi lai khach hang
+          {
+            _id: uuid(),
+            feedbackId: uuid(),
+            user: {
+              _id: uuid(),
+              imageUrl: ECookIcon,
+            },
+            content: "Cam on ban da phan hoi",
+          },
+        ],
+      },
+    ],
+    recipesRelated: [
+      {
+        _id: uuid(),
+        title: "Sườn xào chua ngọt",
+        quantitatif: 5, // so nguoi an
+        feedbacks: 5,
+        contents: [
+          `Bước 1:
+    Rã đông sản phẩm ở nhiệt độ phòng.`,
+          `Bước 2:
+    Đặt nồi lên bếp, cho tôm thẻ rim mặn (ướp sẵn) vào nồi đảo nhẹ 2-3 phút cho săn, tiếp đến cho 200ml nước lọc vào nồi (lấy phần nước này cho vào hộp tôm để lấy hết phần sốt ướp trong hộp). Kho trên lửa nhỏ đến khi nước kho sệt lại, nêm nếm cho vừa ăn rồi tắt bếp
+    `,
+          `Bước 3:
+    Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm trắng.`,
+        ],
+        material: [
+          { _id: uuid(), foodName: "Gà", unit: "kg", quantity: 0.5 },
+          { _id: uuid(), foodName: "Xả", unit: "g", quantity: 500 },
+          { _id: uuid(), foodName: "Ớt", unit: "g", quantity: 200 },
+        ],
+        imageUrl: GaXaoXaOt,
+        createAt: Date.now(),
+        feedbacksList: [
+          {
+            _id: "feedback_123",
+            itemId: "recipe_123", // recipe id
+            user: {
+              userId: "user_1", // user feedback
+              fullName: "Phan Trong Duc",
+              imageUrl:
+                "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
+            },
+            numOfStars: 4,
+            content: "Cong thuc hay qua",
+            createdAt: Date.now(),
+            feedbackType: 1, // 1: recipe, 2: food, 3:course
+            reply: [
+              // Reply cua he thong, phan hoi lai khach hang
+              {
+                _id: uuid(),
+                feedbackId: uuid(),
+                user: {
+                  _id: uuid(),
+                  imageUrl: ECookIcon,
+                },
+                content: "Cam on ban da phan hoi",
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    _id: uuid(),
+    type: "Thịt",
+    unit: "kg",
+    quantity: 1,
+    name: "Sườn Non Heo",
+    unitPrice: 120000,
+    discountOff: 20, // percent %,
+    discountMaximum: 20000, //vnd
+    description: "Hàng tươi sống",
     imageUrl:
       "https://res.cloudinary.com/duc/image/upload/v1639206902/ecook/suon_heo_ssbldm.jpg",
     numOfStars: 5,
@@ -853,44 +1459,54 @@ export const FOODS_DATA = [
         ],
       },
     ],
-  },
-  {
-    _id: uuid(),
-    type: "Thịt Tươi",
-    name: "Sườn Non Heo",
-    unitPrice: 120000,
-    description: "Hang tuoi song",
-    imageUrl:
-      "https://res.cloudinary.com/duc/image/upload/v1639206902/ecook/suon_heo_ssbldm.jpg",
-    numOfStars: 5,
-    numOfFeedbacks: 12,
-    createAt: Date.now(),
-    updateAt: Date.now(),
-    isRemoveTemp: false,
-    feedbacksList: [
+    recipesRelated: [
       {
         _id: uuid(),
-        itemId: uuid(), // recipe id
-        user: {
-          userId: "user_1", // user feedback
-          fullName: "Phan Trong Duc",
-          imageUrl:
-            "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
-        },
-        numOfStars: 4,
-        content: "Cong thuc hay qua",
-        createdAt: Date.now(),
-        feedbackType: 1, // 1: recipe, 2: food, 3:course
-        reply: [
-          // Reply cua he thong, phan hoi lai khach hang
+        title: "Sườn xào chua ngọt",
+        quantitatif: 5, // so nguoi an
+        feedbacks: 5,
+        contents: [
+          `Bước 1:
+    Rã đông sản phẩm ở nhiệt độ phòng.`,
+          `Bước 2:
+    Đặt nồi lên bếp, cho tôm thẻ rim mặn (ướp sẵn) vào nồi đảo nhẹ 2-3 phút cho săn, tiếp đến cho 200ml nước lọc vào nồi (lấy phần nước này cho vào hộp tôm để lấy hết phần sốt ướp trong hộp). Kho trên lửa nhỏ đến khi nước kho sệt lại, nêm nếm cho vừa ăn rồi tắt bếp
+    `,
+          `Bước 3:
+    Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm trắng.`,
+        ],
+        material: [
+          { _id: uuid(), foodName: "Gà", unit: "kg", quantity: 0.5 },
+          { _id: uuid(), foodName: "Xả", unit: "g", quantity: 500 },
+          { _id: uuid(), foodName: "Ớt", unit: "g", quantity: 200 },
+        ],
+        imageUrl: GaXaoXaOt,
+        createAt: Date.now(),
+        feedbacksList: [
           {
-            _id: uuid(),
-            feedbackId: uuid(),
+            _id: "feedback_123",
+            itemId: "recipe_123", // recipe id
             user: {
-              _id: uuid(),
-              imageUrl: ECookIcon,
+              userId: "user_1", // user feedback
+              fullName: "Phan Trong Duc",
+              imageUrl:
+                "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
             },
-            content: "Cam on ban da phan hoi",
+            numOfStars: 4,
+            content: "Cong thuc hay qua",
+            createdAt: Date.now(),
+            feedbackType: 1, // 1: recipe, 2: food, 3:course
+            reply: [
+              // Reply cua he thong, phan hoi lai khach hang
+              {
+                _id: uuid(),
+                feedbackId: uuid(),
+                user: {
+                  _id: uuid(),
+                  imageUrl: ECookIcon,
+                },
+                content: "Cam on ban da phan hoi",
+              },
+            ],
           },
         ],
       },

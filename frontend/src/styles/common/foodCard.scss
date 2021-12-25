@@ -3,13 +3,13 @@
   border: 1px solid rgb(233, 227, 208);
   border-radius: 12px;
   &:hover {
-    cursor: pointer;
     transform: translateY(-10px);
   }
   &__inner {
     padding: 8px 10px;
     &--picture {
       width: 240px;
+      cursor: pointer;
       height: 160px;
       border-radius: 20px;
       margin-bottom: 12px;
@@ -28,9 +28,15 @@
           text-transform: capitalize;
         }
         .f-price {
-          color: #d6a343;
+          color: #9e9a94;
+          margin-right: 12px;
+          text-decoration: line-through;
+          font-size: 17px;
+        }
+        .f-new-price {
+          color: #f39a14;
           font-weight: bold;
-          font-size: 16px;
+          font-size: 20px;
         }
       }
       .block-action-food {

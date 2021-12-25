@@ -13,12 +13,16 @@ import FoodCard from "components/common/card/FoodCard";
 import CourseCard from "components/common/card/CourseCard";
 import InstructorCard from "components/common/card/InstructorCard";
 import ScrollToTop from "components/common/ScrollToTop";
+import { useHistory } from "react-router-dom";
+import { ROUTE_CLIENT_RECIPES_LIST } from "utils/routes";
 
 const HomePageClient = () => {
   const [isFoodShow, setIsFoodShow] = useState(true);
+  const history = useHistory();
 
   useEffect(() => {
     document.title = "Trang chủ | ECook";
+    window.scrollTo(0, 0);
   }, []);
   return (
     <div className="homepage-user">
@@ -47,7 +51,9 @@ const HomePageClient = () => {
           <div className="block--product-list">
             <div className="block--product-list--title">
               <span>Công thức hiện có</span>
-              <span>Xem thêm</span>
+              <span onClick={() => history.push(ROUTE_CLIENT_RECIPES_LIST)}>
+                Xem thêm
+              </span>
             </div>
             <div className="block--product-list--showing">
               {RECIPES_DATA.map((r) => (

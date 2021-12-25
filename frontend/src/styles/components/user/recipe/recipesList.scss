@@ -1,0 +1,16 @@
+.recipes-list-container {
+  &--body {
+  }
+  .block__button-see-more {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    .btn-client {
+      margin-top: 32px;
+      margin-bottom: 75px;
+      color: rgb(73, 27, 0);
+      font-weight: bold;
+      font-size: 18px;
+    }
+  }
+}

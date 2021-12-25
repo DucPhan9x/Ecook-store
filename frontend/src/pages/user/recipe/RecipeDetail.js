@@ -6,11 +6,19 @@ import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { RECIPES_DATA } from "utils/dummyData";
+import AssignmentIcon from "@material-ui/icons/Assignment";
+import FeedbackIcon from "@material-ui/icons/Feedback";
+import RecipeCard from "components/common/card/RecipeCard";
+import ScrollToTop from "components/common/ScrollToTop";
 
 const RecipeDetail = () => {
   const [recipe, setRecipe] = useState({});
   const [rate, setRate] = useState(0);
   useEffect(() => {
+    document.title = "Chi tiết công thức | ECook";
+
+    window.scrollTo(0, 0);
+
     const params = new URLSearchParams(window.location.search);
     const recipeID = params.get("id");
     if (!recipeID) {
@@ -84,6 +92,7 @@ const RecipeDetail = () => {
           <span
             style={{ marginRight: 36, color: "orangered", fontWeight: "bold" }}
           >
+            <FeedbackIcon color="secondary" style={{ marginRight: 12 }} />
             Đánh giá & Nhận xét
           </span>
           <Rating
@@ -115,6 +124,18 @@ const RecipeDetail = () => {
           }}
         />
       </div>
+      <div className="recipe-detail__related">
+        <div className="recipe-detail__related--title">
+          <AssignmentIcon color="secondary" />
+          <span>Công thức liên quan</span>
+        </div>
+        <div className="recipe-detail__related--body">
+          {RECIPES_DATA.map((item) => (
+            <RecipeCard key={item._id} data={item} />
+          ))}
+        </div>
+      </div>
+      <ScrollToTop />
     </div>
   );
 };

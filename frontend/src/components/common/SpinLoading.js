@@ -28,7 +28,7 @@ const SpinLoadingContainer = styled.div`
   left: 0;
   z-index: 9999;
 
-  background: #00000003 0% 0% no-repeat padding-box;
+  background: #0000003 0% 0% no-repeat padding-box;
   opacity: 1;
   backdrop-filter: blur(2px);
   .modal__inner {

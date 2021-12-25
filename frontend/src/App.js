@@ -21,6 +21,7 @@ import {
   ROUTE_ADMIN_DASHBOARD_RECIPES_EDIT,
   ROUTE_ADMIN_DASHBOARD_STATISTICS,
   ROUTE_ADMIN_DASHBOARD_VOUCHERS,
+  ROUTE_CLIENT_RECIPES_LIST,
   ROUTE_FORGOTPASSWORD,
   ROUTE_FORGOT_PASSWORD_ADMIN,
   ROUTE_LOGIN,
@@ -50,6 +51,8 @@ import ManageOrders from "pages/admin/manageOrders";
 import ManageVouchers from "pages/admin/manageVouchers";
 import RecipeDetail from "pages/user/recipe/RecipeDetail";
 import withNoAuth from "HOCS/withNoAuth";
+import RecipesList from "pages/user/recipe/RecipesList";
+import FoodDetail from "pages/user/food/FoodDetail";
 
 function App() {
   return (
@@ -165,11 +168,13 @@ function App() {
           exact
         />
         {/* users */}
+        <Route path="/recipe" component={withAuthClient(RecipeDetail)} exact />
         <Route
-          path={"/recipe"}
-          component={withAuthClient(RecipeDetail)}
+          path={ROUTE_CLIENT_RECIPES_LIST}
+          component={withAuthClient(RecipesList)}
           exact
         />
+        <Route path="/food" component={withAuthClient(FoodDetail)} exact />
       </Switch>
     </Router>
   );

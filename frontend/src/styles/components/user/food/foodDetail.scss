@@ -1,2 +1,179 @@
 .food-detail-container {
+  margin: 20px 0;
+  &-top {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 48px;
+    &__left {
+      width: 40%;
+      display: flex;
+      margin-right: 24px;
+      flex-direction: column;
+      img {
+        border-radius: 6px;
+        width: auto;
+        max-width: 75%;
+        min-width: 75%;
+      }
+      .minor-image {
+        display: none;
+        width: 100%;
+        margin-top: 8px;
+        justify-content: center;
+        img {
+          border: 1px solid rgb(228, 173, 23);
+          width: 160px;
+          height: 120px;
+          border-radius: 6px;
+        }
+      }
+    }
+    &__right {
+      width: 60%;
+      &--title {
+        h3 {
+          font-weight: 600;
+          margin-right: 20px;
+          font-size: 32px;
+          color: rgb(233, 105, 14);
+        }
+        margin-bottom: 12px;
+        span {
+          color: rgb(148, 144, 130);
+          font-size: 15px;
+        }
+      }
+      &--price {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin-bottom: 6px;
+        font-size: 20px;
+        padding-bottom: 15px;
+        .unit-price {
+          color: gray;
+          font-size: 22px;
+          text-decoration: line-through;
+        }
+        .block__disCountOff {
+          margin-top: 4px;
+          .discountOff {
+            margin-right: 24px;
+            color: rgb(255, 255, 255);
+            padding: 4px;
+            border: 1px solid goldenrod;
+            background: rgb(230, 106, 112);
+            border-radius: 6px;
+          }
+          .real-price {
+            font-size: 24px;
+            font-weight: bold;
+            color: rgb(189, 84, 4);
+          }
+        }
+      }
+      &--actions {
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        & > button {
+          font-size: 18px;
+          height: 50px;
+        }
+        .btn--favorite {
+          color: rgb(255, 150, 52);
+          border: 1px solid rgb(255, 150, 52);
+          &:hover {
+            color: rgb(231, 182, 77);
+            box-shadow: 2px 2px rgb(218, 214, 211);
+          }
+        }
+        .btn--add-to-cart {
+          margin: 0 12px;
+          color: rgb(255, 150, 52);
+          border: 1px solid rgb(255, 150, 52);
+          &:hover {
+            color: rgb(224, 171, 56);
+            box-shadow: 2px 2px rgb(218, 214, 211);
+          }
+        }
+        .btn--buy-now {
+          background: rgb(235, 162, 7);
+          color: white;
+          &:hover {
+            color: white;
+            background: rgb(245, 175, 25);
+            box-shadow: 2px 2px rgb(218, 214, 211);
+          }
+        }
+        padding-bottom: 24px;
+        border-bottom: 1px solid rgb(218, 213, 213);
+      }
+      .block__recipe__related {
+        margin-top: 12px;
+        &--title {
+          display: flex;
+          align-items: center;
+          font-size: 20px;
+          color: rgb(128, 92, 60);
+          margin-bottom: 8px;
+          svg {
+            margin-right: 6px;
+          }
+        }
+        &--body {
+          overflow: auto;
+          .MuiChip-root {
+            cursor: pointer;
+            margin: 4px;
+            font-size: 17px;
+            &:hover {
+              transform: translateY(-2px);
+              box-shadow: 2px 2px rgb(218, 214, 211);
+            }
+            &:not(:last-child) {
+              margin-right: 8px;
+            }
+          }
+        }
+      }
+    }
+  }
+  &-bottom {
+    margin: 24px 0;
+  }
+  .food-detail__related {
+    &--title {
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      span {
+        margin-left: 12px;
+        font-size: 20px;
+        color: rgb(197, 81, 13);
+        font-weight: 600;
+      }
+      svg {
+        path {
+          fill: rgb(173, 46, 0);
+        }
+      }
+    }
+    &--body {
+      margin-bottom: 50px;
+      overflow-x: auto;
+      display: flex;
+      align-items: center;
+      &::-webkit-scrollbar {
+        height: 10px !important;
+      }
+      .block--product-list--showing--item {
+        margin: 6px 0;
+        &:not(:last-child) {
+          margin-right: 20px;
+        }
+      }
+    }
+  }
 }

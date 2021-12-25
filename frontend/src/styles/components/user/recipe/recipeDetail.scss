@@ -69,6 +69,39 @@
     }
   }
   &-bottom {
-    margin-top: 24px;
+    margin: 24px 0;
+  }
+  .recipe-detail__related {
+    &--title {
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      span {
+        margin-left: 12px;
+        font-size: 20px;
+        color: rgb(197, 81, 13);
+        font-weight: 600;
+      }
+      svg {
+        path {
+          fill: rgb(173, 46, 0);
+        }
+      }
+    }
+    &--body {
+      margin-bottom: 50px;
+      overflow-x: auto;
+      display: flex;
+      align-items: center;
+      &::-webkit-scrollbar {
+        height: 10px !important;
+      }
+      .block--product-list--showing--item {
+        margin: 6px 0;
+        &:not(:last-child) {
+          margin-right: 20px;
+        }
+      }
+    }
   }
 }
