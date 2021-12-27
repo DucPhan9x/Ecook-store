@@ -1,11 +1,11 @@
 import { Rating } from "@material-ui/lab";
 import { BackPreviousPage } from "components/common";
-import Comments from "components/common/Comments";
-import useNotification from "hooks/useNotification";
+// import Comments from "components/common/Comments";
+// import useNotification from "hooks/useNotification";
 import React, { useEffect, useState } from "react";
 import { COURSES_DATA } from "utils/dummyData";
 import AssignmentIcon from "@material-ui/icons/Assignment";
-import FeedbackIcon from "@material-ui/icons/Feedback";
+// import FeedbackIcon from "@material-ui/icons/Feedback";
 import ScrollToTop from "components/common/ScrollToTop";
 import { formatCurrency, getPriceItem } from "utils/priceUtils";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
@@ -40,7 +40,7 @@ const CourseDetail = () => {
     }
   }, []);
 
-  const [formFeedback, setFormFeedback] = useState({ rating: 0, comment: "" });
+  // const [formFeedback, setFormFeedback] = useState({ rating: 0, comment: "" });
 
   return (
     <div className="course-detail-container">
@@ -154,7 +154,7 @@ const CourseDetail = () => {
           </div>
         </div>
       </div>
-      <div className="course-detail-container-bottom">
+      {/* <div className="course-detail-container-bottom">
         <div className="flex items-center" style={{ marginBottom: 12 }}>
           <span
             style={{ marginRight: 36, color: "orangered", fontWeight: "bold" }}
@@ -190,7 +190,7 @@ const CourseDetail = () => {
             }
           }}
         />
-      </div>
+      </div> */}
       <div className="course-detail__related">
         <div className="course-detail__related--title">
           <AssignmentIcon color="secondary" />

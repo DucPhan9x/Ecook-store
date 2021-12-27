@@ -16,7 +16,17 @@
 @import "./components/user/recipe/recipesList.scss";
 @import "./components/user/food/foodDetail.scss";
 @import "./components/user/course/courseDetail.scss";
+@import "./components/user/course/myCourses.scss";
 @import "./components/user/instructor/instructorDetail.scss";
+@import "./components/user/favorite/favorites.scss";
+@import "./components/user/cart/modalCart.scss";
+
+@import "./components/user/profile/myProfile.scss";
+@import "./components/user/order/myOrders.scss";
+@import "./components/user/order/modalOrdersFood.scss";
+@import "./components/user/order/modalOrdersCourses.scss";
+@import "./components/user/voucher/myVouchers.scss";
+
 // -admin
 @import "./components/admin/manageFood/mainPage.scss";
 @import "./components/admin/manageCourse/editCourse.scss";

@@ -39,3 +39,9 @@ export const ROUTE_CLIENT_INSTRUCTORS_LIST = "/instructors-list"; // course mana
 export const ROUTE_CLIENT_FOOD_DETAIL = "/food?id=:foodId"; // course manage
 export const ROUTE_CLIENT_INSTRUCTOR_DETAIL = "/instructor?id=:instructorId"; // course manage
 export const ROUTE_CLIENT_COURSE_DETAIL = "/course?id=:courseId"; // course manage
+export const ROUTE_CLIENT_FAVORITES = "/favorites";
+// individual feature
+export const ROUTE_CLIENT_MY_PROFILE = "/my-profile";
+export const ROUTE_CLIENT_MY_ORDERS = "/my-orders";
+export const ROUTE_CLIENT_MY_COURSES = "/my-courses";
+export const ROUTE_CLIENT_MY_VOUCHERS = "/my-vouchers";

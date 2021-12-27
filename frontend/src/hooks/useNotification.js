@@ -2,11 +2,11 @@ import { store } from "react-notifications-component";
 
 const notification = {
   insert: "top",
-  container: "bottom-right",
+  container: "bottom-left",
   animationIn: ["animate__animated", "animate__fadeIn"],
   animationOut: ["animate__animated", "animate__fadeOut"],
   dismiss: {
-    duration: 5000,
+    duration: 3000,
     onScreen: true,
   },
 };
@@ -14,8 +14,8 @@ const notification = {
 const Success = ({
   title,
   message,
-  container = "bottom-right",
-  duration = 5000,
+  container = "bottom-left",
+  duration = 2000,
 }) => {
   store.addNotification({
     ...notification,
@@ -33,8 +33,8 @@ const Success = ({
 const Error = ({
   title,
   message,
-  container = "bottom-right",
-  duration = 5000,
+  container = "bottom-left",
+  duration = 3000,
 }) => {
   store.addNotification({
     ...notification,
@@ -52,8 +52,8 @@ const Error = ({
 const Info = ({
   title,
   message,
-  container = "bottom-right",
-  duration = 5000,
+  container = "bottom-left",
+  duration = 3000,
 }) => {
   store.addNotification({
     ...notification,
@@ -71,8 +71,8 @@ const Info = ({
 const Warning = ({
   title,
   message,
-  container = "bottom-right",
-  duration = 5000,
+  container = "bottom-left",
+  duration = 3000,
 }) => {
   store.addNotification({
     ...notification,
@@ -90,8 +90,8 @@ const Warning = ({
 const Default = ({
   title,
   message,
-  container = "bottom-right",
-  duration = 5000,
+  container = "bottom-left",
+  duration = 3000,
 }) => {
   store.addNotification({
     ...notification,

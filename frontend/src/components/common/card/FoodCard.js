@@ -5,6 +5,7 @@ import { IconButton, Tooltip } from "@material-ui/core";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import { useHistory } from "react-router-dom";
 import { formatCurrency, getPriceItem } from "utils/priceUtils";
+import useNotification from "hooks/useNotification";
 
 const FoodCard = ({ data }) => {
   const { name, unitPrice, imageUrl, discountOff, discountMaximum } = data;
@@ -36,7 +37,16 @@ const FoodCard = ({ data }) => {
             </div>
           </div>
           <div className="block-action-food">
-            <IconButton aria-label="add to favorites">
+            <IconButton
+              aria-label="add to favorites"
+              onClick={() => {
+                // call API add cart
+                useNotification.Success({
+                  title: "",
+                  message: "Đã thêm vào bộ sưu tập",
+                });
+              }}
+            >
               <FavoriteIcon color="secondary" />
             </IconButton>
             <div>
@@ -46,7 +56,15 @@ const FoodCard = ({ data }) => {
                 </IconButton>
               </Tooltip>
               <Tooltip title="Thêm vào giỏ hàng" placement="top">
-                <IconButton>
+                <IconButton
+                  onClick={() => {
+                    // call API add cart
+                    useNotification.Success({
+                      title: "",
+                      message: "Đã thêm vào giỏ hàng",
+                    });
+                  }}
+                >
                   <ShoppingBasketIcon />
                 </IconButton>
               </Tooltip>

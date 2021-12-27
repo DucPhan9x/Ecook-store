@@ -3,13 +3,50 @@ import { Dropdown, Button, Menu } from "antd";
 import { Avatar } from "antd";
 import { ArrowDropDown } from "@material-ui/icons";
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
-import HistoryIcon from "@material-ui/icons/History";
 import LocalMallIcon from "@material-ui/icons/LocalMall";
 import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
+import DescriptionIcon from "@material-ui/icons/Description";
+import LaptopChromebookIcon from "@material-ui/icons/LaptopChromebook";
+import { useHistory } from "react-router-dom";
+import {
+  ROUTE_CLIENT_MY_COURSES,
+  ROUTE_CLIENT_MY_ORDERS,
+  ROUTE_CLIENT_MY_PROFILE,
+  ROUTE_CLIENT_MY_VOUCHERS,
+} from "utils/routes";
+import Cookies from "js-cookie";
 
 export default function AvatarMenuClient() {
+  const history = useHistory();
   const handleMenuClick = (e) => {
-    console.log(e);
+    let url = "";
+    switch (Number(e.key)) {
+      case 0: {
+        url = ROUTE_CLIENT_MY_PROFILE;
+        break;
+      }
+      case 1: {
+        url = ROUTE_CLIENT_MY_ORDERS;
+        break;
+      }
+
+      case 2: {
+        url = ROUTE_CLIENT_MY_COURSES;
+        break;
+      }
+
+      case 3: {
+        url = ROUTE_CLIENT_MY_VOUCHERS;
+        break;
+      }
+      default: {
+        // clear local storage/cookies
+        Cookies.remove("accessToken");
+        url = "/login";
+        break;
+      }
+    }
+    history.push(url);
   };
   return (
     <Dropdown
@@ -21,10 +58,14 @@ export default function AvatarMenuClient() {
               icon: <AccountBoxIcon color="secondary" />,
             },
             {
-              name: "Lịch sử mua hàng",
-              icon: <HistoryIcon color="secondary" />,
+              name: "Đơn hàng",
+              icon: <DescriptionIcon color="secondary" />,
             },
-            { name: "Ví vouchers", icon: <LocalMallIcon color="secondary" /> },
+            {
+              name: "Khóa học hiện có",
+              icon: <LaptopChromebookIcon color="secondary" />,
+            },
+            { name: "Ví voucher", icon: <LocalMallIcon color="secondary" /> },
             {
               name: "Đăng xuất",
               icon: <PowerSettingsNewIcon color="secondary" />,
@@ -43,7 +84,6 @@ export default function AvatarMenuClient() {
         <Avatar alt="Remy Sharp" src="https://picsum.photos/200/300" />
         <div className="flex flex-col align-flex-start block-infor-user">
           <span className="block-infor-user--name">Trong Duc</span>
-          <span className="block-infor-user--role">Admin</span>
         </div>
         <ArrowDropDown color="action" />
       </Button>

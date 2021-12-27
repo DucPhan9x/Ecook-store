@@ -39,7 +39,7 @@ const HomePageClient = () => {
       <div className="homepage-user--section-2">
         <div className="block-action-switch">
           <div className="block-action-switch--item">
-            <span>Bạn muốn xem gì?</span>
+            <span style={{ fontSize: 18 }}>Bạn muốn xem gì?</span>
             <Tooltip title="Công thức và sản phẩm">
               <FastfoodIcon
                 className="icon--food"
@@ -80,7 +80,7 @@ const HomePageClient = () => {
 
           <div className="block--product-list">
             <div className="block--product-list--title">
-              <span>Thịt bò, thịt heo</span>
+              <span>Thịt</span>
               <span onClick={() => history.push(ROUTE_CLIENT_FOODS_LIST)}>
                 Xem thêm
               </span>

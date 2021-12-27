@@ -26,7 +26,10 @@
 }
 .menu-header-admin,
 .menu-dropdown-common {
-  border-radius: 14px;
+  border-radius: 8px;
+  .ant-dropdown-menu-title-content {
+    font-size: 17px;
+  }
   svg {
     margin-right: 6px;
   }

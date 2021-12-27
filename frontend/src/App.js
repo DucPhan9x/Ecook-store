@@ -32,6 +32,11 @@ import {
   ROUTE_REGISTER,
   ROUTE_RESETPASSWORD,
   ROUTE_RESET_PASSWORD_ADMIN,
+  ROUTE_CLIENT_FAVORITES,
+  ROUTE_CLIENT_MY_PROFILE,
+  ROUTE_CLIENT_MY_ORDERS,
+  ROUTE_CLIENT_MY_COURSES,
+  ROUTE_CLIENT_MY_VOUCHERS,
 } from "utils/routes";
 import { ResetPassword, ResetPasswordAdmin } from "pages/resetPassword";
 import {
@@ -61,6 +66,11 @@ import FoodsList from "pages/user/food/FoodsList";
 import CoursesList from "pages/user/course/CoursesList";
 import InstructorsList from "pages/user/instructor/InstructorsList";
 import InstructorDetail from "pages/user/instructor/InstructorDetail";
+import Favorites from "pages/user/favvorite/Favorites";
+import MyProfile from "pages/user/profile/MyProfile";
+import MyOrders from "pages/user/order/MyOrders";
+import MyCourses from "pages/user/course/MyCourses";
+import MyVouchers from "pages/user/voucher/MyVouchers";
 
 function App() {
   return (
@@ -202,6 +212,32 @@ function App() {
         <Route
           path="/instructor"
           component={withAuthClient(InstructorDetail)}
+          exact
+        />
+        <Route
+          path={ROUTE_CLIENT_FAVORITES}
+          component={withAuthClient(Favorites)}
+          exact
+        />
+
+        <Route
+          path={ROUTE_CLIENT_MY_PROFILE}
+          component={withAuthClient(MyProfile)}
+          exact
+        />
+        <Route
+          path={ROUTE_CLIENT_MY_ORDERS}
+          component={withAuthClient(MyOrders)}
+          exact
+        />
+        <Route
+          path={ROUTE_CLIENT_MY_COURSES}
+          component={withAuthClient(MyCourses)}
+          exact
+        />
+        <Route
+          path={ROUTE_CLIENT_MY_VOUCHERS}
+          component={withAuthClient(MyVouchers)}
           exact
         />
       </Switch>
