@@ -64,17 +64,21 @@ const FoodDetail = () => {
           </div>
 
           <div className="food-detail-container-top__right--price">
-            <div className="unit-price">{formatCurrency(food.unitPrice)}</div>
+            {food.discountOff !== 0 && (
+              <div className="unit-price">{formatCurrency(food.unitPrice)}</div>
+            )}
             <div className="block__disCountOff">
-              <span className="discountOff">
-                -{" "}
-                {formatCurrency(
-                  food.unitPrice * (food.discountOff / 100) >
-                    food.discountMaximum
-                    ? food.discountMaximum
-                    : food.unitPrice * (food.discountOff / 100)
-                )}
-              </span>
+              {food.discountOff !== 0 && (
+                <span className="discountOff">
+                  -{" "}
+                  {formatCurrency(
+                    food.unitPrice * (food.discountOff / 100) >
+                      food.discountMaximum
+                      ? food.discountMaximum
+                      : food.unitPrice * (food.discountOff / 100)
+                  )}
+                </span>
+              )}
               <span className="real-price">
                 {formatCurrency(
                   getPriceItem(

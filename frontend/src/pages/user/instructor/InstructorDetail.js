@@ -1,12 +1,17 @@
-import { Paper } from "@material-ui/core";
+import { Chip, Paper } from "@material-ui/core";
+import { Rating } from "@material-ui/lab";
 import { BackPreviousPage } from "components/common";
 import ScrollToTop from "components/common/ScrollToTop";
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import { INSTRUCTORS_DATA } from "utils/dummyData";
+import DvrIcon from "@material-ui/icons/Dvr";
 
 const InstructorDetail = () => {
   const [instructor, setInstructor] = useState({});
   const [rate, setRate] = useState(0);
+  const history = useHistory();
+
   useEffect(() => {
     document.title = "Chi tiết chef | ECook";
 
@@ -27,8 +32,6 @@ const InstructorDetail = () => {
     }
   }, []);
 
-  console.log({ instructor });
-  console.log({ rate });
   return (
     <div className="instructor-detail-container">
       <BackPreviousPage />
@@ -57,15 +60,40 @@ const InstructorDetail = () => {
             </div>
             <div>
               <label>Được đánh giá: </label>
-              <span>{instructor.feedbacks}</span>
+              <span>
+                <Rating value={rate} readOnly />
+              </span>
             </div>
             <div>
               <label>Chuyên môn: </label>
               <span>{instructor.expertise}</span>
             </div>
-            <div>
-              <span> Với các khóa học có trên hệ thống như: </span>
-              <div></div>
+            <div
+              style={{
+                marginTop: 15,
+                paddingTop: 10,
+                borderTop: "1px solid rgb(254, 219, 58, 0.8)",
+              }}
+            >
+              <span className="courses__detail-of__instructor">
+                <DvrIcon color="secondary" /> Với các khóa học có trên hệ thống
+                như:
+              </span>
+              <div
+                style={{
+                  marginTop: 8,
+                }}
+              >
+                {instructor.courses?.map((r) => (
+                  <Chip
+                    key={r._id}
+                    onClick={() => history.push(`/course?id=course_123`)}
+                    label={r.name}
+                    className="chip-course-detail"
+                    variant="outlined"
+                  />
+                ))}
+              </div>
             </div>
           </div>
         </Paper>

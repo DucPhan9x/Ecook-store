@@ -4,6 +4,7 @@
     align-items: flex-start;
     justify-content: space-between;
     &--left {
+      background: rgb(252, 246, 218) !important;
       width: 30%;
       margin-right: 24px;
       display: flex;
@@ -17,10 +18,37 @@
       }
     }
     &--right {
+      background: rgb(252, 246, 218) !important;
       height: 600px;
       width: 70%;
       &__inner {
         padding: 20px;
+        & > div {
+          margin-bottom: 6px;
+          label {
+            color: rgb(4, 73, 4);
+            font-size: 19px;
+            width: 150px;
+          }
+          .courses__detail-of__instructor {
+            color: orange;
+            font-weight: bold;
+            font-size: 20px;
+            margin-left: unset;
+          }
+          .chip-course-detail {
+            font-size: 18px;
+          }
+          & > span {
+            color: indianred;
+            font-size: 18px;
+            margin-left: 12px;
+            .MuiRating-root {
+              font-size: 24px;
+              transform: translateY(4px);
+            }
+          }
+        }
       }
     }
   }

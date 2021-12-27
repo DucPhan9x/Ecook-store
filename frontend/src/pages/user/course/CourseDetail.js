@@ -58,13 +58,15 @@ const CourseDetail = () => {
             <div className="flex flex-col block__information__course">
               <div>
                 <label>Tác giả:</label>
-                <span>{course.instructor?.fullName}</span>
+                <span style={{ marginRight: 8 }}>
+                  {course.instructor?.fullName}
+                </span>
                 <IconButton
                   onClick={() =>
                     history.push(`instructor?id=${course.instructor?._id}`)
                   }
                 >
-                  <VisibilityIcon style={{ marginLeft: 8 }} />
+                  <VisibilityIcon />
                 </IconButton>
               </div>
               <div>
@@ -81,9 +83,7 @@ const CourseDetail = () => {
                 }}
               >
                 <label>Tổng thời gian khóa học: </label>
-                <span>
-                  {_.sum(course?.videoUrls?.map((v) => v.duration))} phút
-                </span>
+                <span>{_.sum(course?.videoUrls?.map((v) => v.duration))}</span>
               </div>
               <div
                 style={{
@@ -134,7 +134,11 @@ const CourseDetail = () => {
                 )}
               </span>
             </div>
-            <div className="unit-price">{formatCurrency(course.unitPrice)}</div>
+            {course?.discountOff !== 0 && (
+              <div className="unit-price">
+                {formatCurrency(course.unitPrice)}
+              </div>
+            )}
           </div>
           <div className="course-detail-container-top__left--actions flex flex-col">
             <div className="flex items-center block__like-cart">

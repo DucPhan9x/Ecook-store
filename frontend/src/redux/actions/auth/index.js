@@ -5,7 +5,7 @@ const login = () => {
   return (dispatch) => {
     dispatch({ type: types.GET_AUTH_USER });
     authAPI
-      .getAuthUserDetails()
+      .login()
       .then((response) => response.json())
       .then((result) => {
         if (result.status === 200) {

@@ -6,4 +6,11 @@ const toggleSidebar = () => {
   };
 };
 
-export { toggleSidebar };
+const setScreenView = (input) => {
+  localStorage.setItem("screenView", input);
+  return (dispatch) => {
+    dispatch({ type: types.SET_SCREEN_VIEW_HOMEPAGE, payload: input });
+  };
+};
+
+export { toggleSidebar, setScreenView };

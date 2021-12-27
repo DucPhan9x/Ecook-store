@@ -543,7 +543,7 @@ export const FOODS_DATA = [
       "https://res.cloudinary.com/duc/image/upload/v1639206902/ecook/suon_heo_ssbldm.jpg",
     numOfStars: 5,
     numOfFeedbacks: 12,
-    discountOff: 20, // percent %,
+    discountOff: 0, // percent %,
     discountMaximum: 20000, //vnd
     createAt: Date.now(),
     updateAt: Date.now(),
@@ -1580,7 +1580,7 @@ export const COURSES_DATA = [
     name: "Món Á cơ bản",
     numOfStars: 4,
     unitPrice: 650000,
-    discountOff: 10,
+    discountOff: 0,
     discountMaximum: 100000,
     description: "Đây là khóa học chủ yếu tập trung vào các món ăn Châu Á.",
     examinationContent: "Bò hầm tiêu xanh",
@@ -2007,7 +2007,13 @@ export const INSTRUCTORS_DATA = [
     imageUrl:
       "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
     feedbacks: 5,
-    expertise: "Món Châu Âu",
+    expertise: "Món Châu Âu, Món Á",
+    courses: [
+      {
+        _id: uuid(),
+        name: "Món Á cơ bản",
+      },
+    ],
   },
   {
     _id: uuid(),
@@ -2020,6 +2026,12 @@ export const INSTRUCTORS_DATA = [
       "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
     feedbacks: 5,
     expertise: "Món Châu Âu",
+    courses: [
+      {
+        _id: uuid(),
+        name: "Món Á cơ bản",
+      },
+    ],
   },
   {
     _id: uuid(),
@@ -2032,6 +2044,12 @@ export const INSTRUCTORS_DATA = [
       "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
     feedbacks: 5,
     expertise: "Món Châu Âu",
+    courses: [
+      {
+        _id: uuid(),
+        name: "Món Á cơ bản",
+      },
+    ],
   },
   {
     _id: uuid(),
@@ -2044,6 +2062,12 @@ export const INSTRUCTORS_DATA = [
       "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
     feedbacks: 5,
     expertise: "Món Châu Âu",
+    courses: [
+      {
+        _id: uuid(),
+        name: "Món Á cơ bản",
+      },
+    ],
   },
   {
     _id: uuid(),
@@ -2056,6 +2080,12 @@ export const INSTRUCTORS_DATA = [
       "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
     feedbacks: 5,
     expertise: "Món Châu Âu",
+    courses: [
+      {
+        _id: uuid(),
+        name: "Món Á cơ bản",
+      },
+    ],
   },
   {
     _id: uuid(),
@@ -2068,6 +2098,12 @@ export const INSTRUCTORS_DATA = [
       "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
     feedbacks: 5,
     expertise: "Món Châu Âu",
+    courses: [
+      {
+        _id: uuid(),
+        name: "Món Á cơ bản",
+      },
+    ],
   },
   {
     _id: uuid(),
@@ -2080,6 +2116,12 @@ export const INSTRUCTORS_DATA = [
       "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
     feedbacks: 5,
     expertise: "Món Châu Âu",
+    courses: [
+      {
+        _id: uuid(),
+        name: "Món Á cơ bản",
+      },
+    ],
   },
   {
     _id: uuid(),
@@ -2092,6 +2134,12 @@ export const INSTRUCTORS_DATA = [
       "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
     feedbacks: 5,
     expertise: "Món Châu Âu",
+    courses: [
+      {
+        _id: uuid(),
+        name: "Món Á cơ bản",
+      },
+    ],
   },
   {
     _id: uuid(),
@@ -2104,6 +2152,12 @@ export const INSTRUCTORS_DATA = [
       "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
     feedbacks: 5,
     expertise: "Món Châu Âu",
+    courses: [
+      {
+        _id: uuid(),
+        name: "Món Á cơ bản",
+      },
+    ],
   },
 ];
 

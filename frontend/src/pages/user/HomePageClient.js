@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import AssignmentIcon from "@material-ui/icons/Assignment";
 import FastfoodIcon from "@material-ui/icons/Fastfood";
 import { Tooltip } from "antd";
@@ -20,10 +20,14 @@ import {
   ROUTE_CLIENT_INSTRUCTORS_LIST,
   ROUTE_CLIENT_RECIPES_LIST,
 } from "utils/routes";
+import { setScreenView } from "redux/actions/control";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const HomePageClient = () => {
-  const [isFoodShow, setIsFoodShow] = useState(true);
   const history = useHistory();
+  const { screenView } = useSelector((store) => store.control);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     document.title = "Trang chủ | ECook";
@@ -39,19 +43,21 @@ const HomePageClient = () => {
             <Tooltip title="Công thức và sản phẩm">
               <FastfoodIcon
                 className="icon--food"
-                onClick={() => setIsFoodShow(true)}
+                onClick={() => {
+                  dispatch(setScreenView("food_recipe"));
+                }}
               />
             </Tooltip>
             <Tooltip title="Khóa học nấu ăn">
               <AssignmentIcon
                 className="icon--course"
-                onClick={() => setIsFoodShow(false)}
+                onClick={() => dispatch(setScreenView("course_instructor"))}
               />
             </Tooltip>
           </div>
         </div>
       </div>
-      {isFoodShow ? (
+      {screenView === "food_recipe" ? (
         <div className="homepage-user--section-3">
           <div className="block--product-list">
             <div className="block--product-list--title">

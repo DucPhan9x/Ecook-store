@@ -27,12 +27,16 @@ const CourseCard = ({ data }) => {
           <div className="block-title-price">
             <span className="f-title">{name}</span>
             <div className="flex items-center">
-              <span className="f-price">{formatCurrency(unitPrice)}</span>
-              <span className="f-new-price">
-                {formatCurrency(
-                  getPriceItem(discountOff, unitPrice, discountMaximum)
-                )}
+              <span className={discountOff !== 0 ? "f-price" : "f-new-price"}>
+                {formatCurrency(unitPrice)}
               </span>
+              {discountOff !== 0 && (
+                <span className="f-new-price">
+                  {formatCurrency(
+                    getPriceItem(discountOff, unitPrice, discountMaximum)
+                  )}
+                </span>
+              )}
             </div>
           </div>
           <div className="block-action-food">

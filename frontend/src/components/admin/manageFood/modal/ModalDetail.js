@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Modal } from "antd";
 import { Form as ReForm } from "reactstrap";
+import { formatCurrency } from "utils/priceUtils";
 
 const ModalDetail = ({ isModalVisible, close, data }) => {
   const [form, setForm] = React.useState({
@@ -13,6 +14,8 @@ const ModalDetail = ({ isModalVisible, close, data }) => {
     imageUrl: "",
     numOfStars: 0,
     numOfFeedbacks: 0,
+    unit: "",
+    quantity: 0,
   });
 
   useEffect(() => {
@@ -30,7 +33,7 @@ const ModalDetail = ({ isModalVisible, close, data }) => {
       <ReForm className="flex">
         <div className="block-label-input-modal">
           <img
-            style={{ width: "100%", maxHeight: 200 }}
+            style={{ width: "100%", maxHeight: 200, borderRadius: "6px" }}
             src={form.imageUrl}
             alt="image_product"
           />
@@ -52,9 +55,14 @@ const ModalDetail = ({ isModalVisible, close, data }) => {
           <div className="flex full-width j-space-between body-content-form">
             <div className="block-label-input-modal">
               <label>Giá cả (VNĐ): </label>
-              <span className="value-content">{form.unitPrice}</span>
+              <span className="value-content">
+                {formatCurrency(form.unitPrice)} {"  "}({form.quantity}
+                {form.unit})
+              </span>
             </div>
-            <div className="block-label-input-modal flex flex-col">
+          </div>
+          <div className="flex full-width j-space-between body-content-form">
+            <div className="block-label-input-modal">
               <label>Giảm giá (%): </label>
               <span className="value-content">{form.discountOff || 0}</span>
             </div>
@@ -62,7 +70,9 @@ const ModalDetail = ({ isModalVisible, close, data }) => {
           <div className="flex full-width j-space-between body-content-form">
             <div className="block-label-input-modal">
               <label>Mức giảm tối đa (VNĐ): </label>
-              <span className="value-content">{form.discountMaximum || 0}</span>
+              <span className="value-content">
+                {formatCurrency(form.discountMaximum) || 0}
+              </span>
             </div>
           </div>
           <div className="flex full-width j-space-between body-content-form">

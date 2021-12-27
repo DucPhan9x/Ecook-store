@@ -22,6 +22,8 @@ const ModalCreated = ({ isModalVisible, handleSubmit, close }) => {
     imageUrl: "",
     numOfStars: 0,
     numOfFeedbacks: 0,
+    unit: "", // kg, g
+    quantity: 0,
   });
 
   const validate = () => {
@@ -32,6 +34,12 @@ const ModalCreated = ({ isModalVisible, handleSubmit, close }) => {
     }
     if (isEmpty(form.type)) {
       errorState.type = "Không được để trống!";
+    }
+    if (isEmpty(form.quantity)) {
+      errorState.quantity = "Không được để trống!";
+    }
+    if (isEmpty(form.unit)) {
+      errorState.unit = "Không được để trống!";
     }
     if (!isCurrency(form.unitPrice + "")) {
       errorState.unitPrice = "Nhập mệnh gía hợp lệ!";
@@ -70,6 +78,7 @@ const ModalCreated = ({ isModalVisible, handleSubmit, close }) => {
       imageUrl: "",
       numOfStars: 0,
       numOfFeedbacks: 0,
+      unit: "", // kg, g
     });
     setError({});
   };
@@ -140,7 +149,10 @@ const ModalCreated = ({ isModalVisible, handleSubmit, close }) => {
           </div>
         </div>
         <div className="flex full-width j-space-between body-content-form">
-          <div className="block-label-input-modal" style={{ marginRight: 12 }}>
+          <div
+            className="block-label-input-modal"
+            style={{ marginRight: 12, width: "50%" }}
+          >
             <label>Giá cả (VNĐ)</label>
             <FormBox
               propsInput={{
@@ -156,7 +168,45 @@ const ModalCreated = ({ isModalVisible, handleSubmit, close }) => {
               error={error.unitPrice}
             />
           </div>
-          <div className="block-label-input-modal" style={{ marginLeft: 12 }}>
+          <div
+            className="flex items-center"
+            style={{ marginLeft: 12, width: "50%" }}
+          >
+            <div className="block-label-input-modal" style={{ marginRight: 6 }}>
+              <label>Số lượng</label>
+              <FormBox
+                propsInput={{
+                  type: "number",
+                  min: "0",
+                  name: "quantity",
+                  onChange: handleChange,
+                  onFocus: handleFocus,
+                  value: form.quantity,
+                  disabled: false,
+                }}
+                error={error.quantity}
+              />
+            </div>
+            <div className="block-label-input-modal" style={{ marginLeft: 6 }}>
+              <label>Đơn giá</label>
+              <FormBox
+                propsInput={{
+                  type: "text",
+                  min: "0",
+                  name: "unit",
+                  placeholder: "kg, g, con...",
+                  onChange: handleChange,
+                  onFocus: handleFocus,
+                  value: form.unit,
+                  disabled: false,
+                }}
+                error={error.unit}
+              />
+            </div>
+          </div>
+        </div>
+        <div className="flex full-width j-space-between body-content-form">
+          <div className="block-label-input-modal">
             <label>Giảm giá (%)</label>
 
             <FormBox

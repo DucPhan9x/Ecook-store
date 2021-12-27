@@ -12,5 +12,5 @@ const login = ({ email, password }) => {
 
   return fetch(`${url}auth/login/`, requestOptions);
 };
-
-export { login };
+const authAPI = { login };
+export default authAPI;
