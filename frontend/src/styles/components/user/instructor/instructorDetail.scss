@@ -1,0 +1,27 @@
+.instructor-detail-container {
+  &--body {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    &--left {
+      width: 30%;
+      margin-right: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 450px;
+      img {
+        width: 80%;
+        height: auto;
+        border-radius: 10px;
+      }
+    }
+    &--right {
+      height: 600px;
+      width: 70%;
+      &__inner {
+        padding: 20px;
+      }
+    }
+  }
+}

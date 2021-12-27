@@ -1,7 +1,7 @@
 import React from "react";
-import { Input } from "antd";
+// import { Input } from "antd";
 import {
-  SearchOutlined,
+  // SearchOutlined,
   HeartTwoTone,
   PhoneOutlined,
   UserOutlined,
@@ -20,7 +20,7 @@ const HeaderClient = () => {
           <h3 onClick={() => history.push("/")}>
             <img style={{ height: 70, width: 180 }} src={Logo} alt="" />
           </h3>
-          <Input placeholder="Tìm kiếm thông tin" prefix={<SearchOutlined />} />
+          {/* <Input placeholder="Tìm kiếm thông tin" prefix={<SearchOutlined />} /> */}
         </div>
         <div className="header-client__inner--right">
           <Tooltip title="Bộ sưu tập" placement="bottom">

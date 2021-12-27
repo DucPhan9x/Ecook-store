@@ -1517,9 +1517,12 @@ export const FOODS_DATA = [
 // course
 export const COURSES_DATA = [
   {
-    _id: uuid(),
+    _id: "course_123",
     name: "Món Á cơ bản",
-    unitPrice: 799999,
+    numOfStars: 4,
+    unitPrice: 650000,
+    discountOff: 10,
+    discountMaximum: 100000,
     description: "Đây là khóa học chủ yếu tập trung vào các món ăn Châu Á.",
     examinationContent: "Bò hầm tiêu xanh",
     regulation:
@@ -1527,14 +1530,15 @@ export const COURSES_DATA = [
     criteria: "An toan ve sinh thuc pham, trang tri dep mat",
     videoUrls: [
       {
-        title: "Mon Chau A",
+        title: "Món Châu Âu",
         videoUrl:
           "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-        duration: "30 phút",
+        duration: 30, // unit : min
       },
     ],
     instructor: {
-      fullName: "Phan Trong Duc",
+      _id: "instructor_123",
+      fullName: "Duc Trong",
       phoneNumber: "0984763232",
       address: "TT. La Hai - H.Dong Xuan - T.Phu Yen",
       imageUrl: "https://picsum.photos/200/300",
@@ -1574,78 +1578,25 @@ export const COURSES_DATA = [
   {
     _id: uuid(),
     name: "Món Á cơ bản",
-    unitPrice: 799999,
+    numOfStars: 4,
+    unitPrice: 650000,
+    discountOff: 10,
+    discountMaximum: 100000,
     description: "Đây là khóa học chủ yếu tập trung vào các món ăn Châu Á.",
     examinationContent: "Bò hầm tiêu xanh",
     regulation:
       "Thời gian 45 phút, quay video từ khâu sơ chế đến khi thành phẩm.",
     criteria: "An toan ve sinh thuc pham, trang tri dep mat",
-
     videoUrls: [
       {
-        title: "Mon Chau A",
+        title: "Món Châu Âu",
         videoUrl:
           "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
         duration: "30 phút",
       },
     ],
     instructor: {
-      fullName: "Phan Trong Duc",
-      phoneNumber: "0984763232",
-      address: "TT. La Hai - H.Dong Xuan - T.Phu Yen",
-      imageUrl: "https://picsum.photos/200/300",
-      email: "trongduc@gmail.com",
-    },
-    createAt: Date.now(),
-    amountStudent: 12,
-    feedbacksList: [
-      {
-        _id: uuid(),
-        itemId: uuid(), // recipe id
-        user: {
-          userId: "user_1", // user feedback
-          fullName: "Phan Trong Duc",
-          imageUrl:
-            "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
-        },
-        numOfStars: 4,
-        content: "Cong thuc hay qua",
-        createdAt: Date.now(),
-        feedbackType: 1, // 1: recipe, 2: food, 3:course
-        reply: [
-          // Reply cua he thong, phan hoi lai khach hang
-          {
-            _id: uuid(),
-            user: {
-              _id: uuid(),
-              imageUrl: ECookIcon,
-            },
-            feedbackId: uuid(),
-            content: "Cam on ban da phan hoi",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    _id: uuid(),
-    name: "Món Á cơ bản",
-    unitPrice: 799999,
-    description: "Đây là khóa học chủ yếu tập trung vào các món ăn Châu Á.",
-    examinationContent: "Bò hầm tiêu xanh",
-    regulation:
-      "Thời gian 45 phút, quay video từ khâu sơ chế đến khi thành phẩm.",
-    criteria: "An toan ve sinh thuc pham, trang tri dep mat",
-
-    videoUrls: [
-      {
-        title: "Mon Chau A",
-        videoUrl:
-          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-        duration: "30 phút",
-      },
-    ],
-    instructor: {
+      _id: uuid(),
       fullName: "Phan Trong Duc",
       phoneNumber: "0984763232",
       address: "TT. La Hai - H.Dong Xuan - T.Phu Yen",
@@ -1686,22 +1637,26 @@ export const COURSES_DATA = [
   {
     _id: uuid(),
     name: "Món Á cơ bản",
-    unitPrice: 799999,
+    numOfStars: 4,
+    unitPrice: 650000,
+    discountOff: 10,
+    discountMaximum: 100000,
     description: "Đây là khóa học chủ yếu tập trung vào các món ăn Châu Á.",
     examinationContent: "Bò hầm tiêu xanh",
-    criteria: "An toan ve sinh thuc pham, trang tri dep mat",
-
     regulation:
       "Thời gian 45 phút, quay video từ khâu sơ chế đến khi thành phẩm.",
+    criteria: "An toan ve sinh thuc pham, trang tri dep mat",
+
     videoUrls: [
       {
-        title: "Mon Chau A",
+        title: "Món Châu Âu",
         videoUrl:
           "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
         duration: "30 phút",
       },
     ],
     instructor: {
+      _id: uuid(),
       fullName: "Phan Trong Duc",
       phoneNumber: "0984763232",
       address: "TT. La Hai - H.Dong Xuan - T.Phu Yen",
@@ -1742,22 +1697,26 @@ export const COURSES_DATA = [
   {
     _id: uuid(),
     name: "Món Á cơ bản",
-    unitPrice: 799999,
+    numOfStars: 4,
+    unitPrice: 650000,
+    discountOff: 10,
+    discountMaximum: 100000,
     description: "Đây là khóa học chủ yếu tập trung vào các món ăn Châu Á.",
     examinationContent: "Bò hầm tiêu xanh",
-    regulation:
-      "Thời gian 45 phút, quay video từ khâu sơ chế đến khi thành phẩm.",
     criteria: "An toan ve sinh thuc pham, trang tri dep mat",
 
+    regulation:
+      "Thời gian 45 phút, quay video từ khâu sơ chế đến khi thành phẩm.",
     videoUrls: [
       {
-        title: "Mon Chau A",
+        title: "Món Châu Âu",
         videoUrl:
           "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
         duration: "30 phút",
       },
     ],
     instructor: {
+      _id: uuid(),
       fullName: "Phan Trong Duc",
       phoneNumber: "0984763232",
       address: "TT. La Hai - H.Dong Xuan - T.Phu Yen",
@@ -1798,7 +1757,10 @@ export const COURSES_DATA = [
   {
     _id: uuid(),
     name: "Món Á cơ bản",
-    unitPrice: 799999,
+    numOfStars: 4,
+    unitPrice: 650000,
+    discountOff: 10,
+    discountMaximum: 100000,
     description: "Đây là khóa học chủ yếu tập trung vào các món ăn Châu Á.",
     examinationContent: "Bò hầm tiêu xanh",
     regulation:
@@ -1807,69 +1769,14 @@ export const COURSES_DATA = [
 
     videoUrls: [
       {
-        title: "Mon Chau A",
+        title: "Món Châu Âu",
         videoUrl:
           "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
         duration: "30 phút",
       },
     ],
     instructor: {
-      fullName: "Phan Trong Duc",
-      phoneNumber: "0984763232",
-      address: "TT. La Hai - H.Dong Xuan - T.Phu Yen",
-      imageUrl: "https://picsum.photos/200/300",
-      email: "trongduc@gmail.com",
-    },
-    createAt: Date.now(),
-    feedbacksList: [
-      {
-        _id: uuid(),
-        itemId: uuid(), // recipe id
-        user: {
-          userId: "user_1", // user feedback
-          fullName: "Phan Trong Duc",
-          imageUrl:
-            "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
-        },
-        numOfStars: 4,
-        content: "Cong thuc hay qua",
-        createdAt: Date.now(),
-        feedbackType: 1, // 1: recipe, 2: food, 3:course
-        reply: [
-          // Reply cua he thong, phan hoi lai khach hang
-          {
-            _id: uuid(),
-            feedbackId: uuid(),
-            user: {
-              _id: uuid(),
-              imageUrl: ECookIcon,
-            },
-            content: "Cam on ban da phan hoi",
-          },
-        ],
-      },
-    ],
-    amountStudent: 12,
-  },
-  {
-    _id: uuid(),
-    name: "Món Á cơ bản",
-    unitPrice: 799999,
-    description: "Đây là khóa học chủ yếu tập trung vào các món ăn Châu Á.",
-    examinationContent: "Bò hầm tiêu xanh",
-    criteria: "An toan ve sinh thuc pham, trang tri dep mat",
-
-    regulation:
-      "Thời gian 45 phút, quay video từ khâu sơ chế đến khi thành phẩm.",
-    videoUrls: [
-      {
-        title: "Mon Chau A",
-        videoUrl:
-          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-        duration: "30 phút",
-      },
-    ],
-    instructor: {
+      _id: uuid(),
       fullName: "Phan Trong Duc",
       phoneNumber: "0984763232",
       address: "TT. La Hai - H.Dong Xuan - T.Phu Yen",
@@ -1910,7 +1817,70 @@ export const COURSES_DATA = [
   {
     _id: uuid(),
     name: "Món Á cơ bản",
-    unitPrice: 799999,
+    numOfStars: 4,
+    unitPrice: 650000,
+    discountOff: 10,
+    discountMaximum: 100000,
+    description: "Đây là khóa học chủ yếu tập trung vào các món ăn Châu Á.",
+    examinationContent: "Bò hầm tiêu xanh",
+    regulation:
+      "Thời gian 45 phút, quay video từ khâu sơ chế đến khi thành phẩm.",
+    criteria: "An toan ve sinh thuc pham, trang tri dep mat",
+
+    videoUrls: [
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: "30 phút",
+      },
+    ],
+    instructor: {
+      _id: uuid(),
+      fullName: "Phan Trong Duc",
+      phoneNumber: "0984763232",
+      address: "TT. La Hai - H.Dong Xuan - T.Phu Yen",
+      imageUrl: "https://picsum.photos/200/300",
+      email: "trongduc@gmail.com",
+    },
+    createAt: Date.now(),
+    feedbacksList: [
+      {
+        _id: uuid(),
+        itemId: uuid(), // recipe id
+        user: {
+          userId: "user_1", // user feedback
+          fullName: "Phan Trong Duc",
+          imageUrl:
+            "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
+        },
+        numOfStars: 4,
+        content: "Cong thuc hay qua",
+        createdAt: Date.now(),
+        feedbackType: 1, // 1: recipe, 2: food, 3:course
+        reply: [
+          // Reply cua he thong, phan hoi lai khach hang
+          {
+            _id: uuid(),
+            feedbackId: uuid(),
+            user: {
+              _id: uuid(),
+              imageUrl: ECookIcon,
+            },
+            content: "Cam on ban da phan hoi",
+          },
+        ],
+      },
+    ],
+    amountStudent: 12,
+  },
+  {
+    _id: uuid(),
+    name: "Món Á cơ bản",
+    numOfStars: 4,
+    unitPrice: 650000,
+    discountOff: 10,
+    discountMaximum: 100000,
     description: "Đây là khóa học chủ yếu tập trung vào các món ăn Châu Á.",
     examinationContent: "Bò hầm tiêu xanh",
     criteria: "An toan ve sinh thuc pham, trang tri dep mat",
@@ -1919,13 +1889,74 @@ export const COURSES_DATA = [
       "Thời gian 45 phút, quay video từ khâu sơ chế đến khi thành phẩm.",
     videoUrls: [
       {
-        title: "Mon Chau A",
+        title: "Món Châu Âu",
         videoUrl:
           "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
         duration: "30 phút",
       },
     ],
     instructor: {
+      _id: uuid(),
+      fullName: "Phan Trong Duc",
+      phoneNumber: "0984763232",
+      address: "TT. La Hai - H.Dong Xuan - T.Phu Yen",
+      imageUrl: "https://picsum.photos/200/300",
+      email: "trongduc@gmail.com",
+    },
+    createAt: Date.now(),
+    amountStudent: 12,
+    feedbacksList: [
+      {
+        _id: uuid(),
+        itemId: uuid(), // recipe id
+        user: {
+          userId: "user_1", // user feedback
+          fullName: "Phan Trong Duc",
+          imageUrl:
+            "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
+        },
+        numOfStars: 4,
+        content: "Cong thuc hay qua",
+        createdAt: Date.now(),
+        feedbackType: 1, // 1: recipe, 2: food, 3:course
+        reply: [
+          // Reply cua he thong, phan hoi lai khach hang
+          {
+            _id: uuid(),
+            user: {
+              _id: uuid(),
+              imageUrl: ECookIcon,
+            },
+            feedbackId: uuid(),
+            content: "Cam on ban da phan hoi",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    _id: uuid(),
+    name: "Món Á cơ bản",
+    numOfStars: 4,
+    unitPrice: 650000,
+    discountOff: 10,
+    discountMaximum: 100000,
+    description: "Đây là khóa học chủ yếu tập trung vào các món ăn Châu Á.",
+    examinationContent: "Bò hầm tiêu xanh",
+    criteria: "An toan ve sinh thuc pham, trang tri dep mat",
+
+    regulation:
+      "Thời gian 45 phút, quay video từ khâu sơ chế đến khi thành phẩm.",
+    videoUrls: [
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: "30 phút",
+      },
+    ],
+    instructor: {
+      _id: uuid(),
       fullName: "Phan Trong Duc",
       phoneNumber: "0984763232",
       address: "TT. La Hai - H.Dong Xuan - T.Phu Yen",
@@ -1967,16 +1998,28 @@ export const COURSES_DATA = [
 
 export const INSTRUCTORS_DATA = [
   {
-    _id: uuid(),
+    _id: "instructor_123",
     role: "instructor",
-    fullName: "Phan Trong Duc",
+    fullName: "Duc Trong",
     email: "duc@gmail.com",
     phoneNumber: "0987675646",
     address: "TT.La Hai - H.Dong Xuan - T.Phu Yen",
     imageUrl:
       "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
     feedbacks: 5,
-    expertise: "Mon Chau A",
+    expertise: "Món Châu Âu",
+  },
+  {
+    _id: uuid(),
+    role: "instructor",
+    fullName: "Duc Trong",
+    email: "duc@gmail.com",
+    phoneNumber: "0987675646",
+    address: "TT. La Hai - H.Dong Xuan - T.Phu Yen",
+    imageUrl:
+      "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
+    feedbacks: 5,
+    expertise: "Món Châu Âu",
   },
   {
     _id: uuid(),
@@ -1988,7 +2031,7 @@ export const INSTRUCTORS_DATA = [
     imageUrl:
       "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
     feedbacks: 5,
-    expertise: "Mon Chau A",
+    expertise: "Món Châu Âu",
   },
   {
     _id: uuid(),
@@ -2000,7 +2043,7 @@ export const INSTRUCTORS_DATA = [
     imageUrl:
       "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
     feedbacks: 5,
-    expertise: "Mon Chau A",
+    expertise: "Món Châu Âu",
   },
   {
     _id: uuid(),
@@ -2012,7 +2055,7 @@ export const INSTRUCTORS_DATA = [
     imageUrl:
       "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
     feedbacks: 5,
-    expertise: "Mon Chau A",
+    expertise: "Món Châu Âu",
   },
   {
     _id: uuid(),
@@ -2024,7 +2067,7 @@ export const INSTRUCTORS_DATA = [
     imageUrl:
       "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
     feedbacks: 5,
-    expertise: "Mon Chau A",
+    expertise: "Món Châu Âu",
   },
   {
     _id: uuid(),
@@ -2036,7 +2079,7 @@ export const INSTRUCTORS_DATA = [
     imageUrl:
       "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
     feedbacks: 5,
-    expertise: "Mon Chau A",
+    expertise: "Món Châu Âu",
   },
   {
     _id: uuid(),
@@ -2048,7 +2091,7 @@ export const INSTRUCTORS_DATA = [
     imageUrl:
       "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
     feedbacks: 5,
-    expertise: "Mon Chau A",
+    expertise: "Món Châu Âu",
   },
   {
     _id: uuid(),
@@ -2060,19 +2103,7 @@ export const INSTRUCTORS_DATA = [
     imageUrl:
       "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
     feedbacks: 5,
-    expertise: "Mon Chau A",
-  },
-  {
-    _id: uuid(),
-    role: "instructor",
-    fullName: "Phan Trong Duc",
-    email: "duc@gmail.com",
-    phoneNumber: "0987675646",
-    address: "TT. La Hai - H.Dong Xuan - T.Phu Yen",
-    imageUrl:
-      "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
-    feedbacks: 5,
-    expertise: "Mon Chau A",
+    expertise: "Món Châu Âu",
   },
 ];
 
@@ -2330,7 +2361,7 @@ export const CERTIFICATIONS_DATA = [
         "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
     },
     course: {
-      courseName: "Mon Chau A",
+      courseName: "Món Châu Âu",
     },
     startDate: Date.now(),
     endDate: Date.now(),
@@ -2347,7 +2378,7 @@ export const CERTIFICATIONS_DATA = [
         "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
     },
     course: {
-      courseName: "Mon Chau A",
+      courseName: "Món Châu Âu",
     },
     startDate: Date.now(),
     endDate: Date.now(),
@@ -2364,7 +2395,7 @@ export const CERTIFICATIONS_DATA = [
         "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
     },
     course: {
-      courseName: "Mon Chau A",
+      courseName: "Món Châu Âu",
     },
     startDate: Date.now(),
     endDate: Date.now(),
@@ -2382,7 +2413,7 @@ export const CERTIFICATIONS_DATA = [
         "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
     },
     course: {
-      courseName: "Mon Chau A",
+      courseName: "Món Châu Âu",
     },
     startDate: Date.now(),
     endDate: Date.now(),

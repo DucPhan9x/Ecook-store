@@ -10,14 +10,13 @@
       display: flex;
       margin-right: 24px;
       flex-direction: column;
+      align-items: center;
       img {
         border-radius: 6px;
         width: auto;
         max-width: 75%;
-        min-width: 75%;
       }
       .minor-image {
-        display: none;
         width: 100%;
         margin-top: 8px;
         justify-content: center;

@@ -2,12 +2,18 @@
   margin-right: 10px;
   border: 1px solid rgb(233, 227, 208);
   border-radius: 12px;
+  &:hover {
+    transform: translateY(-2px);
+  }
   &__inner {
     padding: 8px 10px;
     &--video,
     video {
-      width: 240px;
-      height: 160px;
+      cursor: pointer;
+      min-width: 240px;
+      width: 100%;
+      max-height: 200px;
+      height: auto;
       border-radius: 20px;
       margin-bottom: 12px;
       flex-shrink: 0;
@@ -25,9 +31,15 @@
           text-transform: capitalize;
         }
         .f-price {
-          color: #d6a343;
+          color: #9e9a94;
+          margin-right: 12px;
+          text-decoration: line-through;
+          font-size: 17px;
+        }
+        .f-new-price {
+          color: #f39a14;
           font-weight: bold;
-          font-size: 16px;
+          font-size: 20px;
         }
       }
       .block-action-food {

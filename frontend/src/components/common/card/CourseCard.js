@@ -3,9 +3,14 @@ import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import PaymentIcon from "@material-ui/icons/Payment";
 import { IconButton, Tooltip } from "@material-ui/core";
 import FavoriteIcon from "@material-ui/icons/Favorite";
+import { formatCurrency, getPriceItem } from "utils/priceUtils";
+import { useHistory } from "react-router-dom";
 
 const CourseCard = ({ data }) => {
-  const { _id, name, unitPrice, videoUrls } = data;
+  const { _id, name, unitPrice, videoUrls, discountOff, discountMaximum } =
+    data;
+  const history = useHistory();
+
   return (
     <div className="course-card">
       <div className="course-card__inner">
@@ -16,11 +21,19 @@ const CourseCard = ({ data }) => {
           allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
           title="Embedded youtube"
+          onClick={() => history.push(`/course?id=${_id}`)}
         />
         <div className="course-card__inner--information">
           <div className="block-title-price">
             <span className="f-title">{name}</span>
-            <span className="f-price">{unitPrice} đ</span>
+            <div className="flex items-center">
+              <span className="f-price">{formatCurrency(unitPrice)}</span>
+              <span className="f-new-price">
+                {formatCurrency(
+                  getPriceItem(discountOff, unitPrice, discountMaximum)
+                )}
+              </span>
+            </div>
           </div>
           <div className="block-action-food">
             <IconButton aria-label="add to favorites">

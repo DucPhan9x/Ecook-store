@@ -21,6 +21,9 @@ import {
   ROUTE_ADMIN_DASHBOARD_RECIPES_EDIT,
   ROUTE_ADMIN_DASHBOARD_STATISTICS,
   ROUTE_ADMIN_DASHBOARD_VOUCHERS,
+  ROUTE_CLIENT_COURSES_LIST,
+  ROUTE_CLIENT_FOODS_LIST,
+  ROUTE_CLIENT_INSTRUCTORS_LIST,
   ROUTE_CLIENT_RECIPES_LIST,
   ROUTE_FORGOTPASSWORD,
   ROUTE_FORGOT_PASSWORD_ADMIN,
@@ -53,6 +56,11 @@ import RecipeDetail from "pages/user/recipe/RecipeDetail";
 import withNoAuth from "HOCS/withNoAuth";
 import RecipesList from "pages/user/recipe/RecipesList";
 import FoodDetail from "pages/user/food/FoodDetail";
+import CourseDetail from "pages/user/course/CourseDetail";
+import FoodsList from "pages/user/food/FoodsList";
+import CoursesList from "pages/user/course/CoursesList";
+import InstructorsList from "pages/user/instructor/InstructorsList";
+import InstructorDetail from "pages/user/instructor/InstructorDetail";
 
 function App() {
   return (
@@ -174,7 +182,28 @@ function App() {
           component={withAuthClient(RecipesList)}
           exact
         />
+        <Route
+          path={ROUTE_CLIENT_COURSES_LIST}
+          component={withAuthClient(CoursesList)}
+          exact
+        />
+        <Route
+          path={ROUTE_CLIENT_FOODS_LIST}
+          component={withAuthClient(FoodsList)}
+          exact
+        />
+        <Route
+          path={ROUTE_CLIENT_INSTRUCTORS_LIST}
+          component={withAuthClient(InstructorsList)}
+          exact
+        />
         <Route path="/food" component={withAuthClient(FoodDetail)} exact />
+        <Route path="/course" component={withAuthClient(CourseDetail)} exact />
+        <Route
+          path="/instructor"
+          component={withAuthClient(InstructorDetail)}
+          exact
+        />
       </Switch>
     </Router>
   );

@@ -14,7 +14,12 @@ import CourseCard from "components/common/card/CourseCard";
 import InstructorCard from "components/common/card/InstructorCard";
 import ScrollToTop from "components/common/ScrollToTop";
 import { useHistory } from "react-router-dom";
-import { ROUTE_CLIENT_RECIPES_LIST } from "utils/routes";
+import {
+  ROUTE_CLIENT_COURSES_LIST,
+  ROUTE_CLIENT_FOODS_LIST,
+  ROUTE_CLIENT_INSTRUCTORS_LIST,
+  ROUTE_CLIENT_RECIPES_LIST,
+} from "utils/routes";
 
 const HomePageClient = () => {
   const [isFoodShow, setIsFoodShow] = useState(true);
@@ -70,7 +75,9 @@ const HomePageClient = () => {
           <div className="block--product-list">
             <div className="block--product-list--title">
               <span>Thịt bò, thịt heo</span>
-              <span>Xem thêm</span>
+              <span onClick={() => history.push(ROUTE_CLIENT_FOODS_LIST)}>
+                Xem thêm
+              </span>
             </div>
             <div className="block--product-list--showing">
               {FOODS_DATA.map((r) => (
@@ -82,7 +89,9 @@ const HomePageClient = () => {
           <div className="block--product-list">
             <div className="block--product-list--title">
               <span>Gà, vịt</span>
-              <span>Xem thêm</span>
+              <span onClick={() => history.push(ROUTE_CLIENT_FOODS_LIST)}>
+                Xem thêm
+              </span>
             </div>
             <div className="block--product-list--showing">
               {FOODS_DATA.map((r) => (
@@ -94,7 +103,9 @@ const HomePageClient = () => {
           <div className="block--product-list">
             <div className="block--product-list--title">
               <span>Thủy hải sản</span>
-              <span>Xem thêm</span>
+              <span onClick={() => history.push(ROUTE_CLIENT_FOODS_LIST)}>
+                Xem thêm
+              </span>
             </div>
             <div className="block--product-list--showing">
               {FOODS_DATA.map((r) => (
@@ -106,7 +117,9 @@ const HomePageClient = () => {
           <div className="block--product-list">
             <div className="block--product-list--title">
               <span>Rau củ quả</span>
-              <span>Xem thêm</span>
+              <span onClick={() => history.push(ROUTE_CLIENT_FOODS_LIST)}>
+                Xem thêm
+              </span>
             </div>
             <div className="block--product-list--showing">
               {FOODS_DATA.map((r) => (
@@ -120,7 +133,9 @@ const HomePageClient = () => {
           <div className="block--product-list">
             <div className="block--product-list--title">
               <span>Khóa học nấu ăn hiện có</span>
-              <span>Xem thêm</span>
+              <span onClick={() => history.push(ROUTE_CLIENT_COURSES_LIST)}>
+                Xem thêm
+              </span>
             </div>
             <div className="block--product-list--showing">
               {COURSES_DATA.map((r) => (
@@ -130,8 +145,10 @@ const HomePageClient = () => {
           </div>
           <div className="block--product-list">
             <div className="block--product-list--title">
-              <span>Người hướng dẫn</span>
-              <span>Xem thêm</span>
+              <span>Các chef hiện có</span>
+              <span onClick={() => history.push(ROUTE_CLIENT_INSTRUCTORS_LIST)}>
+                Xem thêm
+              </span>
             </div>
             <div className="block--product-list--showing">
               {INSTRUCTORS_DATA.map((r) => (

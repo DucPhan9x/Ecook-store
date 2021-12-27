@@ -33,4 +33,9 @@ export const ROUTE_ADMIN_DASHBOARD_VOUCHERS = "/admin/dashboard/vouchers"; // co
 // user
 export const ROUTE_CLIENT_RECIPE_DETAIL = "/recipe?id=:recipeId"; // course manage
 export const ROUTE_CLIENT_RECIPES_LIST = "/recipes-list"; // course manage
+export const ROUTE_CLIENT_FOODS_LIST = "/foods-list"; // course manage
+export const ROUTE_CLIENT_COURSES_LIST = "/courses-list"; // course manage
+export const ROUTE_CLIENT_INSTRUCTORS_LIST = "/instructors-list"; // course manage
 export const ROUTE_CLIENT_FOOD_DETAIL = "/food?id=:foodId"; // course manage
+export const ROUTE_CLIENT_INSTRUCTOR_DETAIL = "/instructor?id=:instructorId"; // course manage
+export const ROUTE_CLIENT_COURSE_DETAIL = "/course?id=:courseId"; // course manage
