@@ -18,6 +18,9 @@ import LocalAtmIcon from "@material-ui/icons/LocalAtm";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import { IconButton } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
+import { getAccessToken } from "utils/authUtils";
+import useNotification from "hooks/useNotification";
+import ModalConfirm from "components/common/ModalConfirm";
 
 const CourseDetail = () => {
   const [course, setCourse] = useState({});
@@ -39,6 +42,8 @@ const CourseDetail = () => {
       setRate(t.numOfStars);
     }
   }, []);
+
+  const [isOpenModalConfirm, setIsOpenModalConfirm] = useState(false);
 
   // const [formFeedback, setFormFeedback] = useState({ rating: 0, comment: "" });
 
@@ -125,12 +130,10 @@ const CourseDetail = () => {
             <LocalAtmIcon />
             <div className="block__disCountOff">
               <span className="real-price">
-                {formatCurrency(
-                  getPriceItem(
-                    course.discountOff,
-                    course.unitPrice,
-                    course.discountMaximum
-                  )
+                {getPriceItem(
+                  course.discountOff,
+                  course.unitPrice,
+                  course.discountMaximum
                 )}
               </span>
             </div>
@@ -142,15 +145,52 @@ const CourseDetail = () => {
           </div>
           <div className="course-detail-container-top__left--actions flex flex-col">
             <div className="flex items-center block__like-cart">
-              <button className="btn btn--favorite">
-                <FavoriteBorderIcon /> Lưu
+              <button
+                className="btn btn--favorite"
+                onClick={() => {
+                  if (getAccessToken()) {
+                    // call API add cart
+                    useNotification.Success({
+                      title: "",
+                      message: "Đã thêm vào bộ sưu tập",
+                    });
+                  } else {
+                    setIsOpenModalConfirm(true);
+                  }
+                }}
+              >
+                <FavoriteBorderIcon />
               </button>
-              <button className="btn btn--add-to-cart">
+              <button
+                className="btn btn--add-to-cart"
+                onClick={() => {
+                  if (getAccessToken()) {
+                    // call API add cart
+                    useNotification.Success({
+                      title: "",
+                      message: "Đã thêm vào giỏ hàng",
+                    });
+                  } else {
+                    setIsOpenModalConfirm(true);
+                  }
+                }}
+              >
                 <ShoppingCartIcon style={{ marginRight: 4 }} />
                 Thêm vào giỏ hàng
               </button>
             </div>
-            <button className="btn btn--buy-now">Mua ngay</button>
+            <button
+              className="btn btn--buy-now"
+              onClick={() => {
+                if (getAccessToken()) {
+                  // call API add cart
+                } else {
+                  setIsOpenModalConfirm(true);
+                }
+              }}
+            >
+              Mua ngay
+            </button>
           </div>
         </div>
       </div>
@@ -203,6 +243,15 @@ const CourseDetail = () => {
         </div>
       </div>
       <ScrollToTop />
+      <ModalConfirm
+        title="Thông báo"
+        message="Bạn cần đăng nhập để tiếp tục, bạn muốn tiếp tục ?"
+        isOpenModal={isOpenModalConfirm}
+        close={() => setIsOpenModalConfirm(false)}
+        handleOk={() => {
+          history.push("/login");
+        }}
+      />
     </div>
   );
 };

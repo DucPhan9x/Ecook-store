@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import PaymentIcon from "@material-ui/icons/Payment";
 import { IconButton, Tooltip } from "@material-ui/core";
@@ -6,15 +6,21 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import { useHistory } from "react-router-dom";
 import { formatCurrency, getPriceItem } from "utils/priceUtils";
 import useNotification from "hooks/useNotification";
+import ModalConfirm from "../ModalConfirm";
+import { getAccessToken } from "utils/authUtils";
 
 const FoodCard = ({ data }) => {
   const { name, unitPrice, imageUrl, discountOff, discountMaximum } = data;
   const history = useHistory();
+  const [isOpenModalConfirm, setIsOpenModalConfirm] = useState(false);
+
   return (
     <div className="food-card">
       <div className="food-card__inner">
         <img
-          onClick={() => history.push(`/food?id=${data._id}`)}
+          onClick={() => {
+            history.push(`/food?id=${data._id}`);
+          }}
           src={imageUrl}
           alt=""
           className="food-card__inner--picture"
@@ -29,9 +35,7 @@ const FoodCard = ({ data }) => {
               </span>
               {discountOff !== 0 && (
                 <span className="f-new-price">
-                  {formatCurrency(
-                    getPriceItem(discountOff, unitPrice, discountMaximum)
-                  )}
+                  {getPriceItem(discountOff, unitPrice, discountMaximum)}
                 </span>
               )}
             </div>
@@ -40,29 +44,45 @@ const FoodCard = ({ data }) => {
             <IconButton
               aria-label="add to favorites"
               onClick={() => {
-                // call API add cart
-                useNotification.Success({
-                  title: "",
-                  message: "Đã thêm vào bộ sưu tập",
-                });
+                if (getAccessToken()) {
+                  // call API add cart
+                  useNotification.Success({
+                    title: "",
+                    message: "Đã thêm vào bộ sưu tập",
+                  });
+                } else {
+                  setIsOpenModalConfirm(true);
+                }
               }}
             >
               <FavoriteIcon color="secondary" />
             </IconButton>
             <div>
               <Tooltip title="Mua ngay" placement="top">
-                <IconButton>
+                <IconButton
+                  onClick={() => {
+                    if (getAccessToken()) {
+                      // call API add cart
+                    } else {
+                      setIsOpenModalConfirm(true);
+                    }
+                  }}
+                >
                   <PaymentIcon />
                 </IconButton>
               </Tooltip>
               <Tooltip title="Thêm vào giỏ hàng" placement="top">
                 <IconButton
                   onClick={() => {
-                    // call API add cart
-                    useNotification.Success({
-                      title: "",
-                      message: "Đã thêm vào giỏ hàng",
-                    });
+                    if (getAccessToken()) {
+                      // call API add cart
+                      useNotification.Success({
+                        title: "",
+                        message: "Đã thêm vào giỏ hàng",
+                      });
+                    } else {
+                      setIsOpenModalConfirm(true);
+                    }
                   }}
                 >
                   <ShoppingBasketIcon />
@@ -72,6 +92,15 @@ const FoodCard = ({ data }) => {
           </div>
         </div>
       </div>
+      <ModalConfirm
+        title="Thông báo"
+        message="Bạn cần đăng nhập để tiếp tục, bạn muốn tiếp tục ?"
+        isOpenModal={isOpenModalConfirm}
+        close={() => setIsOpenModalConfirm(false)}
+        handleOk={() => {
+          history.push("/login");
+        }}
+      />
     </div>
   );
 };

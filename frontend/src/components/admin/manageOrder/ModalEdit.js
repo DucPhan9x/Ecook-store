@@ -21,6 +21,7 @@ const ModalEdit = ({ isModalVisible, handleSubmit, close, selectedItem }) => {
     isPaid: true,
     orderStatus: {},
     paymentMethod: "",
+    discountOff: 0,
     shipmentFee: "",
     merchandiseSubtotal: "",
     total: "",
@@ -156,7 +157,7 @@ const ModalEdit = ({ isModalVisible, handleSubmit, close, selectedItem }) => {
                   <div className="flex items-center">
                     <span>
                       {index + 1}. &nbsp; {item.foodName} ({item.quantity}
-                      {item.unitType})
+                      {item.unit})
                     </span>
                     <span>
                       &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
@@ -178,23 +179,26 @@ const ModalEdit = ({ isModalVisible, handleSubmit, close, selectedItem }) => {
               <label>Phí ship</label>
               <span>{form?.shipmentFee} VND</span>
             </div>
-            <div className="block_field-modal-edit-order">
-              <label>
-                Khuyến mãi áp dụng voucher{" "}
-                <span style={{ color: "black" }}>{form?.voucher?.name}</span>
-              </label>
-              <span
-                style={{
-                  background: "#de1596",
-                  color: "white",
-                  borderRadius: "12px",
-                  padding: "5px",
-                  width: "fit-content",
-                }}
-              >
-                {form.voucher?.discount} VND
-              </span>
-            </div>
+            {form?.voucher && (
+              <div className="block_field-modal-edit-order">
+                <label>
+                  Khuyến mãi áp dụng voucher{" "}
+                  <span style={{ color: "black" }}>{form?.voucher?.name}</span>
+                </label>
+                <span
+                  style={{
+                    background: "#de1596",
+                    color: "white",
+                    borderRadius: "12px",
+                    padding: "5px",
+                    width: "fit-content",
+                  }}
+                >
+                  {form?.discountOff} VND
+                </span>
+              </div>
+            )}
+
             <div className="block_field-modal-edit-order">
               <label>Tổng tiền</label>
               <span

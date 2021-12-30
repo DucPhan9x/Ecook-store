@@ -14,11 +14,15 @@ import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import DescriptionIcon from "@material-ui/icons/Description";
 import { useHistory } from "react-router-dom";
+import { getAccessToken } from "utils/authUtils";
+import ModalConfirm from "components/common/ModalConfirm";
 
 const FoodDetail = () => {
   const [food, setFood] = useState({});
   const history = useHistory();
   const [rate, setRate] = useState(0);
+  const [isOpenModalConfirm, setIsOpenModalConfirm] = useState(false);
+
   useEffect(() => {
     document.title = "Chi tiết sản phẩm | ECook";
 
@@ -80,25 +84,60 @@ const FoodDetail = () => {
                 </span>
               )}
               <span className="real-price">
-                {formatCurrency(
-                  getPriceItem(
-                    food.discountOff,
-                    food.unitPrice,
-                    food.discountMaximum
-                  )
+                {getPriceItem(
+                  food.discountOff,
+                  food.unitPrice,
+                  food.discountMaximum
                 )}
               </span>
             </div>
           </div>
           <div className="food-detail-container-top__right--actions">
-            <button className="btn btn--favorite">
-              <FavoriteBorderIcon /> Lưu
+            <button
+              className="btn btn--favorite"
+              onClick={() => {
+                if (getAccessToken()) {
+                  // call API add cart
+                  useNotification.Success({
+                    title: "",
+                    message: "Đã thêm vào bộ sưu tập",
+                  });
+                } else {
+                  setIsOpenModalConfirm(true);
+                }
+              }}
+            >
+              <FavoriteBorderIcon />
             </button>
-            <button className="btn btn--add-to-cart">
+            <button
+              className="btn btn--add-to-cart"
+              onClick={() => {
+                if (getAccessToken()) {
+                  // call API add cart
+                  useNotification.Success({
+                    title: "",
+                    message: "Đã thêm vào giỏ hàng",
+                  });
+                } else {
+                  setIsOpenModalConfirm(true);
+                }
+              }}
+            >
               <ShoppingCartIcon />
               Thêm vào giỏ hàng
             </button>
-            <button className="btn btn--buy-now">Mua ngay</button>
+            <button
+              className="btn btn--buy-now"
+              onClick={() => {
+                if (getAccessToken()) {
+                  // call API add cart
+                } else {
+                  setIsOpenModalConfirm(true);
+                }
+              }}
+            >
+              Mua ngay
+            </button>
           </div>
           <div className="block__recipe__related">
             <span className="block__recipe__related--title">
@@ -109,7 +148,13 @@ const FoodDetail = () => {
               {food.recipesRelated?.map((r) => (
                 <Chip
                   key={r._id}
-                  onClick={() => history.push(`/recipe?id=recipe_123`)}
+                  onClick={() => {
+                    if (getAccessToken()) {
+                      history.push(`/recipe?id=recipe_123`);
+                    } else {
+                      setIsOpenModalConfirm(true);
+                    }
+                  }}
                   label={r.title}
                   variant="outlined"
                 />
@@ -118,43 +163,50 @@ const FoodDetail = () => {
           </div>
         </div>
       </div>
-      <div className="food-detail-container-bottom">
-        <div className="flex items-center" style={{ marginBottom: 12 }}>
-          <span
-            style={{ marginRight: 36, color: "orangered", fontWeight: "bold" }}
-          >
-            <FeedbackIcon color="secondary" style={{ marginRight: 12 }} />
-            Đánh giá & Nhận xét
-          </span>
-          <Rating
-            value={formFeedback.rating}
-            onChange={(e, value) =>
-              setFormFeedback({ ...formFeedback, rating: value })
-            }
+      {getAccessToken() && (
+        <div className="food-detail-container-bottom">
+          <div className="flex items-center" style={{ marginBottom: 12 }}>
+            <span
+              style={{
+                marginRight: 36,
+                color: "orangered",
+                fontWeight: "bold",
+              }}
+            >
+              <FeedbackIcon color="secondary" style={{ marginRight: 12 }} />
+              Đánh giá & Nhận xét
+            </span>
+            <Rating
+              value={formFeedback.rating}
+              onChange={(e, value) =>
+                setFormFeedback({ ...formFeedback, rating: value })
+              }
+            />
+          </div>
+          <Comments
+            data={food.feedbacksList}
+            formFeedback={formFeedback}
+            handleReply={(replyList) => {
+              // create reply , call API
+              console.log(replyList);
+            }}
+            handleFeedback={(comment) => {
+              // check if stars > 3 => call API send feedback
+              if (formFeedback.rating > 2) {
+                setFormFeedback({ ...formFeedback, comment });
+                console.log({ ...formFeedback, comment });
+                // CALL API add feedback for this recipe id
+              } else {
+                useNotification.Warning({
+                  title: "Message",
+                  message: "Bạn không thể bình luận vì đánh giá quá thấp",
+                });
+              }
+            }}
           />
         </div>
-        <Comments
-          data={food.feedbacksList}
-          formFeedback={formFeedback}
-          handleReply={(replyList) => {
-            // create reply , call API
-            console.log(replyList);
-          }}
-          handleFeedback={(comment) => {
-            // check if stars > 3 => call API send feedback
-            if (formFeedback.rating > 2) {
-              setFormFeedback({ ...formFeedback, comment });
-              console.log({ ...formFeedback, comment });
-              // CALL API add feedback for this recipe id
-            } else {
-              useNotification.Warning({
-                title: "Message",
-                message: "Bạn không thể bình luận vì đánh giá quá thấp",
-              });
-            }
-          }}
-        />
-      </div>
+      )}
+
       <div className="food-detail__related">
         <div className="food-detail__related--title">
           <AssignmentIcon color="secondary" />
@@ -167,6 +219,15 @@ const FoodDetail = () => {
         </div>
       </div>
       <ScrollToTop />
+      <ModalConfirm
+        title="Thông báo"
+        message="Bạn cần đăng nhập để tiếp tục, bạn muốn tiếp tục ?"
+        isOpenModal={isOpenModalConfirm}
+        close={() => setIsOpenModalConfirm(false)}
+        handleOk={() => {
+          history.push("/login");
+        }}
+      />
     </div>
   );
 };

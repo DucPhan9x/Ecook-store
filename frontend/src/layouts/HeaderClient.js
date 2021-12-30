@@ -14,10 +14,12 @@ import ModalCart from "pages/user/cart/ModalCart";
 import { ROUTE_CLIENT_FAVORITES } from "utils/routes";
 import { AvatarMenuClient } from "components/common";
 import { getAccessToken } from "utils/authUtils";
+import ModalConfirm from "components/common/ModalConfirm";
 
 const HeaderClient = () => {
   const history = useHistory();
   const [openFoodsCart, setOpenFoodsCart] = useState(false);
+  const [isOpenModalConfirm, setIsOpenModalConfirm] = useState(false);
 
   return (
     <div className="header-client">
@@ -33,13 +35,25 @@ const HeaderClient = () => {
             <HeartTwoTone
               twoToneColor="#eb2f96"
               className="favorite-items"
-              onClick={() => history.push(ROUTE_CLIENT_FAVORITES)}
+              onClick={() => {
+                if (getAccessToken()) {
+                  history.push(ROUTE_CLIENT_FAVORITES);
+                } else {
+                  setIsOpenModalConfirm(true);
+                }
+              }}
             />
           </Tooltip>
           <Tooltip title="Giỏ hàng" placement="bottom">
             <div
               className="btn--cart-item"
-              onClick={() => setOpenFoodsCart(true)}
+              onClick={() => {
+                if (getAccessToken()) {
+                  setOpenFoodsCart(true);
+                } else {
+                  setIsOpenModalConfirm(true);
+                }
+              }}
             >
               <img src={CartIcon} alt="Cart item" />
             </div>
@@ -65,6 +79,15 @@ const HeaderClient = () => {
       <ModalCart
         isModalVisible={openFoodsCart}
         close={() => setOpenFoodsCart(false)}
+      />
+      <ModalConfirm
+        title="Thông báo"
+        message="Bạn cần đăng nhập để tiếp tục, bạn muốn tiếp tục ?"
+        isOpenModal={isOpenModalConfirm}
+        close={() => setIsOpenModalConfirm(false)}
+        handleOk={() => {
+          history.push("/login");
+        }}
       />
     </div>
   );

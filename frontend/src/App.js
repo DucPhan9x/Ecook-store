@@ -207,11 +207,11 @@ function App() {
           component={withAuthClient(InstructorsList)}
           exact
         />
-        <Route path="/food" component={withAuthClient(FoodDetail)} exact />
-        <Route path="/course" component={withAuthClient(CourseDetail)} exact />
+        <Route path="/food" component={withNoAuth(FoodDetail)} exact />
+        <Route path="/course" component={withNoAuth(CourseDetail)} exact />
         <Route
           path="/instructor"
-          component={withAuthClient(InstructorDetail)}
+          component={withNoAuth(InstructorDetail)}
           exact
         />
         <Route

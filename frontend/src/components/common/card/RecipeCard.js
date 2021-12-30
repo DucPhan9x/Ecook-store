@@ -14,6 +14,7 @@ import { useHistory } from "react-router-dom";
 import { getAccessToken } from "utils/authUtils";
 import ModalConfirm from "../ModalConfirm";
 import { useState } from "react";
+import useNotification from "hooks/useNotification";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -81,7 +82,20 @@ export default function RecipeCard({ data }) {
         <CardActions disableSpacing className="flex j-space-between">
           <Rating defaultValue={feedbacks} max={5} readOnly />
 
-          <IconButton aria-label="add to favorites">
+          <IconButton
+            aria-label="add to favorites"
+            onClick={() => {
+              if (getAccessToken()) {
+                // call API add cart
+                useNotification.Success({
+                  title: "",
+                  message: "Đã thêm vào bộ sưu tập",
+                });
+              } else {
+                setIsOpenModalConfirm(true);
+              }
+            }}
+          >
             <FavoriteIcon color="secondary" />
           </IconButton>
         </CardActions>

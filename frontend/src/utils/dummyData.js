@@ -2499,20 +2499,26 @@ export const ORDERS_DATA = [
     paymentMethod: "Tiền mặt", // Momo
     shipmentFee: 5000, // tinh theo dia chi dat don mua
     merchandiseSubtotal: 20000, // tien san pham chua tinh ship
-    total: 25000, // tong tien bao gom ship fee
+    total: 10000, // tong tien bao gom ship fee
+    discountOff: 15000, // duoc tinh tu voucher object total- total*(discountOffVoucher?discountOffVoucher<maxDiscountOff:maxDiscountOff)
     voucher: {
       _id: uuid(),
-      name: "VUIVECUOITUAN",
-      discount: "15000",
+      name: "VUIVECUOITHANG",
+      discountOff: 50, // percent (%)
+      content: "Giảm 50% tổng bill tối đa 50k (đơn tối thiểu 250k)",
+      remainingSlot: 10,
+      maxDiscountOff: 50000,
+      minOrder: 250000,
+      expiredDate: Date.now(),
     },
     items: [
       {
         _id: uuid(),
         foodId: uuid(), // to see details the other information
         foodName: "Cam",
-        unitPrice: 20000,
-        unitType: "kg",
-        quantity: 0.5,
+        unitPrice: 20000, // 1kg
+        unit: "kg",
+        quantity: 1,
       },
     ],
   },
@@ -2537,11 +2543,17 @@ export const ORDERS_DATA = [
     paymentMethod: "Tiền mặt", // Momo
     shipmentFee: 5000, // tinh theo dia chi dat don mua
     merchandiseSubtotal: 20000, // tien san pham chua tinh ship
-    total: 25000, // tong tien bao gom ship fee
+    total: 10000, // tong tien bao gom ship fee
+    discountOff: 15000, // duoc tinh tu voucher object total- total*(discountOffVoucher?discountOffVoucher<maxDiscountOff:maxDiscountOff)
     voucher: {
       _id: uuid(),
-      name: "VUIVECUOITUAN",
-      discount: "15000",
+      name: "VUIVECUOITHANG",
+      discountOff: 50, // percent (%)
+      content: "Giảm 50% tổng bill tối đa 50k (đơn tối thiểu 250k)",
+      remainingSlot: 10,
+      maxDiscountOff: 50000,
+      minOrder: 250000,
+      expiredDate: Date.now(),
     },
     items: [
       {
@@ -2549,7 +2561,7 @@ export const ORDERS_DATA = [
         foodId: uuid(), // to see details the other information
         foodName: "Cam",
         unitPrice: 20000,
-        unitType: "kg",
+        unit: "kg",
         quantity: 0.5,
       },
     ],
@@ -2575,11 +2587,17 @@ export const ORDERS_DATA = [
     paymentMethod: "Tiền mặt", // Momo
     shipmentFee: 5000, // tinh theo dia chi dat don mua
     merchandiseSubtotal: 20000, // tien san pham chua tinh ship
-    total: 25000, // tong tien bao gom ship fee
+    total: 10000, // tong tien bao gom ship fee
+    discountOff: 15000, // duoc tinh tu voucher object discountOffVoucher?discountOffVoucher<maxDiscountOff:maxDiscountOff
     voucher: {
       _id: uuid(),
-      name: "VUIVECUOITUAN",
-      discount: "15000",
+      name: "VUIVECUOITHANG",
+      discountOff: 50, // percent (%)
+      content: "Giảm 50% tổng bill tối đa 50k (đơn tối thiểu 250k)",
+      remainingSlot: 10,
+      maxDiscountOff: 50000,
+      minOrder: 250000,
+      expiredDate: Date.now(),
     },
     items: [
       {
@@ -2587,7 +2605,7 @@ export const ORDERS_DATA = [
         foodId: uuid(), // to see details the other information
         foodName: "Cam",
         unitPrice: 20000,
-        unitType: "kg",
+        unit: "kg",
         quantity: 0.5,
       },
     ],
@@ -2613,11 +2631,17 @@ export const ORDERS_DATA = [
     paymentMethod: "Tiền mặt", // Momo
     shipmentFee: 5000, // tinh theo dia chi dat don mua
     merchandiseSubtotal: 10000, // tien san pham chua tinh ship
-    total: 25000, // tong tien bao gom ship fee
+    total: 10000, // tong tien bao gom ship fee
+    discountOff: 15000, // duoc tinh tu voucher object total- total*(discountOffVoucher?discountOffVoucher<maxDiscountOff:maxDiscountOff)
     voucher: {
       _id: uuid(),
-      name: "VUIVECUOITUAN",
-      discount: "15000",
+      name: "VUIVECUOITHANG",
+      discountOff: 50, // percent (%)
+      content: "Giảm 50% tổng bill tối đa 50k (đơn tối thiểu 250k)",
+      remainingSlot: 10,
+      maxDiscountOff: 50000,
+      minOrder: 250000,
+      expiredDate: Date.now(),
     },
     items: [
       {
@@ -2625,7 +2649,7 @@ export const ORDERS_DATA = [
         foodId: uuid(), // to see details the other information
         foodName: "Cam",
         unitPrice: 20000,
-        unitType: "kg",
+        unit: "kg",
         quantity: 0.5,
       },
     ],
@@ -2768,5 +2792,325 @@ export const VOUCHERS_DATA = [
     maxDiscountOff: 50000,
     minOrder: 250000,
     expiredDate: Date.now(),
+  },
+];
+
+export const FOODS_CART = [
+  {
+    _id: uuid(),
+    customerId: uuid(),
+    food: {
+      _id: uuid(),
+      type: "Thịt",
+      unit: "kg",
+      quantity: 1,
+      name: "Sườn Non Heo",
+      unitPrice: 120000,
+      discountOff: 20, // percent %,
+      discountMaximum: 20000, //vnd
+      description: "Hàng tươi sống",
+      imageUrl:
+        "https://res.cloudinary.com/duc/image/upload/v1639206902/ecook/suon_heo_ssbldm.jpg",
+    },
+    itemType: 1,
+    quantity: 1,
+  },
+  {
+    _id: uuid(),
+    customerId: uuid(),
+    food: {
+      _id: uuid(),
+      type: "Thịt",
+      unit: "kg",
+      quantity: 1,
+      name: "Sườn Non Heo",
+      unitPrice: 120000,
+      discountOff: 20, // percent %,
+      discountMaximum: 20000, //vnd
+      description: "Hàng tươi sống",
+      imageUrl:
+        "https://res.cloudinary.com/duc/image/upload/v1639206902/ecook/suon_heo_ssbldm.jpg",
+    },
+    itemType: 1,
+    quantity: 1,
+  },
+  {
+    _id: uuid(),
+    customerId: uuid(),
+    food: {
+      _id: uuid(),
+      type: "Thịt",
+      unit: "kg",
+      quantity: 1,
+      name: "Sườn Non Heo",
+      unitPrice: 120000,
+      discountOff: 20, // percent %,
+      discountMaximum: 20000, //vnd
+      description: "Hàng tươi sống",
+      imageUrl:
+        "https://res.cloudinary.com/duc/image/upload/v1639206902/ecook/suon_heo_ssbldm.jpg",
+    },
+    itemType: 1,
+    quantity: 1,
+  },
+  {
+    _id: uuid(),
+    customerId: uuid(),
+    food: {
+      _id: uuid(),
+      type: "Thịt",
+      unit: "kg",
+      quantity: 1,
+      name: "Sườn Non Heo",
+      unitPrice: 120000,
+      discountOff: 20, // percent %,
+      discountMaximum: 20000, //vnd
+      description: "Hàng tươi sống",
+      imageUrl:
+        "https://res.cloudinary.com/duc/image/upload/v1639206902/ecook/suon_heo_ssbldm.jpg",
+    },
+    itemType: 1,
+    quantity: 1,
+  },
+  {
+    _id: uuid(),
+    customerId: uuid(),
+    food: {
+      _id: uuid(),
+      type: "Thịt",
+      unit: "kg",
+      quantity: 1,
+      name: "Sườn Non Heo",
+      unitPrice: 120000,
+      discountOff: 20, // percent %,
+      discountMaximum: 20000, //vnd
+      description: "Hàng tươi sống",
+      imageUrl:
+        "https://res.cloudinary.com/duc/image/upload/v1639206902/ecook/suon_heo_ssbldm.jpg",
+    },
+    itemType: 1,
+    quantity: 1,
+  },
+  {
+    _id: uuid(),
+    customerId: uuid(),
+    food: {
+      _id: uuid(),
+      type: "Thịt",
+      unit: "kg",
+      quantity: 1,
+      name: "Sườn Non Heo",
+      unitPrice: 120000,
+      discountOff: 20, // percent %,
+      discountMaximum: 20000, //vnd
+      description: "Hàng tươi sống",
+      imageUrl:
+        "https://res.cloudinary.com/duc/image/upload/v1639206902/ecook/suon_heo_ssbldm.jpg",
+    },
+    itemType: 1,
+    quantity: 1,
+  },
+  {
+    _id: uuid(),
+    customerId: uuid(),
+    food: {
+      _id: uuid(),
+      type: "Thịt",
+      unit: "kg",
+      quantity: 1,
+      name: "Sườn Non Heo",
+      unitPrice: 120000,
+      discountOff: 20, // percent %,
+      discountMaximum: 20000, //vnd
+      description: "Hàng tươi sống",
+      imageUrl:
+        "https://res.cloudinary.com/duc/image/upload/v1639206902/ecook/suon_heo_ssbldm.jpg",
+    },
+    itemType: 1,
+    quantity: 1,
+  },
+  {
+    _id: uuid(),
+    customerId: uuid(),
+    food: {
+      _id: uuid(),
+      type: "Thịt",
+      unit: "kg",
+      quantity: 1,
+      name: "Sườn Non Heo",
+      unitPrice: 120000,
+      discountOff: 20, // percent %,
+      discountMaximum: 20000, //vnd
+      description: "Hàng tươi sống",
+      imageUrl:
+        "https://res.cloudinary.com/duc/image/upload/v1639206902/ecook/suon_heo_ssbldm.jpg",
+    },
+    itemType: 1,
+    quantity: 1,
+  },
+  {
+    _id: uuid(),
+    customerId: uuid(),
+    food: {
+      _id: uuid(),
+      type: "Thịt",
+      unit: "kg",
+      quantity: 1,
+      name: "Sườn Non Heo",
+      unitPrice: 120000,
+      discountOff: 20, // percent %,
+      discountMaximum: 20000, //vnd
+      description: "Hàng tươi sống",
+      imageUrl:
+        "https://res.cloudinary.com/duc/image/upload/v1639206902/ecook/suon_heo_ssbldm.jpg",
+    },
+    itemType: 1,
+    quantity: 1,
+  },
+  {
+    _id: uuid(),
+    customerId: uuid(),
+    food: {
+      _id: uuid(),
+      type: "Thịt",
+      unit: "kg",
+      quantity: 1,
+      name: "Sườn Non Heo",
+      unitPrice: 120000,
+      discountOff: 20, // percent %,
+      discountMaximum: 20000, //vnd
+      description: "Hàng tươi sống",
+      imageUrl:
+        "https://res.cloudinary.com/duc/image/upload/v1639206902/ecook/suon_heo_ssbldm.jpg",
+    },
+    itemType: 1,
+    quantity: 1,
+  },
+  {
+    _id: uuid(),
+    customerId: uuid(),
+    food: {
+      _id: uuid(),
+      type: "Thịt",
+      unit: "kg",
+      quantity: 1,
+      name: "Sườn Non Heo",
+      unitPrice: 120000,
+      discountOff: 20, // percent %,
+      discountMaximum: 20000, //vnd
+      description: "Hàng tươi sống",
+      imageUrl:
+        "https://res.cloudinary.com/duc/image/upload/v1639206902/ecook/suon_heo_ssbldm.jpg",
+    },
+    itemType: 1,
+    quantity: 2,
+  },
+];
+
+export const COURSES_CART = [
+  {
+    _id: uuid(),
+    customerId: uuid(),
+    itemType: 2,
+    course: {
+      _id: uuid(),
+      name: "Món Á cơ bản",
+      unitPrice: 650000,
+      discountOff: 10,
+      discountMaximum: 100000,
+      description: "Đây là khóa học chủ yếu tập trung vào các món ăn Châu Á.",
+      videoUrls: [
+        {
+          title: "Món Châu Âu",
+          videoUrl:
+            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+          duration: 30, // unit : min
+        },
+      ],
+    },
+  },
+  {
+    _id: uuid(),
+    customerId: uuid(),
+    itemType: 2,
+    course: {
+      _id: uuid(),
+      name: "Món Á cơ bản",
+      unitPrice: 650000,
+      discountOff: 10,
+      discountMaximum: 100000,
+      description: "Đây là khóa học chủ yếu tập trung vào các món ăn Châu Á.",
+      videoUrls: [
+        {
+          title: "Món Châu Âu",
+          videoUrl:
+            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+          duration: 30, // unit : min
+        },
+      ],
+    },
+  },
+  {
+    _id: uuid(),
+    customerId: uuid(),
+    itemType: 2,
+    course: {
+      _id: uuid(),
+      name: "Món Á cơ bản",
+      unitPrice: 650000,
+      discountOff: 10,
+      discountMaximum: 100000,
+      description: "Đây là khóa học chủ yếu tập trung vào các món ăn Châu Á.",
+      videoUrls: [
+        {
+          title: "Món Châu Âu",
+          videoUrl:
+            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+          duration: 30, // unit : min
+        },
+      ],
+    },
+  },
+  {
+    _id: uuid(),
+    customerId: uuid(),
+    itemType: 2,
+    course: {
+      _id: uuid(),
+      name: "Món Á cơ bản",
+      unitPrice: 650000,
+      discountOff: 10,
+      discountMaximum: 100000,
+      description: "Đây là khóa học chủ yếu tập trung vào các món ăn Châu Á.",
+      videoUrls: [
+        {
+          title: "Món Châu Âu",
+          videoUrl:
+            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+          duration: 30, // unit : min
+        },
+      ],
+    },
+  },
+  {
+    _id: uuid(),
+    customerId: uuid(),
+    itemType: 2,
+    course: {
+      _id: uuid(),
+      name: "Món Á cơ bản",
+      unitPrice: 650000,
+      discountOff: 0,
+      discountMaximum: 100000,
+      description: "Đây là khóa học chủ yếu tập trung vào các món ăn Châu Á.",
+      videoUrls: [
+        {
+          title: "Món Châu Âu",
+          videoUrl:
+            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+          duration: 30, // unit : min
+        },
+      ],
+    },
   },
 ];
