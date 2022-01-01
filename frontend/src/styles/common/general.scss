@@ -25,7 +25,11 @@ body {
 .flex {
   display: flex;
 }
-
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .flex-col {
   flex-direction: column;
 }
@@ -46,8 +50,7 @@ body {
 .pointer {
   cursor: pointer;
 }
-.w-50percent {
-}
+
 .full-width {
   width: 100%;
 }

@@ -1,0 +1,81 @@
+.my-orders-container {
+  .search-field {
+    margin: 12px 0;
+  }
+  &--content {
+    margin-top: 12px;
+    background: rgb(252, 253, 242) !important;
+    height: calc(100vh - 220px);
+    box-shadow: 2px 2px 10px rgba(87, 87, 87, 0.6) !important;
+    position: relative;
+    &__inner {
+      padding: 20px 45px;
+      &--header {
+        margin-bottom: 12px !important;
+        color: orangered !important;
+        font-weight: bold;
+      }
+      &-row-content {
+        .btn--detail {
+          margin-right: 10px;
+          color: rgb(255, 255, 255);
+          background: rgb(71, 131, 241);
+        }
+      }
+      &--pagination {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        bottom: 50px;
+        left: calc(50% - 250px);
+      }
+    }
+    border-top-left-radius: unset !important;
+    border-top-right-radius: unset !important ;
+  }
+}
+
+// modal see detail
+.modal-detail-order-container {
+  .note-voucher {
+    color: rgb(116, 116, 116);
+    margin-bottom: 4px;
+  }
+  .shipment-fee {
+    color: rgb(85, 85, 2);
+    margin-bottom: 16px;
+  }
+  .row-detail-order {
+    margin-bottom: 12px;
+    img {
+      width: 80px;
+      border-radius: 15px;
+      height: auto;
+    }
+    &-info {
+      font-size: 17px;
+      margin-left: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    &-price {
+      display: flex;
+      margin-right: 12px;
+      align-items: center;
+      &-discount {
+        text-decoration: line-through;
+        color: gray;
+        font-size: 17px;
+        transform: translateY(-10px);
+        margin-left: 12px;
+      }
+      &-real {
+        font-size: 19px;
+        font-weight: bold;
+        color: rgb(129, 85, 3);
+      }
+    }
+  }
+}

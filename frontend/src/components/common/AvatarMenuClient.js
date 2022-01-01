@@ -3,7 +3,6 @@ import { Dropdown, Button, Menu } from "antd";
 import { Avatar } from "antd";
 import { ArrowDropDown } from "@material-ui/icons";
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
-import LocalMallIcon from "@material-ui/icons/LocalMall";
 import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
 import DescriptionIcon from "@material-ui/icons/Description";
 import LaptopChromebookIcon from "@material-ui/icons/LaptopChromebook";
@@ -12,7 +11,6 @@ import {
   ROUTE_CLIENT_MY_COURSES,
   ROUTE_CLIENT_MY_ORDERS,
   ROUTE_CLIENT_MY_PROFILE,
-  ROUTE_CLIENT_MY_VOUCHERS,
 } from "utils/routes";
 import Cookies from "js-cookie";
 
@@ -35,10 +33,6 @@ export default function AvatarMenuClient() {
         break;
       }
 
-      case 3: {
-        url = ROUTE_CLIENT_MY_VOUCHERS;
-        break;
-      }
       default: {
         // clear local storage/cookies
         Cookies.remove("accessToken");
@@ -58,14 +52,13 @@ export default function AvatarMenuClient() {
               icon: <AccountBoxIcon color="secondary" />,
             },
             {
-              name: "Đơn hàng",
+              name: "Lịch sử đơn hàng",
               icon: <DescriptionIcon color="secondary" />,
             },
             {
               name: "Khóa học hiện có",
               icon: <LaptopChromebookIcon color="secondary" />,
             },
-            { name: "Ví voucher", icon: <LocalMallIcon color="secondary" /> },
             {
               name: "Đăng xuất",
               icon: <PowerSettingsNewIcon color="secondary" />,

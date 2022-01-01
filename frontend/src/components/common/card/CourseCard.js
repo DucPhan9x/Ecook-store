@@ -20,7 +20,7 @@ const CourseCard = ({ data }) => {
       <div className="course-card__inner">
         <video
           id={_id}
-          src={videoUrls[0].videoUrl}
+          src={videoUrls?.length > 0 && videoUrls[0]?.videoUrl}
           frameBorder="0"
           allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
