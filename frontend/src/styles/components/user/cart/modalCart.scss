@@ -141,3 +141,97 @@
     }
   }
 }
+// modal confirm order
+.btn-order-food {
+  width: 100%;
+  margin-top: 5px;
+  background: red;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: white;
+  &:hover {
+    cursor: pointer;
+    background: rgb(253, 34, 34);
+  }
+}
+.block-momo-direct-moneny {
+  .btn-money {
+    background: rgb(119, 111, 0);
+    color: white !important;
+    &:hover,
+    :active:focus {
+      color: white !important;
+    }
+  }
+  .btn-momo {
+    color: white !important;
+    &:hover,
+    :active:focus {
+      color: white !important;
+    }
+    background: rgb(255, 6, 102);
+  }
+  width: 100%;
+  & > button {
+    font-size: 18px;
+    border-radius: unset !important;
+    width: 50% !important;
+    height: 40px;
+  }
+}
+.modal-confirm-food-cart-container {
+  &__inner {
+    padding: 12px 4px;
+    &-top {
+      .block__order-info {
+        margin-bottom: 12px;
+        label {
+          font-size: 16px;
+          color: rgb(117, 117, 117);
+          margin-bottom: 2px;
+        }
+        .MuiInputBase-root {
+          width: 100%;
+        }
+      }
+    }
+    .block-data-normal {
+      label {
+        color: rgb(136, 55, 1);
+        font-size: 16px;
+      }
+      span {
+        font-size: 17px;
+      }
+    }
+    .block__items-detail {
+      margin-top: 16px;
+      & > span {
+        color: rgb(1, 67, 143);
+        font-size: 18px;
+      }
+      &-content {
+        margin-top: 12px;
+        &--item {
+          display: flex;
+          align-items: center;
+          margin-bottom: 12px;
+          .block-details-item {
+            display: flex;
+            width: 100%;
+            align-items: center;
+            justify-content: space-between;
+          }
+          img {
+            width: 100px;
+            border-radius: 15px;
+            margin-right: 24px;
+          }
+        }
+      }
+    }
+  }
+}

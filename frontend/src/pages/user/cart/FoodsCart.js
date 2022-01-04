@@ -8,6 +8,7 @@ import AddCircleSharpIcon from "@material-ui/icons/AddCircleSharp";
 import RemoveCircleSharpIcon from "@material-ui/icons/RemoveCircleSharp";
 import ModalConfirm from "components/common/ModalConfirm";
 import FoodCartEmpty from "assets/images/empty-cart.svg";
+import ModalConfirmFoodCart from "./ModalConfirmFoodCart";
 
 const FoodsCart = ({ close }) => {
   const [data, setData] = useState([]);
@@ -25,6 +26,9 @@ const FoodsCart = ({ close }) => {
     let temp = [...data];
     setData(temp.filter((item) => item._id !== id));
   };
+
+  const [isOpenModalConfirmOrder, setIsOpenModalConfirmOrder] = useState(false);
+
   return (
     <>
       <div className="modal-body-cart-container__inner-body-top">
@@ -165,7 +169,13 @@ const FoodsCart = ({ close }) => {
           </div>
         </div>
       </div>
-      <div className="modal-body-cart-container__inner-bottom" onClick={close}>
+      <div
+        className="modal-body-cart-container__inner-bottom"
+        onClick={() => {
+          close();
+          setIsOpenModalConfirmOrder(true);
+        }}
+      >
         {data
           .reduce(
             (f, s) =>
@@ -184,6 +194,10 @@ const FoodsCart = ({ close }) => {
           })}{" "}
         - Thanh toán
       </div>
+      <ModalConfirmFoodCart
+        isModalVisible={isOpenModalConfirmOrder}
+        close={() => setIsOpenModalConfirmOrder(false)}
+      />
     </>
   );
 };
