@@ -36,7 +36,6 @@ import {
   ROUTE_CLIENT_MY_PROFILE,
   ROUTE_CLIENT_MY_ORDERS,
   ROUTE_CLIENT_MY_COURSES,
-  ROUTE_CLIENT_MY_EXAMINATION_OF_COURSE,
 } from "utils/routes";
 import { ResetPassword, ResetPasswordAdmin } from "pages/resetPassword";
 import {
@@ -71,6 +70,8 @@ import MyProfile from "pages/user/profile/MyProfile";
 import MyOrders from "pages/user/order/MyOrders";
 import MyCourses from "pages/user/course/MyCourses";
 import Examination from "pages/user/course/Examination";
+import MyCourseDetail from "pages/user/course/MyCourseDetail";
+import ErrorPage from "pages/Error";
 
 function App() {
   return (
@@ -236,10 +237,16 @@ function App() {
           exact
         />
         <Route
-          path={ROUTE_CLIENT_MY_EXAMINATION_OF_COURSE}
+          path="/examination"
           component={withAuthClient(Examination)}
           exact
         />
+        <Route
+          path="/my-course"
+          component={withAuthClient(MyCourseDetail)}
+          exact
+        />
+        <Route component={withAuthClient(ErrorPage)} />
       </Switch>
     </Router>
   );

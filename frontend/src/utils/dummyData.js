@@ -1534,6 +1534,63 @@ export const COURSES_DATA = [
         videoUrl:
           "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
         duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
       },
     ],
     instructor: {
@@ -1592,7 +1649,64 @@ export const COURSES_DATA = [
         title: "Món Châu Âu",
         videoUrl:
           "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-        duration: "30 phút",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
       },
     ],
     instructor: {
@@ -1652,7 +1766,64 @@ export const COURSES_DATA = [
         title: "Món Châu Âu",
         videoUrl:
           "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-        duration: "30 phút",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
       },
     ],
     instructor: {
@@ -1712,7 +1883,64 @@ export const COURSES_DATA = [
         title: "Món Châu Âu",
         videoUrl:
           "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-        duration: "30 phút",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
       },
     ],
     instructor: {
@@ -1772,7 +2000,64 @@ export const COURSES_DATA = [
         title: "Món Châu Âu",
         videoUrl:
           "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-        duration: "30 phút",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
       },
     ],
     instructor: {
@@ -1832,7 +2117,64 @@ export const COURSES_DATA = [
         title: "Món Châu Âu",
         videoUrl:
           "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-        duration: "30 phút",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
       },
     ],
     instructor: {
@@ -1892,7 +2234,64 @@ export const COURSES_DATA = [
         title: "Món Châu Âu",
         videoUrl:
           "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-        duration: "30 phút",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
       },
     ],
     instructor: {
@@ -1952,7 +2351,64 @@ export const COURSES_DATA = [
         title: "Món Châu Âu",
         videoUrl:
           "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-        duration: "30 phút",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Món Châu Âu",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
       },
     ],
     instructor: {
@@ -2491,6 +2947,76 @@ export const ORDERS_DATA = [
     employee: {
       _id: uuid(),
       name: "Van Anh",
+      phoneNumber: "0986758433",
+      email: "ecook.employee@gmail.com",
+    },
+    createdAt: Date.now(),
+    deliveryAt: Date.now(),
+    address: "62/07 Đồng Kè - Hòa Khánh Bắc - Liên Chiểu - Đà Nẵng",
+    orderStatus: {
+      id: 1,
+      description: "Chưa giao hàng",
+    },
+    isPaid: true,
+    paymentMethod: "Tiền mặt", // Momo
+    shipmentFee: 5000, // tinh theo dia chi dat don mua
+    merchandiseSubtotal: 316000, // tien san pham chua tinh ship
+    total: 266000, // tong tien bao gom ship fee, backend tra ve
+    discountOff: 50000, // duoc tinh tu voucher object total- total*(discountOffVoucher?discountOffVoucher<maxDiscountOff:maxDiscountOff)
+    voucher: {
+      _id: uuid(),
+      name: "VUIVECUOITHANG",
+      discountOff: 20, // percent (%)
+      content: "Giảm 20% tổng bill tối đa 50k (đơn tối thiểu 250k)",
+      remainingSlot: 10,
+      maxDiscountOff: 50000,
+      minOrder: 200000,
+      expiredDate: Date.now(),
+    },
+    items: [
+      {
+        _id: "food_123",
+        type: "Thịt",
+        unit: "kg",
+        quantity: 2,
+        name: "Sườn Non Heo",
+        unitPrice: 120000,
+        discountOff: 20, // percent %,
+        discountMaximum: 20000, //vnd
+        description: "Hàng tươi sống",
+        imageUrl:
+          "https://res.cloudinary.com/duc/image/upload/v1639206902/ecook/suon_heo_ssbldm.jpg",
+      },
+      {
+        _id: uuid(),
+        type: "Thịt",
+        unit: "kg",
+        quantity: 1,
+        name: "Sườn Non Heo",
+        unitPrice: 120000,
+        discountOff: 20, // percent %,
+        discountMaximum: 20000, //vnd
+        description: "Hàng tươi sống",
+        imageUrl:
+          "https://res.cloudinary.com/duc/image/upload/v1639206902/ecook/suon_heo_ssbldm.jpg",
+      },
+    ],
+  },
+  {
+    _id: uuid(),
+    customer: {
+      _id: uuid(),
+      name: "Phan Trong Duc",
+      email: "trongduc@gmail.com",
+      phoneNumber: "0987675646",
+      imageUrl:
+        "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
+    },
+    employee: {
+      _id: uuid(),
+      name: "Van Anh",
+      phoneNumber: "0986758433",
+      email: "ecook.employee@gmail.com",
     },
     createdAt: Date.now(),
     deliveryAt: Date.now(),
@@ -2557,6 +3083,8 @@ export const ORDERS_DATA = [
     employee: {
       _id: uuid(),
       name: "Van Anh",
+      phoneNumber: "0986758433",
+      email: "ecook.employee@gmail.com",
     },
     createdAt: Date.now(),
     deliveryAt: Date.now(),
@@ -2623,6 +3151,8 @@ export const ORDERS_DATA = [
     employee: {
       _id: uuid(),
       name: "Van Anh",
+      phoneNumber: "0986758433",
+      email: "ecook.employee@gmail.com",
     },
     createdAt: Date.now(),
     deliveryAt: Date.now(),
@@ -2689,6 +3219,8 @@ export const ORDERS_DATA = [
     employee: {
       _id: uuid(),
       name: "Van Anh",
+      phoneNumber: "0986758433",
+      email: "ecook.employee@gmail.com",
     },
     createdAt: Date.now(),
     deliveryAt: Date.now(),
@@ -2755,6 +3287,8 @@ export const ORDERS_DATA = [
     employee: {
       _id: uuid(),
       name: "Van Anh",
+      phoneNumber: "0986758433",
+      email: "ecook.employee@gmail.com",
     },
     createdAt: Date.now(),
     deliveryAt: Date.now(),
@@ -2821,6 +3355,8 @@ export const ORDERS_DATA = [
     employee: {
       _id: uuid(),
       name: "Van Anh",
+      phoneNumber: "0986758433",
+      email: "ecook.employee@gmail.com",
     },
     createdAt: Date.now(),
     deliveryAt: Date.now(),
@@ -2887,6 +3423,8 @@ export const ORDERS_DATA = [
     employee: {
       _id: uuid(),
       name: "Van Anh",
+      phoneNumber: "0986758433",
+      email: "ecook.employee@gmail.com",
     },
     createdAt: Date.now(),
     deliveryAt: Date.now(),
@@ -2953,6 +3491,8 @@ export const ORDERS_DATA = [
     employee: {
       _id: uuid(),
       name: "Van Anh",
+      phoneNumber: "0986758433",
+      email: "ecook.employee@gmail.com",
     },
     createdAt: Date.now(),
     deliveryAt: Date.now(),
@@ -3019,72 +3559,8 @@ export const ORDERS_DATA = [
     employee: {
       _id: uuid(),
       name: "Van Anh",
-    },
-    createdAt: Date.now(),
-    deliveryAt: Date.now(),
-    address: "62/07 Đồng Kè - Hòa Khánh Bắc - Liên Chiểu - Đà Nẵng",
-    orderStatus: {
-      id: 1,
-      description: "Chưa giao hàng",
-    },
-    isPaid: true,
-    paymentMethod: "Tiền mặt", // Momo
-    shipmentFee: 5000, // tinh theo dia chi dat don mua
-    merchandiseSubtotal: 200000, // tien san pham chua tinh ship
-    total: 165000, // tong tien bao gom ship fee, backend tra ve
-    discountOff: 40000, // duoc tinh tu voucher object total- total*(discountOffVoucher?discountOffVoucher<maxDiscountOff:maxDiscountOff)
-    voucher: {
-      _id: uuid(),
-      name: "VUIVECUOITHANG",
-      discountOff: 20, // percent (%)
-      content: "Giảm 20% tổng bill tối đa 50k (đơn tối thiểu 250k)",
-      remainingSlot: 10,
-      maxDiscountOff: 50000,
-      minOrder: 200000,
-      expiredDate: Date.now(),
-    },
-    items: [
-      {
-        _id: uuid(),
-        type: "Thịt",
-        unit: "kg",
-        quantity: 1,
-        name: "Sườn Non Heo",
-        unitPrice: 120000,
-        discountOff: 20, // percent %,
-        discountMaximum: 20000, //vnd
-        description: "Hàng tươi sống",
-        imageUrl:
-          "https://res.cloudinary.com/duc/image/upload/v1639206902/ecook/suon_heo_ssbldm.jpg",
-      },
-      {
-        _id: uuid(),
-        type: "Thịt",
-        unit: "kg",
-        quantity: 1,
-        name: "Sườn Non Heo",
-        unitPrice: 120000,
-        discountOff: 20, // percent %,
-        discountMaximum: 20000, //vnd
-        description: "Hàng tươi sống",
-        imageUrl:
-          "https://res.cloudinary.com/duc/image/upload/v1639206902/ecook/suon_heo_ssbldm.jpg",
-      },
-    ],
-  },
-  {
-    _id: uuid(),
-    customer: {
-      _id: uuid(),
-      name: "Phan Trong Duc",
-      email: "trongduc@gmail.com",
-      phoneNumber: "0987675646",
-      imageUrl:
-        "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
-    },
-    employee: {
-      _id: uuid(),
-      name: "Van Anh",
+      phoneNumber: "0986758433",
+      email: "ecook.employee@gmail.com",
     },
     createdAt: Date.now(),
     deliveryAt: Date.now(),
@@ -3509,6 +3985,63 @@ export const COURSES_CART = [
           videoUrl:
             "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
           duration: 30, // unit : min
+          createAt: Date.now(),
+        },
+        {
+          title: "Món Châu Âu",
+          videoUrl:
+            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+          duration: 30, // unit : min
+          createAt: Date.now(),
+        },
+        {
+          title: "Món Châu Âu",
+          videoUrl:
+            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+          duration: 30, // unit : min
+          createAt: Date.now(),
+        },
+        {
+          title: "Món Châu Âu",
+          videoUrl:
+            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+          duration: 30, // unit : min
+          createAt: Date.now(),
+        },
+        {
+          title: "Món Châu Âu",
+          videoUrl:
+            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+          duration: 30, // unit : min
+          createAt: Date.now(),
+        },
+        {
+          title: "Món Châu Âu",
+          videoUrl:
+            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+          duration: 30, // unit : min
+          createAt: Date.now(),
+        },
+        {
+          title: "Món Châu Âu",
+          videoUrl:
+            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+          duration: 30, // unit : min
+          createAt: Date.now(),
+        },
+        {
+          title: "Món Châu Âu",
+          videoUrl:
+            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+          duration: 30, // unit : min
+          createAt: Date.now(),
+        },
+        {
+          title: "Món Châu Âu",
+          videoUrl:
+            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+          duration: 30, // unit : min
+          createAt: Date.now(),
         },
       ],
     },
@@ -3530,6 +4063,63 @@ export const COURSES_CART = [
           videoUrl:
             "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
           duration: 30, // unit : min
+          createAt: Date.now(),
+        },
+        {
+          title: "Món Châu Âu",
+          videoUrl:
+            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+          duration: 30, // unit : min
+          createAt: Date.now(),
+        },
+        {
+          title: "Món Châu Âu",
+          videoUrl:
+            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+          duration: 30, // unit : min
+          createAt: Date.now(),
+        },
+        {
+          title: "Món Châu Âu",
+          videoUrl:
+            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+          duration: 30, // unit : min
+          createAt: Date.now(),
+        },
+        {
+          title: "Món Châu Âu",
+          videoUrl:
+            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+          duration: 30, // unit : min
+          createAt: Date.now(),
+        },
+        {
+          title: "Món Châu Âu",
+          videoUrl:
+            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+          duration: 30, // unit : min
+          createAt: Date.now(),
+        },
+        {
+          title: "Món Châu Âu",
+          videoUrl:
+            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+          duration: 30, // unit : min
+          createAt: Date.now(),
+        },
+        {
+          title: "Món Châu Âu",
+          videoUrl:
+            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+          duration: 30, // unit : min
+          createAt: Date.now(),
+        },
+        {
+          title: "Món Châu Âu",
+          videoUrl:
+            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+          duration: 30, // unit : min
+          createAt: Date.now(),
         },
       ],
     },
@@ -3551,6 +4141,63 @@ export const COURSES_CART = [
           videoUrl:
             "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
           duration: 30, // unit : min
+          createAt: Date.now(),
+        },
+        {
+          title: "Món Châu Âu",
+          videoUrl:
+            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+          duration: 30, // unit : min
+          createAt: Date.now(),
+        },
+        {
+          title: "Món Châu Âu",
+          videoUrl:
+            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+          duration: 30, // unit : min
+          createAt: Date.now(),
+        },
+        {
+          title: "Món Châu Âu",
+          videoUrl:
+            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+          duration: 30, // unit : min
+          createAt: Date.now(),
+        },
+        {
+          title: "Món Châu Âu",
+          videoUrl:
+            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+          duration: 30, // unit : min
+          createAt: Date.now(),
+        },
+        {
+          title: "Món Châu Âu",
+          videoUrl:
+            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+          duration: 30, // unit : min
+          createAt: Date.now(),
+        },
+        {
+          title: "Món Châu Âu",
+          videoUrl:
+            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+          duration: 30, // unit : min
+          createAt: Date.now(),
+        },
+        {
+          title: "Món Châu Âu",
+          videoUrl:
+            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+          duration: 30, // unit : min
+          createAt: Date.now(),
+        },
+        {
+          title: "Món Châu Âu",
+          videoUrl:
+            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+          duration: 30, // unit : min
+          createAt: Date.now(),
         },
       ],
     },
@@ -3572,6 +4219,63 @@ export const COURSES_CART = [
           videoUrl:
             "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
           duration: 30, // unit : min
+          createAt: Date.now(),
+        },
+        {
+          title: "Món Châu Âu",
+          videoUrl:
+            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+          duration: 30, // unit : min
+          createAt: Date.now(),
+        },
+        {
+          title: "Món Châu Âu",
+          videoUrl:
+            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+          duration: 30, // unit : min
+          createAt: Date.now(),
+        },
+        {
+          title: "Món Châu Âu",
+          videoUrl:
+            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+          duration: 30, // unit : min
+          createAt: Date.now(),
+        },
+        {
+          title: "Món Châu Âu",
+          videoUrl:
+            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+          duration: 30, // unit : min
+          createAt: Date.now(),
+        },
+        {
+          title: "Món Châu Âu",
+          videoUrl:
+            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+          duration: 30, // unit : min
+          createAt: Date.now(),
+        },
+        {
+          title: "Món Châu Âu",
+          videoUrl:
+            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+          duration: 30, // unit : min
+          createAt: Date.now(),
+        },
+        {
+          title: "Món Châu Âu",
+          videoUrl:
+            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+          duration: 30, // unit : min
+          createAt: Date.now(),
+        },
+        {
+          title: "Món Châu Âu",
+          videoUrl:
+            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+          duration: 30, // unit : min
+          createAt: Date.now(),
         },
       ],
     },
@@ -3593,6 +4297,63 @@ export const COURSES_CART = [
           videoUrl:
             "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
           duration: 30, // unit : min
+          createAt: Date.now(),
+        },
+        {
+          title: "Món Châu Âu",
+          videoUrl:
+            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+          duration: 30, // unit : min
+          createAt: Date.now(),
+        },
+        {
+          title: "Món Châu Âu",
+          videoUrl:
+            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+          duration: 30, // unit : min
+          createAt: Date.now(),
+        },
+        {
+          title: "Món Châu Âu",
+          videoUrl:
+            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+          duration: 30, // unit : min
+          createAt: Date.now(),
+        },
+        {
+          title: "Món Châu Âu",
+          videoUrl:
+            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+          duration: 30, // unit : min
+          createAt: Date.now(),
+        },
+        {
+          title: "Món Châu Âu",
+          videoUrl:
+            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+          duration: 30, // unit : min
+          createAt: Date.now(),
+        },
+        {
+          title: "Món Châu Âu",
+          videoUrl:
+            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+          duration: 30, // unit : min
+          createAt: Date.now(),
+        },
+        {
+          title: "Món Châu Âu",
+          videoUrl:
+            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+          duration: 30, // unit : min
+          createAt: Date.now(),
+        },
+        {
+          title: "Món Châu Âu",
+          videoUrl:
+            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+          duration: 30, // unit : min
+          createAt: Date.now(),
         },
       ],
     },

@@ -46,4 +46,4 @@ export const ROUTE_CLIENT_MY_ORDERS = "/my-orders";
 export const ROUTE_CLIENT_MY_COURSES = "/my-courses";
 export const ROUTE_CLIENT_MY_COURSE_DETAIL = "/my-course?id=courseId";
 export const ROUTE_CLIENT_MY_EXAMINATION_OF_COURSE =
-  "/my-course/examination?courseId=courseId/examination";
+  "/examination?courseId=courseId";

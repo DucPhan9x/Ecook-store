@@ -4,9 +4,11 @@ import { ORDERS_DATA } from "utils/dummyData";
 import { useState } from "react";
 import { useEffect } from "react";
 import { formatCurrency, getPriceItem } from "utils/priceUtils";
+import { useHistory } from "react-router-dom";
 
 const ModalDetailOrder = ({ isModalVisible, close, data }) => {
   const [item, setItem] = useState();
+  const history = useHistory();
   useEffect(() => {
     if (!data) return;
     setItem(ORDERS_DATA?.find((i) => i._id === data));
@@ -46,14 +48,23 @@ const ModalDetailOrder = ({ isModalVisible, close, data }) => {
                 {getPriceItem(
                   row.discountOff,
                   row.unitPrice,
-                  row.discountMaximum
+                  row.discountMaximum,
+                  row.quantity
                 )}
               </div>
               {row.discountOff > 0 && (
                 <div className="row-detail-order-price-discount">
-                  {formatCurrency(row.unitPrice)}
+                  {formatCurrency(row.quantity * row.unitPrice)}
                 </div>
               )}
+            </div>
+            <div>
+              <button
+                className="btn btn-client"
+                onClick={() => history.push(`/food?id=${row._id}`)}
+              >
+                Đánh giá
+              </button>
             </div>
           </div>
         </div>

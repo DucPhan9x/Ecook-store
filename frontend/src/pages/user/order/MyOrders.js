@@ -1,7 +1,8 @@
-import { Grid, Paper } from "@material-ui/core";
+import { Paper } from "@material-ui/core";
 import { Pagination } from "@material-ui/lab";
 import { DropdownCommon } from "components/common/dropdown";
 import SearchField from "components/common/input/SearchField";
+import moment from "moment";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -9,31 +10,69 @@ import { ORDERS_DATA } from "utils/dummyData";
 import { formatCurrency } from "utils/priceUtils";
 import ModalDetailOrder from "./ModalDetailOrder";
 
+import { IconButton } from "@material-ui/core";
+import { PopoverStickOnHover } from "components/common";
+import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
+import PhoneAndroidIcon from "@material-ui/icons/PhoneAndroid";
+import MailOutlineIcon from "@material-ui/icons/MailOutline";
+import EmptyOrder from "assets/images/empty-order.png";
+
+const OPTION_FILTER = [
+  "Tất cả",
+  "Đang chờ xác nhận",
+  "Đang chuẩn bị",
+  "Đang giao hàng",
+  "Đã giao hàng",
+  "Đã hủy",
+];
+
 const RowContent = ({ row, index }) => {
-  const { address, _id, employee, total } = row;
+  const { address, _id, employee, total, paymentMethod, createAt, deliveryAt } =
+    row;
   const [itemSelected, setItemSelected] = useState("");
   return (
-    <Grid
-      container
-      spacing={2}
-      className="my-orders-container--content__inner-row-content"
-    >
-      <Grid item xs={1}>
-        {index + 1}
-      </Grid>
-      <Grid item xs={2}>
-        {_id}
-      </Grid>
-      <Grid item xs={4}>
-        {address}
-      </Grid>
-      <Grid item xs={2}>
-        {employee?.name}
-      </Grid>
-      <Grid item xs={1}>
-        {formatCurrency(total)}
-      </Grid>
-      <Grid item xs={2}>
+    <tr className="my-orders-container--content__inner-row-content">
+      <td>{index + 1}</td>
+      <td>{_id}</td>
+      <td>
+        <div className="flex flex-col">
+          <span>Đặt: {moment(createAt).format("HH:mm:ss - DD/MM/YYYY")}</span>
+          <span>
+            Giao: {moment(deliveryAt).format("HH:mm:ss - DD/MM/YYYY")}
+          </span>
+        </div>
+      </td>
+      <td style={{ width: 350 }}>{address}</td>
+      <td style={{ width: 120 }}>{paymentMethod}</td>
+      <td style={{ width: 150 }}>
+        <span>{employee?.name}</span>
+        <PopoverStickOnHover
+          component={
+            <div className="popover-show-info-student-container">
+              <div className="popover-show-info-student-container--item">
+                <PhoneAndroidIcon />
+                <span>{employee?.phoneNumber}</span>
+              </div>
+              <div className="popover-show-info-student-container--item">
+                <MailOutlineIcon />
+                <span>{employee?.email}</span>
+              </div>
+            </div>
+          }
+          placement="top"
+          onMouseEnter={() => {}}
+          delay={200}
+        >
+          <IconButton>
+            <InfoOutlinedIcon
+              color="secondary"
+              className="infor-icon-show-student"
+            />
+          </IconButton>
+        </PopoverStickOnHover>
+      </td>
+      <td>{formatCurrency(total)}</td>
+      <td>
         <button
           className="btn btn-client btn--detail"
           onClick={() => setItemSelected(_id)}
@@ -41,13 +80,13 @@ const RowContent = ({ row, index }) => {
           Chi tiết
         </button>
         <button className="btn btn-client btn--re-order">Đặt lại</button>
-      </Grid>
+      </td>
       <ModalDetailOrder
         isModalVisible={!!itemSelected}
         close={() => setItemSelected("")}
         data={itemSelected}
       />
-    </Grid>
+    </tr>
   );
 };
 
@@ -64,55 +103,57 @@ const MyOrders = () => {
     <div className="my-orders-container">
       <div className="flex items-center j-space-between full-width">
         <SearchField onChange={(e) => console.log(e.target.value)} />
-        <DropdownCommon
-          label="Bộ lọc trạng thái"
-          options={[
-            "Tất cả",
-            "Đang chờ xác nhận",
-            "Đang chuẩn bị",
-            "Đang giao hàng",
-            "Đã giao hàng",
-            "Đã hủy",
-          ]}
-          handleMenuClick={(e) => console.log(e)}
-        />
+        <div className="flex items-center">
+          <div className="status">{OPTION_FILTER[0]}</div>
+          <DropdownCommon
+            label="Bộ lọc trạng thái"
+            options={OPTION_FILTER}
+            handleMenuClick={(e) => console.log(e)}
+          />
+        </div>
       </div>
 
       <Paper className="my-orders-container--content">
-        <div className="my-orders-container--content__inner">
-          <Grid
-            container
-            spacing={2}
-            className="my-orders-container--content__inner--header"
-          >
-            <Grid item xs={1}>
-              STT
-            </Grid>
-            <Grid item xs={2}>
-              Mã đơn hàng
-            </Grid>
-            <Grid item xs={4}>
-              Điểm đến
-            </Grid>
-            <Grid item xs={2}>
-              Nhân viên
-            </Grid>
-            <Grid item xs={1}>
-              Tổng tiền{" "}
-            </Grid>
-            <Grid item xs={2}></Grid>
-          </Grid>
-          {data?.length ? (
-            data?.map((item, index) => (
-              <RowContent row={item} index={index} key={item._id} />
-            ))
-          ) : (
-            <div>Đang trống</div>
-          )}
-        </div>
-        <div className="my-orders-container--content__inner--pagination">
-          <Pagination count={10} color="secondary" />
-        </div>
+        {data?.length > 0 ? (
+          <div className="my-orders-container--content__inner">
+            <table className="my-orders-container--content__inner--table">
+              <thead>
+                <th>STT</th>
+                <th>Mã đơn hàng</th>
+                <th>Thời gian</th>
+                <th>Điểm đến</th>
+                <th>Thanh toán</th>
+                <th>Nhân viên</th>
+                <th>Tổng tiền </th>
+                <th></th>
+              </thead>
+              <tbody>
+                {data
+                  ?.filter((item, indx) => indx < 8)
+                  .map((item, index) => (
+                    <RowContent row={item} index={index} key={item._id} />
+                  ))}
+              </tbody>
+            </table>
+            <div className="my-orders-container--content__inner--pagination">
+              <Pagination count={10} color="secondary" />
+            </div>
+          </div>
+        ) : (
+          <div className="center flex-col" style={{ position: "relative" }}>
+            <img src={EmptyOrder} alt="" />
+            <span
+              style={{
+                fontSize: 24,
+                color: "gray",
+                position: "absolute",
+                bottom: 80,
+              }}
+            >
+              Đơn hàng trống!
+            </span>
+          </div>
+        )}
       </Paper>
     </div>
   );

@@ -2,6 +2,12 @@
   .search-field {
     margin: 12px 0;
   }
+  .status {
+    font-size: 18px;
+    color: rgb(37, 36, 36);
+    border-radius: 6px;
+    margin-right: 26px;
+  }
   &--content {
     margin-top: 12px;
     background: rgb(252, 253, 242) !important;
@@ -10,11 +16,26 @@
     position: relative;
     &__inner {
       padding: 20px 45px;
-      &--header {
-        margin-bottom: 12px !important;
-        color: orangered !important;
-        font-weight: bold;
+
+      & > table {
+        & > thead > th {
+          font-size: 18px;
+          color: orangered !important;
+          font-weight: bold;
+          &:not(:first-child, :last-child) {
+            padding: 0 4px;
+          }
+        }
+        & > tbody {
+          tr {
+            td {
+              color: #474747;
+              padding: 14px 18px;
+            }
+          }
+        }
       }
+
       &-row-content {
         .btn--detail {
           margin-right: 10px;
@@ -27,8 +48,8 @@
         align-items: center;
         justify-content: center;
         position: absolute;
-        bottom: 50px;
-        left: calc(50% - 250px);
+        bottom: 25px;
+        left: calc(50% - 240px);
       }
     }
     border-top-left-radius: unset !important;
