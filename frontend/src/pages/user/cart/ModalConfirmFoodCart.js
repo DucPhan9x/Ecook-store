@@ -1,10 +1,12 @@
-import { Input } from "@material-ui/core";
+import { IconButton, Input } from "@material-ui/core";
 import Modal from "antd/lib/modal/Modal";
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { formatCurrency, getPriceItem } from "utils/priceUtils";
 import { uuid } from "utils/stringUtils";
 import LocalAtmIcon from "@material-ui/icons/LocalAtm";
+import { VOUCHERS_DATA } from "utils/dummyData";
+import KeyboardArrowRightIcon from "@material-ui/icons/KeyboardArrowRight";
 
 const ModalConfirmFoodCart = ({ isModalVisible, close }) => {
   const [data, setData] = useState({
@@ -16,9 +18,10 @@ const ModalConfirmFoodCart = ({ isModalVisible, close }) => {
     items: [],
     shipmentFee: 0,
     paymentMethod: "",
-    voucher: {},
+    voucher: "",
   });
 
+  const [isOpenVoucher, setIsOpenVoucher] = useState(false);
   useEffect(() => {
     setData({
       customerName: "Phan Trong Duc",
@@ -127,9 +130,17 @@ const ModalConfirmFoodCart = ({ isModalVisible, close }) => {
             <label style={{ marginRight: 12 }}>Tổng tiền:</label>
             <span>{formatCurrency(data?.total)}</span>
           </div>
-          <div className="block-data-normal flex items-center">
+          <div
+            className="block-data-normal flex items-center j-space-between"
+            style={{ width: "100%" }}
+          >
             <label style={{ marginRight: 12 }}>Mã khuyến mãi (nếu có):</label>
-            <div className="voucher-list-modal">Open Modal</div>
+            <div className="voucher-list-modal">
+              <Input value={data?.voucher} />
+              <IconButton onClick={() => setIsOpenVoucher(true)}>
+                <KeyboardArrowRightIcon color="action" />
+              </IconButton>
+            </div>
           </div>
         </div>
       </div>
@@ -141,6 +152,31 @@ const ModalConfirmFoodCart = ({ isModalVisible, close }) => {
         </button>
       </div>
       <div className="btn-order-food">Đặt hàng</div>
+      <Modal
+        className="modal-container modal-confirm-food-cart"
+        title="Danh sách voucher hiện có"
+        visible={isOpenVoucher}
+        onCancel={() => setIsOpenVoucher(false)}
+        footer={false}
+      >
+        <div>
+          {VOUCHERS_DATA.map((item) => (
+            <div key={item._id} style={{ marginBottom: 10 }}>
+              <span
+                style={{ fontSize: 18, color: "gray", cursor: "pointer" }}
+                onClick={() => {
+                  navigator.clipboard.writeText(item.name);
+                  setData({ ...data, voucher: item.name });
+                  setIsOpenVoucher(false);
+                }}
+              >
+                {item.name}:{" "}
+              </span>
+              <span>{item.content}</span>
+            </div>
+          ))}
+        </div>
+      </Modal>
     </Modal>
   );
 };
