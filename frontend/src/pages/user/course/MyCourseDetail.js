@@ -2,137 +2,27 @@ import { BackPreviousPage } from "components/common";
 import Comments from "components/common/Comments";
 import React, { useState } from "react";
 import { useEffect } from "react";
-import ECookIcon from "assets/images/logoECook.png";
-import { uuid } from "utils/stringUtils";
 import useNotification from "hooks/useNotification";
 import FeedbackIcon from "@material-ui/icons/Feedback";
 import { Rating } from "@material-ui/lab";
 import PlayCircleFilledIcon from "@material-ui/icons/PlayCircleFilled";
 import IconButton from "@material-ui/core/IconButton";
 import { useHistory } from "react-router-dom";
+import FormControl from "@material-ui/core/FormControl";
+import { Modal } from "antd";
+import moment from "moment";
+import { COURSES_DATA } from "utils/dummyData";
 
 const MyCourseDetail = () => {
   const [formFeedback, setFormFeedback] = useState({ rating: 0, comment: "" });
   const [data, setData] = useState({});
   const [videoCurrent, setVideoCurrent] = useState({});
   const history = useHistory();
+  const [openModalCertification, setOpenModalCertification] = useState(false);
+  const params = new URLSearchParams(window.location.search);
 
   useEffect(() => {
-    setData({
-      _id: "course_123",
-      name: "Món Á cơ bản",
-      numOfStars: 4,
-      unitPrice: 650000,
-      discountOff: 10,
-      discountMaximum: 100000,
-      description: "Đây là khóa học chủ yếu tập trung vào các món ăn Châu Á.",
-      examinationContent: "Bò hầm tiêu xanh",
-      regulation:
-        "Thời gian 45 phút, quay video từ khâu sơ chế đến khi thành phẩm.",
-      criteria: "An toan ve sinh thuc pham, trang tri dep mat",
-      videoUrls: [
-        {
-          title: "Nghêu hấp thái",
-          videoUrl:
-            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-          duration: 30, // unit : min
-          createAt: Date.now(),
-        },
-        {
-          title: "Sườn xào chua ngọt",
-          videoUrl:
-            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
-          duration: 30, // unit : min
-          createAt: Date.now(),
-        },
-        {
-          title: "Đuôi  bò hầm tiêu xanh",
-          videoUrl:
-            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-          duration: 30, // unit : min
-          createAt: Date.now(),
-        },
-        {
-          title: "Cá lốc chiên xù xoài xanh",
-          videoUrl:
-            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
-          duration: 30, // unit : min
-          createAt: Date.now(),
-        },
-        {
-          title: "Tôm hấp hành",
-          videoUrl:
-            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
-          duration: 30, // unit : min
-          createAt: Date.now(),
-        },
-        {
-          title: "Lẫu gà lá giang",
-          videoUrl:
-            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
-          duration: 30, // unit : min
-          createAt: Date.now(),
-        },
-        {
-          title: "Lòng xào nghệ",
-          videoUrl:
-            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-          duration: 30, // unit : min
-          createAt: Date.now(),
-        },
-        {
-          title: "Giò heo hầm đu đủ",
-          videoUrl:
-            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4",
-          duration: 30, // unit : min
-          createAt: Date.now(),
-        },
-        {
-          title: "Phở bò",
-          videoUrl: "https://www.youtube.com/embed/c9GfHgMk1ac",
-          duration: 30, // unit : min
-          createAt: Date.now(),
-        },
-      ],
-      instructor: {
-        _id: "instructor_123",
-        fullName: "Duc Trong",
-        phoneNumber: "0984763232",
-        address: "TT. La Hai - H.Dong Xuan - T.Phu Yen",
-        imageUrl: "https://picsum.photos/200/300",
-        email: "trongduc@gmail.com",
-      },
-      amountStudent: 12,
-      createAt: Date.now(),
-      feedbacksList: [
-        {
-          _id: uuid(),
-          itemId: uuid(), // recipe id
-          user: {
-            userId: "user_1", // user feedback
-            fullName: "Phan Trong Duc",
-            imageUrl:
-              "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
-          },
-          numOfStars: 4,
-          content: "Cong thuc hay qua",
-          createdAt: Date.now(),
-          feedbackType: 1, // 1: recipe, 2: food, 3:course
-          reply: [
-            // Reply cua he thong, phan hoi lai khach hang
-            {
-              _id: uuid(),
-              feedbackId: uuid(),
-              user: {
-                _id: uuid(),
-                imageUrl: ECookIcon,
-              },
-              content: "Cam on ban da phan hoi",
-            },
-          ],
-        },
-      ],
-    });
+    setData(COURSES_DATA.find((item) => item._id === params.get("id")));
     setVideoCurrent({
       title: "Nghêu hấp thái",
       videoUrl:
@@ -141,6 +31,7 @@ const MyCourseDetail = () => {
       createAt: Date.now(),
       autoPlay: false,
     });
+    // eslint-disable-next-line
   }, []);
 
   return (
@@ -170,14 +61,23 @@ const MyCourseDetail = () => {
               />
             )}
             <div className="center">
-              <button
-                className="btn btn-client btn--access-exam"
-                onClick={() =>
-                  history.push(`examination?courseId=${data?._id}`)
-                }
-              >
-                Thi cuối khóa
-              </button>
+              {data?.isPass ? (
+                <button
+                  className="btn btn-client btn--access-exam"
+                  onClick={() => setOpenModalCertification(true)}
+                >
+                  Xem chứng nhận
+                </button>
+              ) : (
+                <button
+                  className="btn btn-client btn--access-exam"
+                  onClick={() =>
+                    history.push(`examination?courseId=${data?._id}`)
+                  }
+                >
+                  Thi cuối khóa
+                </button>
+              )}
             </div>
           </div>
           <div>
@@ -200,7 +100,7 @@ const MyCourseDetail = () => {
               />
             </div>
             <Comments
-              data={data.feedbacksList}
+              data={data?.feedbacksList}
               formFeedback={formFeedback}
               handleReply={(replyList) => {
                 // create reply , call API
@@ -253,6 +153,116 @@ const MyCourseDetail = () => {
             </div>
           ))}
         </div>
+        <Modal
+          className="certification-form-container"
+          title="Chứng nhận nấu ăn"
+          footer={false}
+          visible={openModalCertification}
+          onOk={() => setOpenModalCertification(false)}
+          onCancel={() => {
+            setOpenModalCertification(false);
+          }}
+        >
+          <div className="certification-form">
+            <div className="certification-form--title flex flex-col items-center">
+              <span>CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</span>
+              <span>Độc lập - Tự do - Hạnh phúc</span>
+            </div>
+            <div className="certification-form-people-sent flex flex-col items-center">
+              <span>Hệ thống đào tạo hướng dẫn nấu ăn</span>
+              <span>ECook</span>
+            </div>
+            <div className="chung-chi-title">GIẤY CHỨNG NHẬN</div>
+            <div className="certification-form--body">
+              <div
+                className="add-edit-recipe-container-bottom--left"
+                style={{ width: "25%", height: 180, border: "1px dashed gray" }}
+              >
+                <img
+                  src={data?.certification?.student?.imageUrl}
+                  alt="avatar"
+                />
+              </div>
+              <div className="certification-form--body-main">
+                <div className="block-input-info-student-course">
+                  <label>Học viên:</label>
+                  <FormControl>
+                    <span>{data?.certification?.student?.fullName}</span>
+                  </FormControl>
+                </div>
+                <div className="block-input-info-student-course">
+                  <label>Sinh ngày:</label>
+                  <FormControl>
+                    <span>
+                      {moment(data?.certification?.student?.dayOfBirth).format(
+                        "DD/MM/YYYY"
+                      )}
+                    </span>
+                  </FormControl>
+                </div>
+                <div className="block-input-info-student-course">
+                  <label>Đã hoàn thành khóa học:</label>
+                  <FormControl>
+                    <span>{data?.certification?.course?.courseName}</span>
+                  </FormControl>
+                </div>
+                <div className="block-input-info-student-course">
+                  <div className="flex">
+                    <label>Từ ngày</label>
+                    <FormControl>
+                      <span>
+                        {moment(data?.certification?.startDate).format(
+                          "DD/MM/YYYY"
+                        )}
+                      </span>
+                    </FormControl>
+                  </div>
+                  <div className="flex">
+                    <label style={{ padding: "0 8px" }}>đến ngày</label>
+                    <FormControl>
+                      <span>
+                        {moment(data?.certification?.endDate).format(
+                          "DD/MM/YYYY"
+                        )}
+                      </span>
+                    </FormControl>
+                  </div>
+                </div>
+                <div className="block-input-info-student-course">
+                  <label>Xếp loại:</label>
+                  <FormControl>
+                    <span>{data?.certification?.evaluate}</span>
+                  </FormControl>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            className="block--signature-certification"
+            style={{ marginTop: 48 }}
+          >
+            <div className="block--signature-certification--title">
+              <FormControl>
+                <span>{data?.certification?.positionCreate}</span>
+              </FormControl>
+              <span>,</span>
+              <span>ngày</span>
+              <FormControl>
+                <span>{moment(data?.certification?.createAt).get("date")}</span>
+              </FormControl>
+              <span>tháng</span>
+              <FormControl>
+                <span>
+                  {moment(data?.certification?.createAt).get("month") + 1}
+                </span>
+              </FormControl>
+              <span>năm</span>
+              <FormControl>
+                <span>{moment(data?.certification?.createAt).get("year")}</span>
+              </FormControl>
+            </div>
+          </div>
+        </Modal>
       </div>
     </>
   );

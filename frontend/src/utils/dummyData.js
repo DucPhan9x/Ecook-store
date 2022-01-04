@@ -1522,6 +1522,7 @@ export const COURSES_DATA = [
     numOfStars: 4,
     unitPrice: 650000,
     discountOff: 10,
+    isPass: true,
     discountMaximum: 100000,
     description: "Đây là khóa học chủ yếu tập trung vào các món ăn Châu Á.",
     examinationContent: "Bò hầm tiêu xanh",
@@ -1530,65 +1531,64 @@ export const COURSES_DATA = [
     criteria: "An toan ve sinh thuc pham, trang tri dep mat",
     videoUrls: [
       {
-        title: "Món Châu Âu",
+        title: "Nghêu hấp thái",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Sườn xào chua ngọt",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Đuôi  bò hầm tiêu xanh",
         videoUrl:
           "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
         duration: 30, // unit : min
         createAt: Date.now(),
       },
       {
-        title: "Món Châu Âu",
+        title: "Cá lốc chiên xù xoài xanh",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Tôm hấp hành",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Lẫu gà lá giang",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
+        title: "Lòng xào nghệ",
         videoUrl:
           "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
         duration: 30, // unit : min
         createAt: Date.now(),
       },
       {
-        title: "Món Châu Âu",
+        title: "Giò heo hầm đu đủ",
         videoUrl:
-          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4",
         duration: 30, // unit : min
         createAt: Date.now(),
       },
       {
-        title: "Món Châu Âu",
-        videoUrl:
-          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-        duration: 30, // unit : min
-        createAt: Date.now(),
-      },
-      {
-        title: "Món Châu Âu",
-        videoUrl:
-          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-        duration: 30, // unit : min
-        createAt: Date.now(),
-      },
-      {
-        title: "Món Châu Âu",
-        videoUrl:
-          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-        duration: 30, // unit : min
-        createAt: Date.now(),
-      },
-      {
-        title: "Món Châu Âu",
-        videoUrl:
-          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-        duration: 30, // unit : min
-        createAt: Date.now(),
-      },
-      {
-        title: "Món Châu Âu",
-        videoUrl:
-          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-        duration: 30, // unit : min
-        createAt: Date.now(),
-      },
-      {
-        title: "Món Châu Âu",
-        videoUrl:
-          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        title: "Phở bò",
+        videoUrl: "https://www.youtube.com/embed/c9GfHgMk1ac",
         duration: 30, // unit : min
         createAt: Date.now(),
       },
@@ -1603,6 +1603,23 @@ export const COURSES_DATA = [
     },
     amountStudent: 12,
     createAt: Date.now(),
+    certification: {
+      _id: uuid(),
+      student: {
+        fullName: "Phan Trong Duc",
+        dayOfBirth: Date.now(),
+        imageUrl:
+          "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
+      },
+      course: {
+        courseName: "Món Châu Âu",
+      },
+      startDate: Date.now(),
+      endDate: Date.now(),
+      createAt: Date.now(),
+      positionCreate: "Da Nang",
+      evaluate: "Gioi",
+    },
     feedbacksList: [
       {
         _id: uuid(),
@@ -1614,6 +1631,7 @@ export const COURSES_DATA = [
             "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
         },
         numOfStars: 4,
+        isPass: true,
         content: "Cong thuc hay qua",
         createdAt: Date.now(),
         feedbackType: 1, // 1: recipe, 2: food, 3:course
@@ -2731,7 +2749,7 @@ export const EMPLOYEES_DATA = [
 export const EXAMINATIONS_DATA = [
   {
     _id: uuid(),
-    courseId: uuid(),
+    courseId: "course_123",
     studentId: uuid(),
     student: {
       email: "duc@gmail.com",
@@ -2748,7 +2766,7 @@ export const EXAMINATIONS_DATA = [
     videoUrlSubmit:
       "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
     createdAt: Date.now(),
-    isPass: false,
+    isPass: true,
     feedbacks: "",
     evaluate: "Khong danh gia", // pass -> Gioi/Kha, fail-> Khong danh gia
   },

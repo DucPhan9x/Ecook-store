@@ -62,3 +62,58 @@
     }
   }
 }
+// examination
+.examination-container {
+  &-body {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    &--left {
+      width: 60%;
+      margin-right: 24px;
+      box-shadow: 2px 2px 10px rgba(87, 87, 87, 0.6) !important;
+
+      padding: 24px;
+      &--title {
+        color: orange;
+        font-weight: 600;
+        margin-bottom: 24px;
+      }
+      .block__data {
+        display: flex;
+        align-items: flex-start;
+        flex-direction: column;
+        margin-bottom: 18px;
+        label {
+          color: orangered;
+          font-size: 20px;
+          margin-bottom: 6px;
+        }
+        span {
+          padding-left: 10px;
+          color: rgb(58, 30, 2);
+          font-size: 18px;
+        }
+      }
+    }
+    &--right {
+      padding: 24px;
+      box-shadow: 2px 2px 10px rgba(87, 87, 87, 0.6) !important;
+      width: 40%;
+      min-height: 350px;
+      label {
+        margin-bottom: 6px;
+        color: orangered;
+      }
+      .block--actions-submit {
+        margin-top: 24px;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        &--item {
+          margin-right: 24px;
+        }
+      }
+    }
+  }
+}
