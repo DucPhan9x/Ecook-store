@@ -59,6 +59,45 @@ const ModalConfirmFoodCart = ({ isModalVisible, close }) => {
           imageUrl:
             "https://res.cloudinary.com/duc/image/upload/v1639206902/ecook/suon_heo_ssbldm.jpg",
         },
+        {
+          _id: uuid(),
+          type: "Thịt",
+          unit: "kg",
+          quantity: 1,
+          name: "Sườn Non Heo",
+          unitPrice: 120000,
+          discountOff: 20, // percent %,
+          discountMaximum: 20000, //vnd
+          description: "Hàng tươi sống",
+          imageUrl:
+            "https://res.cloudinary.com/duc/image/upload/v1639206902/ecook/suon_heo_ssbldm.jpg",
+        },
+        {
+          _id: uuid(),
+          type: "Thịt",
+          unit: "kg",
+          quantity: 1,
+          name: "Sườn Non Heo",
+          unitPrice: 120000,
+          discountOff: 20, // percent %,
+          discountMaximum: 20000, //vnd
+          description: "Hàng tươi sống",
+          imageUrl:
+            "https://res.cloudinary.com/duc/image/upload/v1639206902/ecook/suon_heo_ssbldm.jpg",
+        },
+        {
+          _id: uuid(),
+          type: "Thịt",
+          unit: "kg",
+          quantity: 1,
+          name: "Sườn Non Heo",
+          unitPrice: 120000,
+          discountOff: 20, // percent %,
+          discountMaximum: 20000, //vnd
+          description: "Hàng tươi sống",
+          imageUrl:
+            "https://res.cloudinary.com/duc/image/upload/v1639206902/ecook/suon_heo_ssbldm.jpg",
+        },
       ],
     });
   }, []);
@@ -94,28 +133,30 @@ const ModalConfirmFoodCart = ({ isModalVisible, close }) => {
           <div className="block__items-detail">
             <span>Chi tiết đơn hàng</span>
             <div className="block__items-detail-content">
-              {data.items?.map((item) => (
-                <div
-                  key={item._id}
-                  className="block__items-detail-content--item"
-                >
-                  <img src={item.imageUrl} alt="" />
-                  <div className="block-details-item">
-                    <div className="flex flex-col">
-                      <span>{item.name}</span>
-                      <span>x{item.quantity}</span>
-                    </div>
-                    <div>
-                      {getPriceItem(
-                        item.discountOff,
-                        item.unitPrice,
-                        item.discountMaximum,
-                        item.quantity
-                      )}
+              <div className="block__items-detail-content__inner">
+                {data.items?.map((item) => (
+                  <div
+                    key={item._id}
+                    className="block__items-detail-content__inner--item"
+                  >
+                    <img src={item.imageUrl} alt="" />
+                    <div className="block-details-item">
+                      <div className="flex flex-col">
+                        <span>{item.name}</span>
+                        <span>x{item.quantity}</span>
+                      </div>
+                      <div>
+                        {getPriceItem(
+                          item.discountOff,
+                          item.unitPrice,
+                          item.discountMaximum,
+                          item.quantity
+                        )}
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
           <div className="block-data-normal flex items-center">
@@ -145,13 +186,37 @@ const ModalConfirmFoodCart = ({ isModalVisible, close }) => {
         </div>
       </div>
       <div className="block-momo-direct-moneny">
-        <button className="btn btn-client btn-momo">Momo</button>
-        <button className="btn btn-client btn-money">
+        <button
+          className={`btn btn-client btn-momo ${
+            data?.paymentMethod === "paypal" ? "btn-disabled" : ""
+          }`}
+          onClick={() => setData({ ...data, paymentMethod: "paypal" })}
+        >
+          Paypal
+        </button>
+        <button
+          className={`btn btn-client btn-money ${
+            data?.paymentMethod !== "paypal" ? "btn-disabled" : ""
+          }`}
+          onClick={() => setData({ ...data, paymentMethod: "money" })}
+        >
           <LocalAtmIcon style={{ fontSize: 26 }} />
           Tiền mặt
         </button>
       </div>
-      <div className="btn-order-food">Đặt hàng</div>
+      <div
+        className="btn-order-food"
+        onClick={() => {
+          if (data?.paymentMethod === "paypal") {
+            window.open(
+              "https://test-payment.momo.vn/gw_payment/payment/qr?partnerCode=MOMO&accessKey=F8BBA842ECF85&requestId=MM64101&amount=1100&orderId=MM64101&signature=cb36fa31ac0ec9cee047cf482a81292e8b8863dbd8e3ac0c97aa7208145fe810&requestType=captureMoMoWallet"
+            );
+            close();
+          }
+        }}
+      >
+        Đặt hàng
+      </div>
       <Modal
         className="modal-container modal-confirm-food-cart"
         title="Danh sách voucher hiện có"

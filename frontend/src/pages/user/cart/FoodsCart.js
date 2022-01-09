@@ -170,7 +170,9 @@ const FoodsCart = ({ close }) => {
         </div>
       </div>
       <div
-        className="modal-body-cart-container__inner-bottom"
+        className={`modal-body-cart-container__inner-bottom ${
+          data.filter((item) => item.isCheckbox)?.length ? "" : "btn-disabled"
+        }`}
         onClick={() => {
           close();
           setIsOpenModalConfirmOrder(true);

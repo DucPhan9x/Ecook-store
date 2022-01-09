@@ -5,7 +5,7 @@
     justify-content: space-between;
     &--item {
       min-width: 22%;
-      min-height: 160px;
+      min-height: 100px;
       background: gray;
       border-radius: 8px;
       &__inner {
@@ -72,7 +72,10 @@
     align-items: flex-start;
     justify-content: space-between;
     &-left {
+      box-shadow: 2px 2px 10px rgba(87, 87, 87, 0.6) !important;
       width: 60%;
+      padding: 20px 15px;
+      height: 648px;
     }
     &-right {
       margin-left: 24px;
@@ -81,6 +84,8 @@
       // tabs
 
       .body-tabs-statistic {
+        box-shadow: 2px 2px 10px rgba(87, 87, 87, 0.6) !important;
+
         .item-favorite-block {
           display: flex;
           align-items: center;

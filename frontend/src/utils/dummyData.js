@@ -1531,6 +1531,13 @@ export const COURSES_DATA = [
     criteria: "An toan ve sinh thuc pham, trang tri dep mat",
     videoUrls: [
       {
+        title: "Cá lốc chiên xù xoài xanh",
+        videoUrl:
+          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+        duration: 30, // unit : min
+        createAt: Date.now(),
+      },
+      {
         title: "Nghêu hấp thái",
         videoUrl:
           "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
@@ -1551,13 +1558,7 @@ export const COURSES_DATA = [
         duration: 30, // unit : min
         createAt: Date.now(),
       },
-      {
-        title: "Cá lốc chiên xù xoài xanh",
-        videoUrl:
-          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
-        duration: 30, // unit : min
-        createAt: Date.now(),
-      },
+
       {
         title: "Tôm hấp hành",
         videoUrl:

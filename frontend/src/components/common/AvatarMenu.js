@@ -2,22 +2,29 @@ import React from "react";
 import { Dropdown, Button, Menu } from "antd";
 import { Avatar } from "antd";
 import { ArrowDropDown } from "@material-ui/icons";
-import AccountBoxIcon from "@material-ui/icons/AccountBox";
+// import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
+import Cookies from "js-cookie";
+import { useHistory } from "react-router-dom";
 
 export default function AvatarMenu() {
+  const history = useHistory();
   const handleMenuClick = (e) => {
     console.log(e);
+    if (Number(e.key) === 0) {
+      Cookies.remove("accessToken");
+      history.push("/admin");
+    }
   };
   return (
     <Dropdown
       overlay={() => (
         <Menu onClick={handleMenuClick} className="menu-header-admin">
           {[
-            {
-              name: "Hồ sơ cá nhân",
-              icon: <AccountBoxIcon color="action" />,
-            },
+            // {
+            //   name: "Hồ sơ cá nhân",
+            //   icon: <AccountBoxIcon color="action" />,
+            // },
             {
               name: "Đăng xuất",
               icon: <PowerSettingsNewIcon color="action" />,

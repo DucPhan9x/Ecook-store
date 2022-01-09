@@ -128,7 +128,17 @@ const CoursesCart = ({ close }) => {
           </div>
         </div>
       </div>
-      <div className="modal-body-cart-container__inner-bottom" onClick={close}>
+      <div
+        className={`modal-body-cart-container__inner-bottom ${
+          data.filter((item) => item.isCheckbox)?.length ? "" : "btn-disabled"
+        }`}
+        onClick={() => {
+          close();
+          window.open(
+            "https://test-payment.momo.vn/gw_payment/payment/qr?partnerCode=MOMO&accessKey=F8BBA842ECF85&requestId=MM64101&amount=1100&orderId=MM64101&signature=cb36fa31ac0ec9cee047cf482a81292e8b8863dbd8e3ac0c97aa7208145fe810&requestType=captureMoMoWallet"
+          );
+        }}
+      >
         {data
           .reduce(
             (f, s) =>
