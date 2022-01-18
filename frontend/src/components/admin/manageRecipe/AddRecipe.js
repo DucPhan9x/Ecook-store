@@ -19,7 +19,7 @@ const AddRecipe = () => {
     contents: [],
     materials: [],
     imageUrl: "",
-    quantitatif: 0,
+    slotQuantity: 0,
   });
 
   function onChange(value, index) {
@@ -37,8 +37,8 @@ const AddRecipe = () => {
     if (isEmpty(form.name)) {
       errorState.name = "Vui lòng nhập vào, không được để trống!";
     }
-    if (!form.quantitatif) {
-      errorState.quantitatif = "Vui lòng nhập vào!";
+    if (!form.slotQuantity) {
+      errorState.slotQuantity = "Vui lòng nhập vào!";
     }
     form.materials.forEach((m) => {
       if (
@@ -252,13 +252,13 @@ const AddRecipe = () => {
                 propsInput={{
                   placeholder: "Định lượng",
                   type: "number",
-                  name: "quantitatif",
+                  name: "slotQuantity",
                   onChange: handleChange,
                   onFocus: handleFocus,
-                  value: form.quantitatif,
+                  value: form.slotQuantity,
                   disabled: false,
                 }}
-                error={error.quantitatif}
+                error={error.slotQuantity}
               />
             </div>
             <div className="block-input-info-course">

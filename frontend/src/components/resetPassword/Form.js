@@ -80,6 +80,22 @@ const Form = ({ handleSubmit }) => {
       </div>
       <div className="login-body">
         <ReForm className="form--login">
+          <div
+            className="btn btn-disabled full-width"
+            style={{ color: "whitesmoke" }}
+          >
+            {form.email}
+          </div>
+          {/* <FormBox
+            propsInput={{
+              name: "email",
+              placeholder: "Email",
+              onChange: handleChange,
+              onFocus: handleFocus,
+              value: form.email,
+              disabled: true,
+            }}
+          /> */}
           <FormBox
             propsInput={{
               name: "code",

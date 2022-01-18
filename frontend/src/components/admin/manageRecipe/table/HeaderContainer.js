@@ -21,7 +21,7 @@ const headCells = [
     label: "Nguyên liệu chính",
   },
   {
-    id: "quantitatif",
+    id: "slotQuantity",
     numeric: true,
     disablePadding: false,
     label: "Định lượng",

@@ -8,7 +8,7 @@ export const RECIPES_DATA = [
     _id: "recipe_123",
     title: "Gà xào xả ớt",
     feedbacks: 3, //trung binh cong all feedbacks
-    quantitatif: 5, // so nguoi an
+    slotQuantity: 5, // so nguoi an
     contents: [
       `Bước 1:
 Rã đông sản phẩm ở nhiệt độ phòng.`,
@@ -57,7 +57,7 @@ Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm t
   {
     _id: uuid(),
     title: "Gà xào xả ớt",
-    quantitatif: 5, // so nguoi an
+    slotQuantity: 5, // so nguoi an
     feedbacks: 5,
     contents: [
       `Bước 1:
@@ -107,7 +107,7 @@ Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm t
   {
     _id: uuid(),
     title: "Gà xào xả ớt",
-    quantitatif: 5, // so nguoi an
+    slotQuantity: 5, // so nguoi an
     feedbacks: 5,
     contents: [
       `Bước 1:
@@ -157,7 +157,7 @@ Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm t
   {
     _id: uuid(),
     title: "Gà xào xả ớt",
-    quantitatif: 5, // so nguoi an
+    slotQuantity: 5, // so nguoi an
     feedbacks: 5,
     contents: [
       `Bước 1:
@@ -207,7 +207,7 @@ Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm t
   {
     _id: uuid(),
     title: "Gà xào xả ớt",
-    quantitatif: 5, // so nguoi an
+    slotQuantity: 5, // so nguoi an
     feedbacks: 5,
     contents: [
       `Bước 1:
@@ -257,7 +257,7 @@ Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm t
   {
     _id: uuid(),
     title: "Gà xào xả ớt",
-    quantitatif: 5, // so nguoi an
+    slotQuantity: 5, // so nguoi an
     feedbacks: 5,
     contents: [
       `Bước 1:
@@ -307,7 +307,7 @@ Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm t
   {
     _id: uuid(),
     title: "Gà xào xả ớt",
-    quantitatif: 5, // so nguoi an
+    slotQuantity: 5, // so nguoi an
     feedbacks: 5,
     contents: [
       `Bước 1:
@@ -357,7 +357,7 @@ Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm t
   {
     _id: uuid(),
     title: "Gà xào xả ớt",
-    quantitatif: 5, // so nguoi an
+    slotQuantity: 5, // so nguoi an
     feedbacks: 5,
     contents: [
       `Bước 1:
@@ -482,7 +482,7 @@ export const FOODS_DATA = [
       {
         _id: uuid(),
         title: "Sườn xào chua ngọt",
-        quantitatif: 5, // so nguoi an
+        slotQuantity: 5, // so nguoi an
         feedbacks: 5,
         contents: [
           `Bước 1:
@@ -580,7 +580,7 @@ export const FOODS_DATA = [
       {
         _id: uuid(),
         title: "Sườn xào chua ngọt",
-        quantitatif: 5, // so nguoi an
+        slotQuantity: 5, // so nguoi an
         feedbacks: 5,
         contents: [
           `Bước 1:
@@ -678,7 +678,7 @@ export const FOODS_DATA = [
       {
         _id: uuid(),
         title: "Sườn xào chua ngọt",
-        quantitatif: 5, // so nguoi an
+        slotQuantity: 5, // so nguoi an
         feedbacks: 5,
         contents: [
           `Bước 1:
@@ -776,7 +776,7 @@ export const FOODS_DATA = [
       {
         _id: uuid(),
         title: "Sườn xào chua ngọt",
-        quantitatif: 5, // so nguoi an
+        slotQuantity: 5, // so nguoi an
         feedbacks: 5,
         contents: [
           `Bước 1:
@@ -874,7 +874,7 @@ export const FOODS_DATA = [
       {
         _id: uuid(),
         title: "Sườn xào chua ngọt",
-        quantitatif: 5, // so nguoi an
+        slotQuantity: 5, // so nguoi an
         feedbacks: 5,
         contents: [
           `Bước 1:
@@ -972,7 +972,7 @@ export const FOODS_DATA = [
       {
         _id: uuid(),
         title: "Sườn xào chua ngọt",
-        quantitatif: 5, // so nguoi an
+        slotQuantity: 5, // so nguoi an
         feedbacks: 5,
         contents: [
           `Bước 1:
@@ -1070,7 +1070,7 @@ export const FOODS_DATA = [
       {
         _id: uuid(),
         title: "Sườn xào chua ngọt",
-        quantitatif: 5, // so nguoi an
+        slotQuantity: 5, // so nguoi an
         feedbacks: 5,
         contents: [
           `Bước 1:
@@ -1169,7 +1169,7 @@ export const FOODS_DATA = [
       {
         _id: uuid(),
         title: "Sườn xào chua ngọt",
-        quantitatif: 5, // so nguoi an
+        slotQuantity: 5, // so nguoi an
         feedbacks: 5,
         contents: [
           `Bước 1:
@@ -1267,7 +1267,7 @@ export const FOODS_DATA = [
       {
         _id: uuid(),
         title: "Sườn xào chua ngọt",
-        quantitatif: 5, // so nguoi an
+        slotQuantity: 5, // so nguoi an
         feedbacks: 5,
         contents: [
           `Bước 1:
@@ -1365,7 +1365,7 @@ export const FOODS_DATA = [
       {
         _id: uuid(),
         title: "Sườn xào chua ngọt",
-        quantitatif: 5, // so nguoi an
+        slotQuantity: 5, // so nguoi an
         feedbacks: 5,
         contents: [
           `Bước 1:
@@ -1463,7 +1463,7 @@ export const FOODS_DATA = [
       {
         _id: uuid(),
         title: "Sườn xào chua ngọt",
-        quantitatif: 5, // so nguoi an
+        slotQuantity: 5, // so nguoi an
         feedbacks: 5,
         contents: [
           `Bước 1:

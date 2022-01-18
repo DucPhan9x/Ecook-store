@@ -126,7 +126,7 @@ const BodyContainer = (props) => {
                       </div>
                     ))}
                 </TableCell>
-                <TableCell align="left">{row.quantitatif} người ăn</TableCell>
+                <TableCell align="left">{row.slotQuantity} người ăn</TableCell>
                 <TableCell align="left">
                   <Rate value={row.feedbacks} />
                 </TableCell>

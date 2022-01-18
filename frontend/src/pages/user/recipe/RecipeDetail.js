@@ -51,9 +51,9 @@ const RecipeDetail = () => {
             <Rating defaultValue={0} value={rate} max={5} readOnly />
           </div>
 
-          <div className="recipe-detail-container-top__right--quantitatif">
+          <div className="recipe-detail-container-top__right--slotQuantity">
             <span>Định lượng: </span>
-            {recipe?.quantitatif} người ăn
+            {recipe?.slotQuantity} người ăn
           </div>
 
           <div className="recipe-detail-container-top__right--materials">
