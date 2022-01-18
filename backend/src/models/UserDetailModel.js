@@ -7,8 +7,14 @@ const userDetailSchema = new Schema({
     type: String,
     required: true,
   },
+  dateOfBirth: {
+    type: Date,
+  },
   phoneNumber: {
     type: String,
+  },
+  gender: {
+    type: Boolean,
   },
   address: {
     type: String,

@@ -13,6 +13,10 @@ const userSchema = new Schema({
     type: Number,
     required: true,
   },
+  isActive: {
+    type: Boolean,
+    required: true,
+  },
   createAt: {
     type: Date,
     default: Date.now,

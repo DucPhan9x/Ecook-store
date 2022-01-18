@@ -3,19 +3,16 @@ import { Role } from "../models";
 import { validateRequest } from "../utils";
 const validateRegisterData = async (req, res, next) => {
   try {
-    console.log(req.body);
     const role = await Role.findOne({ roleName: "customer" });
     const registerSchema = joi.object({
       email: joi.string().email().required(),
       password: joi.string().required().min(6).max(50),
-      // .regex(/(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#\$%\^&\*])(?=.{6,})/),
       roleId: joi.number().integer().required().valid(role.id),
       fullName: joi.string().required(),
     });
     validateRequest(req, registerSchema, next);
   } catch (error) {
     next(error);
-    console.log({ error });
   }
 };
 const validateLoginData = (req, res, next) => {
