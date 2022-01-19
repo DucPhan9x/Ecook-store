@@ -9,4 +9,5 @@ const materialSchema = new Schema({
   },
   quantity: Number,
 });
-export const Material = model("Material", materialSchema, "Material");
+const Material = model("Material", materialSchema, "Material");
+export { Material, materialSchema };

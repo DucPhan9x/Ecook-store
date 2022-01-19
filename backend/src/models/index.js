@@ -44,7 +44,6 @@ export {
   Recipe,
   Reply,
   ResetCode,
-  Role,
   Student,
   VideoCourse,
   Voucher,

@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-import { Reply } from "./ReplyModel";
+import { replySchema } from "./ReplyModel";
 const feedbackSchema = new Schema({
   itemId: {
     type: Schema.Types.ObjectId,
@@ -21,7 +21,7 @@ const feedbackSchema = new Schema({
     type: Number,
   },
   reply: {
-    type: [Reply],
+    type: [replySchema],
   },
 });
 export const Feedback = model("Feedback", feedbackSchema, "Feedback");

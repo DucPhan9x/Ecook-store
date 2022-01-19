@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-import { OrderItem } from "./OrderItemModel";
+import { orderItemSchema } from "./OrderItemModel";
 const orderSchema = new Schema({
   customerId: {
     type: Schema.Types.ObjectId,
@@ -37,7 +37,7 @@ const orderSchema = new Schema({
     type: Number,
   },
   items: {
-    type: [OrderItem],
+    type: [orderItemSchema],
   },
   voucherId: {
     type: Schema.Types.ObjectId,

@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-import { Material } from "./MaterialModel";
+import { materialSchema } from "./MaterialModel";
 const recipeSchema = new Schema({
   name: {
     type: String,
@@ -8,7 +8,9 @@ const recipeSchema = new Schema({
   instructorId: {
     type: Schema.Types.ObjectId,
   },
-  material: [Material],
+  material: {
+    type: [materialSchema],
+  },
   createAt: {
     type: Date,
     default: Date.now,

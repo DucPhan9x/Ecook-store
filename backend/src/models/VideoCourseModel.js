@@ -1,5 +1,4 @@
 import { Schema, model } from "mongoose";
-import { Course } from "./CourseModel";
 const videoCourseSchema = new Schema({
   title: {
     type: String,
@@ -22,8 +21,5 @@ const videoCourseSchema = new Schema({
     default: Date.now,
   },
 });
-export const VideoCourse = model(
-  "VideoCourse",
-  videoCourseSchema,
-  "VideoCourse"
-);
+const VideoCourse = model("VideoCourse", videoCourseSchema, "VideoCourse");
+export { VideoCourse, videoCourseSchema };

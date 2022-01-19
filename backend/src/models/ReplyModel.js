@@ -10,4 +10,5 @@ const replySchema = new Schema({
     type: String,
   },
 });
-export const Reply = model("Reply", replySchema, "Reply");
+const Reply = model("Reply", replySchema, "Reply");
+export { Reply, replySchema };

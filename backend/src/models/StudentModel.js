@@ -1,9 +1,11 @@
 import { Schema, model } from "mongoose";
-import { Course } from "./CourseModel";
+import { courseSchema } from "./CourseModel";
 const studentSchema = new Schema({
   accountId: {
     type: Schema.Types.ObjectId,
   },
-  courseList: [Course],
+  courseList: {
+    type: [courseSchema],
+  },
 });
 export const Student = model("Student", studentSchema, "Student");

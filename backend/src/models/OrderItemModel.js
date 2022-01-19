@@ -10,4 +10,6 @@ const orderItemSchema = new Schema({
     type: Number,
   },
 });
-export const OrderItem = model("OrderItem", orderItemSchema, "OrderItem");
+const OrderItem = model("OrderItem", orderItemSchema, "OrderItem");
+
+export { orderItemSchema, OrderItem };
