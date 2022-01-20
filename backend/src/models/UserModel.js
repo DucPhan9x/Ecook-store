@@ -21,5 +21,8 @@ const userSchema = new Schema({
     type: Date,
     default: Date.now,
   },
+  activeToken: {
+    type: String,
+  },
 });
 export const User = model("User", userSchema, "User");

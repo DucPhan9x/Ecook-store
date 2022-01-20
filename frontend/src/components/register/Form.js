@@ -62,15 +62,14 @@ const Form = ({ handleSubmit }) => {
     }
 
     const formData = {
-      userName: form.userName,
-      email: form.email,
-      password: form.password,
-      confirmPassword: form.confirmPassword,
+      fullName: form.userName.trim(),
+      email: form.email.trim(),
+      password: form.password.trim(),
     };
     handleSubmit(formData);
   };
   const handleChange = (event) => {
-    setForm({ ...form, [event.target.name]: event.target.value.trim() });
+    setForm({ ...form, [event.target.name]: event.target.value });
   };
 
   const handleFocus = (event) => {

@@ -19,12 +19,7 @@ const validateLoginData = (req, res, next) => {
   try {
     const loginSchema = joi.object({
       email: joi.string().email().required(),
-      password: joi
-        .string()
-        .required()
-        .min(6)
-        .max(50)
-        .regex(/(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#\$%\^&\*])(?=.{6,})/),
+      password: joi.string().required().min(6).max(50),
     });
     validateRequest(req, loginSchema, next);
   } catch (error) {

@@ -13,9 +13,14 @@ import {
   ROUTE_CLIENT_MY_PROFILE,
 } from "utils/routes";
 import Cookies from "js-cookie";
+import { setToken } from "redux/actions/common";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 export default function AvatarMenuClient() {
+  const { avatarURL } = useSelector((store) => store.common);
   const history = useHistory();
+  const dispatch = useDispatch();
   const handleMenuClick = (e) => {
     let url = "";
     switch (Number(e.key)) {
@@ -32,10 +37,10 @@ export default function AvatarMenuClient() {
         url = ROUTE_CLIENT_MY_COURSES;
         break;
       }
-
       default: {
         // clear local storage/cookies
         Cookies.remove("accessToken");
+        dispatch(setToken(""));
         url = "/login";
         break;
       }
@@ -74,7 +79,13 @@ export default function AvatarMenuClient() {
       className="btn-avatar-menu"
     >
       <Button className="flex">
-        <Avatar alt="Remy Sharp" src="https://picsum.photos/200/300" />
+        <Avatar
+          alt="Remy Sharp"
+          src={
+            avatarURL ||
+            "https://res.cloudinary.com/duc/image/upload/v1642704006/avatardefault_ux3ryj.png"
+          }
+        />
         <div className="flex flex-col align-flex-start block-infor-user">
           <span className="block-infor-user--name">Trong Duc</span>
         </div>

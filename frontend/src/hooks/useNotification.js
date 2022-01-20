@@ -15,7 +15,7 @@ const Success = ({
   title,
   message,
   container = "bottom-left",
-  duration = 2000,
+  duration = 3000,
 }) => {
   store.addNotification({
     ...notification,

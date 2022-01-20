@@ -38,16 +38,6 @@ const Form = ({ handleSubmit }) => {
     return errorState;
   };
 
-  useEffect(() => {
-    if (!(history.location.state && history.location.state.email)) return;
-    setForm({
-      ...form,
-      email: history.location.state.email || "",
-      password: "",
-    });
-    setError({ ...error, email: "", password: "" });
-    // eslint-disable-next-line
-  }, [history]);
   const handleSubmitForm = (event) => {
     event.preventDefault();
     const errorState = validate();

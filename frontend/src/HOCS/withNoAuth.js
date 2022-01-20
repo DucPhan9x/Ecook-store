@@ -6,11 +6,10 @@ import { Redirect } from "react-router-dom";
 const withNoAuth =
   (Component, showFooter = false) =>
   (props) => {
-    const isHomepage = window.location.pathname.includes(
-      "/",
-      "/food",
-      "course"
-    );
+    const isHomepage =
+      window.location.pathname.includes("/food", "/course") ||
+      window.location.pathname === "/";
+    console.log(isHomepage);
     return (
       <div className="app" style={{ minHeight: "100vh" }}>
         {!getAccessToken() || isHomepage ? (

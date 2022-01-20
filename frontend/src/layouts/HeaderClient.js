@@ -15,11 +15,13 @@ import { ROUTE_CLIENT_FAVORITES } from "utils/routes";
 import { AvatarMenuClient } from "components/common";
 import { getAccessToken } from "utils/authUtils";
 import ModalConfirm from "components/common/ModalConfirm";
+import { useSelector } from "react-redux";
 
 const HeaderClient = () => {
   const history = useHistory();
   const [openFoodsCart, setOpenFoodsCart] = useState(false);
   const [isOpenModalConfirm, setIsOpenModalConfirm] = useState(false);
+  const { token } = useSelector((store) => store.common);
 
   return (
     <div className="header-client">
@@ -63,7 +65,7 @@ const HeaderClient = () => {
             <PhoneOutlined />
             <span>1900 1005</span>
           </div>
-          {getAccessToken() ? (
+          {token ? (
             <AvatarMenuClient />
           ) : (
             <div

@@ -10,7 +10,7 @@ const login = ({ email, password }) => {
     body: formdata,
   };
 
-  return fetch(`${url}auth/login/`, requestOptions);
+  return fetch(`${url}auth/login`, requestOptions);
 };
 
 const register = ({ email, password, fullName }) => {
@@ -25,7 +25,7 @@ const register = ({ email, password, fullName }) => {
     body: formdata,
   };
 
-  return fetch(`${url}auth/register/`, requestOptions);
+  return fetch(`${url}auth/register`, requestOptions);
 };
 
 const authAPI = { login, register };
