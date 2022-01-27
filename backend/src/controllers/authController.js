@@ -2,7 +2,7 @@ import { Role, User, UserDetail, Wishlist } from "../models";
 import bcrypt from "bcryptjs";
 import createHttpError from "http-errors";
 import { encodeToken, destroyToken } from "../utils";
-import { sendEmail } from "../utils";
+import { sendEmail, getResetCode, confirmResetCode } from "../utils";
 import { envVariables } from "../configs";
 import crypto from "crypto";
 
@@ -75,7 +75,6 @@ const activeAccount = async (req, res, next) => {
 
 const login = async (req, res, next) => {
   const { email, password } = req.body;
-  console.log(req);
   try {
     const userExisted = await User.findOne({ email });
     if (!userExisted) {
@@ -144,8 +143,8 @@ const sendResetCode = async (req, res, next) => {
       throw createHttpError(400, "Email is invalid!");
     }
     const code = await getResetCode(user._id, next);
-    const message = "Your code for reseting password is: " + code;
-    await sendEmail(email, "Reset Code for change password", message, "", next);
+    const message = "Your code for reset password is: " + code;
+    await sendEmail(email, "Reset Code for change password", message, "");
     res.status(200).json({
       status: 200,
       msg: "Send reset code successfully!. Please check your email.",
@@ -159,8 +158,11 @@ const sendResetCode = async (req, res, next) => {
 const resetPassword = async (req, res, next) => {
   try {
     const { code, email, newPassword, confirmPassword } = req.body;
+
     const user = await User.findOne({ email });
     const confirmed = await confirmResetCode(code, user._id, next);
+    const match = await bcrypt.compare(newPassword, user.password);
+
     if (!confirmed) {
       throw createHttpError(400, "Reset code is invalid!");
     }
@@ -169,6 +171,9 @@ const resetPassword = async (req, res, next) => {
         400,
         "New password and confirm password are not matched!"
       );
+    if (match)
+      throw createHttpError(400, "New password duplicate old password!");
+
     const hashPassword = await bcrypt.hash(newPassword, 12);
     await User.findByIdAndUpdate(user._id, {
       password: hashPassword,

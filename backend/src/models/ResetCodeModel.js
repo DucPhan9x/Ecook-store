@@ -8,6 +8,7 @@ const resetCodeSchema = new Schema({
   },
   expired: {
     type: Boolean,
+    default: false,
   },
   createAt: {
     type: Date,

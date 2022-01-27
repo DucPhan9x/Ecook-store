@@ -80,13 +80,7 @@ const Form = ({ handleSubmit }) => {
             }}
             error={error.email}
           />
-          <button
-            className="btn--login"
-            disabled={loading}
-            onClick={() =>
-              history.push("/reset-password", { email: form.email })
-            }
-          >
+          <button className="btn--login" disabled={loading}>
             Xác nhận
           </button>
         </ReForm>

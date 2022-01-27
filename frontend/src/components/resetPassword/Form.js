@@ -14,6 +14,7 @@ const Form = ({ handleSubmit }) => {
     code: "",
     password: "",
     confirmPassword: "",
+    email: "",
   });
   const storeResetPassword = useSelector((store) => store.resetPassword);
   const loading = storeResetPassword.loading;
@@ -55,8 +56,9 @@ const Form = ({ handleSubmit }) => {
     }
 
     const formData = {
+      email: form.email,
       code: form.code,
-      password: form.password,
+      newPassword: form.password,
       confirmPassword: form.confirmPassword,
     };
     handleSubmit(formData);
@@ -86,16 +88,6 @@ const Form = ({ handleSubmit }) => {
           >
             {form.email}
           </div>
-          {/* <FormBox
-            propsInput={{
-              name: "email",
-              placeholder: "Email",
-              onChange: handleChange,
-              onFocus: handleFocus,
-              value: form.email,
-              disabled: true,
-            }}
-          /> */}
           <FormBox
             propsInput={{
               name: "code",

@@ -114,7 +114,14 @@ const Form = ({ handleSubmit }) => {
         </ReForm>
       </div>
       <div className="login-footer">
-        <span onClick={() => history.push(ROUTE_FORGOTPASSWORD)}>
+        <span
+          onClick={() =>
+            history.push({
+              pathname: ROUTE_FORGOTPASSWORD,
+              state: { email: form.email },
+            })
+          }
+        >
           Quên mật khẩu?
         </span>
       </div>

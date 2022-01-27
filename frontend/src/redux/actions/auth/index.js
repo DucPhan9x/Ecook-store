@@ -67,4 +67,66 @@ const login = (data, res = () => {}) => {
       });
   };
 };
-export { login, register };
+
+const sendResetCode = (data, res = () => {}) => {
+  return (dispatch) => {
+    dispatch({ type: types.FORGOT_PASSWORD });
+    authAPI
+      .sendResetCode(data)
+      .then((response) => response.json())
+      .then((result) => {
+        if (result.status === 200) {
+          res(result);
+          dispatch({
+            type: types.FORGOT_PASSWORD_SUCCEED,
+          });
+        } else {
+          dispatch({ type: types.FORGOT_PASSWORD_FAIL });
+          useNotification.Error({
+            title: "Error",
+            message: result.msg || "Send reset code failed!",
+          });
+        }
+      })
+      .catch((error) => {
+        dispatch({ type: types.FORGOT_PASSWORD_FAIL });
+        useNotification.Error({
+          title: "Error",
+          message: "Error connected to server!",
+        });
+      });
+  };
+};
+
+const resetPassword = (data, res = () => {}) => {
+  return (dispatch) => {
+    dispatch({ type: types.RESET_PASSWORD });
+    authAPI
+      .resetPassword(data)
+      .then((response) => response.json())
+      .then((result) => {
+        if (result.status === 200) {
+          res(result);
+          dispatch({
+            type: types.RESET_PASSWORD_SUCCEED,
+            payload: result,
+          });
+        } else {
+          dispatch({ type: types.RESET_PASSWORD_FAIL });
+          useNotification.Error({
+            title: "Error",
+            message: result.msg || "Reset password failed!",
+          });
+        }
+      })
+      .catch((error) => {
+        dispatch({ type: types.RESET_PASSWORD_FAIL });
+        useNotification.Error({
+          title: "Error",
+          message: "Error connected to server!",
+        });
+      });
+  };
+};
+
+export { login, register, sendResetCode, resetPassword };

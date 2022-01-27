@@ -28,5 +28,32 @@ const register = ({ email, password, fullName }) => {
   return fetch(`${url}auth/register`, requestOptions);
 };
 
-const authAPI = { login, register };
+const sendResetCode = (email) => {
+  let formdata = new FormData();
+  formdata.append("email", email);
+
+  let requestOptions = {
+    method: "POST",
+    body: formdata,
+  };
+
+  return fetch(`${url}auth/send-reset-code`, requestOptions);
+};
+
+const resetPassword = ({ email, code, newPassword, confirmPassword }) => {
+  let formdata = new FormData();
+  formdata.append("code", code);
+  formdata.append("email", email);
+  formdata.append("newPassword", newPassword);
+  formdata.append("confirmPassword", confirmPassword);
+
+  let requestOptions = {
+    method: "POST",
+    body: formdata,
+  };
+
+  return fetch(`${url}auth/new-password`, requestOptions);
+};
+
+const authAPI = { login, register, sendResetCode, resetPassword };
 export default authAPI;
