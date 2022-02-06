@@ -76,9 +76,9 @@ const loginAdmin = (data, res = () => {}) => {
       .then((response) => response.json())
       .then((result) => {
         if (result.status === 200) {
-          res(result.user);
+          res(result);
           dispatch({
-            type: types.ADMIN_LOGIN_API,
+            type: types.ADMIN_LOGIN_API_SUCCEED,
             payload: result.user,
           });
         } else {

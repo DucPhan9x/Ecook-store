@@ -1,7 +1,17 @@
 import { combineReducers } from "redux";
-import { login, resetPassword, register, forgotPassword } from "./auth";
+import {
+  login,
+  resetPassword,
+  register,
+  forgotPassword,
+  loginAdmin,
+  forgotPasswordAdmin,
+  resetPasswordAdmin,
+  createNewAdminAccount,
+} from "./auth";
 import control from "./control";
 import common from "./common";
+import admin from "./admin";
 
 export default combineReducers({
   login,
@@ -10,4 +20,9 @@ export default combineReducers({
   resetPassword,
   control,
   common,
+  createNewAdminAccount,
+  loginAdmin,
+  forgotPasswordAdmin,
+  resetPasswordAdmin,
+  admin,
 });

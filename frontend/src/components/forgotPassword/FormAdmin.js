@@ -19,7 +19,7 @@ const FormForgotAdmin = () => {
   const [form, setForm] = React.useState({
     email: "",
   });
-  const storeForgotPassword = useSelector((store) => store.forgotPassword);
+  const storeForgotPassword = useSelector((store) => store.forgotPasswordAdmin);
   const loading = storeForgotPassword.loading;
 
   const validate = () => {
@@ -79,7 +79,7 @@ const FormForgotAdmin = () => {
   };
 
   return (
-    <section onSubmit={handleSubmitForm} className="login">
+    <section onSubmit={handleSubmitForm} className="login login-admin">
       <div className="login-header">
         <span>Quên mật khẩu</span>
       </div>
@@ -101,15 +101,15 @@ const FormForgotAdmin = () => {
           />
           <div className="flex items-center" style={{ marginTop: 20 }}>
             <button
-              className="btn--login"
-              disabled={loading}
+              className={`btn--login ${!form.email ? "btn-disabled" : ""}`}
+              disabled={loading || !form.email}
               style={{ marginRight: 15 }}
             >
               Gửi code
             </button>
             <button
-              className="btn--login"
-              disabled={loading}
+              className={`btn--login ${!form.email ? "btn-disabled" : ""}`}
+              disabled={loading || !form.email}
               onClick={() => {
                 history.push("/admin/reset-password", { email: form.email });
               }}

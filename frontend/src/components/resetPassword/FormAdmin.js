@@ -16,7 +16,7 @@ const FormResetPassAdmin = ({ handleSubmit }) => {
     confirmPassword: "",
     email: "",
   });
-  const storeResetPassword = useSelector((store) => store.resetPassword);
+  const storeResetPassword = useSelector((store) => store.resetPasswordAdmin);
   const loading = storeResetPassword.loading;
   const validate = () => {
     const errorState = {};
@@ -75,7 +75,7 @@ const FormResetPassAdmin = ({ handleSubmit }) => {
   };
 
   return (
-    <section onSubmit={handleSubmitForm} className="login">
+    <section onSubmit={handleSubmitForm} className="login login-admin">
       {loading && <SpinLoading />}
       <div className="login-header">
         <span>Reset mật khẩu</span>
@@ -128,18 +128,32 @@ const FormResetPassAdmin = ({ handleSubmit }) => {
             Xác nhận
           </button>
         </ReForm>
-        <span
-          className="center"
-          style={{
-            marginTop: 10,
-            fontSize: 14,
-            color: "blue",
-            cursor: "pointer",
-          }}
-          onClick={() => history.push("/admin/login")}
-        >
-          Login now?
-        </span>
+        <div className="flex j-space-between full-width">
+          <span
+            className="center"
+            style={{
+              marginTop: 10,
+              fontSize: 14,
+              color: "blue",
+              cursor: "pointer",
+            }}
+            onClick={() => history.push("/admin/forgot-password")}
+          >
+            Re-send code now?
+          </span>
+          <span
+            className="center"
+            style={{
+              marginTop: 10,
+              fontSize: 14,
+              color: "blue",
+              cursor: "pointer",
+            }}
+            onClick={() => history.push("/admin/login")}
+          >
+            Login now?
+          </span>
+        </div>
       </div>
     </section>
   );

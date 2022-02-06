@@ -3,7 +3,8 @@ import { FormAdmin } from "components/login";
 import { useHistory } from "react-router-dom";
 import { loginAdmin } from "redux/actions/auth";
 import { useDispatch } from "react-redux";
-import { setAvatarURLAdmin, setTokenAdmin } from "redux/actions/common";
+import { setTokenAdmin } from "redux/actions/common";
+import { setUserDetailAdmin } from "redux/actions/admin";
 
 const LogInAdmin = () => {
   const history = useHistory();
@@ -13,8 +14,8 @@ const LogInAdmin = () => {
       loginAdmin(formData, (res) => {
         if (res) {
           history.push("/admin/dashboard");
-          dispatch(setTokenAdmin(res?.token));
-          dispatch(setAvatarURLAdmin(res?.imageUrl));
+          dispatch(setUserDetailAdmin(res.user));
+          dispatch(setTokenAdmin(res?.user?.token));
         }
       })
     );

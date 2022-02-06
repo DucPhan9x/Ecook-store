@@ -1,4 +1,4 @@
-import { withAuthAdmin, withAuthClient } from "HOCS";
+import { withAuthAdmin, withAuthClient, withNoAuthAdmin } from "HOCS";
 import { LoginClient, LoginAdmin } from "pages/login";
 import { CreationAccountAdmin, Register } from "pages/register";
 import { ForgotPassword, ForgotPasswordAdmin } from "pages/forgotPassword";
@@ -104,18 +104,22 @@ function App() {
         {/* admin */}
         <Route
           path={ROUTE_CREATE_ADMIN_ACCOUNT}
-          component={CreationAccountAdmin}
+          component={withNoAuthAdmin(CreationAccountAdmin)}
           exact
         />
-        <Route path={ROUTE_LOGIN_ADMIN} component={LoginAdmin} exact />
+        <Route
+          path={ROUTE_LOGIN_ADMIN}
+          component={withNoAuthAdmin(LoginAdmin)}
+          exact
+        />
         <Route
           path={ROUTE_FORGOT_PASSWORD_ADMIN}
-          component={ForgotPasswordAdmin}
+          component={withNoAuthAdmin(ForgotPasswordAdmin)}
           exact
         />
         <Route
           path={ROUTE_RESET_PASSWORD_ADMIN}
-          component={ResetPasswordAdmin}
+          component={withNoAuthAdmin(ResetPasswordAdmin)}
           exact
         />
         <Route

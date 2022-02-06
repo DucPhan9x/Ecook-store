@@ -101,15 +101,15 @@ const Form = () => {
           />
           <div className="flex items-center" style={{ marginTop: 20 }}>
             <button
-              className="btn--login"
-              disabled={loading}
+              className={`btn--login ${!form.email ? "btn-disabled" : ""}`}
+              disabled={loading || !form.email}
               style={{ marginRight: 15 }}
             >
               Gửi code
             </button>
             <button
-              className="btn--login"
-              disabled={loading}
+              className={`btn--login ${!form.email ? "btn-disabled" : ""}`}
+              disabled={loading || !form.email}
               onClick={() => {
                 history.push("/reset-password", { email: form.email });
               }}

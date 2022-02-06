@@ -6,6 +6,51 @@ import { sendEmail, getResetCode, confirmResetCode } from "../utils";
 import { envVariables } from "../configs";
 import crypto from "crypto";
 
+const createAdminAccount = async (req, res, next) => {
+  const { email, password, roleId, fullName } = req.body;
+  try {
+    const userExisted = await User.findOne({ email });
+    if (userExisted) {
+      throw createHttpError(400, "This email is used by others!");
+    }
+    // Check role
+    const checkRole = await Role.findOne({ id: roleId });
+    if (!checkRole || checkRole.roleName != "admin") {
+      throw createHttpError(400, "Role is invalid");
+    }
+    const hashPassword = await bcrypt.hash(password, 12);
+    const activeToken = await crypto
+      .createHash("md5")
+      .update(Math.random().toString().substring(2))
+      .digest("hex");
+
+    const newUser = await User.create({
+      email,
+      password: hashPassword,
+      roleId: roleId,
+      createAt: Date.now(),
+      isActive: true,
+      activeToken,
+    });
+
+    await UserDetail.create({
+      userId: newUser._id,
+      fullName,
+      phoneNumber: "",
+      address: "",
+      imageUrl: "",
+    });
+
+    res.status(200).json({
+      status: 200,
+      msg: "Created admin account successfully!",
+    });
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
+
 const registerCustomer = async (req, res, next) => {
   const { email, password, roleId, fullName } = req.body;
   try {
@@ -76,7 +121,54 @@ const activeAccount = async (req, res, next) => {
 const login = async (req, res, next) => {
   const { email, password } = req.body;
   try {
-    const userExisted = await User.findOne({ email });
+    const userExisted = await User.findOne({ email, roleId: 1 });
+    if (!userExisted) {
+      throw createHttpError(400, "Email doesn't exist!");
+    }
+    const match = await bcrypt.compare(password, userExisted.password);
+    if (!match) {
+      throw createHttpError(400, "Password is incorrect!");
+    }
+    if (!userExisted.isActive) {
+      throw createHttpError(
+        400,
+        "Your account hasn't activated, please check email to active right now!"
+      );
+    }
+    const userData = {
+      _id: userExisted._id,
+      email: userExisted.email,
+      roleId: userExisted.roleId,
+    };
+
+    const token = await encodeToken(userData);
+    const userDetail = await UserDetail.findOne({ userId: userExisted._id }, [
+      "imageUrl",
+      "fullName",
+      "address",
+    ]);
+    res.status(200).json({
+      status: 200,
+      msg: "success!",
+      user: {
+        roleId: userExisted.roleId,
+        token,
+        userId: userExisted._id,
+        imageUrl: userDetail.imageUrl,
+        fullName: userDetail.fullName,
+        address: userDetail.address,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
+
+const loginAdmin = async (req, res, next) => {
+  const { email, password } = req.body;
+  try {
+    const userExisted = await User.findOne({ roleId: { $gt: 1 }, email });
     if (!userExisted) {
       throw createHttpError(400, "Email doesn't exist!");
     }
@@ -228,10 +320,12 @@ const getRoleId = async (req, res, next) => {
 export const authController = {
   registerCustomer,
   login,
+  loginAdmin,
   logout,
   sendResetCode,
   resetPassword,
   changePassword,
   activeAccount,
   getRoleId,
+  createAdminAccount,
 };

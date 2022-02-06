@@ -15,6 +15,7 @@ const validateRegisterData = async (req, res, next) => {
     next(error);
   }
 };
+
 const validateLoginData = (req, res, next) => {
   try {
     const loginSchema = joi.object({

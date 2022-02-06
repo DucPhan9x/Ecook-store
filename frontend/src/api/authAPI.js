@@ -71,7 +71,7 @@ const loginAdmin = ({ email, password }) => {
 const createNewAdminAccount = ({ email, password, fullName }) => {
   let formdata = new FormData();
   formdata.append("fullName", fullName);
-  formdata.append("roleId", 4); // 1 customer, 2 employee, 3 instructor, 4 admin
+  formdata.append("roleId", 2); // 1 customer, 2 admin, 3 employee, 4 instructor
   formdata.append("email", email);
   formdata.append("password", password);
 

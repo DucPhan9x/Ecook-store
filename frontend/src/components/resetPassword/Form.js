@@ -128,18 +128,32 @@ const Form = ({ handleSubmit }) => {
             Xác nhận
           </button>
         </ReForm>
-        <span
-          className="center"
-          style={{
-            marginTop: 10,
-            fontSize: 14,
-            color: "blue",
-            cursor: "pointer",
-          }}
-          onClick={() => history.push("/login")}
-        >
-          Login now?
-        </span>
+        <div className="flex j-space-between full-width">
+          <span
+            className="center"
+            style={{
+              marginTop: 10,
+              fontSize: 14,
+              color: "blue",
+              cursor: "pointer",
+            }}
+            onClick={() => history.push("/forgot-password")}
+          >
+            Re-send code now?
+          </span>
+          <span
+            className="center"
+            style={{
+              marginTop: 10,
+              fontSize: 14,
+              color: "blue",
+              cursor: "pointer",
+            }}
+            onClick={() => history.push("/login")}
+          >
+            Login now?
+          </span>
+        </div>
       </div>
     </section>
   );

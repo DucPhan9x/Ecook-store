@@ -16,13 +16,17 @@ const {
   changePassword,
   getRoleId,
   activeAccount,
+  loginAdmin,
+  createAdminAccount,
 } = authController;
 const baseUrl = "/api/v1/auth";
 export const authRoute = Router();
 authRoute
   .route(`${baseUrl}/register`)
   .post(validateRegisterData, registerCustomer);
+authRoute.route(`${baseUrl}/admin/register`).post(createAdminAccount);
 authRoute.route(`${baseUrl}/login`).post(validateLoginData, login);
+authRoute.route(`${baseUrl}/admin/login`).post(validateLoginData, loginAdmin);
 authRoute.route(`${baseUrl}/logout`).post(jwtMiddleware, logout);
 authRoute.route(`${baseUrl}/send-reset-code`).post(sendResetCode);
 authRoute.route(`${baseUrl}/confirm/:token`).get(activeAccount);

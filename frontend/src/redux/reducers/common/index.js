@@ -1,10 +1,9 @@
-import Cookies from "js-cookie";
-import { getAccessToken } from "utils/authUtils";
+import { getAccessToken, getAccessTokenSystem } from "utils/authUtils";
 import * as types from "../../types/common";
 
 const initialState = {
   token: getAccessToken(),
-  avatarURL: Cookies.get("avatarURL"),
+  tokenAdmin: getAccessTokenSystem(),
 };
 
 export default function reducer(state = initialState, actions) {
@@ -14,10 +13,10 @@ export default function reducer(state = initialState, actions) {
         ...state,
         token: actions.payload,
       };
-    case types.SET_IMAGE_USER:
+    case types.SET_TOKEN_ADMIN:
       return {
         ...state,
-        avatarURL: actions.payload,
+        tokenAdmin: actions.payload,
       };
     default:
       return state;

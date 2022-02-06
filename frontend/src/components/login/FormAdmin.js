@@ -20,7 +20,7 @@ const FormAdmin = ({ handleSubmit }) => {
     password: "",
   });
 
-  const storeLogin = useSelector((store) => store.login);
+  const storeLogin = useSelector((store) => store.loginAdmin);
   const loading = storeLogin.loading;
   const validate = () => {
     const errorState = {};
