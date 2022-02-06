@@ -1,6 +1,6 @@
 import { withAuthAdmin, withAuthClient } from "HOCS";
 import { LoginClient, LoginAdmin } from "pages/login";
-import { Register } from "pages/register";
+import { CreationAccountAdmin, Register } from "pages/register";
 import { ForgotPassword, ForgotPasswordAdmin } from "pages/forgotPassword";
 import { HomePageClient } from "pages/user";
 import React from "react";
@@ -36,6 +36,7 @@ import {
   ROUTE_CLIENT_MY_PROFILE,
   ROUTE_CLIENT_MY_ORDERS,
   ROUTE_CLIENT_MY_COURSES,
+  ROUTE_CREATE_ADMIN_ACCOUNT,
 } from "utils/routes";
 import { ResetPassword, ResetPasswordAdmin } from "pages/resetPassword";
 import {
@@ -99,7 +100,13 @@ function App() {
           component={withNoAuth(ResetPassword, true)}
           exact
         />
+
         {/* admin */}
+        <Route
+          path={ROUTE_CREATE_ADMIN_ACCOUNT}
+          component={CreationAccountAdmin}
+          exact
+        />
         <Route path={ROUTE_LOGIN_ADMIN} component={LoginAdmin} exact />
         <Route
           path={ROUTE_FORGOT_PASSWORD_ADMIN}

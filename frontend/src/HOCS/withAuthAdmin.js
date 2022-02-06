@@ -3,7 +3,7 @@ import Sidebar from "layouts/Sidebar";
 import { HeaderAdmin } from "layouts";
 import { makeStyles } from "@material-ui/core";
 import { Redirect } from "react-router-dom";
-import { getAccessToken } from "utils/authUtils";
+import { getAccessTokenSystem } from "utils/authUtils";
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -17,7 +17,7 @@ const withAuthAdmin = (Component) => (props) => {
   const classes = useStyles();
   return (
     <div className="app-admin">
-      {getAccessToken() ? (
+      {getAccessTokenSystem() ? (
         <>
           <Sidebar />
           <HeaderAdmin />

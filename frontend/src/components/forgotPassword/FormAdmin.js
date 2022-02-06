@@ -8,7 +8,7 @@ import SpinLoading from "components/common/SpinLoading";
 import { sendResetCode } from "redux/actions/auth";
 import useNotification from "hooks/useNotification";
 
-const Form = () => {
+const FormForgotAdmin = () => {
   const [error, setError] = React.useState({});
   const history = useHistory();
 
@@ -111,7 +111,7 @@ const Form = () => {
               className="btn--login"
               disabled={loading}
               onClick={() => {
-                history.push("/reset-password", { email: form.email });
+                history.push("/admin/reset-password", { email: form.email });
               }}
             >
               Reset password
@@ -124,4 +124,4 @@ const Form = () => {
   );
 };
 
-export default Form;
+export default FormForgotAdmin;

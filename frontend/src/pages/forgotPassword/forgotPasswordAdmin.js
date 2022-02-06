@@ -1,12 +1,8 @@
 import React from "react";
-import { Form } from "components/forgotPassword";
+import FormForgotAdmin from "components/forgotPassword/FormAdmin";
 
 const ForgotPasswordAdmin = () => {
-  const handleForgotPassword = (formData) => {
-    console.log(formData);
-  };
-
-  return <Form handleSubmit={handleForgotPassword} />;
+  return <FormForgotAdmin />;
 };
 
 export default ForgotPasswordAdmin;

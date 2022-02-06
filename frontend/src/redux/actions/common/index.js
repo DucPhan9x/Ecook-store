@@ -1,5 +1,5 @@
 import Cookies from "js-cookie";
-import { setAccessToken } from "utils/authUtils";
+import { setAccessToken, setAccessTokenSystem } from "utils/authUtils";
 import * as types from "../../types/common";
 
 const setToken = (token) => {
@@ -16,4 +16,18 @@ const setAvatarURL = (url) => {
   };
 };
 
-export { setAvatarURL, setToken };
+const setTokenAdmin = (token) => {
+  setAccessTokenSystem(token);
+  return (dispatch) => {
+    dispatch({ type: types.SET_TOKEN_ADMIN, payload: token });
+  };
+};
+
+const setAvatarURLAdmin = (url) => {
+  Cookies.set("avatarURLSystem", url);
+  return (dispatch) => {
+    dispatch({ type: types.SET_IMAGE_USER_ADMIN, payload: url });
+  };
+};
+
+export { setAvatarURL, setToken, setTokenAdmin, setAvatarURLAdmin };

@@ -55,5 +55,56 @@ const resetPassword = ({ email, code, newPassword, confirmPassword }) => {
   return fetch(`${url}auth/new-password`, requestOptions);
 };
 
-const authAPI = { login, register, sendResetCode, resetPassword };
+//admin, employee, instructor
+const loginAdmin = ({ email, password }) => {
+  let formdata = new FormData();
+  formdata.append("email", email);
+  formdata.append("password", password);
+
+  let requestOptions = {
+    method: "POST",
+    body: formdata,
+  };
+
+  return fetch(`${url}auth/admin/login`, requestOptions);
+};
+const createNewAdminAccount = ({ email, password, fullName }) => {
+  let formdata = new FormData();
+  formdata.append("fullName", fullName);
+  formdata.append("roleId", 4); // 1 customer, 2 employee, 3 instructor, 4 admin
+  formdata.append("email", email);
+  formdata.append("password", password);
+
+  let requestOptions = {
+    method: "POST",
+    body: formdata,
+  };
+
+  return fetch(`${url}auth/admin/register`, requestOptions);
+};
+
+const resetPasswordAdmin = ({ email, code, newPassword, confirmPassword }) => {
+  let formdata = new FormData();
+  formdata.append("code", code);
+  formdata.append("email", email);
+  formdata.append("newPassword", newPassword);
+  formdata.append("confirmPassword", confirmPassword);
+
+  let requestOptions = {
+    method: "POST",
+    body: formdata,
+  };
+
+  return fetch(`${url}auth/admin/new-password`, requestOptions);
+};
+
+const authAPI = {
+  login,
+  register,
+  sendResetCode,
+  resetPassword,
+  loginAdmin,
+  createNewAdminAccount,
+  resetPasswordAdmin,
+};
 export default authAPI;

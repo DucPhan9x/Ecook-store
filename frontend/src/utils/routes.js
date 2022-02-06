@@ -1,3 +1,5 @@
+// special
+export const ROUTE_CREATE_ADMIN_ACCOUNT = "/create-admin-account";
 // client
 export const ROUTE_LOGIN = "/login";
 export const ROUTE_REGISTER = "/register";

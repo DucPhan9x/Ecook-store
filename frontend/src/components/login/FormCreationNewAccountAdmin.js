@@ -2,26 +2,26 @@ import React, { useEffect } from "react";
 import { FormBox } from "components/common";
 import { Form as ReForm } from "reactstrap";
 import { isEmpty, isEmail } from "validator";
+import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import SpinLoading from "components/common/SpinLoading";
-import { sendResetCode } from "redux/actions/auth";
-import useNotification from "hooks/useNotification";
+import { ROUTE_FORGOT_PASSWORD_ADMIN } from "utils/routes";
 
-const Form = () => {
+const FormCreationNewAccountAdmin = ({ handleSubmit }) => {
   const [error, setError] = React.useState({});
   const history = useHistory();
 
   useEffect(() => {
-    document.title = "Quên mật khẩu | ECook";
+    document.title = "Đăng nhập | ECook";
   }, []);
 
   const [form, setForm] = React.useState({
     email: "",
+    password: "",
   });
-  const storeForgotPassword = useSelector((store) => store.forgotPassword);
-  const loading = storeForgotPassword.loading;
 
+  const storeLogin = useSelector((store) => store.login);
+  const loading = storeLogin.loading;
   const validate = () => {
     const errorState = {};
     // check validate
@@ -32,14 +32,20 @@ const Form = () => {
         errorState.email = "Email không hợp lệ!";
       }
     }
+    if (isEmpty(form.password)) {
+      errorState.password = "Vui lòng nhập vào, không được để trống!";
+    }
     return errorState;
   };
-  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!(history.location.state && history.location.state.email)) return;
-    setForm({ ...form, email: history.location.state.email || "" });
-    setError({ ...error, email: "" });
+    setForm({
+      ...form,
+      email: history.location.state.email || "",
+      password: "",
+    });
+    setError({ ...error, email: "", password: "" });
     // eslint-disable-next-line
   }, [history]);
   const handleSubmitForm = (event) => {
@@ -51,6 +57,7 @@ const Form = () => {
 
     const formData = {
       email: form.email,
+      password: form.password,
     };
     handleSubmit(formData);
   };
@@ -65,29 +72,20 @@ const Form = () => {
     });
   };
 
-  const handleSubmit = (formData) => {
-    dispatch(
-      sendResetCode(formData.email, (res) => {
-        if (res.status === 200) {
-          useNotification.Success({
-            title: "Message",
-            message: res?.msg,
-          });
-        }
-      })
-    );
-  };
-
   return (
-    <section onSubmit={handleSubmitForm} className="login">
+    <section onSubmit={handleSubmitForm} className="login login-admin">
+      {loading && <SpinLoading />}
       <div className="login-header">
-        <span>Quên mật khẩu</span>
+        <div
+          className={`login-header--item ${
+            window.location.pathname.endsWith("/login") ? "active" : ""
+          }`}
+        >
+          Quản trị viên
+        </div>
       </div>
       <div className="login-body">
         <ReForm className="form--login">
-          <label style={{ fontSize: 14, color: "gray", marginLeft: 10 }}>
-            Địa chỉ email
-          </label>
           <FormBox
             propsInput={{
               name: "email",
@@ -99,29 +97,38 @@ const Form = () => {
             }}
             error={error.email}
           />
-          <div className="flex items-center" style={{ marginTop: 20 }}>
-            <button
-              className="btn--login"
-              disabled={loading}
-              style={{ marginRight: 15 }}
-            >
-              Gửi code
-            </button>
-            <button
-              className="btn--login"
-              disabled={loading}
-              onClick={() => {
-                history.push("/reset-password", { email: form.email });
-              }}
-            >
-              Reset password
-            </button>
-          </div>
+
+          <FormBox
+            propsInput={{
+              type: "password",
+              name: "password",
+              placeholder: "Mật khẩu",
+              onChange: handleChange,
+              onFocus: handleFocus,
+              value: form.password,
+              disabled: false,
+            }}
+            error={error.password}
+          />
+          <button disabled={loading} className="btn--login">
+            Đăng nhập
+          </button>
         </ReForm>
       </div>
-      {loading && <SpinLoading />}
+      <div className="login-footer">
+        <span
+          onClick={() =>
+            history.push({
+              pathname: ROUTE_FORGOT_PASSWORD_ADMIN,
+              state: { email: form.email },
+            })
+          }
+        >
+          Quên mật khẩu?
+        </span>
+      </div>
     </section>
   );
 };
 
-export default Form;
+export default FormCreationNewAccountAdmin;

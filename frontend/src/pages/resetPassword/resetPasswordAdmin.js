@@ -1,12 +1,24 @@
 import React from "react";
-import { Form } from "components/resetPassword";
+import FormResetPassAdmin from "components/resetPassword/FormAdmin";
+import { resetPasswordAdmin } from "redux/actions/auth";
+import { useDispatch } from "react-redux";
+import useNotification from "hooks/useNotification";
 
 const ResetPasswordAdmin = () => {
+  const dispatch = useDispatch();
   const handleResetPassword = (formData) => {
-    console.log(formData);
+    dispatch(
+      resetPasswordAdmin(formData, (res) => {
+        if (res.status === 200) {
+          useNotification.Success({
+            message: res.msg,
+          });
+        }
+      })
+    );
   };
 
-  return <Form handleSubmit={handleResetPassword} />;
+  return <FormResetPassAdmin handleSubmit={handleResetPassword} />;
 };
 
 export default ResetPasswordAdmin;

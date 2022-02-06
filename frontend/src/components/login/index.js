@@ -1,4 +1,5 @@
 import Form from "./Form";
 import FormAdmin from "./FormAdmin";
+import FormCreationNewAccountAdmin from "./FormCreationNewAccountAdmin";
 
-export { Form, FormAdmin };
+export { Form, FormAdmin, FormCreationNewAccountAdmin };

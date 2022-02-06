@@ -1,2 +1,5 @@
 export const SET_TOKEN = "SET_TOKEN";
 export const SET_IMAGE_USER = "SET_IMAGE_USER";
+
+export const SET_TOKEN_ADMIN = "SET_TOKEN_ADMIN";
+export const SET_IMAGE_USER_ADMIN = "SET_IMAGE_USER_ADMIN";

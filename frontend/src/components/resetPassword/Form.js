@@ -128,6 +128,18 @@ const Form = ({ handleSubmit }) => {
             Xác nhận
           </button>
         </ReForm>
+        <span
+          className="center"
+          style={{
+            marginTop: 10,
+            fontSize: 14,
+            color: "blue",
+            cursor: "pointer",
+          }}
+          onClick={() => history.push("/login")}
+        >
+          Login now?
+        </span>
       </div>
     </section>
   );
