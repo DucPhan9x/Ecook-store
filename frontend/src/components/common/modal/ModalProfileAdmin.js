@@ -11,6 +11,8 @@ import { FormBox } from "components/common";
 import { Form as ReForm } from "reactstrap";
 import { isEmpty, isMobilePhone } from "validator";
 import moment from "moment";
+import { useSelector } from "react-redux";
+import SpinLoading from "../SpinLoading";
 
 const ModalProfileAdmin = ({ isModalVisible, close }) => {
   const dispatch = useDispatch();
@@ -34,6 +36,7 @@ const ModalProfileAdmin = ({ isModalVisible, close }) => {
 
   const [errorInfo, setErrorInfo] = useState({});
   const [errorPassword, setErrorPassword] = useState({});
+  const { loading } = useSelector((store) => store.admin)?.userDetail;
 
   useEffect(() => {
     dispatch(
@@ -347,6 +350,7 @@ const ModalProfileAdmin = ({ isModalVisible, close }) => {
           </div>
         </div>
       </div>
+      {loading && <SpinLoading />}
     </Modal>
   );
 };

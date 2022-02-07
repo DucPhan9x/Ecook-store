@@ -1,9 +1,10 @@
 import Cookies from "js-cookie";
-import * as types from "../../types/admin";
+import * as types from "../../types/user";
 
 const initialState = {
   userDetail: {
-    information: JSON.parse(Cookies.get("profileAdmin")) || {},
+    information:
+      (Cookies.get("profile") && JSON.parse(Cookies.get("profile"))) || {},
     loading: false,
     profile: {},
   },
@@ -11,8 +12,8 @@ const initialState = {
 
 export default function reducer(state = initialState, actions) {
   switch (actions.type) {
-    case types.SET_INFORMATION_ADMIN:
-      Cookies.set("profileAdmin", JSON.stringify(actions.payload));
+    case types.SET_INFORMATION_USER:
+      Cookies.set("profile", JSON.stringify(actions.payload));
       return {
         ...state,
         userDetail: {
@@ -21,13 +22,13 @@ export default function reducer(state = initialState, actions) {
           loading: false,
         },
       };
-    case types.GET_PROFILE_ADMIN:
+    case types.GET_PROFILE:
       return {
         ...state,
         userDetail: { ...state.userDetail, loading: true },
       };
-    case types.GET_PROFILE_ADMIN_SUCCEED:
-      Cookies.set("profileAdmin", JSON.stringify(actions.payload));
+    case types.GET_PROFILE_SUCCEED:
+      Cookies.set("profile", JSON.stringify(actions.payload));
       return {
         ...state,
         userDetail: {
@@ -36,7 +37,7 @@ export default function reducer(state = initialState, actions) {
           loading: false,
         },
       };
-    case types.GET_PROFILE_ADMIN_FAIL:
+    case types.GET_PROFILE_FAIL:
       return {
         ...state,
         userDetail: { ...state.userDetail, loading: false },

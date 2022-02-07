@@ -12,6 +12,7 @@ import {
 import control from "./control";
 import common from "./common";
 import admin from "./admin";
+import user from "./user";
 
 export default combineReducers({
   login,
@@ -25,4 +26,5 @@ export default combineReducers({
   forgotPasswordAdmin,
   resetPasswordAdmin,
   admin,
+  user,
 });

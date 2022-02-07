@@ -1,13 +1,14 @@
 import { Paper, Radio, Tab, Tabs } from "@material-ui/core";
 import UploadImage from "components/common/UploadImage";
 import React, { useEffect } from "react";
-import { uuid } from "utils/stringUtils";
 import NoImage from "assets/images/notImage.png";
 import { useState } from "react";
-import { FormBox } from "components/common";
+import { FormBox, SpinLoading } from "components/common";
 import { Form as ReForm } from "reactstrap";
 import { isEmpty, isMobilePhone } from "validator";
 import moment from "moment";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserDetail } from "redux/actions/user";
 
 const MyProfile = () => {
   const [value, setValue] = React.useState(0);
@@ -15,17 +16,6 @@ const MyProfile = () => {
     document.title = "Hồ sơ cá nhân | ECook";
     window.scrollTo(0, 0);
   }, []);
-  const data = {
-    _id: uuid(),
-    email: "trongduc.iter@gmail.com",
-    fullName: "Phan Trong Duc",
-    dateOfBirth: Date.now(),
-    phoneNumber: "0987867583",
-    gender: false,
-    address: "62/07 Dong Ke, Hoa Khanh Bac, Lien Chieu, Da Nang",
-    imageUrl:
-      "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
-  };
 
   const [formInfo, setFormInfo] = useState({
     fullName: "",
@@ -40,21 +30,23 @@ const MyProfile = () => {
     newPassword: "",
     confirmNewPassword: "",
   });
+  const dispatch = useDispatch();
   const [imageAvatar, setImageAVatar] = useState("");
 
   const [errorInfo, setErrorInfo] = useState({});
   const [errorPassword, setErrorPassword] = useState({});
+  const { loading } = useSelector((store) => store.user)?.userDetail;
 
   useEffect(() => {
-    setImageAVatar(data?.imageUrl);
-    setFormInfo({
-      fullName: data.fullName,
-      email: data.email,
-      dateOfBirth: data.dateOfBirth,
-      phoneNumber: data.phoneNumber,
-      gender: data.gender,
-      address: data.address,
-    });
+    dispatch(
+      getUserDetail((res) => {
+        if (res) {
+          setImageAVatar(res?.imageUrl);
+          setFormInfo(res);
+        }
+      })
+    );
+
     // eslint-disable-next-line
   }, []);
 
@@ -124,6 +116,7 @@ const MyProfile = () => {
 
   return (
     <div className="my-profile-container">
+      {loading && <SpinLoading />}
       <div className="my-profile-container__inner">
         <Paper className="my-profile-container__inner-left">
           <img src={imageAvatar || NoImage} alt="" />

@@ -77,10 +77,12 @@ const HeaderAdmin = () => {
           <AvatarMenu openModalProfile={() => setOpenProfile(true)} />
         </div>
       </Toolbar>
-      <ModalProfileAdmin
-        isModalVisible={openProfile}
-        close={() => setOpenProfile(false)}
-      />
+      {openProfile && (
+        <ModalProfileAdmin
+          isModalVisible={true}
+          close={() => setOpenProfile(false)}
+        />
+      )}
     </AppBar>
   );
 };

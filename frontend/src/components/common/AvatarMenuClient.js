@@ -16,9 +16,11 @@ import Cookies from "js-cookie";
 import { setToken } from "redux/actions/common";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
+import { setUserDetail } from "redux/actions/user";
 
 export default function AvatarMenuClient() {
-  const { avatarURL } = useSelector((store) => store.common);
+  const { information } = useSelector((store) => store.user)?.userDetail;
+
   const history = useHistory();
   const dispatch = useDispatch();
   const handleMenuClick = (e) => {
@@ -40,7 +42,9 @@ export default function AvatarMenuClient() {
       default: {
         // clear local storage/cookies
         Cookies.remove("accessToken");
+        Cookies.remove("profile");
         dispatch(setToken(""));
+        dispatch(setUserDetail({}));
         url = "/login";
         break;
       }
@@ -80,14 +84,16 @@ export default function AvatarMenuClient() {
     >
       <Button className="flex">
         <Avatar
-          alt="Remy Sharp"
+          alt={information?.fullName || "Unknown"}
           src={
-            avatarURL ||
+            information?.imageUrl ||
             "https://res.cloudinary.com/duc/image/upload/v1642704006/avatardefault_ux3ryj.png"
           }
         />
         <div className="flex flex-col align-flex-start block-infor-user">
-          <span className="block-infor-user--name">Trong Duc</span>
+          <span className="block-infor-user--name">
+            {information?.fullName || "Unknown"}
+          </span>
         </div>
         <ArrowDropDown color="action" />
       </Button>
