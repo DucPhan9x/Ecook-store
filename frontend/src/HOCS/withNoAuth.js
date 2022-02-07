@@ -7,7 +7,7 @@ const withNoAuth =
   (Component, showFooter = false) =>
   (props) => {
     const isHomepage =
-      window.location.pathname.includes("/food", "/course") ||
+      ["/food", "/course", "/instructor"].includes(window.location.pathname) ||
       window.location.pathname === "/";
     return (
       <div className="app" style={{ minHeight: "100vh" }}>

@@ -146,17 +146,24 @@ const login = async (req, res, next) => {
       "imageUrl",
       "fullName",
       "address",
+      "dateOfBirth",
+      "phoneNumber",
+      "gender",
     ]);
     res.status(200).json({
       status: 200,
       msg: "success!",
       user: {
+        _id: userExisted._id,
         roleId: userExisted.roleId,
         token,
         userId: userExisted._id,
-        imageUrl: userDetail.imageUrl,
         fullName: userDetail.fullName,
+        dateOfBirth: userDetail.dateOfBirth,
+        phoneNumber: userDetail.phoneNumber,
+        gender: userDetail.gender,
         address: userDetail.address,
+        imageUrl: userDetail.imageUrl,
       },
     });
   } catch (error) {
@@ -198,6 +205,7 @@ const loginAdmin = async (req, res, next) => {
       status: 200,
       msg: "success!",
       user: {
+        _id: userExisted._id,
         roleId: userExisted.roleId,
         token,
         userId: userExisted._id,

@@ -10,18 +10,22 @@ import { setTokenAdmin } from "redux/actions/common";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { getRoleName } from "utils/convertUtils";
+import { setUserDetailAdmin } from "redux/actions/admin";
 
-export default function AvatarMenu() {
+export default function AvatarMenu({ openModalProfile }) {
   const history = useHistory();
   const dispatch = useDispatch();
   const { information } = useSelector((store) => store.admin)?.userDetail;
 
   const handleMenuClick = (e) => {
-    console.log(e);
     if (Number(e.key) === 1) {
       Cookies.remove("accessTokenSystem");
+      Cookies.remove("profileAdmin");
       dispatch(setTokenAdmin(""));
+      dispatch(setUserDetailAdmin({}));
       history.push("/admin");
+    } else {
+      openModalProfile();
     }
   };
   return (
@@ -51,10 +55,10 @@ export default function AvatarMenu() {
         <Avatar alt="Remy Sharp" src="https://picsum.photos/200/300" />
         <div className="flex flex-col align-flex-start block-infor-user">
           <span className="block-infor-user--name">
-            {information?.fullName}
+            {information?.fullName || "Unknown"}
           </span>
           <span className="block-infor-user--role">
-            {getRoleName(information?.roleId)}
+            {getRoleName(information?.roleId) || "Unknown"}
           </span>
         </div>
         <ArrowDropDown color="action" />

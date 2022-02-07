@@ -98,6 +98,8 @@ const resetPasswordAdmin = ({ email, code, newPassword, confirmPassword }) => {
   return fetch(`${url}auth/admin/new-password`, requestOptions);
 };
 
+const getUserDetail = () => {};
+
 const authAPI = {
   login,
   register,
@@ -106,5 +108,6 @@ const authAPI = {
   loginAdmin,
   createNewAdminAccount,
   resetPasswordAdmin,
+  getUserDetail,
 };
 export default authAPI;

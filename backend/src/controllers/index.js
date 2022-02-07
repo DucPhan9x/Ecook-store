@@ -1,2 +1,3 @@
 import { authController } from "./authController";
-export { authController };
+import { profileController } from "./profileController";
+export { authController, profileController };

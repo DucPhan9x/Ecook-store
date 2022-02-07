@@ -1,21 +1,22 @@
-import adminAPI from "api/adminAPI";
+import profileAPI from "api/profileAPI";
 import useNotification from "hooks/useNotification";
 import * as types from "../../types/admin";
 
-const getUserDetailAdmin = (data) => {
+const getUserDetailAdmin = (res = () => {}) => {
   return (dispatch) => {
-    dispatch({ type: types.GET_INFORMATION_ADMIN });
-    adminAPI
-      .getUserDetailAdmin(data)
+    dispatch({ type: types.GET_PROFILE_ADMIN });
+    profileAPI
+      .getProfileAdmin()
       .then((response) => response.json())
       .then((result) => {
         if (result.status === 200) {
+          res(result.data);
           dispatch({
-            type: types.GET_INFORMATION_ADMIN_SUCCEED,
+            type: types.GET_PROFILE_ADMIN_SUCCEED,
             payload: result.data,
           });
         } else {
-          dispatch({ type: types.GET_INFORMATION_ADMIN_FAIL });
+          dispatch({ type: types.GET_PROFILE_ADMIN_FAIL });
           useNotification.Error({
             title: "Error",
             message: result.msg || "Get user detail fail!",
@@ -23,7 +24,7 @@ const getUserDetailAdmin = (data) => {
         }
       })
       .catch((error) => {
-        dispatch({ type: types.GET_INFORMATION_ADMIN_FAIL });
+        dispatch({ type: types.GET_PROFILE_ADMIN_FAIL });
         useNotification.Error({
           title: "Error",
           message: "Error connected to server!",

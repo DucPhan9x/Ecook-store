@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
@@ -10,6 +10,7 @@ import { toggleSidebar } from "redux/actions/control";
 import AvatarMenu from "components/common/AvatarMenu";
 import Badge from "@material-ui/core/Badge";
 import NotificationsIcon from "@material-ui/icons/Notifications";
+import ModalProfileAdmin from "components/common/modal/ModalProfileAdmin";
 
 const drawerWidth = 250;
 
@@ -42,6 +43,7 @@ const HeaderAdmin = () => {
 
   const classes = useStyles();
   const { isOpenSidebar } = useSelector((store) => store.control);
+  const [openProfile, setOpenProfile] = useState(false);
 
   return (
     <AppBar
@@ -72,9 +74,13 @@ const HeaderAdmin = () => {
               <NotificationsIcon color="action" />
             </Badge>
           </IconButton>
-          <AvatarMenu />
+          <AvatarMenu openModalProfile={() => setOpenProfile(true)} />
         </div>
       </Toolbar>
+      <ModalProfileAdmin
+        isModalVisible={openProfile}
+        close={() => setOpenProfile(false)}
+      />
     </AppBar>
   );
 };

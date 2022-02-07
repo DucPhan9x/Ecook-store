@@ -1,7 +1,6 @@
 import cloud from "cloudinary";
 import createHttpError from "http-errors";
 import multer from "multer";
-import { nextTick } from "process";
 import { envVariables } from "../configs";
 const { cloud_name, api_key_cloud, api_secret_cloud } = envVariables;
 cloud.v2.config({
@@ -17,7 +16,7 @@ export const uploadSingle = async (file) => {
   return new Promise((resolve) => {
     cloud.uploader
       .upload(file, {
-        folder: "food",
+        folder: "ecook",
       })
       .then((result) => {
         if (result) {

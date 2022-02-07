@@ -1,2 +1,3 @@
 import { authRoute } from "./authRoute";
-export { authRoute };
+import { profileRoute } from "./profileRoute";
+export { authRoute, profileRoute };

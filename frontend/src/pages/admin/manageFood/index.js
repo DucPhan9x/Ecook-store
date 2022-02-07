@@ -12,6 +12,8 @@ const ManageFood = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
+    document.title = "Quản lý hàng hóa | ECook";
+    window.scrollTo(0, 0);
     // fetch data
     setData(FOODS_DATA);
   }, []);
