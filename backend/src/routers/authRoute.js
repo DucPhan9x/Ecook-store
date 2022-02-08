@@ -18,6 +18,8 @@ const {
   activeAccount,
   loginAdmin,
   createAdminAccount,
+  getToken,
+  checkExpiredToken,
 } = authController;
 const baseUrl = "/api/v1/auth";
 export const authRoute = Router();
@@ -37,3 +39,6 @@ authRoute
   .route(`${baseUrl}/change-password`)
   .post(jwtMiddleware, validateChangePasswordData, changePassword);
 authRoute.route(`${baseUrl}/roleId`).get(jwtMiddleware, getRoleId);
+// ?????????? co can jwtMiddleware cho getToken API, boi vi token expired
+authRoute.route(`${baseUrl}/refresh-token`).get(getToken);
+/// ????????????

@@ -1,10 +1,13 @@
 import { Role, User, UserDetail, Wishlist } from "../models";
 import bcrypt from "bcryptjs";
 import createHttpError from "http-errors";
-import { encodeToken, destroyToken } from "../utils";
+import { encodeToken, destroyToken, verifyToken } from "../utils";
 import { sendEmail, getResetCode, confirmResetCode } from "../utils";
 import { envVariables } from "../configs";
 import crypto from "crypto";
+
+const { jwtSecret, tokenLife, refreshTokenLife, refreshTokenSecret } =
+  envVariables;
 
 const createAdminAccount = async (req, res, next) => {
   const { email, password, roleId, fullName } = req.body;
@@ -141,7 +144,12 @@ const login = async (req, res, next) => {
       roleId: userExisted.roleId,
     };
 
-    const token = await encodeToken(userData);
+    const token = await encodeToken(userData, jwtSecret, tokenLife);
+    const refreshToken = await encodeToken(
+      userData,
+      jwtSecret,
+      refreshTokenLife
+    );
     const userDetail = await UserDetail.findOne({ userId: userExisted._id }, [
       "imageUrl",
       "fullName",
@@ -157,6 +165,7 @@ const login = async (req, res, next) => {
         _id: userExisted._id,
         roleId: userExisted.roleId,
         token,
+        refreshToken,
         userId: userExisted._id,
         fullName: userDetail.fullName,
         dateOfBirth: userDetail.dateOfBirth,
@@ -195,7 +204,12 @@ const loginAdmin = async (req, res, next) => {
       roleId: userExisted.roleId,
     };
 
-    const token = await encodeToken(userData);
+    const token = await encodeToken(userData, jwtSecret, tokenLife);
+    const refreshToken = await encodeToken(
+      userData,
+      jwtSecret,
+      refreshTokenLife
+    );
     const userDetail = await UserDetail.findOne({ userId: userExisted._id }, [
       "imageUrl",
       "fullName",
@@ -211,6 +225,7 @@ const loginAdmin = async (req, res, next) => {
         _id: userExisted._id,
         roleId: userExisted.roleId,
         token,
+        refreshToken,
         userId: userExisted._id,
         fullName: userDetail.fullName,
         dateOfBirth: userDetail.dateOfBirth,
@@ -331,6 +346,29 @@ const getRoleId = async (req, res, next) => {
     next(error);
   }
 };
+
+const getToken = async (req, res, next) => {
+  try {
+    const { refreshToken } = req.body;
+    if (!refreshToken) throw createHttpError(400, "No refresh token!");
+    const data = await verifyToken(refreshToken, refreshTokenSecret);
+    const { _id, email, roleId } = data;
+    const userData = { _id, email, roleId };
+    const token = await encodeToken(userData, tokenSecret, tokenLife);
+    res.status(200).json({
+      status: 200,
+      msg: "Refresh token successfully!",
+      data: token,
+    });
+  } catch (error) {
+    console.log(error);
+    if (error.status == 400) next(error);
+    else {
+      next(createHttpError(error.status, `Refresh ${error.message}`));
+    }
+  }
+};
+
 export const authController = {
   registerCustomer,
   login,
@@ -341,5 +379,6 @@ export const authController = {
   changePassword,
   activeAccount,
   getRoleId,
+  getToken,
   createAdminAccount,
 };

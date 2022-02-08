@@ -1,5 +1,8 @@
 import createHttpError from "http-errors";
+import { envVariables } from "../configs";
 import { verifyToken } from "../utils";
+const { jwtSecret } = envVariables;
+
 export const jwtMiddleware = async (req, res, next) => {
   try {
     if (
@@ -11,7 +14,7 @@ export const jwtMiddleware = async (req, res, next) => {
     try {
       console.log(req.headers.authorization);
       const token = req.headers.authorization.split(" ")[1];
-      const userData = await verifyToken(token);
+      const userData = await verifyToken(token, jwtSecret);
       req.user = userData;
       next();
     } catch (error) {

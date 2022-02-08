@@ -3,7 +3,10 @@ import * as types from "../../types/admin";
 
 const initialState = {
   userDetail: {
-    information: JSON.parse(Cookies.get("profileAdmin")) || {},
+    information:
+      (Cookies.get("profileAdmin") &&
+        JSON.parse(Cookies.get("profileAdmin"))) ||
+      {},
     loading: false,
     profile: {},
   },

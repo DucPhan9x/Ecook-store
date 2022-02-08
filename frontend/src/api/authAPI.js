@@ -98,7 +98,27 @@ const resetPasswordAdmin = ({ email, code, newPassword, confirmPassword }) => {
   return fetch(`${url}auth/admin/new-password`, requestOptions);
 };
 
-const getUserDetail = () => {};
+const getToken = ({ refreshToken }) => {
+  let formdata = new FormData();
+  formdata.append("refreshToken", refreshToken);
+
+  let requestOptions = {
+    method: "GET",
+    body: formdata,
+  };
+  return fetch(`${url}auth/refresh-token`, requestOptions);
+};
+
+const checkExpiredToken = ({ token }) => {
+  let formdata = new FormData();
+  formdata.append("token", token);
+
+  let requestOptions = {
+    method: "GET",
+    body: formdata,
+  };
+  return fetch(`${url}auth/check-expired-token`, requestOptions);
+};
 
 const authAPI = {
   login,
@@ -108,6 +128,7 @@ const authAPI = {
   loginAdmin,
   createNewAdminAccount,
   resetPasswordAdmin,
-  getUserDetail,
+  getToken,
+  checkExpiredToken,
 };
 export default authAPI;

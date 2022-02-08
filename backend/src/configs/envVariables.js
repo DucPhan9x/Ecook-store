@@ -4,9 +4,11 @@ export const envVariables = {
   connectString:
     process.env.CONNSTR ||
     "mongodb+srv://ecook:ecook@cluster0.fp7hq.mongodb.net/ecook?retryWrites=true&w=majority",
-  refreshTokenSecret: process.env.REFRESH_TOKEN_SECRET || "",
-  tokenLife: process.env.TOKEN_LIFE || "30d",
-  refreshTokenLife: process.env.REFRESH_TOKEN_LIFE || 86400,
+  nodeEnv: process.env.NODE_ENV || "development",
+  refreshTokenSecret:
+    process.env.REFRESH_TOKEN_SECRET || "ecooksystem_refresh_secret",
+  tokenLife: process.env.TOKEN_LIFE || 86400,
+  refreshTokenLife: process.env.REFRESH_TOKEN_LIFE || "30d",
   jwtSecret: process.env.JWTSERCRET || "ecooksystem",
   nodemailerEmail: process.env.NODE_EMAILER_EMAIL || "system.ecook@gmail.com",
   nodemailerPassword: process.env.NODE_EMAILER_PASSWORD || "Trongduc@22851999",

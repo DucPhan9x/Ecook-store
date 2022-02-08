@@ -1,5 +1,11 @@
 export const SET_TOKEN = "SET_TOKEN";
+export const SET_REFRESH_TOKEN = "SET_REFRESH_TOKEN";
 export const SET_IMAGE_USER = "SET_IMAGE_USER";
 
 // ADMIN
 export const SET_TOKEN_ADMIN = "SET_TOKEN_ADMIN";
+export const SET_REFRESH_TOKEN_ADMIN = "SET_REFRESH_TOKEN_ADMIN";
+
+export const GET_TOKEN = "GET_TOKEN";
+export const GET_TOKEN_SUCCEED = "GET_TOKEN_SUCCEED";
+export const GET_TOKEN_FAIL = "GET_TOKEN_FAIL";

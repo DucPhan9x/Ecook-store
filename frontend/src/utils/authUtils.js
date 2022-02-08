@@ -17,3 +17,21 @@ export const getAccessTokenSystem = () => {
 export const setAccessTokenSystem = (accessToken) => {
   Cookies.set("accessTokenSystem", accessToken);
 };
+
+export const getRefreshAccessToken = () => {
+  const accessToken = Cookies.get("refreshAccessToken");
+  return accessToken;
+};
+
+export const setRefreshAccessToken = (accessToken) => {
+  Cookies.set("refreshAccessToken", accessToken);
+};
+
+export const getRefreshAccessTokenSystem = () => {
+  const accessToken = Cookies.get("refreshAccessTokenSystem");
+  return accessToken;
+};
+
+export const setRefreshAccessTokenSystem = (accessToken) => {
+  Cookies.set("refreshAccessTokenSystem", accessToken);
+};

@@ -45,18 +45,8 @@ const validateResetPasswordData = async (req, res, next) => {
 const validateChangePasswordData = async (req, res, next) => {
   try {
     const changePasswordSchema = joi.object({
-      oldPassword: joi
-        .string()
-        .required()
-        .min(6)
-        .max(50)
-        .regex(/(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#\$%\^&\*])(?=.{6,})/),
-      newPassword: joi
-        .string()
-        .required()
-        .min(6)
-        .max(50)
-        .regex(/(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#\$%\^&\*])(?=.{6,})/),
+      oldPassword: joi.string().required().min(6).max(50),
+      newPassword: joi.string().required().min(6).max(50),
       confirmPassword: joi.valid(joi.ref("newPassword")),
     });
     validateRequest(req, changePasswordSchema, next);
