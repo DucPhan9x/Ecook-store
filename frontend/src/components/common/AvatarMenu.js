@@ -6,23 +6,22 @@ import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
 import Cookies from "js-cookie";
 import { useHistory } from "react-router-dom";
-import { setTokenAdmin } from "redux/actions/common";
+import { setToken, setUserDetail } from "redux/actions/common";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { getRoleName } from "utils/convertUtils";
-import { setUserDetailAdmin } from "redux/actions/admin";
 
 export default function AvatarMenu({ openModalProfile }) {
   const history = useHistory();
   const dispatch = useDispatch();
-  const { information } = useSelector((store) => store.admin)?.userDetail;
+  const { information } = useSelector((store) => store.common)?.userDetail;
 
   const handleMenuClick = (e) => {
     if (Number(e.key) === 1) {
-      Cookies.remove("accessTokenSystem");
-      Cookies.remove("profileAdmin");
-      dispatch(setTokenAdmin(""));
-      dispatch(setUserDetailAdmin({}));
+      Cookies.remove("accessToken");
+      Cookies.remove("profile");
+      dispatch(setToken(""));
+      dispatch(setUserDetail({}));
       history.push("/admin");
     } else {
       openModalProfile();
@@ -52,7 +51,13 @@ export default function AvatarMenu({ openModalProfile }) {
       className="btn-avatar-menu"
     >
       <Button className="flex">
-        <Avatar alt="Remy Sharp" src="https://picsum.photos/200/300" />
+        <Avatar
+          alt={information?.fullName}
+          src={
+            information?.imageUrl ||
+            "https://res.cloudinary.com/duc/image/upload/v1642704006/avatardefault_ux3ryj.png"
+          }
+        />
         <div className="flex flex-col align-flex-start block-infor-user">
           <span className="block-infor-user--name">
             {information?.fullName || "Unknown"}

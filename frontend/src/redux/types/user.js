@@ -1,5 +1,0 @@
-// profile
-export const SET_INFORMATION_USER = "SET_INFORMATION_USER";
-export const GET_PROFILE = "GET_PROFILE";
-export const GET_PROFILE_FAIL = "GET_PROFILE_FAIL";
-export const GET_PROFILE_SUCCEED = "GET_PROFILE_SUCCEED";

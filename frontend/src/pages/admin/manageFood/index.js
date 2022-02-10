@@ -6,6 +6,7 @@ import SearchField from "components/common/input/SearchField";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import { FOODS_DATA } from "utils/dummyData";
 import ModalCreated from "components/admin/manageFood/modal/ModalCreated";
+import { DropdownCommon } from "components/common/dropdown";
 
 const ManageFood = () => {
   const [isOpenModalCreated, setIsOpenModalCreated] = useState(false);
@@ -37,6 +38,11 @@ const ManageFood = () => {
           </button>
         </div>
         <div className="manage-food-page-top-right">
+          <DropdownCommon
+            label="Loại hàng"
+            options={["Chưa giao", "Đã nhận", "Đang giao", "Đã giao"]}
+            handleMenuClick={(e) => console.log(e)}
+          />
           <SearchField onChange={(e) => console.log(e.target.value)} />
           <button
             className="btn-admin"

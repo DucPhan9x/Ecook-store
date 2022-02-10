@@ -11,7 +11,6 @@ const getProfile = async (req, res, next) => {
       "address",
       "dateOfBirth",
       "phoneNumber",
-      "gender",
     ]);
 
     if (!user) {
@@ -28,7 +27,6 @@ const getProfile = async (req, res, next) => {
         fullName: userDetail.fullName,
         dateOfBirth: userDetail.dateOfBirth,
         phoneNumber: userDetail.phoneNumber,
-        gender: userDetail.gender,
         address: userDetail.address,
         imageUrl: userDetail.imageUrl,
       },
@@ -41,11 +39,9 @@ const getProfile = async (req, res, next) => {
 
 const updateProfile = async (req, res, next) => {
   try {
-    const { fullName, phoneNumber, birthday, address } = req.body;
+    const { fullName, phoneNumber, dateOfBirth, address } = req.body;
     const userId = req.user._id;
-    console.log("userId :", userId);
     const user = await User.findOne({ _id: userId });
-    console.log("User: ", user);
     if (!user) {
       throw createHttpError(404, "User is not exist!");
     }
@@ -54,7 +50,7 @@ const updateProfile = async (req, res, next) => {
       {
         phoneNumber,
         fullName,
-        birthday,
+        dateOfBirth,
         address,
       }
     );
@@ -70,11 +66,12 @@ const updateProfile = async (req, res, next) => {
 
 const updateAvatar = async (req, res, next) => {
   try {
-    const { files } = req.body;
     const userDetail = await UserDetail.findOne({ userId: req.user._id });
     const asset_id = userDetail.imageUrl.split("/").pop().split(".")[0];
-    await deleteImage(asset_id);
-    const image = await uploadSingle(files[0].path);
+    if (asset_id) {
+      await deleteImage(asset_id);
+    }
+    const image = await uploadSingle(req.files[0].path);
     await UserDetail.findByIdAndUpdate(userDetail._id, {
       imageUrl: image.url,
     });

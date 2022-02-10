@@ -13,6 +13,8 @@ const PaypalCheckoutButton = (props) => {
     //  if response is success
     console.log("paymentID: ", order.id);
     console.log("payerID: ", order.payer.payer_id);
+    // api minh//// lam 2 viec : ua tien call API v1/payment/...(execute payment),
+
     setPaidFor(true);
     // refresh user'account or subscription status
     // if the response is error

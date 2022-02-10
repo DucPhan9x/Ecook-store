@@ -15,7 +15,6 @@ const ModalDetail = ({ isModalVisible, close, data }) => {
     numOfStars: 0,
     numOfFeedbacks: 0,
     unit: "",
-    quantity: 0,
   });
 
   useEffect(() => {
@@ -56,8 +55,7 @@ const ModalDetail = ({ isModalVisible, close, data }) => {
             <div className="block-label-input-modal">
               <label>Giá cả (VNĐ): </label>
               <span className="value-content">
-                {formatCurrency(form.unitPrice)} {"  "}({form.quantity}
-                {form.unit})
+                {formatCurrency(form.unitPrice)} {"  "}(1 {form.unit})
               </span>
             </div>
           </div>

@@ -1,4 +1,4 @@
-import { Grid } from "@material-ui/core";
+import { Checkbox, Grid } from "@material-ui/core";
 import { CardEmployee } from "components/admin/manageEmployee";
 import SearchField from "components/common/input/SearchField";
 import React, { useEffect, useState } from "react";
@@ -12,7 +12,6 @@ import ModalAdd from "components/admin/manageEmployee/ModalAdd";
 import ModalEdit from "components/admin/manageEmployee/ModalEdit";
 import { RemoveCircle } from "@material-ui/icons";
 import DialogConfirm from "components/common/DialogConform";
-import useNotification from "hooks/useNotification";
 
 const ManageEmployee = () => {
   const [employees, setEmployees] = useState([]);
@@ -73,6 +72,22 @@ const ManageEmployee = () => {
             <RemoveCircle color="secondary" />
             Xóa
           </button>
+          <Checkbox
+            className="radio-checked-container"
+            checked={
+              filterData?.filter((item) => !item.isSelected)?.length === 0
+            }
+            onChange={(e) => {
+              e.stopPropagation();
+              let temp = [...filterData];
+              const isAllSelected =
+                filterData?.filter((item) => !item.isSelected)?.length === 0;
+              temp.forEach((item) => {
+                item.isSelected = !isAllSelected;
+              });
+              setFilterData(temp);
+            }}
+          />
         </div>
         <FormControl component="fieldset">
           <RadioGroup
@@ -138,12 +153,12 @@ const ManageEmployee = () => {
         handleClose={() => setOpenDialogConfirm(false)}
         message="xóa"
         handleSubmit={() => {
-          console.log(filterData.filter((item) => item.isSelected));
+          setFilterData(filterData.filter((item) => !item.isSelected));
           // call API
-          useNotification.Error({
-            title: "Setup company error",
-            message: "aaaaaaaaaaaaa",
-          });
+          // useNotification.Error({
+          //   title: "Setup company error",
+          //   message: "aaaaaaaaaaaaa",
+          // });
           setOpenDialogConfirm(false);
         }}
       />

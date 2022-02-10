@@ -23,7 +23,6 @@ const ModalUpdated = ({ isModalVisible, handleSubmit, close, data }) => {
     numOfStars: 0,
     numOfFeedbacks: 0,
     unit: "",
-    quantity: 0,
   });
 
   useEffect(() => {
@@ -154,23 +153,8 @@ const ModalUpdated = ({ isModalVisible, handleSubmit, close, data }) => {
             className="flex items-center"
             style={{ marginLeft: 12, width: "50%" }}
           >
-            <div className="block-label-input-modal" style={{ marginRight: 6 }}>
-              <label>Số lượng</label>
-              <FormBox
-                propsInput={{
-                  type: "number",
-                  min: "0",
-                  name: "quantity",
-                  onChange: handleChange,
-                  onFocus: handleFocus,
-                  value: form.quantity,
-                  disabled: false,
-                }}
-                error={error.quantity}
-              />
-            </div>
             <div className="block-label-input-modal" style={{ marginLeft: 6 }}>
-              <label>Đơn giá</label>
+              <label>Đơn vị(1)</label>
               <FormBox
                 propsInput={{
                   type: "text",

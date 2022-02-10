@@ -24,6 +24,11 @@ const foodSchema = new Schema({
   },
   numOfStars: {
     type: Number,
+    default: 0,
+  },
+  numOfFeedbacks: {
+    type: Number,
+    default: 0,
   },
   discountMaximum: {
     type: Number,
@@ -36,10 +41,12 @@ const foodSchema = new Schema({
   isRemoveTemp: {
     type: Boolean,
     required: true,
+    default: false,
   },
   createAt: {
     type: Date,
     default: Date.now,
   },
 });
+foodSchema.index({ name: "text" });
 export const Food = model("Food", foodSchema, "Food");

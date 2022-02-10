@@ -15,11 +15,11 @@ const useStyles = makeStyles((theme) => ({
 
 const withAuthAdmin = (Component) => (props) => {
   const classes = useStyles();
-  const { tokenAdmin } = useSelector((store) => store.common);
+  const { token } = useSelector((store) => store.common);
 
   return (
     <div className="app-admin">
-      {tokenAdmin ? (
+      {token ? (
         <>
           <Sidebar />
           <HeaderAdmin />

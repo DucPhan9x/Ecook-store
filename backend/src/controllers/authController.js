@@ -156,7 +156,6 @@ const login = async (req, res, next) => {
       "address",
       "dateOfBirth",
       "phoneNumber",
-      "gender",
     ]);
     res.status(200).json({
       status: 200,
@@ -170,7 +169,6 @@ const login = async (req, res, next) => {
         fullName: userDetail.fullName,
         dateOfBirth: userDetail.dateOfBirth,
         phoneNumber: userDetail.phoneNumber,
-        gender: userDetail.gender,
         address: userDetail.address,
         imageUrl: userDetail.imageUrl,
       },
@@ -207,7 +205,7 @@ const loginAdmin = async (req, res, next) => {
     const token = await encodeToken(userData, jwtSecret, tokenLife);
     const refreshToken = await encodeToken(
       userData,
-      jwtSecret,
+      refreshTokenSecret,
       refreshTokenLife
     );
     const userDetail = await UserDetail.findOne({ userId: userExisted._id }, [
@@ -216,7 +214,6 @@ const loginAdmin = async (req, res, next) => {
       "address",
       "dateOfBirth",
       "phoneNumber",
-      "gender",
     ]);
     res.status(200).json({
       status: 200,
@@ -230,7 +227,6 @@ const loginAdmin = async (req, res, next) => {
         fullName: userDetail.fullName,
         dateOfBirth: userDetail.dateOfBirth,
         phoneNumber: userDetail.phoneNumber,
-        gender: userDetail.gender,
         address: userDetail.address,
         imageUrl: userDetail.imageUrl,
       },

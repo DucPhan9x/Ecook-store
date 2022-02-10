@@ -10,8 +10,9 @@ cloud.v2.config({
 });
 
 export const upload = new multer({
-  dest: "uploads/",
+  dest: "./uploads",
 });
+
 export const uploadSingle = async (file) => {
   return new Promise((resolve) => {
     cloud.uploader

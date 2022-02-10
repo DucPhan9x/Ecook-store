@@ -18,7 +18,7 @@ const feedbackSchema = new Schema({
     default: Date.now,
   },
   feedbackType: {
-    type: Number,
+    type: Number, // 1 food, 2 recipe, 3 course
   },
   reply: {
     type: [replySchema],

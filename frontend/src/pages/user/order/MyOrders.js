@@ -33,16 +33,32 @@ const RowContent = ({ row, index }) => {
   return (
     <tr className="my-orders-container--content__inner-row-content">
       <td>{index + 1}</td>
-      <td>{_id}</td>
-      <td>
-        <div className="flex flex-col">
-          <span>Đặt: {moment(createAt).format("HH:mm:ss - DD/MM/YYYY")}</span>
-          <span>
-            Giao: {moment(deliveryAt).format("HH:mm:ss - DD/MM/YYYY")}
-          </span>
-        </div>
+      <td
+        style={{
+          maxWidth: 140,
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+          whiteSpace: "nowrap",
+        }}
+      >
+        {_id}
       </td>
-      <td style={{ width: 350 }}>{address}</td>
+      <td>
+        <span>{moment(createAt).format("HH:mm:ss [] DD/MM/YYYY")}</span>
+      </td>
+      <td>
+        <span>{moment(deliveryAt).format("HH:mm:ss [] DD/MM/YYYY")}</span>
+      </td>
+      <td
+        style={{
+          maxWidth: 220,
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+          whiteSpace: "nowrap",
+        }}
+      >
+        {address}
+      </td>
       <td style={{ width: 120 }}>{paymentMethod}</td>
       <td style={{ width: 150 }}>
         <span>{employee?.name}</span>
@@ -72,7 +88,7 @@ const RowContent = ({ row, index }) => {
         </PopoverStickOnHover>
       </td>
       <td>{formatCurrency(total)}</td>
-      <td>
+      <td style={{ width: 220 }}>
         <button
           className="btn btn-client btn--detail"
           onClick={() => setItemSelected(_id)}
@@ -120,7 +136,8 @@ const MyOrders = () => {
               <thead>
                 <th>STT</th>
                 <th>Mã đơn hàng</th>
-                <th>Thời gian</th>
+                <th>Thời gian đi</th>
+                <th>Thời gian đến</th>
                 <th>Điểm đến</th>
                 <th>Thanh toán</th>
                 <th>Nhân viên</th>

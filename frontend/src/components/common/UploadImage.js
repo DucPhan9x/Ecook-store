@@ -10,6 +10,7 @@ const UploadImage = ({ onChangeImage }) => {
         id="file"
         style={{ display: "none" }}
         type="file"
+        name="avatar"
         onChange={onChangeImage}
       />
     </>

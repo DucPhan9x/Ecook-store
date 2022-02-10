@@ -3,8 +3,7 @@ import { Form } from "components/login";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login } from "redux/actions/auth";
-import { setRefreshToken, setToken } from "redux/actions/common";
-import { setUserDetail } from "redux/actions/user";
+import { setRefreshToken, setToken, setUserDetail } from "redux/actions/common";
 
 const LogIn = () => {
   const history = useHistory();

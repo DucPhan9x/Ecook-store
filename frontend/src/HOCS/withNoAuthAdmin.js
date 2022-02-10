@@ -4,10 +4,10 @@ import { useSelector } from "react-redux";
 
 const withNoAuthAdmin = (Component) => (props) => {
   const isHomepage = window.location.pathname === "/admin/dashboard";
-  const { tokenAdmin } = useSelector((store) => store.common);
+  const { token } = useSelector((store) => store.common);
   return (
     <div className="app-admin">
-      {!tokenAdmin || isHomepage ? (
+      {!token || isHomepage ? (
         <Component {...props} />
       ) : (
         <Redirect to="/admin/dashboard" />

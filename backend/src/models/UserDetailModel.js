@@ -13,9 +13,6 @@ const userDetailSchema = new Schema({
   phoneNumber: {
     type: String,
   },
-  gender: {
-    type: Boolean,
-  },
   address: {
     type: String,
   },

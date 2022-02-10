@@ -1,4 +1,4 @@
-import { Paper, Radio, Tab, Tabs } from "@material-ui/core";
+import { Paper, Tab, Tabs } from "@material-ui/core";
 import UploadImage from "components/common/UploadImage";
 import React, { useEffect } from "react";
 import NoImage from "assets/images/notImage.png";
@@ -8,7 +8,12 @@ import { Form as ReForm } from "reactstrap";
 import { isEmpty, isMobilePhone } from "validator";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserDetail } from "redux/actions/user";
+import {
+  changePassword,
+  getUserDetail,
+  updateAvatar,
+  updateProfile,
+} from "redux/actions/common";
 
 const MyProfile = () => {
   const [value, setValue] = React.useState(0);
@@ -22,7 +27,6 @@ const MyProfile = () => {
     email: "",
     dateOfBirth: Date.now(),
     phoneNumber: "",
-    gender: false,
     address: "",
   });
   const [formPassword, setFormPassword] = useState({
@@ -35,14 +39,15 @@ const MyProfile = () => {
 
   const [errorInfo, setErrorInfo] = useState({});
   const [errorPassword, setErrorPassword] = useState({});
-  const { loading } = useSelector((store) => store.user)?.userDetail;
+  const { loading } = useSelector((store) => store.common)?.userDetail;
+  const commonStore = useSelector((store) => store.common);
 
   useEffect(() => {
     dispatch(
       getUserDetail((res) => {
         if (res) {
           setImageAVatar(res?.imageUrl);
-          setFormInfo(res);
+          setFormInfo({ ...res, dateOfBirth: res?.dateOfBirth || Date.now() });
         }
       })
     );
@@ -57,6 +62,8 @@ const MyProfile = () => {
   const handleChangeImage = (e) => {
     const temp = URL.createObjectURL(e.target.files[0]);
     setImageAVatar(temp);
+
+    dispatch(updateAvatar(e.target.files[0]));
   };
 
   const handleFocusInfo = (event) => {
@@ -116,7 +123,10 @@ const MyProfile = () => {
 
   return (
     <div className="my-profile-container">
-      {loading && <SpinLoading />}
+      {(loading ||
+        commonStore?.updateProfile?.loading ||
+        commonStore?.updateAvatar?.loading ||
+        commonStore?.changePassword?.loading) && <SpinLoading />}
       <div className="my-profile-container__inner">
         <Paper className="my-profile-container__inner-left">
           <img src={imageAvatar || NoImage} alt="" />
@@ -175,36 +185,6 @@ const MyProfile = () => {
                       }}
                       error={errorInfo.dateOfBirth}
                     />
-                  </div>
-                  <div
-                    className="flex items-center"
-                    style={{ marginBottom: 12 }}
-                  >
-                    <label style={{ marginRight: 12 }}>Giới tính</label>
-                    <div>
-                      <div className="flex items-center">
-                        <div style={{ width: 50 }}>Nam</div>
-                        <Radio
-                          checked={!formInfo?.gender}
-                          onChange={() =>
-                            setFormInfo({ ...formInfo, gender: false })
-                          }
-                          value="male"
-                          name="radio-button-demo"
-                        />
-                      </div>
-                      <div className="flex items-center">
-                        <div style={{ width: 50 }}>Nữ</div>
-                        <Radio
-                          checked={formInfo?.gender}
-                          onChange={() =>
-                            setFormInfo({ ...formInfo, gender: true })
-                          }
-                          value="female"
-                          name="radio-button-demo"
-                        />
-                      </div>
-                    </div>
                   </div>
                   <div
                     className="flex items-center"
@@ -327,13 +307,25 @@ const MyProfile = () => {
                         return setErrorInfo(errorState);
                       }
                       // callAPI update info
+                      dispatch(
+                        updateProfile({
+                          ...formInfo,
+                          dateOfBirth: new Date(formInfo?.dateOfBirth),
+                        })
+                      );
                     } else {
                       event.preventDefault();
                       const errorState = validatePass();
                       if (Object.keys(errorState).length > 0) {
                         return setErrorPassword(errorState);
                       }
-                      // update API password
+                      dispatch(
+                        changePassword({
+                          oldPassword: formPassword?.password,
+                          newPassword: formPassword?.newPassword,
+                          confirmPassword: formPassword?.confirmNewPassword,
+                        })
+                      );
                     }
                   }}
                 >

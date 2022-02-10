@@ -12,9 +12,9 @@ export const jwtMiddleware = async (req, res, next) => {
       throw createHttpError(401, "No token, authorization denied!");
     }
     try {
-      console.log(req.headers.authorization);
       const token = req.headers.authorization.split(" ")[1];
       const userData = await verifyToken(token, jwtSecret);
+      console.log("a111: ", { userData });
       req.user = userData;
       next();
     } catch (error) {

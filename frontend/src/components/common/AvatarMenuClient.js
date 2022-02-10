@@ -13,13 +13,12 @@ import {
   ROUTE_CLIENT_MY_PROFILE,
 } from "utils/routes";
 import Cookies from "js-cookie";
-import { setToken } from "redux/actions/common";
+import { setToken, setUserDetail } from "redux/actions/common";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { setUserDetail } from "redux/actions/user";
 
 export default function AvatarMenuClient() {
-  const { information } = useSelector((store) => store.user)?.userDetail;
+  const { information } = useSelector((store) => store.common)?.userDetail;
 
   const history = useHistory();
   const dispatch = useDispatch();
