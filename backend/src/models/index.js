@@ -10,7 +10,6 @@ import { Examination } from "./ExaminationModel";
 import { Feedback } from "./FeedbackModel";
 import { Food } from "./FoodModel";
 import { FoodType } from "./FoodTypeModel";
-import { Instructor } from "./InstructorModel";
 import { Material } from "./MaterialModel";
 import { OrderItem } from "./OrderItemModel";
 import { Order } from "./OrderModel";
@@ -19,9 +18,9 @@ import { PaymentCode } from "./PaymentCodeModel";
 import { Recipe } from "./RecipeModel";
 import { Reply } from "./ReplyModel";
 import { ResetCode } from "./ResetCodeModel";
-import { Student } from "./StudentModel";
 import { VideoCourse } from "./VideoCourseModel";
 import { Voucher } from "./VoucherModel";
+import { Test } from "./TestModel";
 export {
   User,
   UserDetail,
@@ -35,7 +34,6 @@ export {
   Feedback,
   Food,
   FoodType,
-  Instructor,
   Material,
   OrderItem,
   Order,
@@ -44,7 +42,7 @@ export {
   Recipe,
   Reply,
   ResetCode,
-  Student,
   VideoCourse,
   Voucher,
+  Test,
 };

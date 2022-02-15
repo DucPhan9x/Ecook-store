@@ -4,7 +4,13 @@ import { FormBox } from "components/common";
 import { Form as ReForm } from "reactstrap";
 import { isEmpty, isMobilePhone, isEmail } from "validator";
 import UploadImage from "components/common/UploadImage";
-import { Paper } from "@material-ui/core";
+import {
+  FormControl,
+  FormControlLabel,
+  Paper,
+  Radio,
+  RadioGroup,
+} from "@material-ui/core";
 import NoImage from "assets/images/notImage.png";
 
 const ModalAdd = ({ isModalVisible, handleSubmit, close }) => {
@@ -17,6 +23,7 @@ const ModalAdd = ({ isModalVisible, handleSubmit, close }) => {
     password: "",
     address: "",
     imageUrl: "",
+    employeeType: "3",
   });
 
   const validate = () => {
@@ -70,6 +77,7 @@ const ModalAdd = ({ isModalVisible, handleSubmit, close }) => {
       password: "",
       address: "",
       imageUrl: "",
+      employeeType: 3,
     });
     setError({});
   };
@@ -78,6 +86,12 @@ const ModalAdd = ({ isModalVisible, handleSubmit, close }) => {
     const temp = URL.createObjectURL(e.target.files[0]);
     setForm({ ...form, imageUrl: temp });
   };
+
+  const handleChangeFilterEmployeeType = (event) => {
+    setForm({ ...form, employeeType: event.target.value });
+  };
+
+  console.log(form);
 
   return (
     <Modal
@@ -99,6 +113,28 @@ const ModalAdd = ({ isModalVisible, handleSubmit, close }) => {
           <UploadImage onChangeImage={handleChangeImage} />
         </Paper>
         <div style={{ width: "60%" }}>
+          <div className="field-input-information-employee">
+            <FormControl component="fieldset">
+              <RadioGroup
+                aria-label="role"
+                name="role"
+                value={form.employeeType}
+                onChange={handleChangeFilterEmployeeType}
+                className="flex flex-row"
+              >
+                <FormControlLabel
+                  value="3"
+                  control={<Radio />}
+                  label="Nhân viên"
+                />
+                <FormControlLabel
+                  value="4"
+                  control={<Radio />}
+                  label="Giáo viên"
+                />
+              </RadioGroup>
+            </FormControl>
+          </div>
           <div className="field-input-information-employee">
             <label>Họ & tên</label>
             <FormBox

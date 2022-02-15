@@ -38,11 +38,19 @@ const ManageFood = () => {
           </button>
         </div>
         <div className="manage-food-page-top-right">
-          <DropdownCommon
-            label="Loại hàng"
-            options={["Chưa giao", "Đã nhận", "Đang giao", "Đã giao"]}
-            handleMenuClick={(e) => console.log(e)}
-          />
+          <div style={{ marginRight: 12 }}>
+            <DropdownCommon
+              label="Loại hàng"
+              options={[
+                "Thịt heo, bò",
+                "Thủy hải sản",
+                "Gia cầm",
+                "Rau củ, quả",
+              ]}
+              handleMenuClick={(e) => console.log(e)}
+            />
+          </div>
+
           <SearchField onChange={(e) => console.log(e.target.value)} />
           <button
             className="btn-admin"

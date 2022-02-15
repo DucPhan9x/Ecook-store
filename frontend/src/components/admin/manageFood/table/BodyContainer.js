@@ -1,16 +1,11 @@
-import {
-  Checkbox,
-  IconButton,
-  TableBody,
-  TableCell,
-  TableRow,
-} from "@material-ui/core";
+import { IconButton, TableBody, TableCell, TableRow } from "@material-ui/core";
 import { Rate } from "antd";
 import moment from "moment";
 import React from "react";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
 import LockIcon from "@material-ui/icons/Lock";
 import FeedbackIcon from "@material-ui/icons/Feedback";
+import { getFoodType } from "utils/convertUtils";
 
 const BodyContainer = (props) => {
   const {
@@ -20,7 +15,6 @@ const BodyContainer = (props) => {
     page,
     rowsPerPage,
     selected,
-    setSelected,
     setItemSelected,
     setItemSeeDetail,
     setRows,
@@ -53,25 +47,6 @@ const BodyContainer = (props) => {
     });
     return stabilizedThis.map((el) => el[0]);
   }
-  const handleClick = (event, name) => {
-    event.stopPropagation();
-    const selectedIndex = selected.indexOf(name);
-    let newSelected = [];
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
-    }
-    setSelected(newSelected);
-  };
 
   return (
     <>
@@ -93,13 +68,7 @@ const BodyContainer = (props) => {
                 key={row._id}
                 selected={isItemSelected}
               >
-                <TableCell padding="checkbox">
-                  <Checkbox
-                    onClick={(event) => handleClick(event, row._id)}
-                    checked={isItemSelected}
-                    inputProps={{ "aria-labelledby": labelId }}
-                  />
-                </TableCell>
+                <TableCell padding="checkbox"></TableCell>
                 <TableCell
                   component="th"
                   id={labelId}
@@ -109,8 +78,10 @@ const BodyContainer = (props) => {
                   {row._id}
                 </TableCell>
                 <TableCell align="left">{row.name}</TableCell>
-                <TableCell align="left">{row.type}</TableCell>
-                <TableCell align="left">{row.unitPrice}</TableCell>
+                <TableCell align="left">{getFoodType(row.typeId)}</TableCell>
+                <TableCell align="left">
+                  {row.unitPrice + "(" + row.unit + ")"}
+                </TableCell>
                 <TableCell align="left">
                   <Rate value={row.numOfStars} />
                 </TableCell>

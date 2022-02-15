@@ -11,10 +11,22 @@ const recipeSchema = new Schema({
   material: {
     type: [materialSchema],
   },
+  numOfStars: {
+    type: Number,
+    default: 0,
+  },
+  numOfFeedbacks: {
+    type: Number,
+    default: 0,
+  },
   createAt: {
     type: Date,
     default: Date.now,
   },
   slotQuantity: Number,
+  isRemoved: {
+    type: Boolean,
+    default: false,
+  },
 });
 export const Recipe = model("Recipe", recipeSchema, "Recipe");

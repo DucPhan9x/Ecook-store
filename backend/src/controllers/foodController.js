@@ -2,7 +2,7 @@ import { Feedback, Food } from "../models";
 import { uploadSingle } from "../configs";
 import createHttpError from "http-errors";
 
-const createNewFood = async (data) => {
+const createNewFood = async (data, filePath) => {
   try {
     const {
       typeId,
@@ -13,13 +13,16 @@ const createNewFood = async (data) => {
       description,
       discountMaximum,
     } = data;
-    const image = await uploadSingle(req.files[0].path);
+    let image;
+    if (filePath) {
+      image = await uploadSingle(filePath);
+    }
     await Food.create({
       typeId,
       name,
       unitPrice,
       unit,
-      imageUrl: image.url,
+      imageUrl: image.url || "",
       discountOff,
       description,
       discountMaximum,
@@ -33,11 +36,14 @@ const createNewFood = async (data) => {
 const creatMultipleNewFood = async (req, res, next) => {
   try {
     const { foodLists } = req.body;
+    let filePath;
+    if (req.files[0].path) {
+      filePath = req.files[0].path;
+    }
     for (let index = 0; index < foodLists.length; index++) {
       const element = foodLists[index];
-      await createNewFood(element);
+      await createNewFood(element, filePath);
     }
-
     res.status(201).json({
       status: 201,
       msg: "Create new food(s) successfully!",
@@ -53,7 +59,7 @@ const getFoodById = async (req, res, next) => {
   try {
     const foodId = req.params.foodId;
     let food = await Food.findById(foodId);
-    let feedbacks = await Feedback.find({ itemId: foodId }).limit(2);
+    let feedbacks = await Feedback.find({ itemId: foodId });
     feedbacks = feedbacks.map((item) => {
       return {
         _id: item._id,
@@ -116,6 +122,28 @@ const updateFoodById = async (req, res, next) => {
   }
 };
 
+const updateStatusRemoveTempFood = async (req, res, next) => {
+  try {
+    const { isRemoveTemp } = req.body;
+    const foodId = req.params.foodId;
+    const existedFood = await Food.findById(foodId);
+    if (!existedFood) {
+      throw createHttpError(404, "Food id not exist!");
+    }
+    const newFood = await Food.findByIdAndUpdate(foodId, {
+      isRemoveTemp,
+    });
+    res.status(200).json({
+      status: 200,
+      msg: "Update status remove temp successfully!",
+      food: newFood,
+    });
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
+
 const deleteFoodById = async (req, res, next) => {
   try {
     const foodId = req.params.foodId;
@@ -164,7 +192,7 @@ const getListFoodPerPage = async (req, res, next) => {
         .skip(start)
         .limit(numOfPerPage)
         .sort(orderQuery);
-      totalNumOfFoods = await Food.find().count();
+      totalNumOfFoods = await Food.find({}).count();
     }
     const totalPage = parseInt(totalNumOfFoods / numOfPerPage) + 1;
     res.status(200).json({
@@ -183,8 +211,8 @@ export const foodController = {
   createNewFood,
   updateFoodById,
   deleteFoodById,
-  searchFoods,
   getListFoodPerPage,
   creatMultipleNewFood,
   getFoodById,
+  updateStatusRemoveTempFood,
 };

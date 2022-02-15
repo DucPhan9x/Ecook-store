@@ -22,5 +22,9 @@ const voucherSchema = new Schema({
     type: Date,
     default: Date.now,
   },
+  isRemoved: {
+    type: Boolean,
+    default: false,
+  },
 });
 export const Voucher = model("Voucher", voucherSchema, "Voucher");

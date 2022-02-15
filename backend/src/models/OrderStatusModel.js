@@ -1,5 +1,4 @@
 import { Schema, model } from "mongoose";
-import { OrderItem } from "./OrderItemModel";
 const orderStatusSchema = new Schema({
   id: {
     type: Number,

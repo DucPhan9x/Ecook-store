@@ -1,26 +1,38 @@
 import createHttpError from "http-errors";
-import { Feedback, Food, Reply, UserDetail } from "../models";
+import { Course, Feedback, Food, Recipe, Reply, UserDetail } from "../models";
 
 const addFeedback = async (req, res, next) => {
   try {
     const user = req.user;
     const userDetail = await UserDetail.findOne({ userId: user._id });
-    let { numOfStars, content, foodId } = req.body;
-    const food = await Food.findById(foodId);
-    if (!food) throw createHttpError(404, "The id of food is invalid!");
-    let foodNumOfStars = food.numOfStars || 0;
-    let numOfFeedbacks = food.numOfFeedbacks || 0;
-    foodNumOfStars = foodNumOfStars * numOfFeedbacks;
+    let { numOfStars, content, itemId, feedbackType } = req.body;
+    let Model;
+    if (feedbackType === 1) {
+      Model = Food;
+    } else {
+      if (feedbackType === 2) {
+        Model = Recipe;
+      } else {
+        Model = Course;
+      }
+    }
+    //
+    const item = await Model.findById(itemId);
+    if (!item) throw createHttpError(404, "The id of item is invalid!");
+    let itemNumOfStars = item.numOfStars || 0;
+    let numOfFeedbacks = item.numOfFeedbacks || 0;
+    itemNumOfStars = itemNumOfStars * numOfFeedbacks;
     numOfFeedbacks++;
-    numOfStars = (numOfStars + foodNumOfStars) / numOfFeedbacks;
-    await Food.findByIdAndUpdate(foodId, {
+    numOfStars = (numOfStars + itemNumOfStars) / numOfFeedbacks;
+    await Model.findByIdAndUpdate(itemId, {
       numOfStars,
       numOfFeedbacks,
     });
     await Feedback.create({
-      itemId: foodId,
+      itemId,
       userId: userDetail.userId,
       content,
+      feedbackType,
       numOfStars,
     });
     res.status(200).json({
@@ -35,11 +47,11 @@ const addFeedback = async (req, res, next) => {
 
 const reply = async (req, res, next) => {
   try {
-    const userDetail = await UserDetail.findOne({ userId: req.user._id });
     const { feedbackId, content } = req.body;
     const newReply = Reply({
-      userName: userDetail.fullName,
+      userId: req.user._id,
       content,
+      feedbackId,
     });
     await Feedback.findByIdAndUpdate(feedbackId, {
       $push: {
@@ -58,14 +70,14 @@ const reply = async (req, res, next) => {
 
 const getAllFeedbacks = async (req, res, next) => {
   try {
-    const { foodId } = req.params;
-    let feedbacks = await Feedback.find({ foodId });
-    console.log(feedbacks);
-    feedbacks = feedbacks.map((x) => {
+    const { itemId } = req.params;
+    let feedbacks = await Feedback.find({ itemId });
+    feedbacks = feedbacks.map(async (x) => {
+      // need check again
+      const user = await UserDetail.findById(x.userId);
       return {
         _id: x._id,
-        userId: req.user._id,
-        userName: x.userName,
+        userFeedback: user,
         content: x.content,
         numOfStars: x.numOfStars,
         createAt: x.createAt,

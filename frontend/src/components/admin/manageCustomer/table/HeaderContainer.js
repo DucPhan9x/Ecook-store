@@ -26,7 +26,6 @@ const headCells = [
     label: "Số điện thoại",
   },
   { id: "email", numeric: false, disablePadding: false, label: "Email" },
-  { id: "gender", numeric: false, disablePadding: false, label: "Giới tính" },
   { id: "address", numeric: false, disablePadding: false, label: "Địa chỉ" },
   {
     id: "",

@@ -103,7 +103,6 @@ const BodyContainer = (props) => {
                 </TableCell>
                 <TableCell align="left">{row.phoneNumber}</TableCell>
                 <TableCell align="left">{row.email}</TableCell>
-                <TableCell align="left">{row.gender ? "Nu" : "Nam"}</TableCell>
                 <TableCell align="left">{row.address}</TableCell>
                 <TableCell align="center">
                   <button

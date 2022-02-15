@@ -179,6 +179,7 @@ const ModalProfileAdmin = ({ isModalVisible, close }) => {
                           placeholder: "Ngày sinh",
                           onChange: handleChangeInfo,
                           onFocus: handleFocusInfo,
+                          max: moment(new Date()).format("YYYY-MM-DD"),
                           value: moment(formInfo.dateOfBirth).format(
                             "YYYY-MM-DD"
                           ),

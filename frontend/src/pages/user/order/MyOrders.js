@@ -30,6 +30,7 @@ const RowContent = ({ row, index }) => {
   const { address, _id, employee, total, paymentMethod, createAt, deliveryAt } =
     row;
   const [itemSelected, setItemSelected] = useState("");
+
   return (
     <tr className="my-orders-container--content__inner-row-content">
       <td>{index + 1}</td>

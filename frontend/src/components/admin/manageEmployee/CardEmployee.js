@@ -7,7 +7,14 @@ import Checkbox from "@material-ui/core/Checkbox";
 const CardEmployee = ({ data, filterData, setFilterData }) => {
   return (
     <Paper className="card-employee">
-      <img className="avatar-employee" src={data?.imageUrl} alt="" />
+      <img
+        className="avatar-employee"
+        src={
+          data?.imageUrl ||
+          "https://res.cloudinary.com/duc/image/upload/v1642704006/avatardefault_ux3ryj.png"
+        }
+        alt=""
+      />
       <div className="block-information-employee">
         <span className="block-information-employee--full-name">
           {data?.fullName}

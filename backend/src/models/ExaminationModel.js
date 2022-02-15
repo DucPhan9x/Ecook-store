@@ -1,11 +1,10 @@
 import { Schema, model } from "mongoose";
+import { testSchema } from "./TestModel";
 const examinationSchema = new Schema({
   courseId: {
     type: Schema.Types.ObjectId,
   },
-  studentId: {
-    type: Schema.Types.ObjectId,
-  },
+
   content: {
     type: String,
   },
@@ -15,25 +14,20 @@ const examinationSchema = new Schema({
   criteria: {
     type: String,
   },
-  videoUrlSubmit: {
-    type: String,
-  },
   createAt: {
     type: Date,
     default: Date.now,
   },
-  isPass: {
+  tests: {
+    type: [testSchema],
+    default: [],
+  },
+  isRemoved: {
     type: Boolean,
-  },
-  evaluate: {
-    type: String,
-  },
-  feedbacks: {
-    type: String,
+    default: false,
   },
 });
-export const Examination = model(
-  "Examination",
-  examinationSchema,
-  "Examination"
-);
+
+const Examination = model("Examination", examinationSchema, "Examination");
+
+export { Examination, examinationSchema };

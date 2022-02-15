@@ -11,6 +11,7 @@ const certificationSchema = new Schema({
   },
   endDate: {
     type: Date,
+    default: Date.now,
   },
   positionCreate: {
     type: String,
@@ -18,11 +19,16 @@ const certificationSchema = new Schema({
   graded: {
     type: String,
   },
+  isRemoved: {
+    type: Boolean,
+    default: false,
+  },
   createAt: {
     type: Date,
     default: Date.now,
   },
 });
+
 export const Certification = model(
   "Certification",
   certificationSchema,

@@ -22,6 +22,7 @@ const feedbackSchema = new Schema({
   },
   reply: {
     type: [replySchema],
+    default: [],
   },
 });
 export const Feedback = model("Feedback", feedbackSchema, "Feedback");

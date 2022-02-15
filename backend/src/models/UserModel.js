@@ -21,6 +21,10 @@ const userSchema = new Schema({
     type: Date,
     default: Date.now,
   },
+  isRemoved: {
+    type: Boolean,
+    default: false,
+  },
   activeToken: {
     type: String,
   },

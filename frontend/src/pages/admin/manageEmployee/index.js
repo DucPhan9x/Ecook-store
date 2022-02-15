@@ -17,7 +17,7 @@ const ManageEmployee = () => {
   const [employees, setEmployees] = useState([]);
   const [openModalEdit, setOpenModalEdit] = useState(false);
   const [openModalAdd, setOpenModalAdd] = useState(false);
-  const [employeeRole, setEmployeeRole] = React.useState("Nhân viên");
+  const [employeeRole, setEmployeeRole] = React.useState("employee");
   const [filterData, setFilterData] = React.useState([]);
 
   const handleChange = (event) => {
@@ -71,6 +71,21 @@ const ManageEmployee = () => {
           >
             <RemoveCircle color="secondary" />
             Xóa
+          </button>
+          <button
+            style={{ marginLeft: 12 }}
+            className={`btn-admin ${
+              filterData.filter((item) => item.isSelected)?.length > 0
+                ? ""
+                : "btn-disabled"
+            }`}
+            onClick={() => {
+              if (!filterData.filter((item) => item.isSelected)?.length) return;
+              setOpenDialogConfirm(true);
+            }}
+          >
+            <RemoveCircle color="secondary" />
+            Ban
           </button>
           <Checkbox
             className="radio-checked-container"

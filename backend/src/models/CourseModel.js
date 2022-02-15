@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+import { examinationSchema } from "./ExaminationModel";
 import { videoCourseSchema } from "./VideoCourseModel";
 const courseSchema = new Schema({
   courseName: {
@@ -26,14 +27,29 @@ const courseSchema = new Schema({
   },
   numOfStars: {
     type: Number,
+    default: 0,
+  },
+  numOfFeedbacks: {
+    type: Number,
+    default: 0,
   },
   videoList: {
     type: [videoCourseSchema],
+    default: [],
+  },
+  isRemoved: {
+    type: Boolean,
+    default: false,
+  },
+  examination: {
+    type: examinationSchema,
   },
   createAt: {
     type: Date,
     default: Date.now,
   },
 });
+
+courseSchema.index({ courseName: "text" });
 const Course = model("Course", courseSchema, "Course");
 export { Course, courseSchema };

@@ -131,14 +131,30 @@ const MyCourseDetail = () => {
               key={indx}
             >
               <div className="my-course-detail-container-right--item-info">
-                <span style={{ fontSize: 18 }}>Bài {indx + 1}. </span>
+                <span style={{ fontSize: 18, whiteSpace: "nowrap" }}>
+                  Bài {indx + 1}.{" "}
+                </span>
                 <span
-                  style={{ color: "orangered", fontSize: 19, marginLeft: 12 }}
+                  style={{
+                    color: "orangered",
+                    fontSize: 19,
+                    marginLeft: 12,
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    display: "block",
+                    maxWidth: 210,
+                  }}
                 >
                   {v.title}
                 </span>
               </div>
-              <div style={{ marginLeft: 32 }} className="center">
+              <div
+                style={{
+                  marginLeft: 32,
+                }}
+                className="center"
+              >
                 <IconButton
                   className="icon-show-video"
                   onClick={() => setVideoCurrent({ ...v, autoPlay: true })}
@@ -148,7 +164,7 @@ const MyCourseDetail = () => {
                     style={{ fontSize: 36 }}
                   />
                 </IconButton>
-                <span>{v.duration} min</span>
+                <span style={{ whiteSpace: "nowrap" }}>{v.duration} min</span>
               </div>
             </div>
           ))}

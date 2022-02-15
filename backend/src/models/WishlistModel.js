@@ -4,7 +4,8 @@ const wishlistSchema = Schema({
     type: Schema.Types.ObjectId,
   },
   itemIds: {
-    type: [Schema.Types.ObjectId],
+    type: [{ itemId: Schema.Types.ObjectId, itemType: Number }],
+    default: [],
   },
 });
 export const Wishlist = model("Wishlist", wishlistSchema, "Wishlist");

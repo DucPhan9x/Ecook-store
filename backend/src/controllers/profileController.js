@@ -1,3 +1,4 @@
+import createHttpError from "http-errors";
 import { deleteImage, uploadSingle } from "../configs";
 import { User, UserDetail } from "../models";
 

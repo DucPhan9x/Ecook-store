@@ -27,8 +27,9 @@
         height: fit-content;
         border-radius: 15px;
       }
-      & > iframe {
-        width: 900px;
+      & > iframe,
+      & > video {
+        width: 850px;
         border-radius: 15px;
       }
       .btn--access-exam {
