@@ -1,5 +1,6 @@
 import { Schema, model } from "mongoose";
 import { orderItemSchema } from "./OrderItemModel";
+
 const orderSchema = new Schema({
   customerId: {
     type: Schema.Types.ObjectId,
@@ -20,6 +21,7 @@ const orderSchema = new Schema({
   },
   statusId: {
     type: Number,
+    default: 1,
   },
   isPaid: {
     type: Boolean,

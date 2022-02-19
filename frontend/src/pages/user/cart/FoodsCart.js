@@ -174,11 +174,11 @@ const FoodsCart = ({ close }) => {
           data.filter((item) => item.isCheckbox)?.length ? "" : "btn-disabled"
         }`}
         onClick={() => {
-          close();
           setIsOpenModalConfirmOrder(true);
         }}
       >
         {data
+          .filter((item) => item.isCheckbox)
           .reduce(
             (f, s) =>
               f +
@@ -199,6 +199,7 @@ const FoodsCart = ({ close }) => {
       <ModalConfirmFoodCart
         isModalVisible={isOpenModalConfirmOrder}
         close={() => setIsOpenModalConfirmOrder(false)}
+        products={data.filter((item) => item.isCheckbox)}
       />
     </>
   );

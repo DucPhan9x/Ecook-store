@@ -2,6 +2,7 @@ import { envVariables } from "./envVariables";
 import { dbConnection } from "./dbConnection";
 import { Server } from "./Server";
 import { upload, uploadSingle, deleteImage } from "./cloudinary";
+import paypal from "./paypal";
 export {
   envVariables,
   dbConnection,
@@ -9,4 +10,5 @@ export {
   upload,
   uploadSingle,
   deleteImage,
+  paypal,
 };

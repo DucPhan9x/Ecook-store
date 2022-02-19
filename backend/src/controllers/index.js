@@ -12,6 +12,7 @@ import { examinationController } from "./examinationController";
 import { testController } from "./testController";
 import { certificateController } from "./certificateController";
 import { cartItemController } from "./cartItemController";
+import { orderController } from "./orderController";
 
 export {
   authController,
@@ -28,4 +29,5 @@ export {
   testController,
   certificateController,
   cartItemController,
+  orderController,
 };

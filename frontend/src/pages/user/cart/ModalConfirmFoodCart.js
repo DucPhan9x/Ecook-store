@@ -2,15 +2,18 @@ import { IconButton, Input } from "@material-ui/core";
 import Modal from "antd/lib/modal/Modal";
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { formatCurrency, getPriceItem } from "utils/priceUtils";
-import { uuid } from "utils/stringUtils";
+import {
+  formatCurrency,
+  getPriceItem,
+  getPriceItemNumber,
+} from "utils/priceUtils";
 import LocalAtmIcon from "@material-ui/icons/LocalAtm";
 import { VOUCHERS_DATA } from "utils/dummyData";
 import KeyboardArrowRightIcon from "@material-ui/icons/KeyboardArrowRight";
 import PaypalCheckoutButton from "components/common/PaypalCheckoutButton";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 
-const ModalConfirmFoodCart = ({ isModalVisible, close }) => {
+const ModalConfirmFoodCart = ({ isModalVisible, close, products }) => {
   const [data, setData] = useState({
     customerName: "",
     addressCustomer: "",
@@ -33,76 +36,28 @@ const ModalConfirmFoodCart = ({ isModalVisible, close }) => {
       paymentMethod: "Momo",
       shipmentFee: 15000,
       merchandiseSubtotal: 20000, // tien san pham chua tinh ship
-      total: 315000, // tong tien bao gom ship fee
-      items: [
-        {
-          _id: "food_123",
-          type: "Thịt",
-          unit: "kg",
-          quantity: 2,
-          name: "Sườn Non Heo",
-          unitPrice: 120000,
-          discountOff: 20, // percent %,
-          discountMaximum: 20000, //vnd
-          description: "Hàng tươi sống",
-          imageUrl:
-            "https://res.cloudinary.com/duc/image/upload/v1639206902/ecook/suon_heo_ssbldm.jpg",
-        },
-        {
-          _id: uuid(),
-          type: "Thịt",
-          unit: "kg",
-          quantity: 1,
-          name: "Sườn Non Heo",
-          unitPrice: 120000,
-          discountOff: 20, // percent %,
-          discountMaximum: 20000, //vnd
-          description: "Hàng tươi sống",
-          imageUrl:
-            "https://res.cloudinary.com/duc/image/upload/v1639206902/ecook/suon_heo_ssbldm.jpg",
-        },
-        {
-          _id: uuid(),
-          type: "Thịt",
-          unit: "kg",
-          quantity: 1,
-          name: "Sườn Non Heo",
-          unitPrice: 120000,
-          discountOff: 20, // percent %,
-          discountMaximum: 20000, //vnd
-          description: "Hàng tươi sống",
-          imageUrl:
-            "https://res.cloudinary.com/duc/image/upload/v1639206902/ecook/suon_heo_ssbldm.jpg",
-        },
-        {
-          _id: uuid(),
-          type: "Thịt",
-          unit: "kg",
-          quantity: 1,
-          name: "Sườn Non Heo",
-          unitPrice: 120000,
-          discountOff: 20, // percent %,
-          discountMaximum: 20000, //vnd
-          description: "Hàng tươi sống",
-          imageUrl:
-            "https://res.cloudinary.com/duc/image/upload/v1639206902/ecook/suon_heo_ssbldm.jpg",
-        },
-        {
-          _id: uuid(),
-          type: "Thịt",
-          unit: "kg",
-          quantity: 1,
-          name: "Sườn Non Heo",
-          unitPrice: 120000,
-          discountOff: 20, // percent %,
-          discountMaximum: 20000, //vnd
-          description: "Hàng tươi sống",
-          imageUrl:
-            "https://res.cloudinary.com/duc/image/upload/v1639206902/ecook/suon_heo_ssbldm.jpg",
-        },
-      ],
+      total: products
+        .map((item) => ({
+          ...item.food,
+          quantity: item.quantity,
+        }))
+        .reduce(
+          (f, s) =>
+            f +
+            getPriceItemNumber(
+              s?.discountOff,
+              s?.unitPrice,
+              s?.discountMaximum,
+              s.quantity
+            ),
+          0
+        ), // tong tien bao gom ship fee
+      items: products.map((item) => ({
+        ...item.food,
+        quantity: item.quantity,
+      })),
     });
-  }, []);
+  }, [products]);
 
   const [openPaypalButtonCheckout, setOpenPaypalButtonCheckout] =
     useState(false);
@@ -126,9 +81,21 @@ const ModalConfirmFoodCart = ({ isModalVisible, close }) => {
             <span style={{ color: "orangered" }}>Quay trở lại</span>
           </div>
           <PaypalCheckoutButton
-            product={{
-              description: "abc",
-              price: "10.00",
+            type="food"
+            requestData={{
+              address: data.addressCustomer,
+              shipmentFee: 15000, // will call API to calculate from address,
+              voucherId: data.voucherId || "",
+              voucherData: data.voucherData,
+              items: data.items.map((i) => ({
+                itemId: i._id,
+                quantity: i.quantity,
+                unitPrice: getPriceItemNumber(
+                  i.discountOff,
+                  i.unitPrice,
+                  i.discountMaximum
+                ),
+              })),
             }}
           />
         </>
@@ -188,12 +155,12 @@ const ModalConfirmFoodCart = ({ isModalVisible, close }) => {
                 <span>{data?.items.length} s/p</span>
               </div>
               <div className="block-data-normal flex items-center">
-                <label style={{ marginRight: 12 }}>Phí vận chuyển:</label>
-                <span>{formatCurrency(data?.shipmentFee)}</span>
+                <label style={{ marginRight: 12 }}>Tổng tiền hàng:</label>
+                <span>{formatCurrency(data?.total)}</span>
               </div>
               <div className="block-data-normal flex items-center">
-                <label style={{ marginRight: 12 }}>Tổng tiền:</label>
-                <span>{formatCurrency(data?.total)}</span>
+                <label style={{ marginRight: 12 }}>Phí vận chuyển:</label>
+                <span>{formatCurrency(data?.shipmentFee)}</span>
               </div>
               <div
                 className="block-data-normal flex items-center j-space-between"
@@ -261,7 +228,12 @@ const ModalConfirmFoodCart = ({ isModalVisible, close }) => {
                 style={{ fontSize: 18, color: "gray", cursor: "pointer" }}
                 onClick={() => {
                   navigator.clipboard.writeText(item.name);
-                  setData({ ...data, voucher: item.name });
+                  setData({
+                    ...data,
+                    voucher: item.name,
+                    voucherId: item._id,
+                    voucherData: item,
+                  });
                   setIsOpenVoucher(false);
                 }}
               >

@@ -32,8 +32,10 @@
     "node-geocoder": "^3.27.0",
     "node-rsa": "^1.1.1",
     "nodemailer": "^6.5.0",
+    "paypal-rest-sdk": "^1.8.1",
     "randomatic": "^3.1.1",
     "redis": "^3.1.0",
+    "request": "^2.88.2",
     "socket.io": "^4.0.1",
     "uuid": "^8.3.2"
   },

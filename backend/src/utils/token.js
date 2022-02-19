@@ -6,9 +6,7 @@ import { Token } from "../models";
 const { jwtSecret, tokenLife } = envVariables;
 
 export const encodeToken = async (data) => {
-  const token = jwt.sign(data, jwtSecret, {
-    expiresIn: tokenLife,
-  });
+  const token = jwt.sign(data, jwtSecret);
   const token1 = await Token.create({
     userId: data._id,
     token,

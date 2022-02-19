@@ -30,3 +30,7 @@ export const getPriceItemNumber = (
 
 export const formatCurrency = (number) =>
   number?.toLocaleString("vi-VI", { style: "currency", currency: "VND" });
+
+export const convertVNDToUSD = (VNDMoney) => {
+  return VNDMoney * 0.000044;
+};

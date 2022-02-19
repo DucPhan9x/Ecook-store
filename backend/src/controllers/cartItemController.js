@@ -9,15 +9,13 @@ const getListCartItem = async (req, res, next) => {
       itemType,
     });
 
-    cartItems = cartItems
-      .filter((item) => item.itemType === itemType)
-      .map((item) => {
-        if (item.itemType === 1) {
-          return { ...item, item: Food.findById(item.itemId) };
-        } else {
-          return { ...item, item: Course.findById(item.itemId) };
-        }
-      });
+    cartItems = cartItems.map((item) => {
+      if (item.itemType === 1) {
+        return { ...item, item: Food.findById(item.itemId) };
+      } else {
+        return { ...item, item: Course.findById(item.itemId) };
+      }
+    });
 
     let data = await Promise.all(cartItems);
     res.status(200).json({

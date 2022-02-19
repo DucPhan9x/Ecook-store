@@ -1,6 +1,6 @@
 import { Schema, model } from "mongoose";
 const orderItemSchema = new Schema({
-  foodId: {
+  itemId: {
     type: Schema.Types.ObjectId,
   },
   unitPrice: {

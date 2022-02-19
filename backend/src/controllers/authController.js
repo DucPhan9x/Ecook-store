@@ -144,12 +144,8 @@ const login = async (req, res, next) => {
       roleId: userExisted.roleId,
     };
 
-    const token = await encodeToken(userData, jwtSecret, tokenLife);
-    const refreshToken = await encodeToken(
-      userData,
-      jwtSecret,
-      refreshTokenLife
-    );
+    const token = await encodeToken(userData, jwtSecret);
+    const refreshToken = await encodeToken(userData, jwtSecret);
     const userDetail = await UserDetail.findOne({ userId: userExisted._id }, [
       "imageUrl",
       "fullName",
@@ -202,12 +198,8 @@ const loginAdmin = async (req, res, next) => {
       roleId: userExisted.roleId,
     };
 
-    const token = await encodeToken(userData, jwtSecret, tokenLife);
-    const refreshToken = await encodeToken(
-      userData,
-      refreshTokenSecret,
-      refreshTokenLife
-    );
+    const token = await encodeToken(userData, jwtSecret);
+    const refreshToken = await encodeToken(userData, refreshTokenSecret);
     const userDetail = await UserDetail.findOne({ userId: userExisted._id }, [
       "imageUrl",
       "fullName",
@@ -350,7 +342,7 @@ const getToken = async (req, res, next) => {
     const data = await verifyToken(refreshToken, refreshTokenSecret);
     const { _id, email, roleId } = data;
     const userData = { _id, email, roleId };
-    const token = await encodeToken(userData, tokenSecret, tokenLife);
+    const token = await encodeToken(userData, tokenSecret);
     res.status(200).json({
       status: 200,
       msg: "Refresh token successfully!",

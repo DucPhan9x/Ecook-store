@@ -137,7 +137,7 @@ const MyOrders = () => {
               <thead>
                 <th>STT</th>
                 <th>Mã đơn hàng</th>
-                <th>Thời gian đi</th>
+                <th>Thời gian đặt</th>
                 <th>Thời gian đến</th>
                 <th>Điểm đến</th>
                 <th>Thanh toán</th>

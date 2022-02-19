@@ -12,6 +12,7 @@ import { examinationRoute } from "./examinationRoute";
 import { testRoute } from "./testRoute";
 import { certificationRoute } from "./certificationRoute";
 import { cartItemRoute } from "./cartItemRoute";
+import { orderRoute } from "./orderRoute";
 
 export {
   authRoute,
@@ -28,4 +29,5 @@ export {
   testRoute,
   certificationRoute,
   cartItemRoute,
+  orderRoute,
 };

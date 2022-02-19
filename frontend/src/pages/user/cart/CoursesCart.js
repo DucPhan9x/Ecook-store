@@ -9,11 +9,14 @@ import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import IconButton from "@material-ui/core/IconButton";
 import { Tooltip } from "antd";
 import FoodCartEmpty from "assets/images/empty-cart.svg";
+import ModalConfirmCourseCart from "./ModalConfirmCourseCart";
 
 const CoursesCart = ({ close }) => {
   const [data, setData] = useState([]);
   const [isOpenModalConfirmRemoveAll, setIsOpenModalConfirmRemoveAll] =
     useState(false);
+
+  const [isOpenModalConfirmOrder, setIsOpenModalConfirmOrder] = useState(false);
 
   useEffect(() => {
     setData(COURSES_CART.map((item) => ({ ...item, isCheckbox: false })));
@@ -133,13 +136,11 @@ const CoursesCart = ({ close }) => {
           data.filter((item) => item.isCheckbox)?.length ? "" : "btn-disabled"
         }`}
         onClick={() => {
-          close();
-          window.open(
-            "https://test-payment.momo.vn/gw_payment/payment/qr?partnerCode=MOMO&accessKey=F8BBA842ECF85&requestId=MM64101&amount=1100&orderId=MM64101&signature=cb36fa31ac0ec9cee047cf482a81292e8b8863dbd8e3ac0c97aa7208145fe810&requestType=captureMoMoWallet"
-          );
+          setIsOpenModalConfirmOrder(true);
         }}
       >
         {data
+          .filter((item) => item.isCheckbox)
           .reduce(
             (f, s) =>
               f +
@@ -157,6 +158,11 @@ const CoursesCart = ({ close }) => {
           })}{" "}
         - Thanh toán
       </div>
+      <ModalConfirmCourseCart
+        isModalVisible={isOpenModalConfirmOrder}
+        close={() => setIsOpenModalConfirmOrder(false)}
+        products={data.filter((item) => item.isCheckbox)}
+      />
     </>
   );
 };

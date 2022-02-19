@@ -4,6 +4,7 @@ import { sendEmail } from "./sendMail";
 import { getPaymentCode, getResetCode, confirmResetCode } from "./confirmCode";
 import { distanceBetween2Points, getShipmentFee } from "./shipment";
 import { dateFunction } from "./dateFunction";
+import { calculateItemPrice, calculateTotalPrice } from "./calPrice";
 // import { uploadMultiData } from "./uploadMultiData";
 export {
   validateRequest,
@@ -16,5 +17,7 @@ export {
   dateFunction,
   getResetCode,
   confirmResetCode,
+  calculateItemPrice,
+  calculateTotalPrice,
   // uploadMultiData,
 };

@@ -5,6 +5,7 @@ import express from "express";
 import { upload, envVariables } from "../configs";
 const { nodeEnv } = envVariables;
 const morgan = nodeEnv !== "production" && require("morgan");
+
 export const defaultMiddleware = (app) => {
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(bodyParser.json());

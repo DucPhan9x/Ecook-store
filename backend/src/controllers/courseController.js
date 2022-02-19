@@ -212,6 +212,8 @@ const getCourseById = async (req, res, next) => {
   }
 };
 
+// payment online
+
 export const courseController = {
   createNewCourse,
   updateCourseById,
