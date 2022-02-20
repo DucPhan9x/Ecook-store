@@ -2,37 +2,6 @@ import orderAPI from "api/orderAPI";
 import useNotification from "hooks/useNotification";
 import * as types from "../../types/order";
 
-const paypalRequest = (data, res = () => {}) => {
-  return (dispatch) => {
-    dispatch({ type: types.PAYPAL_CREATE });
-    orderAPI
-      .paypalRequest(data)
-      .then((response) => response.json())
-      .then((result) => {
-        if (result.status === 200) {
-          dispatch({
-            type: types.PAYPAL_CREATE_SUCCEED,
-            payload: data,
-          });
-          res(result.link);
-        } else {
-          dispatch({ type: types.PAYPAL_CREATE_FAIL });
-          useNotification.Error({
-            title: "Error",
-            message: result.msg || "Payment create failed!",
-          });
-        }
-      })
-      .catch((error) => {
-        dispatch({ type: types.PAYPAL_CREATE_FAIL });
-        useNotification.Error({
-          title: "Error",
-          message: "Error connected to server!",
-        });
-      });
-  };
-};
-
 const paypalPayment = (data) => {
   return (dispatch) => {
     dispatch({ type: types.PAYPAL_EXECUTE });
@@ -66,4 +35,4 @@ const paypalPayment = (data) => {
   };
 };
 
-export { paypalRequest, paypalPayment };
+export { paypalPayment };

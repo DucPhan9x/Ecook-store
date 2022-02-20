@@ -130,10 +130,12 @@ const paypalPaymentCourse = (req, res, next) => {
   // same paypalPayment food
 };
 
+const reOrderByClient = (req, res, next) => {};
 const getOrdersByClientId = (req, res, next) => {};
 const getAllOrders = (req, res, next) => {};
 const updateStatusOrder = (req, res, next) => {};
 const customerFinishOrder = (req, res, next) => {};
+const deleteOrders = (req, res, next) => {};
 
 export const orderController = {
   paypalPayment,
@@ -143,4 +145,6 @@ export const orderController = {
   customerFinishOrder,
   getOrdersByClientId,
   getAllOrders,
+  deleteOrders,
+  reOrderByClient,
 };

@@ -10,6 +10,9 @@ import BodyContainer from "./BodyContainer";
 import ModalUpdated from "../modal/ModalUpdated";
 import ModalDetail from "../modal/ModalDetail";
 import ModalManageFeedback from "components/common/modal/ModalManageFeedback";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { updateFoodById } from "redux/actions/food";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,23 +38,25 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function EnhancedTable({ data, setData }) {
+export default function EnhancedTable({ queries, setQueries }) {
   const classes = useStyles();
-  const [order, setOrder] = React.useState("asc");
-  const [orderBy, setOrderBy] = React.useState("createAt");
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const { totalRows, foodList } = useSelector((store) => store.food);
 
   const [rows, setRows] = useState([]);
   useEffect(() => {
-    setRows(data);
-  }, [data]);
+    setRows(foodList);
+  }, [foodList]);
 
   const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === "asc";
-    setOrder(isAsc ? "desc" : "asc");
-    setOrderBy(property);
+    const isAsc = queries.orderBy === property && queries.orderType === "asc";
+    setQueries({
+      ...queries,
+      orderBy: property,
+      orderType: isAsc ? "desc" : "asc",
+    });
   };
 
   const handleSelectAllClick = (event) => {
@@ -65,15 +70,18 @@ export default function EnhancedTable({ data, setData }) {
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
+    setQueries({ ...queries, page: newPage + 1 });
   };
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
+    setQueries({ ...queries, numOfPerPage: event.target.value });
     setPage(0);
   };
 
   const [itemSelected, setItemSelected] = useState("");
   const [itemSeeDetail, setItemSeeDetail] = useState("");
+  const dispatch = useDispatch();
   const [feedbackItemSelected, setFeedbackItemSelected] = useState("");
 
   return (
@@ -95,16 +103,16 @@ export default function EnhancedTable({ data, setData }) {
             <HeaderContainer
               classes={classes}
               numSelected={selected.length}
-              order={order}
-              orderBy={orderBy}
+              order={queries?.orderType}
+              orderBy={queries?.orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
               rowCount={rows.length}
             />
             <BodyContainer
               rows={rows}
-              order={order}
-              orderBy={orderBy}
+              order={queries?.orderType}
+              orderBy={queries?.orderBy}
               selected={selected}
               setSelected={setSelected}
               page={page}
@@ -119,7 +127,7 @@ export default function EnhancedTable({ data, setData }) {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={rows.length}
+          count={totalRows}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
@@ -132,19 +140,27 @@ export default function EnhancedTable({ data, setData }) {
         handleSubmit={(formData) => {
           // update rows by item selected // RUN API update, setRows
           console.log(formData);
-          let temp = [...rows];
-          temp.forEach((item) => {
-            if (item._id === itemSelected._id) {
-              item.name = formData.name;
-              item.type = formData.type;
-              item.unitPrice = formData.unitPrice;
-              item.description = formData.description;
-              item.discountOff = formData.discountOff;
-              item.discountMaximum = formData.discountMaximum;
-              item.imageUrl = formData.imageUrl || "";
-            }
-          });
-          setRows(temp);
+          dispatch(
+            updateFoodById({
+              imageFile: formData?.imageFile,
+              foodUpdated: formData,
+            })
+          );
+
+          //update food in the redux
+          // let temp = [...rows];
+          // temp.forEach((item) => {
+          //   if (item._id === itemSelected._id) {
+          //     item.name = formData.name;
+          //     item.type = formData.type;
+          //     item.unitPrice = formData.unitPrice;
+          //     item.description = formData.description;
+          //     item.discountOff = formData.discountOff;
+          //     item.discountMaximum = formData.discountMaximum;
+          //     item.imageUrl = formData.imageUrl || "";
+          //   }
+          // });
+
           setItemSelected("");
         }}
         close={() => {

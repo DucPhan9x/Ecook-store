@@ -7,6 +7,7 @@ import { Select } from "antd";
 import UploadImage from "components/common/UploadImage";
 import { Paper } from "@material-ui/core";
 import NoImage from "assets/images/notImage.png";
+import { getFoodType } from "utils/convertUtils";
 
 const { Option } = Select;
 const ModalUpdated = ({ isModalVisible, handleSubmit, close, data }) => {
@@ -15,6 +16,7 @@ const ModalUpdated = ({ isModalVisible, handleSubmit, close, data }) => {
   const [form, setForm] = React.useState({
     name: "",
     type: "",
+    typeId: 0,
     unitPrice: 0,
     description: "",
     discountOff: 0,
@@ -26,20 +28,19 @@ const ModalUpdated = ({ isModalVisible, handleSubmit, close, data }) => {
   });
 
   useEffect(() => {
-    setForm(data);
-    console.log(data);
+    setForm({ ...data, type: getFoodType(data.typeId) });
   }, [data]);
 
   const validate = () => {
     const errorState = {};
     // check validate
-    if (isEmpty(form.name)) {
+    if (isEmpty(form.name || "")) {
       errorState.name = "Không được để trống!";
     }
-    if (isEmpty(form.type)) {
+    if (isEmpty(form.type || "")) {
       errorState.type = "Không được để trống!";
     }
-    if (!isCurrency(form.unitPrice + "")) {
+    if (!isCurrency(form.unitPrice ? form.unitPrice + "" : "")) {
       errorState.unitPrice = "Nhập mệnh gía hợp lệ!";
     }
     return errorState;
@@ -51,7 +52,7 @@ const ModalUpdated = ({ isModalVisible, handleSubmit, close, data }) => {
     if (Object.keys(errorState).length > 0) {
       return setError(errorState);
     }
-    handleSubmit({ ...form, imageUrl: form.imageUrl[0]?.thumbUrl });
+    handleSubmit({ ...form });
   };
   const handleChange = (event) => {
     setForm({ ...form, [event.target.name]: event.target.value });
@@ -66,7 +67,7 @@ const ModalUpdated = ({ isModalVisible, handleSubmit, close, data }) => {
 
   const handleChangeImage = (e) => {
     const temp = URL.createObjectURL(e.target.files[0]);
-    setForm({ ...form, imageUrl: temp });
+    setForm({ ...form, imageFile: e.target.files[0], imageUrl: temp });
   };
 
   return (
@@ -116,7 +117,7 @@ const ModalUpdated = ({ isModalVisible, handleSubmit, close, data }) => {
               onChange={(value) => {
                 setForm({ ...form, type: value });
               }}
-              value={form.type}
+              value={getFoodType(form.typeId)}
             >
               {["Thịt", "Gia cầm", "Thủy hải sản", "Rau củ quả"].map(
                 (item, index) => (

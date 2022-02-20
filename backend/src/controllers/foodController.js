@@ -1,5 +1,5 @@
 import { Feedback, Food } from "../models";
-import { uploadSingle } from "../configs";
+import { deleteImage, uploadSingle } from "../configs";
 import createHttpError from "http-errors";
 
 const createNewFood = async (data, filePath) => {
@@ -17,12 +17,12 @@ const createNewFood = async (data, filePath) => {
     if (filePath) {
       image = await uploadSingle(filePath);
     }
-    await Food.create({
+    return Food.create({
       typeId,
       name,
       unitPrice,
       unit,
-      imageUrl: image.url || "",
+      imageUrl: image ? image.url : "",
       discountOff,
       description,
       discountMaximum,
@@ -35,18 +35,20 @@ const createNewFood = async (data, filePath) => {
 
 const creatMultipleNewFood = async (req, res, next) => {
   try {
-    const { foodLists } = req.body;
+    let { foodLists } = req.body;
     let filePath;
-    if (req.files[0].path) {
+    if (req.files[0]) {
       filePath = req.files[0].path;
     }
-    for (let index = 0; index < foodLists.length; index++) {
-      const element = foodLists[index];
-      await createNewFood(element, filePath);
+    foodLists = JSON.parse(foodLists);
+    let foods = [];
+    for (var i = 0; i < foodLists.length; i++) {
+      foods.push(await createNewFood(foodLists[i], filePath));
     }
-    res.status(201).json({
-      status: 201,
+    res.status(200).json({
+      status: 200,
       msg: "Create new food(s) successfully!",
+      foods,
     });
   } catch (error) {
     console.log(error);
@@ -89,28 +91,45 @@ const getFoodById = async (req, res, next) => {
 const updateFoodById = async (req, res, next) => {
   try {
     const {
+      _id,
       name,
       unitPrice,
       typeId,
       unit,
+      imageUrl,
       discountOff,
       description,
       discountMaximum,
-    } = req.body;
-    const foodId = req.params.foodId;
+    } = JSON.parse(req.body.foodUpdated);
+    const foodId = _id;
+    let filePath;
+    if (req.files[0]) {
+      filePath = req.files[0].path;
+    }
+    let image;
+    if (filePath) {
+      image = await uploadSingle(filePath);
+
+      const asset_id = imageUrl.split("/").pop().split(".")[0];
+      if (asset_id) {
+        await deleteImage(asset_id);
+      }
+    }
     const existedFood = await Food.findById(foodId);
     if (!existedFood) {
       throw createHttpError(404, "Food id not exist!");
     }
-    const newFood = await Food.findByIdAndUpdate(foodId, {
+    await Food.findByIdAndUpdate(foodId, {
       name,
       unitPrice,
       typeId,
       unit,
+      imageUrl: image ? image.url : imageUrl,
       discountOff,
       description,
       discountMaximum,
     });
+    const newFood = await Food.findById(foodId);
     res.status(200).json({
       status: 200,
       msg: "Update food successfully!",
@@ -124,15 +143,16 @@ const updateFoodById = async (req, res, next) => {
 
 const updateStatusRemoveTempFood = async (req, res, next) => {
   try {
-    const { isRemoveTemp } = req.body;
     const foodId = req.params.foodId;
+    const isRemoveTemp = req.params.isRemoveTemp;
     const existedFood = await Food.findById(foodId);
     if (!existedFood) {
       throw createHttpError(404, "Food id not exist!");
     }
-    const newFood = await Food.findByIdAndUpdate(foodId, {
+    await Food.findByIdAndUpdate(foodId, {
       isRemoveTemp,
     });
+    const newFood = await Food.findById(foodId);
     res.status(200).json({
       status: 200,
       msg: "Update status remove temp successfully!",
@@ -168,38 +188,61 @@ const getListFoodPerPage = async (req, res, next) => {
       req.query;
     page = page ? page : 1;
     searchText = searchText ? searchText : "";
-    orderBy = orderBy ? orderBy : "";
-    orderType = orderType ? orderType : 1;
-    const orderQuery = orderBy ? { [orderBy]: orderType } : {};
+    orderBy = orderBy ? orderBy : "unitPrice";
+    orderType = orderType === "asc" ? 1 : 0;
+    const orderQuery = { [orderBy]: orderType };
 
     const start = (page - 1) * numOfPerPage;
     let totalNumOfFoods;
     let foods;
     if (searchText) {
-      foods = await Food.find({
-        $text: { $search: searchText },
-        typeId,
-      })
-        .skip(start)
-        .limit(numOfPerPage)
-        .sort(orderQuery);
-      totalNumOfFoods = await Food.find({
-        $text: { $search: searchText },
-        typeId,
-      }).count();
+      if (typeId) {
+        foods = await Food.find({
+          $text: { $search: searchText },
+          typeId,
+        })
+          .skip(start)
+          .limit(Number(numOfPerPage))
+          .sort(orderQuery);
+        totalNumOfFoods = await Food.find({
+          $text: { $search: searchText },
+          typeId,
+        }).count();
+      } else {
+        foods = await Food.find({
+          $text: { $search: searchText },
+        })
+          .skip(start)
+          .limit(Number(numOfPerPage))
+          .sort(orderQuery);
+        totalNumOfFoods = await Food.find({
+          $text: { $search: searchText },
+        }).count();
+      }
     } else {
-      foods = await Food.find({})
-        .skip(start)
-        .limit(numOfPerPage)
-        .sort(orderQuery);
-      totalNumOfFoods = await Food.find({}).count();
+      if (typeId) {
+        foods = await Food.find({ typeId })
+          .skip(start)
+          .limit(Number(numOfPerPage))
+          .sort(orderQuery);
+        totalNumOfFoods = await Food.find({ typeId }).count();
+      } else {
+        foods = await Food.find()
+          .skip(start)
+          .limit(Number(numOfPerPage))
+          .sort(orderQuery);
+        totalNumOfFoods = await Food.find().count();
+      }
     }
+    const totalRows = await Food.find({}).count();
+
     const totalPage = parseInt(totalNumOfFoods / numOfPerPage) + 1;
     res.status(200).json({
       status: 200,
       msg: "Get foods successfully!",
       foods,
       totalPage,
+      totalRows,
     });
   } catch (error) {
     console.log(error);

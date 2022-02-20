@@ -2,11 +2,14 @@ import React, { useEffect } from "react";
 import { Modal } from "antd";
 import { Form as ReForm } from "reactstrap";
 import { formatCurrency } from "utils/priceUtils";
+import { getFoodType } from "utils/convertUtils";
+import NoImage from "assets/images/notImage.png";
 
 const ModalDetail = ({ isModalVisible, close, data }) => {
   const [form, setForm] = React.useState({
     name: "",
     type: "",
+    typeId: 1,
     unitPrice: 0,
     description: "",
     discountOff: 0,
@@ -33,7 +36,7 @@ const ModalDetail = ({ isModalVisible, close, data }) => {
         <div className="block-label-input-modal">
           <img
             style={{ width: "100%", maxHeight: 200, borderRadius: "6px" }}
-            src={form.imageUrl}
+            src={form?.imageUrl ? form.imageUrl : NoImage}
             alt="image_product"
           />
         </div>
@@ -48,7 +51,7 @@ const ModalDetail = ({ isModalVisible, close, data }) => {
             </div>
             <div className="block-label-input-modal">
               <label>Loại sản phẩm: </label>
-              <span className="value-content">{form.type}</span>
+              <span className="value-content">{getFoodType(form.typeId)}</span>
             </div>
           </div>
           <div className="flex full-width j-space-between body-content-form">

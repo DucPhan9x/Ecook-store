@@ -14,9 +14,9 @@ const {
 export const foodRoute = Router();
 foodRoute.use(`${baseUrl}`, jwtMiddleware);
 foodRoute.route(`${baseUrl}`).post(creatMultipleNewFood);
-foodRoute.route(`${baseUrl}/:foodId`).put(updateFoodById);
-foodRoute.route(`${baseUrl}`).get(getListFoodPerPage);
+foodRoute.route(`${baseUrl}/update`).put(updateFoodById);
+foodRoute.route(`${baseUrl}?`).get(getListFoodPerPage);
 foodRoute.route(`${baseUrl}/:foodId`).get(getFoodById);
 foodRoute
-  .route(`${baseUrl}/statusRemoveTemp/:foodId`)
+  .route(`${baseUrl}/statusRemoveTemp/:foodId/:isRemoveTemp`)
   .put(updateStatusRemoveTempFood);

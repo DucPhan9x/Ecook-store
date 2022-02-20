@@ -24,8 +24,29 @@ export const getFoodType = (roleId) => {
 
     case 3:
       return "Gia cầm";
+    case 4:
+      return "Rau củ quả";
 
     default:
-      return "Rau củ, quả";
+      return "Tất cả";
+  }
+};
+
+export const getFoodTypeId = (roleId) => {
+  switch (roleId) {
+    case "Thịt heo, bò":
+      return 1;
+
+    case "Thủy hải sản":
+      return 2;
+
+    case "Gia cầm":
+      return 3;
+
+    case "Rau củ, quả":
+      return 4;
+
+    default:
+      return 0;
   }
 };

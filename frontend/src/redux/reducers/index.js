@@ -11,6 +11,8 @@ import {
 } from "./auth";
 import control from "./control";
 import common from "./common";
+import order from "./order";
+import food from "./food";
 
 export default combineReducers({
   login,
@@ -23,4 +25,6 @@ export default combineReducers({
   loginAdmin,
   forgotPasswordAdmin,
   resetPasswordAdmin,
+  order,
+  food,
 });

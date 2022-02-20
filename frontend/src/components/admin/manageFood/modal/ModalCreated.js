@@ -20,6 +20,7 @@ const ModalCreated = ({ isModalVisible, handleSubmit, close }) => {
     discountOff: 0,
     discountMaximum: 0,
     imageUrl: "",
+    imageFile: {},
     numOfStars: 0,
     numOfFeedbacks: 0,
     unit: "", // kg, g
@@ -49,7 +50,7 @@ const ModalCreated = ({ isModalVisible, handleSubmit, close }) => {
     if (Object.keys(errorState).length > 0) {
       return setError(errorState);
     }
-    handleSubmit({ ...form, imageUrl: form.imageUrl[0]?.thumbUrl });
+    handleSubmit({ ...form });
     handleReset();
   };
   const handleChange = (event) => {
@@ -72,6 +73,7 @@ const ModalCreated = ({ isModalVisible, handleSubmit, close }) => {
       discountOff: 0,
       discountMaximum: 0,
       imageUrl: "",
+      imageFile: {},
       numOfStars: 0,
       numOfFeedbacks: 0,
       unit: "", // kg, g
@@ -79,8 +81,8 @@ const ModalCreated = ({ isModalVisible, handleSubmit, close }) => {
     setError({});
   };
   const handleChangeImage = (e) => {
-    const temp = URL.createObjectURL(e.target.files[0]);
-    setForm({ ...form, imageUrl: temp });
+    const temp = window.URL.createObjectURL(e.target.files[0]);
+    setForm({ ...form, imageUrl: temp, imageFile: e.target.files[0] });
   };
 
   return (
@@ -133,7 +135,7 @@ const ModalCreated = ({ isModalVisible, handleSubmit, close }) => {
               }}
               value={form.type}
             >
-              {["Thịt", "Gia cầm", "Thủy hải sản", "Rau củ quả"].map(
+              {["Thịt heo, bò", "Gia cầm", "Thủy hải sản", "Rau củ quả"].map(
                 (item, index) => (
                   <Option value={item} key={index}>
                     {item}

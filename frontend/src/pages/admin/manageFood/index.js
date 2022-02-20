@@ -4,20 +4,40 @@ import InputIcon from "@material-ui/icons/Input";
 import PrintIcon from "@material-ui/icons/Print";
 import SearchField from "components/common/input/SearchField";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
-import { FOODS_DATA } from "utils/dummyData";
 import ModalCreated from "components/admin/manageFood/modal/ModalCreated";
 import { DropdownCommon } from "components/common/dropdown";
+import { useDispatch } from "react-redux";
+import { createFood, getListFoodPerPage } from "redux/actions/food";
+import { useSelector } from "react-redux";
+import { getFoodType, getFoodTypeId } from "utils/convertUtils";
+import { SpinLoading } from "components/common";
 
 const ManageFood = () => {
   const [isOpenModalCreated, setIsOpenModalCreated] = useState(false);
-  const [data, setData] = useState([]);
+  const dispatch = useDispatch();
+  const {
+    foodList,
+    loadingGetListFood,
+    createFoodState,
+    removeTempFoodState,
+    updateFoodState,
+  } = useSelector((store) => store.food);
+  const [queries, setQueries] = useState({
+    page: 1,
+    searchText: "",
+    typeId: "",
+    orderBy: "unitPrice",
+    orderType: "asc",
+    numOfPerPage: 5,
+  });
 
   useEffect(() => {
     document.title = "Quản lý hàng hóa | ECook";
     window.scrollTo(0, 0);
     // fetch data
-    setData(FOODS_DATA);
-  }, []);
+    dispatch(getListFoodPerPage(queries));
+  }, [queries, dispatch]);
+
   return (
     <div className="manage-food-page">
       <div className="manage-food-page-top">
@@ -42,16 +62,26 @@ const ManageFood = () => {
             <DropdownCommon
               label="Loại hàng"
               options={[
+                "Tất cả",
                 "Thịt heo, bò",
                 "Thủy hải sản",
                 "Gia cầm",
                 "Rau củ, quả",
               ]}
-              handleMenuClick={(e) => console.log(e)}
+              selectedItem={getFoodType(queries.typeId)}
+              handleMenuClick={(e) => {
+                const typeId = Number(e.key);
+                setQueries({
+                  ...queries,
+                  typeId: typeId ? typeId : "",
+                });
+              }}
             />
           </div>
 
-          <SearchField onChange={(e) => console.log(e.target.value)} />
+          <SearchField
+            onSubmit={(value) => setQueries({ ...queries, searchText: value })}
+          />
           <button
             className="btn-admin"
             onClick={() => setIsOpenModalCreated(true)}
@@ -61,16 +91,32 @@ const ManageFood = () => {
           </button>
         </div>
       </div>
-      <EnhancedTable data={data} setData={setData} />
+      <EnhancedTable
+        data={foodList}
+        queries={queries}
+        setQueries={setQueries}
+      />
       <ModalCreated
         isModalVisible={isOpenModalCreated}
         handleSubmit={(formData) => {
           setIsOpenModalCreated(false);
-          // add formData into data ,setData
-          console.log("data: ", formData);
+          const requestData = {
+            imageFile: formData?.imageFile,
+            foodLists: [
+              {
+                ...formData,
+                typeId: getFoodTypeId(formData.type),
+              },
+            ],
+          };
+          dispatch(createFood(requestData));
         }}
         close={() => setIsOpenModalCreated(false)}
       />
+      {(loadingGetListFood ||
+        createFoodState.loading ||
+        removeTempFoodState.loading ||
+        updateFoodState.loading) && <SpinLoading />}
     </div>
   );
 };
