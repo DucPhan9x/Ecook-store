@@ -21,7 +21,6 @@ import OrderIcon from "assets/icons/sidebarAdmin/form.png";
 import VoucherIcon from "assets/icons/sidebarAdmin/voucher.png";
 import RecipeIcon from "assets/icons/sidebarAdmin/recipes.png";
 import { useHistory } from "react-router";
-
 const drawerWidth = 250;
 
 const useStyles = makeStyles((theme) => ({
@@ -68,6 +67,8 @@ const Sidebar = () => {
   const history = useHistory();
   const { isOpenSidebar } = useSelector((store) => store.control);
 
+  const { information } = useSelector((store) => store.common)?.userDetail;
+
   return (
     <Drawer
       variant="permanent"
@@ -105,28 +106,50 @@ const Sidebar = () => {
           { name: "Quản lý đơn hàng", pathName: "/orders" },
           { name: "Quản lý vouchers", pathName: "/vouchers" },
           { name: "Thống kê", pathName: "/statistics" },
-        ].map((text, index) => (
-          <ListItem
-            onClick={() => history.push("/admin/dashboard" + text.pathName)}
-            button
-            key={index}
-            className={`list--icon ${
-              (window.location.pathname.startsWith(
-                "/admin/dashboard" + text.pathName
-              ) &&
-                text.pathName !== "") ||
-              (text.pathName === "" &&
-                window.location.pathname === "/admin/dashboard")
-                ? "active"
-                : ""
-            }`}
-          >
-            <ListItemIcon>
-              <img src={LIST_ICON[index]} alt="" />
-            </ListItemIcon>
-            <ListItemText primary={text.name} />
-          </ListItem>
-        ))}
+        ]
+          .filter((item) => {
+            if (information.roleId === 2) {
+              return item;
+            } else {
+              if (information.roleId === 3) {
+                return ![
+                  "Quản lý khóa học",
+                  "Quản lý công thức",
+                  "Quản lý nhân viên",
+                  "Quản lý chứng nhận",
+                ].includes(item.name);
+              } else {
+                return ![
+                  "Quản lý đơn hàng",
+                  "Quán lý khách hàng",
+                  "Quản lý nhân viên",
+                  "Quản lý vouchers",
+                ].includes(item.name);
+              }
+            }
+          })
+          .map((text, index) => (
+            <ListItem
+              onClick={() => history.push("/admin/dashboard" + text.pathName)}
+              button
+              key={index}
+              className={`list--icon ${
+                (window.location.pathname.startsWith(
+                  "/admin/dashboard" + text.pathName
+                ) &&
+                  text.pathName !== "") ||
+                (text.pathName === "" &&
+                  window.location.pathname === "/admin/dashboard")
+                  ? "active"
+                  : ""
+              }`}
+            >
+              <ListItemIcon>
+                <img src={LIST_ICON[index]} alt="" />
+              </ListItemIcon>
+              <ListItemText primary={text.name} />
+            </ListItem>
+          ))}
       </List>
     </Drawer>
   );

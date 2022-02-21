@@ -7,6 +7,8 @@ import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import DeleteIcon from "@material-ui/icons/Delete";
 import FilterListIcon from "@material-ui/icons/FilterList";
+import { useDispatch } from "react-redux";
+import { deleteCourseById } from "redux/actions/course";
 
 const useToolbarStyles = makeStyles((theme) => ({
   root: {
@@ -30,8 +32,9 @@ const useToolbarStyles = makeStyles((theme) => ({
 
 const ToolbarContainer = (props) => {
   const classes = useToolbarStyles();
-  const { selected, setRows, rows, setSelected } = props;
+  const { selected, setSelected } = props;
   const numSelected = selected.length;
+  const dispatch = useDispatch();
 
   return (
     <Toolbar
@@ -64,8 +67,8 @@ const ToolbarContainer = (props) => {
           <IconButton
             aria-label="delete"
             onClick={() => {
-              console.log("run api delete by selected: ", { selected });
-              setRows(rows.filter((item) => !selected.includes(item._id)));
+              dispatch(deleteCourseById(selected));
+              // setRows(rows.filter((item) => !selected.includes(item._id)));
               setSelected([]);
             }}
           >

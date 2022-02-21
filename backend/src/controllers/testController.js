@@ -96,13 +96,15 @@ const getListTest = async (req, res, next) => {
       examinationId: existedExamination._id,
       isPass,
     }).sort(orderQuery);
-
-    tests = Promise.all(
-      tests.map((item) => ({
-        ...item,
-        student: UserDetail.findOne({ userId: item.studentId }),
-      }))
+    let studentsData = tests.map((item) =>
+      UserDetail.findOne({ userId: item.studentId })
     );
+    studentsData = await Promise.all(studentsData);
+
+    tests = tests.map((item, index) => ({
+      ...item,
+      student: studentsData[index],
+    }));
     res.status(200).json({
       status: 200,
       msg: "Get tests successfully!",

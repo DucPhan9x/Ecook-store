@@ -23,6 +23,7 @@ const userDetailSchema = new Schema({
   },
   courseList: {
     type: [courseSchema],
+    default: [],
   },
   expertise: String,
 });

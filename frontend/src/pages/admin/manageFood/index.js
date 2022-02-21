@@ -16,7 +16,6 @@ const ManageFood = () => {
   const [isOpenModalCreated, setIsOpenModalCreated] = useState(false);
   const dispatch = useDispatch();
   const {
-    foodList,
     loadingGetListFood,
     createFoodState,
     removeTempFoodState,
@@ -74,13 +73,16 @@ const ManageFood = () => {
                 setQueries({
                   ...queries,
                   typeId: typeId ? typeId : "",
+                  page: 1,
                 });
               }}
             />
           </div>
 
           <SearchField
-            onSubmit={(value) => setQueries({ ...queries, searchText: value })}
+            onSubmit={(value) =>
+              setQueries({ ...queries, searchText: value, page: 1 })
+            }
           />
           <button
             className="btn-admin"
@@ -91,11 +93,7 @@ const ManageFood = () => {
           </button>
         </div>
       </div>
-      <EnhancedTable
-        data={foodList}
-        queries={queries}
-        setQueries={setQueries}
-      />
+      <EnhancedTable queries={queries} setQueries={setQueries} />
       <ModalCreated
         isModalVisible={isOpenModalCreated}
         handleSubmit={(formData) => {

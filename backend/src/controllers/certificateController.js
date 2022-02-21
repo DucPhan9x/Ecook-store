@@ -129,12 +129,15 @@ const getListCertificationPerPage = async (req, res, next) => {
     }
     const totalPage = parseInt(totalNumOfCertifications / numOfPerPage) + 1;
 
-    certifications = Promise.all(
-      certifications.map((item) => ({
-        ...item,
-        student: UserDetail.findOne({ userId: item.studentId }),
-      }))
+    let studentsData = certifications.map((item) =>
+      UserDetail.findOne({ userId: item.studentId })
     );
+    studentsData = await Promise.all(studentsData);
+
+    certifications = certifications.map((item, index) => ({
+      ...item,
+      student: studentsData[index],
+    }));
     res.status(200).json({
       status: 200,
       msg: "Get certifications successfully!",

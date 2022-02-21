@@ -2,19 +2,18 @@ import { IconButton, Input, Paper } from "@material-ui/core";
 import {
   BackPreviousPage,
   PopoverStickOnHover,
+  SpinLoading,
   YoutubeEmbed,
 } from "components/common";
 import { DropdownCommon } from "components/common/dropdown";
 import SearchField from "components/common/input/SearchField";
 import React, { useEffect, useRef, useState } from "react";
-import { EXAMINATIONS_DATA } from "utils/dummyData";
 import moment from "moment";
 import FlareIcon from "@material-ui/icons/Flare";
 import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
 import { Form as ReForm } from "reactstrap";
 import { FormBox } from "components/common";
 import Button from "@restart/ui/esm/Button";
-import { uuid } from "utils/stringUtils";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
@@ -27,45 +26,30 @@ import SignaturePad from "react-signature-canvas";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import UploadImage from "components/common/UploadImage";
 import { isEmpty } from "validator";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { getExaminationByCourseId } from "redux/actions/course";
 
 const ExaminationsCourse = () => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState({});
   const [openModalCertification, setOpenModalCertification] = useState(false);
-  // fetch course by id course
-  const courseSelected = {
-    _id: uuid(),
-    name: "Món Á cơ bản",
-    unitPrice: 799999,
-    description: "Đây là khóa học chủ yếu tập trung vào các món ăn Châu Á.",
-    examinationContent: "Bò hầm tiêu xanh",
-    regulation:
-      "Thời gian 45 phút, quay video từ khâu sơ chế đến khi thành phẩm.",
-    criteria: "An toan ve sinh thuc pham, trang tri dep mat",
-    videoUrls: [
-      {
-        title: "Mon Chau A",
-        videoUrl:
-          "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-        duration: "30 phút",
-      },
-    ],
-    instructor: {
-      fullName: "Phan Trong Duc",
-      phoneNumber: "0984763232",
-      address: "TT. La Hai - H.Dong Xuan - T.Phu Yen",
-      imageUrl: "https://picsum.photos/200/300",
-      email: "trongduc@gmail.com",
-    },
-    createAt: Date.now(),
-  };
+  const dispatch = useDispatch();
+  const { courseID } = useParams();
+  const { examinationByCourseId } = useSelector((store) => store.course);
+  const [queries, setQueries] = useState({
+    orderBy: "createAt",
+    orderType: "asc",
+    page: 1,
+    searchText: "",
+  });
 
   useEffect(() => {
-    // fetch examination by course id
-    const temp = EXAMINATIONS_DATA.map((item) => ({
-      ...item,
-    }));
-    setData([...temp]);
-  }, []);
+    dispatch(getExaminationByCourseId(courseID));
+  }, [courseID, dispatch]);
+
+  useEffect(() => {
+    setData(examinationByCourseId?.data);
+  }, [examinationByCourseId]);
 
   let padRef = useRef(null);
 
@@ -142,17 +126,30 @@ const ExaminationsCourse = () => {
   return (
     <div className="examinations-course-container">
       <h3 className="title-examination-course">
-        Danh sách các bài thi cuối khóa học: {courseSelected.content}
+        Danh sách các bài thi cuối khóa học: {data?.courseName}
       </h3>
       <div className="examinations-course-container-top flex j-space-between">
         <BackPreviousPage />
         <div className="examinations-course-container-top-right flex j-space-between items-center">
           <DropdownCommon
             label="Sắp xếp"
+            selectedItem={
+              ["Mới nhất", "Cũ nhất"][queries.orderType === "asc" ? 1 : 0]
+            }
             options={["Mới nhất", "Cũ nhất"]}
-            handleMenuClick={(e) => console.log(e)}
+            handleMenuClick={(e) =>
+              setQueries({
+                ...queries,
+                orderType: Number(e.key) === 0 ? "desc" : "asc",
+                page: 1,
+              })
+            }
           />
-          <SearchField onChange={(e) => console.log(e.target.value)} />
+          <SearchField
+            onSubmit={(value) =>
+              setQueries({ ...queries, searchText: value, page: 1 })
+            }
+          />
         </div>
       </div>
       <Paper className="examinations-course-container-content">
@@ -162,19 +159,19 @@ const ExaminationsCourse = () => {
               <FlareIcon />
               Nội dung bài thi:
             </label>
-            <span>- {courseSelected.examinationContent}</span>
-            <span>- {courseSelected.regulation}</span>
+            <span>- {data?.content}</span>
+            <span>- {data?.regulation}</span>
           </div>
           <div className="examinations-course-container-content-bottom-contents">
             <label>
               <FlareIcon />
               Tiêu chí đánh giá:
             </label>
-            <span>- {courseSelected.criteria}</span>
+            <span>- {data?.criteria}</span>
           </div>
         </div>
       </Paper>
-      {data.map((c, index) => (
+      {data?.tests?.map((c, index) => (
         <Paper
           className="examinations-course-container-submit-video"
           key={index}
@@ -235,7 +232,7 @@ const ExaminationsCourse = () => {
                           item.isPass = e.target.value === "pass";
                         }
                       });
-                      setData(temp);
+                      // setData(temp);
                     }}
                     className="flex flex-row"
                   >
@@ -265,7 +262,7 @@ const ExaminationsCourse = () => {
                       onChange: (e) => {
                         let temp = [...data];
                         temp[index].feedbacks = e.target.value;
-                        setData(temp);
+                        // setData(temp);
                       },
                       value: c.feedbacks,
                       disabled: false,
@@ -468,6 +465,7 @@ const ExaminationsCourse = () => {
           </div>
         </div>
       </Modal>
+      {examinationByCourseId?.loading && <SpinLoading />}
     </div>
   );
 };

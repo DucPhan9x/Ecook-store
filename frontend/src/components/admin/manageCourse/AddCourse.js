@@ -1,5 +1,4 @@
 import { Paper } from "@material-ui/core";
-import YoutubeEmbed from "components/common/YoutubeEmbed";
 import React, { useState } from "react";
 import QueueIcon from "@material-ui/icons/Queue";
 import { Modal } from "antd";
@@ -7,21 +6,29 @@ import { Form as ReForm } from "reactstrap";
 import { isEmpty, isCurrency } from "validator";
 import isURL from "validator/lib/isURL";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
-import { FormBox } from "components/common";
+import { FormBox, SpinLoading } from "components/common";
 import BackPreviousPage from "components/common/BackPreviousPage";
+import { useDispatch } from "react-redux";
+import { createCourse } from "redux/actions/course";
+import { useSelector } from "react-redux";
 
 const AddCourse = () => {
   const [videoUrls, setVideoUrls] = useState([]);
   const [errorVideo, setErrorVideo] = React.useState({});
   const [error, setError] = React.useState({});
+  const { createCourseState } = useSelector((store) => store.course);
+  const dispatch = useDispatch();
   const [formVideo, setFormVideo] = useState({
     title: "",
     videoUrl: "",
+    duration: 0,
   });
   const [form, setForm] = useState({
     name: "",
     unitPrice: "",
     description: "",
+    discountOff: 0,
+    discountMaximum: 0,
     examinationContent: "",
     regulation: "",
     criteria: "",
@@ -32,6 +39,9 @@ const AddCourse = () => {
     // check validate
     if (isEmpty(formVideo.title)) {
       errorState.title = "Vui lòng nhập vào, không được để trống!";
+    }
+    if (!formVideo.duration) {
+      errorState.duration = "Vui lòng nhập vào, không được để trống!";
     }
     if (!isURL(formVideo.videoUrl)) {
       errorState.videoUrl = "URL không hợp lệ!";
@@ -69,10 +79,7 @@ const AddCourse = () => {
       return setErrorVideo(errorState);
     }
     const temp = [...videoUrls];
-    temp.push({
-      ...formVideo,
-      duration: "30 phút",
-    });
+    temp.push(formVideo);
     setVideoUrls(temp);
     setIsModalVisible(false);
   };
@@ -84,8 +91,22 @@ const AddCourse = () => {
       return setError(errorState);
     }
     // API add couse
-    console.log({ form });
-    console.log({ videoUrls });
+    const requestData = {
+      courseName: form.name,
+      discountOff: form.discountOff,
+      discountMaximum: form.discountMaximum,
+      description: form.description,
+      unitPrice: form.unitPrice,
+      videoList: videoUrls,
+      examination: {
+        regulation: form.regulation,
+        criteria: form.criteria,
+        content: form.examinationContent,
+        tests: [],
+      },
+    };
+
+    dispatch(createCourse(requestData));
   };
   const handleChangeVideo = (event) => {
     setFormVideo({ ...formVideo, [event.target.name]: event.target.value });
@@ -153,6 +174,36 @@ const AddCourse = () => {
                 />
               </div>
               <div className="block-input-info-course">
+                <label>Giảm giá(%)</label>
+                <FormBox
+                  propsInput={{
+                    type: "number",
+                    min: 0,
+                    name: "discountOff",
+                    onChange: handleChange,
+                    onFocus: handleFocus,
+                    value: form.discountOff,
+                    disabled: false,
+                  }}
+                  error={error.discountOff}
+                />
+              </div>
+              <div className="block-input-info-course">
+                <label>Giá giảm tối đa:</label>
+                <FormBox
+                  propsInput={{
+                    type: "number",
+                    min: 0,
+                    name: "discountMaximum",
+                    onChange: handleChange,
+                    onFocus: handleFocus,
+                    value: form.discountMaximum,
+                    disabled: false,
+                  }}
+                  error={error.discountMaximum}
+                />
+              </div>
+              <div className="block-input-info-course">
                 <label>Mô tả</label>
                 <FormBox
                   propsInput={{
@@ -216,7 +267,14 @@ const AddCourse = () => {
           <Paper>
             {videoUrls.map((item, index) => (
               <div className="block-video-course-added">
-                <YoutubeEmbed videoUrl={item.videoUrl} id={item._id} />
+                <iframe
+                  src={item?.videoUrl}
+                  frameBorder="0"
+                  allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  controls
+                  title="Embedded youtube"
+                />
                 <div className="block-video-course-added-right">
                   <div>
                     <label>Bài {index + 1}: </label>
@@ -286,7 +344,22 @@ const AddCourse = () => {
               error={errorVideo.title}
             />
           </div>
+          <div className="body-content-form-add-video">
+            <label>Thời lượng(phút)</label>
+            <FormBox
+              propsInput={{
+                type: "number",
+                name: "duration",
+                onChange: handleChangeVideo,
+                onFocus: handleFocusVideo,
+                value: formVideo.duration,
+                disabled: false,
+              }}
+              error={errorVideo.duration}
+            />
+          </div>
         </ReForm>
+        {createCourseState.loading && <SpinLoading />}
       </Modal>
     </div>
   );

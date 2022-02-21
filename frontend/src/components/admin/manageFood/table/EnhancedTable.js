@@ -41,8 +41,6 @@ const useStyles = makeStyles((theme) => ({
 export default function EnhancedTable({ queries, setQueries }) {
   const classes = useStyles();
   const [selected, setSelected] = React.useState([]);
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const { totalRows, foodList } = useSelector((store) => store.food);
 
   const [rows, setRows] = useState([]);
@@ -56,6 +54,7 @@ export default function EnhancedTable({ queries, setQueries }) {
       ...queries,
       orderBy: property,
       orderType: isAsc ? "desc" : "asc",
+      page: 1,
     });
   };
 
@@ -69,14 +68,11 @@ export default function EnhancedTable({ queries, setQueries }) {
   };
 
   const handleChangePage = (event, newPage) => {
-    setPage(newPage);
     setQueries({ ...queries, page: newPage + 1 });
   };
 
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setQueries({ ...queries, numOfPerPage: event.target.value });
-    setPage(0);
+    setQueries({ ...queries, numOfPerPage: event.target.value, page: 1 });
   };
 
   const [itemSelected, setItemSelected] = useState("");
@@ -115,9 +111,9 @@ export default function EnhancedTable({ queries, setQueries }) {
               orderBy={queries?.orderBy}
               selected={selected}
               setSelected={setSelected}
-              page={page}
+              page={queries.page - 1}
               setRows={setRows}
-              rowsPerPage={rowsPerPage}
+              rowsPerPage={queries.numOfPerPage}
               setItemSelected={setItemSelected}
               setItemSeeDetail={setItemSeeDetail}
               setFeedbackItemSelected={setFeedbackItemSelected}
@@ -128,8 +124,8 @@ export default function EnhancedTable({ queries, setQueries }) {
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
           count={totalRows}
-          rowsPerPage={rowsPerPage}
-          page={page}
+          rowsPerPage={queries.numOfPerPage}
+          page={queries.page - 1}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
@@ -146,21 +142,6 @@ export default function EnhancedTable({ queries, setQueries }) {
               foodUpdated: formData,
             })
           );
-
-          //update food in the redux
-          // let temp = [...rows];
-          // temp.forEach((item) => {
-          //   if (item._id === itemSelected._id) {
-          //     item.name = formData.name;
-          //     item.type = formData.type;
-          //     item.unitPrice = formData.unitPrice;
-          //     item.description = formData.description;
-          //     item.discountOff = formData.discountOff;
-          //     item.discountMaximum = formData.discountMaximum;
-          //     item.imageUrl = formData.imageUrl || "";
-          //   }
-          // });
-
           setItemSelected("");
         }}
         close={() => {

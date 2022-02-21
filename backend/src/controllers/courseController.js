@@ -1,4 +1,4 @@
-import { Examination, UserDetail } from "../models";
+import { Examination, Feedback, UserDetail } from "../models";
 import { Course } from "../models/CourseModel";
 import createHttpError from "http-errors";
 
@@ -8,19 +8,13 @@ const createNewCourse = async (req, res, next) => {
       courseName,
       discountOff,
       discountMaximum,
-      instructorId,
       description,
       unitPrice,
       videoList,
       examination,
     } = req.body;
-
-    const newExamination = await Examination.create(examination);
-    if (newExamination) {
-      throw createHttpError(404, "Examination is not exist!");
-    }
+    const instructorId = req.user._id;
     const instructor = await UserDetail.findOne({ userId: instructorId });
-
     const newCourse = await Course.create({
       courseName,
       discountOff,
@@ -29,9 +23,12 @@ const createNewCourse = async (req, res, next) => {
       description,
       unitPrice,
       videoList,
-      examination: newExamination,
     });
 
+    const newExamination = await Examination.create({
+      ...examination,
+      courseId: newCourse._id,
+    });
     res.status(200).json({
       status: 200,
       msg: "Create new course successfully!",
@@ -49,13 +46,14 @@ const updateCourseById = async (req, res, next) => {
       courseName,
       discountOff,
       discountMaximum,
-      instructorId,
       description,
       unitPrice,
       videoList,
       examination,
+      courseId,
     } = req.body;
-    const courseId = req.params.courseId;
+    const instructorId = req.user._id;
+
     const existedCourse = await Course.findById(courseId);
     const existedExamination = await Examination.findOne({ courseId });
     if (!existedCourse) {
@@ -93,30 +91,28 @@ const updateCourseById = async (req, res, next) => {
 
 const deleteCourseById = async (req, res, next) => {
   try {
-    const courseId = req.params.courseId;
-    const existedCourse = await Course.findById(courseId);
-    const existedExamination = await Examination.findOne({ courseId });
-    if (!existedCourse) {
-      throw createHttpError(404, "Course is not exist!");
-    }
-    if (!existedExamination) {
-      throw createHttpError(404, "Examination is not exist!");
+    const courseIds = req.body;
+    for (let i = 0; i < courseIds.length; i++) {
+      const courseId = courseIds[i];
+      const course = await Promise.all([
+        Course.findByIdAndUpdate(courseId, {
+          isRemoved: true,
+        }),
+        Examination.findOneAndUpdate(
+          { courseId },
+          {
+            isRemoved: true,
+          }
+        ),
+      ]);
+      if (!course) {
+        throw createHttpError(400, "Course(s) is(are) not exist!");
+      }
     }
 
-    await Promise.all([
-      Course.findByIdAndUpdate(courseId, {
-        isRemoved: true,
-      }),
-      Examination.findOneAndUpdate(
-        { courseId },
-        {
-          isRemoved: true,
-        }
-      ),
-    ]);
     res.status(200).json({
       status: 200,
-      msg: "Delete course successfully!",
+      msg: "Delete course(s) successfully!",
     });
   } catch (error) {
     console.log(error);
@@ -127,11 +123,12 @@ const deleteCourseById = async (req, res, next) => {
 const getListCoursePerPage = async (req, res, next) => {
   try {
     let { page, searchText, orderBy, orderType, numOfPerPage } = req.query;
+    numOfPerPage = Number(numOfPerPage);
     page = page ? page : 1;
     searchText = searchText ? searchText : "";
-    orderBy = orderBy ? orderBy : "";
-    orderType = orderType ? orderType : 1;
-    const orderQuery = orderBy ? { [orderBy]: orderType } : {};
+    orderBy = orderBy ? orderBy : "unitPrice";
+    orderType = orderType === "asc" ? 1 : 0;
+    const orderQuery = { [orderBy]: orderType };
 
     const start = (page - 1) * numOfPerPage;
     let totalNumOfCourses;
@@ -139,35 +136,40 @@ const getListCoursePerPage = async (req, res, next) => {
     if (searchText) {
       courses = await Course.find({
         $text: { $search: searchText },
-        isRemoved: true,
+        isRemoved: false,
       })
         .skip(start)
         .limit(numOfPerPage)
         .sort(orderQuery);
       totalNumOfCourses = await Course.find({
         $text: { $search: searchText },
-        isRemoved: true,
+        isRemoved: false,
       }).count();
     } else {
-      courses = await Course.find({ isRemoved: true })
+      courses = await Course.find({ isRemoved: false })
         .skip(start)
         .limit(numOfPerPage)
         .sort(orderQuery);
-      totalNumOfCourses = await Course.find({ isRemoved: true }).count();
+      totalNumOfCourses = await Course.find({ isRemoved: false }).count();
     }
     const totalPage = parseInt(totalNumOfCourses / numOfPerPage) + 1;
 
-    courses = Promise.all(
-      courses.map((item) => ({
-        ...item,
-        instructor: UserDetail.findOne({ userId: item.instructorId }),
-      }))
+    let instructorsData = courses.map((item) =>
+      UserDetail.findOne({ userId: item.instructorId })
     );
+    instructorsData = await Promise.all(instructorsData);
+    courses = courses.map((item, index) => ({
+      ...item._doc,
+      instructor: instructorsData[index],
+    }));
+    const totalRows = await Course.find({ isRemoved: false }).count();
+
     res.status(200).json({
       status: 200,
       msg: "Get courses successfully!",
       courses,
       totalPage,
+      totalRows,
     });
   } catch (error) {
     console.log(error);
@@ -179,6 +181,7 @@ const getCourseById = async (req, res, next) => {
   try {
     const courseId = req.params.courseId;
     let course = await Course.findById(courseId);
+    let examination = await Examination.findOne({ courseId });
 
     let feedbacks = await Feedback.find({ itemId: courseId });
     feedbacks = feedbacks.map((item) => {
@@ -200,6 +203,7 @@ const getCourseById = async (req, res, next) => {
       ...course._doc,
       feedbacks,
       instructor,
+      examination,
     };
     res.status(200).json({
       status: 200,

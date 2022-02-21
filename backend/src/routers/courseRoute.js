@@ -12,13 +12,15 @@ const {
 } = courseController;
 
 export const courseRoute = Router();
-courseRoute.use(
-  `${baseUrl}`,
-  jwtMiddleware,
-  validatePermission.isInstructorRole
-);
-courseRoute.route(`${baseUrl}`).post(createNewCourse);
-courseRoute.route(`${baseUrl}/:courseId`).put(updateCourseById);
-courseRoute.route(`${baseUrl}/:courseId`).delete(deleteCourseById);
+courseRoute.use(`${baseUrl}`, jwtMiddleware);
+courseRoute
+  .route(`${baseUrl}`)
+  .post(validatePermission.isInstructorRole, createNewCourse);
+courseRoute
+  .route(`${baseUrl}`)
+  .put(validatePermission.isInstructorRole, updateCourseById);
+courseRoute
+  .route(`${baseUrl}/delete`)
+  .put(validatePermission.isInstructorRole, deleteCourseById);
 courseRoute.route(`${baseUrl}/:courseId`).get(getCourseById);
-courseRoute.route(`${baseUrl}`).get(getListCoursePerPage);
+courseRoute.route(`${baseUrl}?`).get(getListCoursePerPage);

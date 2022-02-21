@@ -13,6 +13,7 @@ import control from "./control";
 import common from "./common";
 import order from "./order";
 import food from "./food";
+import course from "./course";
 
 export default combineReducers({
   login,
@@ -27,4 +28,5 @@ export default combineReducers({
   resetPasswordAdmin,
   order,
   food,
+  course,
 });

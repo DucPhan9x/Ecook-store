@@ -9,15 +9,21 @@ const getListCartItem = async (req, res, next) => {
       itemType,
     });
 
-    cartItems = cartItems.map((item) => {
+    let itemDetails = cartItems.map((item) => {
       if (item.itemType === 1) {
-        return { ...item, item: Food.findById(item.itemId) };
+        return Food.findById(item.itemId);
       } else {
-        return { ...item, item: Course.findById(item.itemId) };
+        return Course.findById(item.itemId);
       }
     });
 
-    let data = await Promise.all(cartItems);
+    itemDetails = await Promise.all(itemDetails);
+    let data = cartItems.map((i, index) => {
+      return {
+        ...i,
+        item: itemDetails[index],
+      };
+    });
     res.status(200).json({
       status: 200,
       msg: "Get cart items successfully!",

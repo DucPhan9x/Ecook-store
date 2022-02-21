@@ -2,17 +2,32 @@ import React, { useEffect, useState } from "react";
 import { EnhancedTable } from "components/admin/manageCourse";
 import SearchField from "components/common/input/SearchField";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
-import { COURSES_DATA } from "utils/dummyData";
 import { useHistory } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { getListCoursePerPage } from "redux/actions/course";
+import { SpinLoading } from "components/common";
 
 const ManageCourse = () => {
-  const [data, setData] = useState([]);
   const history = useHistory();
+  const dispatch = useDispatch();
+  const {
+    loadingGetListCourse,
+    createCourseState,
+    removeTempCourseState,
+    updateCourseState,
+  } = useSelector((store) => store.course);
+  const [queries, setQueries] = useState({
+    page: 1,
+    searchText: "",
+    orderBy: "unitPrice",
+    orderType: "asc",
+    numOfPerPage: 5,
+  });
 
   useEffect(() => {
     // fetch data
-    setData(COURSES_DATA);
-  }, []);
+    dispatch(getListCoursePerPage(queries));
+  }, [queries, dispatch]);
   return (
     <div className="manage-food-page">
       <div className="manage-food-page-top">
@@ -27,10 +42,18 @@ const ManageCourse = () => {
             </button>
           </div>
 
-          <SearchField onChange={(e) => console.log(e.target.value)} />
+          <SearchField
+            onSubmit={(value) =>
+              setQueries({ ...queries, searchText: value, page: 1 })
+            }
+          />
         </div>
       </div>
-      <EnhancedTable data={data} setData={setData} />
+      <EnhancedTable queries={queries} setQueries={setQueries} />
+      {(loadingGetListCourse ||
+        createCourseState.loading ||
+        updateCourseState.loading ||
+        removeTempCourseState.loading) && <SpinLoading />}
     </div>
   );
 };

@@ -4,6 +4,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TableSortLabel from "@material-ui/core/TableSortLabel";
 import Checkbox from "@material-ui/core/Checkbox";
+import { useSelector } from "react-redux";
 
 const headCells = [
   {
@@ -12,7 +13,7 @@ const headCells = [
     disablePadding: true,
     label: "ID",
   },
-  { id: "name", numeric: false, disablePadding: false, label: "Tên" },
+  { id: "courseName", numeric: false, disablePadding: false, label: "Tên" },
   {
     id: "unitPrice",
     numeric: true,
@@ -20,12 +21,12 @@ const headCells = [
     label: "Giá cả (khóa học)",
   },
   { id: "instructor", numeric: false, disablePadding: false, label: "Tác giả" },
-  {
-    id: "amountStudent",
-    numeric: true,
-    disablePadding: false,
-    label: "Số lượng người mua",
-  },
+  // {
+  //   id: "amountStudent",
+  //   numeric: true,
+  //   disablePadding: false,
+  //   label: "Số lượng người mua",
+  // },
   {
     id: "createAt",
     numeric: false,
@@ -54,6 +55,8 @@ const HeaderContainer = (props) => {
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
+  const { information } = useSelector((store) => store.common)?.userDetail;
+
   return (
     <TableHead>
       <TableRow>
@@ -65,27 +68,37 @@ const HeaderContainer = (props) => {
             inputProps={{ "aria-label": "select all desserts" }}
           />
         </TableCell>
-        {headCells.map((headCell) => (
-          <TableCell
-            key={headCell.id}
-            align="left"
-            padding={headCell.disablePadding ? "none" : "normal"}
-            sortDirection={orderBy === headCell.id ? order : false}
-          >
-            <TableSortLabel
-              active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : "asc"}
-              onClick={createSortHandler(headCell.id)}
+        {headCells
+          .filter((item) => {
+            if (information?.roleId !== 2) {
+              return item.id !== "instructor";
+            } else {
+              return item;
+            }
+          })
+          .map((headCell) => (
+            <TableCell
+              key={headCell.id}
+              align="left"
+              padding={headCell.disablePadding ? "none" : "normal"}
+              sortDirection={orderBy === headCell.id ? order : false}
             >
-              {headCell.label}
-              {orderBy === headCell.id ? (
-                <span className={classes.visuallyHidden}>
-                  {order === "desc" ? "sorted descending" : "sorted ascending"}
-                </span>
-              ) : null}
-            </TableSortLabel>
-          </TableCell>
-        ))}
+              <TableSortLabel
+                active={orderBy === headCell.id}
+                direction={orderBy === headCell.id ? order : "asc"}
+                onClick={createSortHandler(headCell.id)}
+              >
+                {headCell.label}
+                {orderBy === headCell.id ? (
+                  <span className={classes.visuallyHidden}>
+                    {order === "desc"
+                      ? "sorted descending"
+                      : "sorted ascending"}
+                  </span>
+                ) : null}
+              </TableSortLabel>
+            </TableCell>
+          ))}
       </TableRow>
     </TableHead>
   );

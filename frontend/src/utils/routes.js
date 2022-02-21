@@ -17,7 +17,7 @@ export const ROUTE_ADMIN_DASHBOARD_COURSES = "/admin/dashboard/courses"; // cour
 export const ROUTE_ADMIN_DASHBOARD_COURSES_EDIT =
   "/admin/dashboard/courses/edit/:courseID"; // course manage
 export const ROUTE_ADMIN_DASHBOARD_EXAMINATION_COURSE =
-  "/admin/dashboard/courses/:courseID/examinations"; // course manage
+  "/admin/dashboard/examination/:courseID/"; // course manage
 export const ROUTE_ADMIN_DASHBOARD_COURSES_ADD = "/admin/dashboard/courses/add"; // course manage
 export const ROUTE_ADMIN_DASHBOARD_CUSTOMERS = "/admin/dashboard/customers"; // customer manage
 export const ROUTE_ADMIN_DASHBOARD_CUSTOMER_DETAIL =
