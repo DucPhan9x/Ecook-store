@@ -98,7 +98,6 @@ const Favorites = () => {
             </Grid>
           ))}
         </Grid>
-        <button className="btn btn-client">Xem thêm</button>
       </div>
       <ScrollToTop />
     </div>

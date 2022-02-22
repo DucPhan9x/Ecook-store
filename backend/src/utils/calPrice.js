@@ -29,3 +29,7 @@ export const calculateTotalPrice = (
   }
   return realPrice - promotePrice + shipmentFee;
 };
+
+export const convertVNDToUSD = (VNDMoney) => {
+  return VNDMoney * 0.000044;
+};

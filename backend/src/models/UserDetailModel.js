@@ -25,6 +25,10 @@ const userDetailSchema = new Schema({
     type: [courseSchema],
     default: [],
   },
+  isRemoved: {
+    type: Boolean,
+    default: false,
+  },
   expertise: String,
 });
 export const UserDetail = model("UserDetail", userDetailSchema, "UserDetail");

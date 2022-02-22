@@ -1,21 +1,37 @@
-import { Certification, Course } from "../models";
+import {
+  Certification,
+  Course,
+  Examination,
+  Test,
+  UserDetail,
+} from "../models";
 import createHttpError from "http-errors";
 
 const createNewCertification = async (req, res, next) => {
   try {
-    const {
-      courseId,
-      studentId,
-      startDate, // get by order course
-      endDate, // get last updated at test modal
-      positionCreate,
-      graded,
-    } = req.body;
-
+    const { courseId, studentId, positionCreate, graded } = req.body;
     const existedCourse = await Course.findById(courseId);
     if (!existedCourse) {
       throw createHttpError(404, "Course is not exist!");
     }
+    const examination = await Examination.findOne({ courseId: courseId });
+    if (!examination) {
+      throw createHttpError(404, "Examination is not exist!");
+    }
+    const test = await Test.findOne({
+      studentId,
+      examinationId: examination._id,
+    });
+    if (!test) {
+      throw createHttpError(404, "Test is not exist!");
+    }
+    const student = await UserDetail.findOne({ userId: studentId });
+    const courseOfStudent = student.courseList.find(
+      (item) => item._id === courseId
+    );
+
+    const startDate = courseOfStudent.studentBuyAt; //
+    const endDate = test.createAt; // create test model
 
     const newCertification = await Certification.create({
       courseId,
@@ -29,7 +45,7 @@ const createNewCertification = async (req, res, next) => {
     res.status(200).json({
       status: 200,
       msg: "Create new certification successfully!",
-      data: { certification: newCertification, course: existedCourse },
+      certification: { ...newCertification, course: existedCourse, student },
     });
   } catch (error) {
     console.log(error);
@@ -39,9 +55,8 @@ const createNewCertification = async (req, res, next) => {
 
 const updateCertification = async (req, res, next) => {
   try {
-    const certificationId = req.params.certificationId;
-    const { courseId, startDate, endDate, positionCreate, graded } = req.body;
-    const existedCourse = await Course.findById(courseId);
+    const { certificationId, startDate, endDate, positionCreate, graded } =
+      req.body;
     const existedCertification = await Certification.findById({
       certificationId,
     });
@@ -52,20 +67,23 @@ const updateCertification = async (req, res, next) => {
       throw createHttpError(404, "Certification is not exist!");
     }
 
-    const newCertification = await Certification.findByIdAndUpdate(
-      certificationId,
-      {
-        startDate,
-        endDate,
-        positionCreate,
-        graded,
-      }
-    );
+    const student = await UserDetail.findOne({
+      userId: existedCertification.studentId,
+    });
+    const course = await Course.findById(existedCertification.courseId);
+
+    await Certification.findByIdAndUpdate(certificationId, {
+      startDate,
+      endDate,
+      positionCreate,
+      graded,
+    });
+    const newCertification = Certification.findById(certificationId);
 
     res.status(200).json({
       status: 200,
       msg: "Update certification successfully!",
-      certification: newCertification,
+      certification: { ...newCertification._doc, course, student },
     });
   } catch (error) {
     console.log(error);
@@ -75,18 +93,22 @@ const updateCertification = async (req, res, next) => {
 
 const deleteCertificationById = async (req, res, next) => {
   try {
-    const certificationId = req.params.certificationId;
-    const existedCertification = await Certification.findById(certificationId);
-
-    if (!existedCertification) {
-      throw createHttpError(404, "Certification is not exist!");
+    const certificationIds = req.body;
+    for (let i = 0; i < certificationIds.length; i++) {
+      const certificationId = certificationIds[i];
+      const certification = await Promise.all([
+        Certification.findByIdAndUpdate(certificationId, {
+          isRemoved: true,
+        }),
+      ]);
+      if (!certification) {
+        throw createHttpError(400, "Certification(s) is(are) not exist!");
+      }
     }
-    await Certification.findByIdAndUpdate(certificationId, {
-      isRemoved: true,
-    });
+
     res.status(200).json({
       status: 200,
-      msg: "Delete certification successfully!",
+      msg: "Delete course(s) successfully!",
     });
   } catch (error) {
     console.log(error);
@@ -96,37 +118,23 @@ const deleteCertificationById = async (req, res, next) => {
 
 const getListCertificationPerPage = async (req, res, next) => {
   try {
-    let { page, searchText, orderBy, orderType, numOfPerPage } = req.query;
+    let { page, orderBy, orderType, numOfPerPage } = req.query;
+    numOfPerPage = Number(numOfPerPage);
     page = page ? page : 1;
-    searchText = searchText ? searchText : "";
-    orderBy = orderBy ? orderBy : "";
-    orderType = orderType ? orderType : 1;
-    const orderQuery = orderBy ? { [orderBy]: orderType } : {};
+    orderBy = orderBy ? orderBy : "createAt";
+    orderType = orderType === "asc" ? 1 : 0;
+    const orderQuery = { [orderBy]: orderType };
 
     const start = (page - 1) * numOfPerPage;
     let totalNumOfCertifications;
     let certifications;
-    if (searchText) {
-      certifications = await Certification.find({
-        $text: { $search: searchText },
-        isRemoved: true,
-      })
-        .skip(start)
-        .limit(numOfPerPage)
-        .sort(orderQuery);
-      totalNumOfCertifications = await Certification.find({
-        $text: { $search: searchText },
-        isRemoved: true,
-      }).count();
-    } else {
-      certifications = await Certification.find({ isRemoved: true })
-        .skip(start)
-        .limit(numOfPerPage)
-        .sort(orderQuery);
-      totalNumOfCertifications = await Certification.find({
-        isRemoved: true,
-      }).count();
-    }
+    certifications = await Certification.find({ isRemoved: true })
+      .skip(start)
+      .limit(numOfPerPage)
+      .sort(orderQuery);
+    totalNumOfCertifications = await Certification.find({
+      isRemoved: true,
+    }).count();
     const totalPage = parseInt(totalNumOfCertifications / numOfPerPage) + 1;
 
     let studentsData = certifications.map((item) =>
@@ -134,15 +142,22 @@ const getListCertificationPerPage = async (req, res, next) => {
     );
     studentsData = await Promise.all(studentsData);
 
+    let coursesData = certifications.map((item) =>
+      Course.findById(item.courseId)
+    );
+    coursesData = await Promise.all(coursesData);
+
     certifications = certifications.map((item, index) => ({
-      ...item,
+      ...item._doc,
       student: studentsData[index],
+      course: coursesData[index],
     }));
     res.status(200).json({
       status: 200,
       msg: "Get certifications successfully!",
       certifications,
       totalPage,
+      totalRows: totalNumOfCertifications,
     });
   } catch (error) {
     console.log(error);
@@ -157,11 +172,12 @@ const getCertificationById = async (req, res, next) => {
     const student = await UserDetail.findOne({
       userId: certification.studentId,
     });
+    const course = await Course.findById(certification.courseId);
 
     res.status(200).json({
       status: 200,
-      msg: "Get certification successfully!",
-      certification: { ...certification, student },
+      msg: "Get course successfully!",
+      certification: { ...certification._doc, student, course },
     });
   } catch (error) {
     console.log(error);

@@ -12,13 +12,15 @@ const {
 } = recipeController;
 
 export const recipeRoute = Router();
-recipeRoute.use(
-  `${baseUrl}`,
-  jwtMiddleware,
-  validatePermission.isInstructorRole
-);
-recipeRoute.route(`${baseUrl}`).post(createNewRecipe);
-recipeRoute.route(`${baseUrl}/:recipeId`).put(updateRecipeById);
-recipeRoute.route(`${baseUrl}/:recipeId`).delete(deleteRecipeById);
+recipeRoute.use(`${baseUrl}`, jwtMiddleware);
+recipeRoute
+  .route(`${baseUrl}`)
+  .post(validatePermission.isInstructorRole, createNewRecipe);
+recipeRoute
+  .route(`${baseUrl}`)
+  .put(validatePermission.isInstructorRole, updateRecipeById);
+recipeRoute
+  .route(`${baseUrl}`)
+  .delete(validatePermission.isInstructorRole, deleteRecipeById);
 recipeRoute.route(`${baseUrl}/:recipeId`).get(getRecipeById);
-recipeRoute.route(`${baseUrl}`).get(getListRecipePerPage);
+recipeRoute.route(`${baseUrl}?`).get(getListRecipePerPage);

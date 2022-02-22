@@ -8,6 +8,9 @@ const orderSchema = new Schema({
   employeeId: {
     type: Schema.Types.ObjectId,
   },
+  orderType: {
+    type: Number, // 1 food, 2 course
+  },
   createAt: {
     type: Date,
     default: Date.now,

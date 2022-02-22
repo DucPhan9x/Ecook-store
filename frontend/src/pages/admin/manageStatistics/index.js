@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ProfitIcon from "assets/icons/profit.png";
 import AccessUserIcon from "assets/icons/group.png";
 import NumberSellCourseIcon from "assets/icons/numberOfCoursesSell.png";
@@ -40,6 +40,10 @@ export const options = {
 };
 
 const Statistics = () => {
+  useEffect(() => {
+    document.title = "Thống kế doanh thu | ECook";
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div className="statistic-container">
       <div className="statistic-container__top">

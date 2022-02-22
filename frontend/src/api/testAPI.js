@@ -1,7 +1,7 @@
 const { getAccessToken } = require("utils/authUtils");
 const url = process.env.REACT_APP_API_URL;
 
-const createRecipe = (data) => {
+const createTest = (data) => {
   const token = getAccessToken();
   let myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${token}`);
@@ -12,10 +12,10 @@ const createRecipe = (data) => {
     method: "POST",
     body: JSON.stringify(data),
   };
-  return fetch(`${url}recipe`, requestOptions);
+  return fetch(`${url}test`, requestOptions);
 };
 
-const updateRecipeById = (data) => {
+const updateTestById = (data) => {
   const token = getAccessToken();
   let myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${token}`);
@@ -26,25 +26,10 @@ const updateRecipeById = (data) => {
     method: "PUT",
     body: JSON.stringify(data),
   };
-  return fetch(`${url}recipe`, requestOptions);
+  return fetch(`${url}test`, requestOptions);
 };
 
-const deleteRecipeById = (recipeIds) => {
-  const token = getAccessToken();
-  let myHeaders = new Headers();
-  myHeaders.append("Authorization", `Bearer ${token}`);
-  myHeaders.append("Content-Type", `application/json`);
-
-  let requestOptions = {
-    headers: myHeaders,
-    method: "DELETE",
-    body: JSON.stringify(recipeIds),
-  };
-
-  return fetch(`${url}recipe`, requestOptions);
-};
-
-const getRecipeById = (recipeId) => {
+const getTestById = (courseId) => {
   const token = getAccessToken();
   let myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${token}`);
@@ -53,30 +38,30 @@ const getRecipeById = (recipeId) => {
     headers: myHeaders,
     method: "GET",
   };
-  return fetch(`${url}recipe/${recipeId}`, requestOptions);
+  return fetch(`${url}test/${courseId}`, requestOptions);
 };
 
-const getListRecipePerPage = (data) => {
+const getListTestPerPage = (data) => {
   const token = getAccessToken();
   let myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${token}`);
-  const { page, searchText, orderBy, orderType, numOfPerPage } = data;
+  const { page, orderBy, orderType, isPass, numOfPerPage, courseId } = data;
+  console.log(courseId);
 
   let requestOptions = {
     headers: myHeaders,
     method: "GET",
   };
   return fetch(
-    `${url}recipe?page=${page}&searchText=${searchText}&orderBy=${orderBy}&orderType=${orderType}&numOfPerPage=${numOfPerPage}`,
+    `${url}test?courseId=${courseId}&page=${page}&isPass=${isPass}&orderBy=${orderBy}&orderType=${orderType}&numOfPerPage=${numOfPerPage}`,
     requestOptions
   );
 };
 
-const recipeAPI = {
-  createRecipe,
-  updateRecipeById,
-  deleteRecipeById,
-  getRecipeById,
-  getListRecipePerPage,
+const testAPI = {
+  createTest,
+  getListTestPerPage,
+  updateTestById,
+  getTestById,
 };
-export default recipeAPI;
+export default testAPI;

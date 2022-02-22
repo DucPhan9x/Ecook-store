@@ -32,6 +32,8 @@ const ManageEmployee = () => {
   };
 
   useEffect(() => {
+    document.title = "Quản lý nhân viên | ECook";
+    window.scrollTo(0, 0);
     setFilterData(employees);
   }, [employees]);
 

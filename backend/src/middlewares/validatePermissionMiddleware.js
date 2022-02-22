@@ -14,6 +14,20 @@ const isAdminRole = async (req, res, next) => {
   }
 };
 
+const isCustomerRole = async (req, res, next) => {
+  const user = req.user;
+  try {
+    const customerRole = await Role.findOne({ roleName: "customer" });
+    if (user.roleId != customerRole.id) {
+      throw createHttpError(401, "You are not customer account!");
+    }
+    next();
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
+
 const isEmployeeRole = async (req, res, next) => {
   const user = req.user;
   try {
@@ -46,4 +60,5 @@ export const validatePermission = {
   isAdminRole,
   isEmployeeRole,
   isInstructorRole,
+  isCustomerRole,
 };

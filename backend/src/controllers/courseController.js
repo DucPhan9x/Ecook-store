@@ -62,7 +62,7 @@ const updateCourseById = async (req, res, next) => {
     if (!existedExamination) {
       throw createHttpError(404, "Examination is not exist!");
     }
-    const newCourse = await Course.findByIdAndUpdate(courseId, {
+    await Course.findByIdAndUpdate(courseId, {
       courseName,
       discountOff,
       discountMaximum,
@@ -71,13 +71,16 @@ const updateCourseById = async (req, res, next) => {
       unitPrice,
       videoList,
     });
-    const newExamination = await Examination.findOneAndUpdate(
+    await Examination.findOneAndUpdate(
       { courseId },
       {
         examination,
       }
     );
     const instructor = await UserDetail.findOne({ userId: instructorId });
+    const newCourse = await Course.findById(courseId);
+    const newExamination = await Examination.findById(existedExamination._id);
+
     res.status(200).json({
       status: 200,
       msg: "Update course successfully!",

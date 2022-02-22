@@ -26,6 +26,8 @@ const ManageCourse = () => {
 
   useEffect(() => {
     // fetch data
+    document.title = "Quản lý khóa học | ECook";
+    window.scrollTo(0, 0);
     dispatch(getListCoursePerPage(queries));
   }, [queries, dispatch]);
   return (

@@ -23,7 +23,7 @@ const OPTION_FILTER = [
   "Đang chuẩn bị",
   "Đang giao hàng",
   "Đã giao hàng",
-  "Đã hủy",
+  // "Đã hủy",
 ];
 
 const RowContent = ({ row, index }) => {
@@ -96,7 +96,6 @@ const RowContent = ({ row, index }) => {
         >
           Chi tiết
         </button>
-        <button className="btn btn-client btn--re-order">Đặt lại</button>
       </td>
       <ModalDetailOrder
         isModalVisible={!!itemSelected}

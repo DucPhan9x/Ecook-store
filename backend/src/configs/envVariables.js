@@ -19,4 +19,6 @@ export const envVariables = {
   clientSecretPaypal: process.env.CLIENT_SECRET_PAYPAL,
   modePaypal: process.env.MODE_PAYPAL,
   PAYPAL_API: process.env.PAYPAL_API,
+  API_GOOGLEMAP_KEY: process.env.API_GOOGLEMAP_KEY,
+  MY_ADDRESS: process.env.MY_ADDRESS,
 };

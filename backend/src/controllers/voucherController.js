@@ -27,7 +27,7 @@ const createNewVoucher = async (req, res, next) => {
     res.status(200).json({
       status: 200,
       msg: "Create new voucher successfully!",
-      data: newVoucher,
+      voucher: newVoucher,
     });
   } catch (error) {
     console.log(error);
@@ -38,6 +38,7 @@ const createNewVoucher = async (req, res, next) => {
 const updateVoucherById = async (req, res, next) => {
   try {
     const {
+      voucherId,
       name,
       discountOff,
       maxDiscountOff,
@@ -46,13 +47,12 @@ const updateVoucherById = async (req, res, next) => {
       remainingSlot,
       expiredDate,
     } = req.body;
-    const voucherId = req.params.voucherId;
     const existedVoucher = await Voucher.findById(voucherId);
 
     if (!existedVoucher) {
       throw createHttpError(404, "Voucher is not exist!");
     }
-    const newVoucher = await Voucher.findByIdAndUpdate(recipeId, {
+    await Voucher.findByIdAndUpdate(voucherId, {
       name,
       discountOff,
       maxDiscountOff,
@@ -61,6 +61,7 @@ const updateVoucherById = async (req, res, next) => {
       remainingSlot,
       expiredDate,
     });
+    const newVoucher = Voucher.findById(voucherId);
 
     res.status(200).json({
       status: 200,
@@ -75,17 +76,24 @@ const updateVoucherById = async (req, res, next) => {
 
 const deleteVoucherById = async (req, res, next) => {
   try {
-    const voucherId = req.params.voucherId;
-    const existedVoucher = await Voucher.findById(voucherId);
-
-    if (!existedVoucher) {
-      throw createHttpError(404, "Voucher is not exist!");
+    const voucherIds = req.body;
+    for (let i = 0; i < voucherIds.length; i++) {
+      const voucherId = voucherIds[i];
+      const voucher = await Promise.all([
+        Voucher.findByIdAndUpdate(voucherId, {
+          isRemoved: true,
+        }),
+      ]);
+      if (!voucher) {
+        throw createHttpError(400, "Voucher is not exist!");
+      }
     }
-    Voucher.findByIdAndRemove(voucherId),
-      res.status(200).json({
-        status: 200,
-        msg: "Delete voucher successfully!",
-      });
+
+    res.status(200).json({
+      status: 200,
+      msg: "Delete voucher(s) successfully!",
+      voucherIds,
+    });
   } catch (error) {
     console.log(error);
     next(error);
@@ -95,40 +103,44 @@ const deleteVoucherById = async (req, res, next) => {
 const getListVoucherPerPage = async (req, res, next) => {
   try {
     let { page, searchText, orderBy, orderType, numOfPerPage } = req.query;
+    numOfPerPage = Number(numOfPerPage);
     page = page ? page : 1;
     searchText = searchText ? searchText : "";
-    orderBy = orderBy ? orderBy : "";
-    orderType = orderType ? orderType : 1;
-    const orderQuery = orderBy ? { [orderBy]: orderType } : {};
+    orderBy = orderBy ? orderBy : "name";
+    orderType = orderType === "asc" ? 1 : 0;
+    const orderQuery = { [orderBy]: orderType };
 
     const start = (page - 1) * numOfPerPage;
     let totalNumOfVouchers;
     let vouchers;
     if (searchText) {
+      let regex = new RegExp([searchText].join(""), "i");
       vouchers = await Voucher.find({
-        $text: { $search: searchText },
-        isRemoved: true,
+        name: { $regex: regex },
+        isRemoved: false,
       })
         .skip(start)
         .limit(numOfPerPage)
         .sort(orderQuery);
-      totalNumOfVouchers = await Recipe.find({
-        $text: { $search: searchText },
-        isRemoved: true,
+      totalNumOfVouchers = await Voucher.find({
+        name: { $regex: regex },
+        isRemoved: false,
       }).count();
     } else {
-      vouchers = await Recipe.find({ isRemoved: true })
+      vouchers = await Voucher.find({ isRemoved: false })
         .skip(start)
         .limit(numOfPerPage)
         .sort(orderQuery);
-      totalNumOfVouchers = await Voucher.find({ isRemoved: true }).count();
+      totalNumOfVouchers = await Voucher.find({ isRemoved: false }).count();
     }
+    const totalRows = await Voucher.find({ isRemoved: false }).count();
     const totalPage = parseInt(totalNumOfVouchers / numOfPerPage) + 1;
     res.status(200).json({
       status: 200,
       msg: "Get vouchers successfully!",
       vouchers,
       totalPage,
+      totalRows,
     });
   } catch (error) {
     console.log(error);

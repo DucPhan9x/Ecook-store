@@ -34,6 +34,8 @@ const MyCourseDetail = () => {
     // eslint-disable-next-line
   }, []);
 
+  console.log(videoCurrent);
+
   return (
     <>
       <BackPreviousPage />

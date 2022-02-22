@@ -6,7 +6,6 @@ import {
   YoutubeEmbed,
 } from "components/common";
 import { DropdownCommon } from "components/common/dropdown";
-import SearchField from "components/common/input/SearchField";
 import React, { useEffect, useRef, useState } from "react";
 import moment from "moment";
 import FlareIcon from "@material-ui/icons/Flare";
@@ -28,19 +27,24 @@ import UploadImage from "components/common/UploadImage";
 import { isEmpty } from "validator";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getExaminationByCourseId } from "redux/actions/course";
+import {
+  getExaminationByCourseId,
+  getListTestPerPage,
+} from "redux/actions/course";
 
 const ExaminationsCourse = () => {
   const [data, setData] = useState({});
   const [openModalCertification, setOpenModalCertification] = useState(false);
   const dispatch = useDispatch();
   const { courseID } = useParams();
-  const { examinationByCourseId } = useSelector((store) => store.course);
+  const { examinationByCourseId, getListTestState, updateTestState } =
+    useSelector((store) => store.course);
   const [queries, setQueries] = useState({
     orderBy: "createAt",
     orderType: "asc",
     page: 1,
-    searchText: "",
+    isPass: false,
+    numOfPerPage: 5,
   });
 
   useEffect(() => {
@@ -48,8 +52,17 @@ const ExaminationsCourse = () => {
   }, [courseID, dispatch]);
 
   useEffect(() => {
+    dispatch(getListTestPerPage({ ...queries, courseId: courseID }));
+  }, [queries, dispatch, courseID]);
+
+  const [tests, setTests] = useState([]);
+  useEffect(() => {
     setData(examinationByCourseId?.data);
   }, [examinationByCourseId]);
+
+  useEffect(() => {
+    setTests(getListTestState?.testList);
+  }, [getListTestState]);
 
   let padRef = useRef(null);
 
@@ -145,11 +158,30 @@ const ExaminationsCourse = () => {
               })
             }
           />
-          <SearchField
-            onSubmit={(value) =>
-              setQueries({ ...queries, searchText: value, page: 1 })
-            }
-          />
+          <div className="flex items-center">
+            <FormControl component="fieldset">
+              <RadioGroup
+                aria-label="isPass"
+                name="isPass"
+                value={queries.isPass ? "pass" : "fail"}
+                onChange={(e) =>
+                  setQueries({ ...queries, isPass: e.target.value === "pass" })
+                }
+                className="flex flex-row"
+              >
+                <FormControlLabel
+                  value="pass"
+                  control={<Radio />}
+                  label="Pass"
+                />
+                <FormControlLabel
+                  value="fail"
+                  control={<Radio />}
+                  label="Fail"
+                />
+              </RadioGroup>
+            </FormControl>
+          </div>
         </div>
       </div>
       <Paper className="examinations-course-container-content">
@@ -171,127 +203,133 @@ const ExaminationsCourse = () => {
           </div>
         </div>
       </Paper>
-      {data?.tests?.map((c, index) => (
-        <Paper
-          className="examinations-course-container-submit-video"
-          key={index}
-        >
-          <div className="examinations-course-container-submit-video-top">
-            <div>
-              <span className="name-student">{c?.student.fullName}</span>
-              <PopoverStickOnHover
-                component={
-                  <div className="popover-show-info-student-container">
-                    <div className="popover-show-info-student-container--item">
-                      <PhoneAndroidIcon />
-                      <span>{c?.student.phoneNumber}</span>
+      {tests?.length > 0 ? (
+        tests?.map((c, index) => (
+          <Paper
+            className="examinations-course-container-submit-video"
+            key={index}
+          >
+            <div className="examinations-course-container-submit-video-top">
+              <div>
+                <span className="name-student">{c?.student.fullName}</span>
+                <PopoverStickOnHover
+                  component={
+                    <div className="popover-show-info-student-container">
+                      <div className="popover-show-info-student-container--item">
+                        <PhoneAndroidIcon />
+                        <span>{c?.student.phoneNumber}</span>
+                      </div>
+                      <div className="popover-show-info-student-container--item">
+                        <MailOutlineIcon />
+                        <span>{c?.student.email}</span>
+                      </div>
+                      <div className="popover-show-info-student-container--item">
+                        <BusinessIcon />
+                        <span>{c?.student.address}</span>
+                      </div>
                     </div>
-                    <div className="popover-show-info-student-container--item">
-                      <MailOutlineIcon />
-                      <span>{c?.student.email}</span>
-                    </div>
-                    <div className="popover-show-info-student-container--item">
-                      <BusinessIcon />
-                      <span>{c?.student.address}</span>
-                    </div>
-                  </div>
-                }
-                placement="top"
-                onMouseEnter={() => {}}
-                delay={200}
-              >
-                <IconButton>
-                  <InfoOutlinedIcon
-                    color="secondary"
-                    className="infor-icon-show-student"
-                  />
-                </IconButton>
-              </PopoverStickOnHover>
-            </div>
-            <span className="time-submit">
-              {moment(c?.creatAt).format("DD/MM/YYYY [-] HH:mm:ss")}
-            </span>
-          </div>
-          <div className="examinations-course-container-submit-video-bottom">
-            <div className="examinations-course-container-submit-video-bottom--left flex flex-col">
-              <YoutubeEmbed videoUrl={c?.videoUrlSubmit} />
-            </div>
-
-            <div className="examinations-course-container-submit-video-bottom--right flex">
-              <div className="flex flex-col">
-                <span>Đánh giá và chấm bài thi</span>
-                <FormControl component="fieldset">
-                  <RadioGroup
-                    aria-label="evaluate"
-                    name="evaluate"
-                    value={c.isPass ? "pass" : "fail"}
-                    onChange={(e) => {
-                      let temp = [...data];
-                      temp.forEach((item) => {
-                        if (item._id === c._id) {
-                          item.isPass = e.target.value === "pass";
-                        }
-                      });
-                      // setData(temp);
-                    }}
-                    className="flex flex-row"
-                  >
-                    <FormControlLabel
-                      style={{ color: "blue" }}
-                      value="pass"
-                      control={<Radio />}
-                      label="Đạt"
-                    />
-                    <FormControlLabel
-                      style={{ color: "red" }}
-                      value="fail"
-                      control={<Radio />}
-                      label="Chưa đạt"
-                    />
-                  </RadioGroup>
-                </FormControl>
-                <div
-                  className="flex block-evaluate-exam flex-col"
-                  style={{ marginTop: 12 }}
+                  }
+                  placement="top"
+                  onMouseEnter={() => {}}
+                  delay={200}
                 >
-                  <label style={{ color: "rgb(82, 67, 41)" }}>Nhận xét</label>
-                  <FormBox
-                    propsInput={{
-                      type: "textarea",
-                      name: "feedbacks",
-                      onChange: (e) => {
-                        let temp = [...data];
-                        temp[index].feedbacks = e.target.value;
-                        // setData(temp);
-                      },
-                      value: c.feedbacks,
-                      disabled: false,
-                    }}
-                  />
-                </div>
-                <ReForm>
-                  <Button
-                    className="btn-admin btn-update-exam"
-                    onClick={handleUpdateEvaluate}
-                  >
-                    Cập nhật
-                  </Button>
-                </ReForm>
+                  <IconButton>
+                    <InfoOutlinedIcon
+                      color="secondary"
+                      className="infor-icon-show-student"
+                    />
+                  </IconButton>
+                </PopoverStickOnHover>
+              </div>
+              <span className="time-submit">
+                {moment(c?.creatAt).format("DD/MM/YYYY [-] HH:mm:ss")}
+              </span>
+            </div>
+            <div className="examinations-course-container-submit-video-bottom">
+              <div className="examinations-course-container-submit-video-bottom--left flex flex-col">
+                <YoutubeEmbed videoUrl={c?.videoUrlSubmit} />
               </div>
 
-              <Button
-                className={`btn-admin btn-confirm-exam ${
-                  !c.isPass ? "btn-disabled" : ""
-                }`}
-                disabled={!c.isPass}
-                onClick={() => setOpenModalCertification(true)}
-              >
-                Cấp chứng nhận
-              </Button>
+              <div className="examinations-course-container-submit-video-bottom--right flex">
+                <div className="flex flex-col">
+                  <span>Đánh giá và chấm bài thi</span>
+                  <FormControl component="fieldset">
+                    <RadioGroup
+                      aria-label="evaluate"
+                      name="evaluate"
+                      value={c.isPass ? "pass" : "fail"}
+                      onChange={(e) => {
+                        let temp = [...data];
+                        temp.forEach((item) => {
+                          if (item._id === c._id) {
+                            item.isPass = e.target.value === "pass";
+                          }
+                        });
+                        // setData(temp);
+                      }}
+                      className="flex flex-row"
+                    >
+                      <FormControlLabel
+                        style={{ color: "blue" }}
+                        value="pass"
+                        control={<Radio />}
+                        label="Đạt"
+                      />
+                      <FormControlLabel
+                        style={{ color: "red" }}
+                        value="fail"
+                        control={<Radio />}
+                        label="Chưa đạt"
+                      />
+                    </RadioGroup>
+                  </FormControl>
+                  <div
+                    className="flex block-evaluate-exam flex-col"
+                    style={{ marginTop: 12 }}
+                  >
+                    <label style={{ color: "rgb(82, 67, 41)" }}>Nhận xét</label>
+                    <FormBox
+                      propsInput={{
+                        type: "textarea",
+                        name: "feedbacks",
+                        onChange: (e) => {
+                          let temp = [...data];
+                          temp[index].feedbacks = e.target.value;
+                          // setData(temp);
+                        },
+                        value: c.feedbacks,
+                        disabled: false,
+                      }}
+                    />
+                  </div>
+                  <ReForm>
+                    <Button
+                      className="btn-admin btn-update-exam"
+                      onClick={handleUpdateEvaluate}
+                    >
+                      Cập nhật
+                    </Button>
+                  </ReForm>
+                </div>
+
+                <Button
+                  className={`btn-admin btn-confirm-exam ${
+                    !c.isPass ? "btn-disabled" : ""
+                  }`}
+                  disabled={!c.isPass}
+                  onClick={() => setOpenModalCertification(true)}
+                >
+                  Cấp chứng nhận
+                </Button>
+              </div>
             </div>
-          </div>
-        </Paper>
-      ))}
+          </Paper>
+        ))
+      ) : (
+        <div style={{ color: "gray", marginTop: 50 }} className="center">
+          Không có bài thi nào được tìm thấy!
+        </div>
+      )}
       <Modal
         className="certification-form-container"
         title="Chứng nhận nấu ăn"
@@ -465,7 +503,9 @@ const ExaminationsCourse = () => {
           </div>
         </div>
       </Modal>
-      {examinationByCourseId?.loading && <SpinLoading />}
+      {(examinationByCourseId?.loading ||
+        getListTestState.loading ||
+        updateTestState.loading) && <SpinLoading />}
     </div>
   );
 };

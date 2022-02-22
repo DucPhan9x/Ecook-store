@@ -1,53 +1,54 @@
 import createHttpError from "http-errors";
 import Mongoose from "mongoose";
-import { User } from "../models";
+import { User, UserDetail } from "../models";
 
 const getListCustomers = async (req, res, next) => {
   try {
-    const { searchText } = req.query; // employeeType===3: employee, ===4 instructor
-    let filter;
-    filter = {
-      ...filter,
-      roleId: 1,
-    };
+    let { page, searchText, orderBy, orderType, numOfPerPage } = req.query;
+    numOfPerPage = Number(numOfPerPage);
+    page = page ? page : 1;
+    searchText = searchText ? searchText : "";
+    orderBy = orderBy ? orderBy : "_id";
+    orderType = orderType === "asc" ? 1 : 0;
+    const orderQuery = { [orderBy]: orderType };
+
+    const start = (page - 1) * numOfPerPage;
+    let totalNumOfCustomers;
+    let customers;
     if (searchText) {
-      filter = {
-        ...filter,
-        email: {
-          $regex: searchText,
-        },
-      };
+      let regex = new RegExp([searchText].join(""), "i");
+      customers = await UserDetail.find({
+        fullName: { $regex: regex },
+        roleId: 1,
+      })
+        .skip(start)
+        .limit(numOfPerPage)
+        .sort(orderQuery);
+      totalNumOfCustomers = await UserDetail.find({
+        fullName: { $regex: regex },
+        roleId: 1,
+      }).count();
+    } else {
+      customers = await UserDetail.find({ roleId: 1 })
+        .skip(start)
+        .limit(numOfPerPage)
+        .sort(orderQuery);
+      totalNumOfCustomers = await UserDetail.find({
+        roleId: 1,
+      }).count();
     }
 
-    let listCustomers = await User.aggregate([
-      {
-        $lookup: {
-          from: "UserDetail",
-          localField: "_id",
-          foreignField: "userId",
-          as: "userDetail",
-        },
-      },
-      {
-        $match: filter,
-      },
-    ]);
-    listCustomers = listCustomers.map((x) => {
-      return {
-        _id: x._id,
-        email: x.email,
-        roleId: x.roleId,
-        fullName: x.userDetail[0].fullName,
-        phoneNumber: x.userDetail[0].phoneNumber,
-        dateOfBirth: x.userDetail[0].dateOfBirth,
-        address: x.userDetail[0].address,
-        imageUrl: x.userDetail[0].imageUrl,
-      };
-    });
+    const totalPage = parseInt(totalNumOfCustomers / numOfPerPage) + 1;
+    const totalRows = await UserDetail.find({
+      roleId: 1,
+    }).count();
+
     res.status(200).json({
       status: 200,
       msg: "Get list customer successfully!",
-      employees: listEmployees,
+      customers,
+      totalRows,
+      totalPage,
     });
   } catch (error) {
     console.log(error);
@@ -97,20 +98,28 @@ const getCustomerById = async (req, res, next) => {
 
 const banCustomerById = async (req, res, next) => {
   try {
-    const customerIds = req.body.customerIds;
+    const { customerIds, isBanned } = req.body;
     for (var i = 0; i < customerIds.length; i++) {
-      const customer = await User.findOneAndUpdate({
-        _id: customerIds[i],
-        isRemoved: true,
-      });
+      const customer = await Promise.all([
+        User.findOneAndUpdate({
+          _id: customerIds[i],
+          isRemoved: isBanned,
+        }),
+
+        UserDetail.findOneAndUpdate({
+          userId: customerIds[i],
+          isRemoved: isBanned,
+        }),
+      ]);
       if (!customer) {
-        throw createHttpError(400, "The customer(s) is not exist!");
+        throw createHttpError(400, "Customer is not exist!");
       }
     }
     res.status(200).json({
       status: 200,
-      msg: "Ban customer(s) successfully!",
+      msg: `${isBanned ? "Ban" : "Un-Ban"} customer(s) successfully!`,
       customerIds,
+      isBanned,
     });
   } catch (error) {
     console.log(error);

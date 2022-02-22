@@ -23,6 +23,21 @@ const initialState = {
     loading: false,
     data: {},
   },
+  createTestState: {
+    loading: false,
+  },
+  updateTestState: {
+    loading: false,
+  },
+  getTestByIdState: {
+    loading: false,
+    test: {},
+  },
+  getListTestState: {
+    testList: [],
+    totalRows: 0,
+    loading: false,
+  },
 };
 
 export default function reducer(state = initialState, actions) {
@@ -177,10 +192,114 @@ export default function reducer(state = initialState, actions) {
       return {
         ...state,
         examinationByCourseId: {
+          loading: false,
+        },
+      };
+    // CREATE TEST
+    case types.CREATE_TEST:
+      return {
+        ...state,
+        createTestState: {
           loading: true,
         },
       };
+    case types.CREATE_TEST_SUCCEED:
+      return {
+        ...state,
+        createTestState: {
+          loading: false,
+        },
+      };
 
+    case types.CREATE_TEST_FAIL:
+      return {
+        ...state,
+        createTestState: {
+          loading: false,
+        },
+      };
+    //UPDATE TEST
+    case types.UPDATE_TEST:
+      return {
+        ...state,
+        updateTestState: {
+          loading: true,
+        },
+      };
+    case types.UPDATE_TEST_SUCCEED: {
+      const testsTemp = actions.payload;
+      let testListTemp = { ...state.getListTestState.testList };
+      const index = testListTemp.findIndex(
+        (item) => item._id === testsTemp._id
+      );
+      testListTemp[index] = testsTemp;
+      return {
+        ...state,
+        updateTestState: {
+          loading: false,
+        },
+        getListTestState: {
+          testList: testListTemp,
+        },
+      };
+    }
+    case types.UPDATE_TEST_FAIL:
+      return {
+        ...state,
+        updateTestState: {
+          loading: false,
+        },
+      };
+
+    // get test by id
+    case types.GET_TEST_ID:
+      return {
+        ...state,
+        getTestByIdState: {
+          loading: true,
+        },
+      };
+    case types.GET_TEST_ID_SUCCEED: {
+      return {
+        ...state,
+        getTestByIdState: {
+          loading: false,
+          test: actions.payload,
+        },
+      };
+    }
+    case types.GET_TEST_ID_FAIL:
+      return {
+        ...state,
+        getTestByIdState: {
+          loading: false,
+        },
+      };
+
+    case types.GET_LIST_TEST_PER_PAGE:
+      return {
+        ...state,
+        getListTestState: {
+          loading: true,
+        },
+      };
+    case types.GET_LIST_TEST_PER_PAGE_SUCCEED: {
+      return {
+        ...state,
+        getListTestState: {
+          loading: false,
+          testList: actions.payload.tests,
+          totalRows: actions.payload.totalRows,
+        },
+      };
+    }
+    case types.GET_LIST_TEST_PER_PAGE_FAIL:
+      return {
+        ...state,
+        getListTestState: {
+          loading: false,
+        },
+      };
     default:
       return state;
   }

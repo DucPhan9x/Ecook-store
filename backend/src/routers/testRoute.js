@@ -12,9 +12,11 @@ const {
 
 export const testRoute = Router();
 testRoute.use(`${baseUrl}`, jwtMiddleware);
-testRoute.route(`${baseUrl}`).get(getListTest);
+testRoute.route(`${baseUrl}?`).get(getListTest);
 testRoute.route(`${baseUrl}/:courseId`).get(getTestByExamination);
 testRoute
-  .route(`${baseUrl}/:courseId`)
+  .route(`${baseUrl}`)
   .put(validatePermission.isInstructorRole, updateTestOfExamination);
-testRoute.route(`${baseUrl}`).post(submitTestOfExamination);
+testRoute
+  .route(`${baseUrl}`)
+  .post(validatePermission.isCustomerRole, submitTestOfExamination);

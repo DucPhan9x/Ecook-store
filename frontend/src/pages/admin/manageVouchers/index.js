@@ -9,6 +9,8 @@ const ManageVouchers = () => {
 
   useEffect(() => {
     // fetch data
+    document.title = "Quản lý voucher | ECook";
+    window.scrollTo(0, 0);
     setData(VOUCHERS_DATA);
   }, []);
 

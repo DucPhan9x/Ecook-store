@@ -3,6 +3,8 @@ import { dbConnection } from "./dbConnection";
 import { Server } from "./Server";
 import { upload, uploadSingle, deleteImage } from "./cloudinary";
 import paypal from "./paypal";
+import { geocoder } from "./googleMap";
+
 export {
   envVariables,
   dbConnection,
@@ -11,4 +13,5 @@ export {
   uploadSingle,
   deleteImage,
   paypal,
+  geocoder,
 };

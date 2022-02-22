@@ -4,6 +4,8 @@ import createHttpError from "http-errors";
 const submitTestOfExamination = async (req, res, next) => {
   try {
     const studentId = req.user._id;
+    const student = await UserDetail.findOne({ userId: studentId });
+
     const { courseId, videoUrlSubmit } = req.body;
 
     const examination = await Examination.findOne({ courseId });
@@ -16,14 +18,17 @@ const submitTestOfExamination = async (req, res, next) => {
       videoUrlSubmit,
     });
 
+    examination.tests.push(newTest);
     await Examination.findByIdAndUpdate(examination._id, {
-      tests: examination.tests.push(newTest),
+      tests: examination.tests,
     });
+
+    const newExam = await Examination.findById(examination._id);
 
     res.status(200).json({
       status: 200,
       msg: "Submit test successfully!",
-      data: newTest,
+      test: { ...newTest, student, newExam },
     });
   } catch (error) {
     console.log(error);
@@ -33,8 +38,7 @@ const submitTestOfExamination = async (req, res, next) => {
 
 const updateTestOfExamination = async (req, res, next) => {
   try {
-    const { isPass, evaluate, studentId } = req.body;
-    const courseId = req.params.courseId;
+    const { isPass, evaluate, studentId, courseId } = req.body;
     const existedCourse = await Course.findById(courseId);
     const existedExamination = await Examination.findOne({ courseId });
     const test = await Test.findOne({
@@ -50,15 +54,17 @@ const updateTestOfExamination = async (req, res, next) => {
     if (!test) {
       throw createHttpError(404, "Test is not exist!");
     }
-    const newTest = await Test.findByIdAndUpdate(test._id, {
+    await Test.findByIdAndUpdate(test._id, {
       isPass,
       evaluate,
       updateAt: new Date(),
     });
+    const newTest = await Test.findById(test._id);
+    const student = await UserDetail.findOne({ userId: newTest.studentId });
 
     let testsBySelectedExam = existedExamination.tests;
     const index = testsBySelectedExam.findIndex(
-      (item) => item._id === newTest._id
+      (item) => item._id === test._id
     );
     testsBySelectedExam[index] = newTest;
 
@@ -69,7 +75,7 @@ const updateTestOfExamination = async (req, res, next) => {
     res.status(200).json({
       status: 200,
       msg: "Update test successfully!",
-      test: newTest,
+      test: { ...newTest._doc, student },
     });
   } catch (error) {
     console.log(error);
@@ -79,36 +85,51 @@ const updateTestOfExamination = async (req, res, next) => {
 
 const getListTest = async (req, res, next) => {
   try {
-    let { orderBy, orderType, courseId, isPass } = req.query;
+    let { page, orderBy, orderType, numOfPerPage, courseId, isPass } =
+      req.query;
     const existedExamination = await Examination.findOne({ courseId });
     if (!existedExamination) {
       throw createHttpError(404, "Examination is not exist!");
     }
 
-    searchText = searchText ? searchText : "";
-    orderBy = orderBy ? orderBy : "";
-    orderType = orderType ? orderType : 1;
-    const orderQuery = orderBy ? { [orderBy]: orderType } : {};
+    numOfPerPage = Number(numOfPerPage);
+    page = page ? page : 1;
+    orderBy = orderBy ? orderBy : "createAt";
+    orderType = orderType === "asc" ? 1 : 0;
+    const orderQuery = { [orderBy]: orderType };
 
+    const start = (page - 1) * numOfPerPage;
+    let totalNumOfTests;
     let tests;
     tests = await Test.find({
-      isRemoved: true,
-      examinationId: existedExamination._id,
+      isRemoved: false,
       isPass,
-    }).sort(orderQuery);
+      examinationId: existedExamination._id,
+    })
+      .skip(start)
+      .limit(numOfPerPage)
+      .sort(orderQuery);
+    totalNumOfTests = await Test.find({
+      isRemoved: false,
+      examinationId: existedExamination._id,
+    }).count();
+    const totalPage = parseInt(totalNumOfTests / numOfPerPage) + 1;
+
     let studentsData = tests.map((item) =>
       UserDetail.findOne({ userId: item.studentId })
     );
     studentsData = await Promise.all(studentsData);
 
     tests = tests.map((item, index) => ({
-      ...item,
+      ...item._doc,
       student: studentsData[index],
     }));
     res.status(200).json({
       status: 200,
       msg: "Get tests successfully!",
       tests,
+      totalPage,
+      totalRows: totalNumOfTests,
     });
   } catch (error) {
     console.log(error);
@@ -140,7 +161,7 @@ const getTestByExamination = async (req, res, next) => {
     res.status(200).json({
       status: 200,
       msg: "Get test successfully!",
-      data: { ...test, student },
+      test: { ...test, student },
     });
   } catch (error) {
     console.log(error);

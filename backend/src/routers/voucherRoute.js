@@ -13,8 +13,14 @@ const {
 
 export const voucherRoute = Router();
 voucherRoute.use(`${baseUrl}`, jwtMiddleware);
-voucherRoute.route(`${baseUrl}`).post(createNewVoucher);
-voucherRoute.route(`${baseUrl}/:voucherId`).put(updateVoucherById);
-voucherRoute.route(`${baseUrl}/:voucherId`).delete(deleteVoucherById);
+voucherRoute
+  .route(`${baseUrl}`)
+  .post(validatePermission.isEmployeeRole, createNewVoucher);
+voucherRoute
+  .route(`${baseUrl}`)
+  .put(validatePermission.isEmployeeRole, updateVoucherById);
+voucherRoute
+  .route(`${baseUrl}`)
+  .delete(validatePermission.isEmployeeRole, deleteVoucherById);
 voucherRoute.route(`${baseUrl}/:voucherId`).get(getVoucherById);
-voucherRoute.route(`${baseUrl}`).get(getListVoucherPerPage);
+voucherRoute.route(`${baseUrl}?`).get(getListVoucherPerPage);

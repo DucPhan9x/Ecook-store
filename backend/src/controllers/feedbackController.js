@@ -72,9 +72,13 @@ const getAllFeedbacks = async (req, res, next) => {
   try {
     const { itemId } = req.params;
     let feedbacks = await Feedback.find({ itemId });
-    feedbacks = feedbacks.map(async (x) => {
-      // need check again
-      const user = await UserDetail.findById(x.userId);
+    let usersData = feedbacks.map((item) =>
+      UserDetail.findOne({ userId: item.userId })
+    );
+    usersData = await Promise.all(usersData);
+
+    feedbacks = feedbacks.map((x, index) => {
+      const user = usersData[index];
       return {
         _id: x._id,
         userFeedback: user,

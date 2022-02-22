@@ -13,6 +13,7 @@ import { testRoute } from "./testRoute";
 import { certificationRoute } from "./certificationRoute";
 import { cartItemRoute } from "./cartItemRoute";
 import { orderRoute } from "./orderRoute";
+import { statisticRoute } from "./statisticRoute";
 
 export {
   authRoute,
@@ -30,4 +31,5 @@ export {
   certificationRoute,
   cartItemRoute,
   orderRoute,
+  statisticRoute,
 };

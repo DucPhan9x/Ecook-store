@@ -12,6 +12,8 @@ const ManageRecipes = () => {
 
   useEffect(() => {
     // fetch data
+    document.title = "Quản lý công thức | ECook";
+    window.scrollTo(0, 0);
     setData(RECIPES_DATA);
   }, []);
   return (

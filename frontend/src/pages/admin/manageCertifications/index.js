@@ -1,14 +1,15 @@
 import { EnhancedTable } from "components/admin/manageCertification";
-import SearchField from "components/common/input/SearchField";
 import React from "react";
+import { useEffect } from "react";
 import { CERTIFICATIONS_DATA } from "utils/dummyData";
 
 const ManageCertifications = () => {
+  useEffect(() => {
+    document.title = "Quản lý chứng nhận | ECook";
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div className="manage-certification-container">
-      <div className="manage-certification-container--top">
-        <SearchField onChange={(e) => console.log(e.target.value)} />
-      </div>
       <EnhancedTable data={CERTIFICATIONS_DATA} />
     </div>
   );

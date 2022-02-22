@@ -17,16 +17,16 @@ export const distanceBetween2Points = (la1, lo1, la2, lo2) => {
 };
 export const getShipmentFee = (distance) => {
   try {
-    if (distance < 2) return 0;
-    if (distance < 6) return 10000;
+    if (distance < 2) return 0; // 2km
+    if (distance < 6) return 10000; // 6 km
     if (distance > 8)
+      // 8km
       throw createHttpError(
         400,
         "The distance is over for shipping. Please chose other address!"
       );
     return (1.8 * distance).toFixed(1) * 1000;
   } catch (error) {
-    console.log(error);
     throw createHttpError(400, error);
   }
 };

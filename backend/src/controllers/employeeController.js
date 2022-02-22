@@ -5,52 +5,46 @@ import Mongoose from "mongoose";
 
 const getListEmployees = async (req, res, next) => {
   try {
-    const { searchText, employeeType } = req.query; // employeeType===3: employee, ===4 instructor
-    let filter;
-    if (employeeType) {
-      filter = {
-        ...filter,
-        roleId: employeeType,
-      };
-    }
+    let { page, searchText, numOfPerPage, employeeType } = req.query;
+    numOfPerPage = Number(numOfPerPage);
+    page = page ? page : 1;
+    searchText = searchText ? searchText : "";
+
+    const start = (page - 1) * numOfPerPage;
+    let totalNumOfEmployees;
+    let employees;
     if (searchText) {
-      filter = {
-        ...filter,
-        email: {
-          $regex: searchText,
-        },
-      };
+      let regex = new RegExp([searchText].join(""), "i");
+      employees = await UserDetail.find({
+        fullName: { $regex: regex },
+        roleId: employeeType,
+      })
+        .skip(start)
+        .limit(numOfPerPage);
+      totalNumOfEmployees = await UserDetail.find({
+        fullName: { $regex: regex },
+        roleId: employeeType,
+      }).count();
+    } else {
+      employees = await UserDetail.find({ roleId: 1 })
+        .skip(start)
+        .limit(numOfPerPage);
+      totalNumOfEmployees = await UserDetail.find({
+        roleId: employeeType,
+      }).count();
     }
 
-    let listEmployees = await User.aggregate([
-      {
-        $lookup: {
-          from: "UserDetail",
-          localField: "_id",
-          foreignField: "userId",
-          as: "userDetail",
-        },
-      },
-      {
-        $match: filter,
-      },
-    ]);
-    listEmployees = listEmployees.map((x) => {
-      return {
-        _id: x._id,
-        email: x.email,
-        roleId: x.roleId,
-        fullName: x.userDetail[0].fullName,
-        phoneNumber: x.userDetail[0].phoneNumber,
-        dateOfBirth: x.userDetail[0].dateOfBirth,
-        address: x.userDetail[0].address,
-        imageUrl: x.userDetail[0].imageUrl,
-      };
-    });
+    const totalPage = parseInt(totalNumOfEmployees / numOfPerPage) + 1;
+    const totalRows = await UserDetail.find({
+      roleId: employeeType,
+    }).count();
+
     res.status(200).json({
       status: 200,
       msg: "Get list employee successfully!",
-      employees: listEmployees,
+      employees,
+      totalPage,
+      totalRows,
     });
   } catch (error) {
     console.log(error);
@@ -158,9 +152,11 @@ const updateEmployeeById = async (req, res, next) => {
         dateOfBirth: new Date(dateOfBirth),
       }
     );
+    const newEmployee = await UserDetail.findOne({ userId: employeeId });
     res.status(200).json({
       status: 200,
       msg: "Update an employee successfully!",
+      employee: newEmployee,
     });
   } catch (error) {
     console.log(error);
@@ -173,7 +169,9 @@ const deleteEmployeeById = async (req, res, next) => {
     const employeeIds = req.body.employeeIds;
     for (var i = 0; i < employeeIds.length; i++) {
       const employee = await Promise.all([
-        User.findOneAndDelete({ _id: employeeIds[i], roleId: 2 }),
+        User.findOneAndDelete({
+          _id: employeeIds[i],
+        }),
 
         UserDetail.findOneAndDelete({ userId: employeeIds[i] }),
       ]);
@@ -194,20 +192,28 @@ const deleteEmployeeById = async (req, res, next) => {
 
 const banEmployeeById = async (req, res, next) => {
   try {
-    const employeeIds = req.body.employeeIds;
+    const { isBanned, employeeIds } = req.body.employeeIds;
     for (var i = 0; i < employeeIds.length; i++) {
-      const employee = await User.findOneAndUpdate({
-        _id: employeeIds[i],
-        isRemoved: true,
-      });
+      const employee = await Promise.all([
+        User.findOneAndUpdate({
+          _id: employeeIds[i],
+          isRemoved: isBanned,
+        }),
+
+        UserDetail.findOneAndUpdate({
+          userId: employeeIds[i],
+          isRemoved: isBanned,
+        }),
+      ]);
       if (!employee) {
-        throw createHttpError(400, "The employee(s) is not exist!");
+        throw createHttpError(400, "Employee is not exist!");
       }
     }
     res.status(200).json({
       status: 200,
-      msg: "Ban employee(s) successfully!",
+      msg: `${isBanned ? "Ban" : "Un-Ban"} employee(s) successfully!`,
       employeeIds,
+      isBanned,
     });
   } catch (error) {
     console.log(error);
