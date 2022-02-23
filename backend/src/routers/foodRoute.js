@@ -9,6 +9,7 @@ const {
   updateFoodById,
   updateStatusRemoveTempFood,
   creatMultipleNewFood,
+  getListFoodsRelated,
 } = foodController;
 
 export const foodRoute = Router();
@@ -20,3 +21,4 @@ foodRoute.route(`${baseUrl}/:foodId`).get(getFoodById);
 foodRoute
   .route(`${baseUrl}/statusRemoveTemp/:foodId/:isRemoveTemp`)
   .put(updateStatusRemoveTempFood);
+foodRoute.route(`${baseUrl}/related?`).get(getListFoodsRelated);

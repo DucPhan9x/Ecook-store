@@ -151,11 +151,11 @@ const getListRecipePerPage = async (req, res, next) => {
   }
 };
 
-// get 10 items
+// get 15 items
 const getListRecipesRelatedFoodName = async (req, res, next) => {
   try {
     let { searchText } = req.query;
-    numOfPerPage = Number(10);
+    numOfPerPage = Number(15);
     page = 1;
     searchText = searchText;
 

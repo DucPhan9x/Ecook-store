@@ -9,6 +9,8 @@ const {
   deleteCourseById,
   getListCoursePerPage,
   getCourseById,
+  getListCourseByInstructorId,
+  getListCoursesRelated,
 } = courseController;
 
 export const courseRoute = Router();
@@ -24,3 +26,7 @@ courseRoute
   .put(validatePermission.isInstructorRole, deleteCourseById);
 courseRoute.route(`${baseUrl}/:courseId`).get(getCourseById);
 courseRoute.route(`${baseUrl}?`).get(getListCoursePerPage);
+courseRoute
+  .route(`${baseUrl}/by-instructorId?`)
+  .get(getListCourseByInstructorId);
+courseRoute.route(`${baseUrl}/related?`).get(getListCoursesRelated);

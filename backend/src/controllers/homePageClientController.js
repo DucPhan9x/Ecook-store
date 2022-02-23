@@ -3,7 +3,7 @@ import { Course, Food, Recipe, UserDetail } from "../models";
 const getListFoodAndRecipe = async (req, res, next) => {
   try {
     const page = 1;
-    const numOfPerPage = 10;
+    const numOfPerPage = 15;
 
     const start = (page - 1) * numOfPerPage;
     let totalNumOfItems;
@@ -45,7 +45,7 @@ const getListFoodAndRecipe = async (req, res, next) => {
 const getListCourseAndInstructor = async (req, res, next) => {
   try {
     const page = 1;
-    const numOfPerPage = 10;
+    const numOfPerPage = 15;
 
     const start = (page - 1) * numOfPerPage;
     let totalNumOfItems;

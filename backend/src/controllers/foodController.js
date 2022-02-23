@@ -250,6 +250,34 @@ const getListFoodPerPage = async (req, res, next) => {
   }
 };
 
+// get 15 items
+const getListFoodsRelated = async (req, res, next) => {
+  try {
+    let { searchText } = req.query;
+    numOfPerPage = Number(15);
+    page = 1;
+    searchText = searchText;
+
+    const start = (page - 1) * numOfPerPage;
+    let foods;
+    foods = await Food.find({
+      $text: { $search: searchText },
+      isRemoved: false,
+    })
+      .skip(start)
+      .limit(numOfPerPage);
+
+    res.status(200).json({
+      status: 200,
+      msg: "Get foods successfully!",
+      foods,
+    });
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
+
 export const foodController = {
   createNewFood,
   updateFoodById,
@@ -258,4 +286,5 @@ export const foodController = {
   creatMultipleNewFood,
   getFoodById,
   updateStatusRemoveTempFood,
+  getListFoodsRelated,
 };

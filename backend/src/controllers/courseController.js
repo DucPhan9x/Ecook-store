@@ -194,6 +194,34 @@ const getListCoursePerPage = async (req, res, next) => {
   }
 };
 
+// get 15 items
+const getListCoursesRelated = async (req, res, next) => {
+  try {
+    let { searchText } = req.query;
+    numOfPerPage = Number(15);
+    page = 1;
+    searchText = searchText;
+
+    const start = (page - 1) * numOfPerPage;
+    let courses;
+    courses = await Course.find({
+      $text: { $search: searchText },
+      isRemoved: false,
+    })
+      .skip(start)
+      .limit(numOfPerPage);
+
+    res.status(200).json({
+      status: 200,
+      msg: "Get courses successfully!",
+      courses,
+    });
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
+
 const getListCourseByInstructorId = async (req, res, next) => {
   try {
     let { page, searchText, orderBy, orderType, numOfPerPage } = req.query;
@@ -308,4 +336,6 @@ export const courseController = {
   deleteCourseById,
   getListCoursePerPage,
   getCourseById,
+  getListCoursesRelated,
+  getListCourseByInstructorId,
 };
