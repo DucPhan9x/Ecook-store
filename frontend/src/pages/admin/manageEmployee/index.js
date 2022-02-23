@@ -87,7 +87,22 @@ const ManageEmployee = () => {
             }}
           >
             <RemoveCircle color="secondary" />
-            Ban
+            Khóa
+          </button>
+          <button
+            style={{ marginLeft: 12 }}
+            className={`btn-admin ${
+              filterData.filter((item) => item.isSelected)?.length > 0
+                ? ""
+                : "btn-disabled"
+            }`}
+            onClick={() => {
+              if (!filterData.filter((item) => item.isSelected)?.length) return;
+              setOpenDialogConfirm(true);
+            }}
+          >
+            <RemoveCircle color="secondary" />
+            Mở khóa
           </button>
           <Checkbox
             className="radio-checked-container"

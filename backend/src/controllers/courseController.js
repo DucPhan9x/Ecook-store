@@ -62,6 +62,12 @@ const updateCourseById = async (req, res, next) => {
     if (!existedExamination) {
       throw createHttpError(404, "Examination is not exist!");
     }
+    if (existedCourse.instructorId != instructorId) {
+      throw createHttpError(
+        404,
+        "You're not instructor that created this course!"
+      );
+    }
     await Course.findByIdAndUpdate(courseId, {
       courseName,
       discountOff,
@@ -95,6 +101,7 @@ const updateCourseById = async (req, res, next) => {
 const deleteCourseById = async (req, res, next) => {
   try {
     const courseIds = req.body;
+    const instructorId = req.user._id;
     for (let i = 0; i < courseIds.length; i++) {
       const courseId = courseIds[i];
       const course = await Promise.all([
@@ -108,8 +115,15 @@ const deleteCourseById = async (req, res, next) => {
           }
         ),
       ]);
+
       if (!course) {
-        throw createHttpError(400, "Course(s) is(are) not exist!");
+        throw createHttpError(400, "Course is not exist!");
+      }
+      if (course.instructorId != instructorId) {
+        throw createHttpError(
+          404,
+          "You're not instructor that created this course!"
+        );
       }
     }
 
@@ -166,6 +180,73 @@ const getListCoursePerPage = async (req, res, next) => {
       instructor: instructorsData[index],
     }));
     const totalRows = await Course.find({ isRemoved: false }).count();
+
+    res.status(200).json({
+      status: 200,
+      msg: "Get courses successfully!",
+      courses,
+      totalPage,
+      totalRows,
+    });
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
+
+const getListCourseByInstructorId = async (req, res, next) => {
+  try {
+    let { page, searchText, orderBy, orderType, numOfPerPage } = req.query;
+    const instructorId = req.user._id;
+
+    numOfPerPage = Number(numOfPerPage);
+    page = page ? page : 1;
+    searchText = searchText ? searchText : "";
+    orderBy = orderBy ? orderBy : "unitPrice";
+    orderType = orderType === "asc" ? 1 : 0;
+    const orderQuery = { [orderBy]: orderType };
+
+    const start = (page - 1) * numOfPerPage;
+    let totalNumOfCourses;
+    let courses;
+    if (searchText) {
+      courses = await Course.find({
+        $text: { $search: searchText },
+        isRemoved: false,
+        instructorId,
+      })
+        .skip(start)
+        .limit(numOfPerPage)
+        .sort(orderQuery);
+      totalNumOfCourses = await Course.find({
+        $text: { $search: searchText },
+        isRemoved: false,
+        instructorId,
+      }).count();
+    } else {
+      courses = await Course.find({ isRemoved: false, instructorId })
+        .skip(start)
+        .limit(numOfPerPage)
+        .sort(orderQuery);
+      totalNumOfCourses = await Course.find({
+        isRemoved: false,
+        instructorId,
+      }).count();
+    }
+    const totalPage = parseInt(totalNumOfCourses / numOfPerPage) + 1;
+
+    let instructorsData = courses.map((item) =>
+      UserDetail.findOne({ userId: item.instructorId })
+    );
+    instructorsData = await Promise.all(instructorsData);
+    courses = courses.map((item, index) => ({
+      ...item._doc,
+      instructor: instructorsData[index],
+    }));
+    const totalRows = await Course.find({
+      isRemoved: false,
+      instructorId,
+    }).count();
 
     res.status(200).json({
       status: 200,

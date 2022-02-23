@@ -14,6 +14,7 @@ import { certificateController } from "./certificateController";
 import { cartItemController } from "./cartItemController";
 import { orderController } from "./orderController";
 import { statisticController } from "./statisticController";
+import { homePageClientController } from "./homePageClientController";
 
 export {
   authController,
@@ -32,4 +33,5 @@ export {
   cartItemController,
   orderController,
   statisticController,
+  homePageClientController,
 };

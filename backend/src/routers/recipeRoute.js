@@ -9,6 +9,8 @@ const {
   deleteRecipeById,
   getListRecipePerPage,
   getRecipeById,
+  getListRecipeByInstructorId,
+  getListRecipesRelatedFoodName,
 } = recipeController;
 
 export const recipeRoute = Router();
@@ -24,3 +26,9 @@ recipeRoute
   .delete(validatePermission.isInstructorRole, deleteRecipeById);
 recipeRoute.route(`${baseUrl}/:recipeId`).get(getRecipeById);
 recipeRoute.route(`${baseUrl}?`).get(getListRecipePerPage);
+recipeRoute
+  .route(`${baseUrl}/related-foodName?`)
+  .get(getListRecipesRelatedFoodName);
+recipeRoute
+  .route(`${baseUrl}/by-instructorId?`)
+  .get(getListRecipeByInstructorId);

@@ -3,10 +3,14 @@ import React from "react";
 import PhoneIcon from "@material-ui/icons/Phone";
 import MailOutlineIcon from "@material-ui/icons/MailOutline";
 import Checkbox from "@material-ui/core/Checkbox";
+import LockIcon from "@material-ui/icons/Lock";
 
 const CardEmployee = ({ data, filterData, setFilterData }) => {
   return (
-    <Paper className="card-employee">
+    <Paper
+      className="card-employee"
+      style={{ background: data?.isRemoved ? "rgb(165 164 164 / 87%)" : "" }}
+    >
       <img
         className="avatar-employee"
         src={
@@ -49,6 +53,16 @@ const CardEmployee = ({ data, filterData, setFilterData }) => {
           setFilterData(temp);
         }}
       />
+
+      {data?.isRemoved && (
+        <LockIcon
+          style={{ position: "absolute", bottom: 11, right: 10 }}
+          onClick={() => {
+            console.log("aaaaaa");
+            // un-ban API
+          }}
+        />
+      )}
     </Paper>
   );
 };

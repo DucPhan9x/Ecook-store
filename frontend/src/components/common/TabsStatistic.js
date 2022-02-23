@@ -85,7 +85,7 @@ export default function TabsStatistic() {
         axis={theme.direction === "rtl" ? "x-reverse" : "x"}
         index={value}
         className="body-tabs-statistic"
-        style={{ maxHeight: 600 }}
+        style={{ maxHeight: 500 }}
         onChangeIndex={handleChangeIndex}
       >
         <TabPanel value={value} index={0} dir={theme.direction}>

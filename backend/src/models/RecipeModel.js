@@ -29,4 +29,6 @@ const recipeSchema = new Schema({
     default: false,
   },
 });
+
+recipeSchema.index({ name: "text" });
 export const Recipe = model("Recipe", recipeSchema, "Recipe");

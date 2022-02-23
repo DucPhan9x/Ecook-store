@@ -533,7 +533,7 @@ const getOrdersByClientId = async (req, res, next) => {
         customerId,
       }).count();
     } else {
-      orders = await Order.find({ isRemoved: false, statusId })
+      orders = await Order.find({ isRemoved: false, statusId, customerId })
         .skip(start)
         .limit(numOfPerPage)
         .sort(orderQuery);

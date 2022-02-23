@@ -12,6 +12,8 @@ import { VOUCHERS_DATA } from "utils/dummyData";
 import KeyboardArrowRightIcon from "@material-ui/icons/KeyboardArrowRight";
 import PaypalCheckoutButton from "components/common/PaypalCheckoutButton";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import { Info } from "@material-ui/icons";
+import { Tooltip } from "antd";
 
 const ModalConfirmFoodCart = ({ isModalVisible, close, products }) => {
   const [data, setData] = useState({
@@ -161,6 +163,21 @@ const ModalConfirmFoodCart = ({ isModalVisible, close, products }) => {
               <div className="block-data-normal flex items-center">
                 <label style={{ marginRight: 12 }}>Phí vận chuyển:</label>
                 <span>{formatCurrency(data?.shipmentFee)}</span>
+                <Tooltip
+                  title={`
+                * Quy định tính phí ship:                                 
+                .Dưới 2km: 0đ; 
+                ; dưới 6km: 10.000đ
+                ; dưới 8km: Hệ thống sẽ thống theo công thức: 1.8*(số km)*1000(đ)
+                ; trên 8km: Cửa hàng không ship.
+                `}
+                  placement="top"
+                >
+                  <Info
+                    color="action"
+                    style={{ fontSize: 18, marginLeft: 30 }}
+                  />
+                </Tooltip>
               </div>
               <div
                 className="block-data-normal flex items-center j-space-between"

@@ -60,9 +60,9 @@ const Examination = () => {
             />
           </div>
           <div className="block--actions-submit">
-            <button className="btn btn-client block--actions-submit--item">
+            {/* <button className="btn btn-client block--actions-submit--item">
               Lưu nháp
-            </button>
+            </button> */}
             <button
               className="btn btn-client"
               style={{ color: "white", background: "blue" }}

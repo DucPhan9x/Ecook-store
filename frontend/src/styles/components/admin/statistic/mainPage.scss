@@ -75,12 +75,12 @@
       box-shadow: 2px 2px 10px rgba(87, 87, 87, 0.6) !important;
       width: 60%;
       padding: 20px 15px;
-      height: 648px;
+      margin-left: 24px;
+      background: white;
+      height: 560px;
     }
     &-right {
-      margin-left: 24px;
       width: 40%;
-      height: 100%;
       // tabs
 
       .body-tabs-statistic {

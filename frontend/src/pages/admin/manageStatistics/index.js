@@ -85,6 +85,9 @@ const Statistics = () => {
         </div>
       </div>
       <div className="statistic-container__bottom">
+        <div className="statistic-container__bottom-right">
+          <TabsStatistic />
+        </div>
         <div className="statistic-container__bottom-left">
           <DropdownCommon
             label="Bộ lọc"
@@ -121,9 +124,6 @@ const Statistics = () => {
               ],
             }}
           />
-        </div>
-        <div className="statistic-container__bottom-right">
-          <TabsStatistic />
         </div>
       </div>
     </div>
