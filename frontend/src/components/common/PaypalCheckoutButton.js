@@ -14,7 +14,7 @@ const PaypalCheckoutButton = (props) => {
       style={{ shape: "pill" }}
       createOrder={async (data, actions) => {
         let merchandiseSubtotal =
-          requestData.items.reduce((f, s) => f + 1 * s.unitPrice, 0) +
+          requestData.items.reduce((f, s) => f + s.quantity * s.unitPrice, 0) +
           requestData.shipmentFee;
 
         if (requestData.voucherId) {

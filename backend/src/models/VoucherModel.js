@@ -27,4 +27,5 @@ const voucherSchema = new Schema({
     default: false,
   },
 });
+voucherSchema.index({ name: "text" });
 export const Voucher = model("Voucher", voucherSchema, "Voucher");

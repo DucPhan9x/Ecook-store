@@ -10,6 +10,7 @@ const {
   getAllOrders,
   updateStatusOrder,
   paymentRedirectMoney,
+  checkExistMyCourse,
 } = orderController;
 
 export const orderRoute = Router();
@@ -24,3 +25,4 @@ orderRoute.route(`${baseUrl}?`).get(getAllOrders);
 // client side
 orderRoute.route(`${baseUrl}/get-all-by-clientID?`).get(getOrdersByClientId);
 orderRoute.route(`${baseUrl}`).put(updateStatusOrder);
+orderRoute.route(`${baseUrl}/check-exist-courses`).get(checkExistMyCourse);

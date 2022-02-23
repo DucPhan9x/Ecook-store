@@ -121,16 +121,15 @@ const getListVoucherPerPage = async (req, res, next) => {
     let totalNumOfVouchers;
     let vouchers;
     if (searchText) {
-      let regex = new RegExp([searchText].join(""), "i");
       vouchers = await Voucher.find({
-        name: { $regex: regex },
+        $text: { $search: searchText },
         isRemoved: false,
       })
         .skip(start)
         .limit(numOfPerPage)
         .sort(orderQuery);
       totalNumOfVouchers = await Voucher.find({
-        name: { $regex: regex },
+        $text: { $search: searchText },
         isRemoved: false,
       }).count();
     } else {
@@ -148,6 +147,27 @@ const getListVoucherPerPage = async (req, res, next) => {
       vouchers,
       totalPage,
       totalRows,
+    });
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
+
+const getListVoucherClient = async (req, res, next) => {
+  try {
+    let { totalMoneyOrder } = req.query;
+    let vouchers = await Voucher.find({
+      isRemoved: false,
+      minOrder: { $lte: totalMoneyOrder },
+      remainingSlot: { $gt: 0 },
+      expiredDate: { $gte: new Date() },
+    });
+
+    res.status(200).json({
+      status: 200,
+      msg: "Get vouchers successfully!",
+      vouchers,
     });
   } catch (error) {
     console.log(error);
@@ -177,4 +197,5 @@ export const voucherController = {
   deleteVoucherById,
   getListVoucherPerPage,
   getVoucherById,
+  getListVoucherClient,
 };

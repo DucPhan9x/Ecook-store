@@ -110,7 +110,7 @@ const updateCartItem = async (req, res, next) => {
 
 const deleteCartItem = async (req, res, next) => {
   try {
-    const { cartItems } = req.body;
+    const { cartItems } = req.body; // array id
     const cartItem = await CartItem.deleteMany({
       _id: {
         $in: cartItems,

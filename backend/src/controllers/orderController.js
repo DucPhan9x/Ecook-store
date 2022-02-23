@@ -1,6 +1,6 @@
 import request from "request";
 import createHttpError from "http-errors";
-import { Food, Voucher, Order, Course, UserDetail } from "../models";
+import { Food, Voucher, Order, Course, UserDetail, CartItem } from "../models";
 import {
   calculateItemPrice,
   calculateTotalPrice,
@@ -20,7 +20,8 @@ const paypalPayment = async (req, res, next) => {
     const order = req.body.order;
 
     let merchandiseSubtotal =
-      order.items.reduce((f, s) => f + 1 * s.unitPrice, 0) + order.shipmentFee;
+      order.items.reduce((f, s) => f + s.quantity * s.unitPrice, 0) +
+      order.shipmentFee;
 
     if (order.voucherId) {
       const voucher = order.voucherData;
@@ -60,6 +61,17 @@ const paypalPayment = async (req, res, next) => {
         }
         try {
           await createNewOrder(req);
+          // remove cart items
+          let cartItemIds = order.items.map((i) => i._id);
+          const cartItems = await CartItem.deleteMany({
+            _id: {
+              $in: cartItemIds,
+            },
+          });
+          if (!cartItems) {
+            throw createHttpError(404, "Not found food in the cart(s)");
+          }
+
           res.status(200).json({
             msg: "Payment by paypal successfully!",
             status: 200,
@@ -93,7 +105,7 @@ const createNewOrder = async (req) => {
     const shipmentFee = getShipmentFee(distance);
     console.log({ shipmentFee });
 
-    const foods = await Promise.all(
+    await Promise.all(
       items.map((item) =>
         Food.findOne({ _id: Mongoose.Types.ObjectId(item.itemId) })
       )
@@ -240,7 +252,7 @@ const createNewOrderCourse = async (req) => {
 const paymentRedirectMoney = async (req, res, next) => {
   try {
     const { address, items, voucherId } = req.body.order;
-    const foods = await Promise.all(
+    await Promise.all(
       items.map((item) =>
         Food.findOne({ _id: Mongoose.Types.ObjectId(item.itemId) })
       )
@@ -255,8 +267,8 @@ const paymentRedirectMoney = async (req, res, next) => {
           calculateItemPrice(
             currentValue.unitPrice,
             currentValue.quantity,
-            foods[currentIndex] ? foods[currentIndex].discountOff : 0,
-            foods[currentIndex] ? foods[currentIndex].discountMaximum : 0
+            0,
+            0
           )
         );
       },
@@ -293,6 +305,17 @@ const paymentRedirectMoney = async (req, res, next) => {
       total = merchandiseSubtotal + shipmentFee;
     }
     await Order.create({ ...data, total });
+
+    // remove cart items
+    let cartItemIds = items.map((i) => i._id);
+    const cartItems = await CartItem.deleteMany({
+      _id: {
+        $in: cartItemIds,
+      },
+    });
+    if (!cartItems) {
+      throw createHttpError(404, "Not found food in the cart(s)");
+    }
   } catch (error) {
     console.log(error);
     throw createHttpError(400, error);
@@ -347,6 +370,18 @@ const paypalPaymentCourse = async (req, res, next) => {
         }
         try {
           await createNewOrderCourse(req);
+
+          // remove cart items
+          let cartItemIds = order.items.map((i) => i._id);
+          const cartItems = await CartItem.deleteMany({
+            _id: {
+              $in: cartItemIds,
+            },
+          });
+          if (!cartItems) {
+            throw createHttpError(404, "Not found food in the cart(s)");
+          }
+
           res.status(200).json({
             msg: "Payment by paypal successfully!",
             status: 200,
@@ -517,6 +552,33 @@ const updateStatusOrder = async (req, res, next) => {
   }
 };
 
+const checkExistMyCourse = async (req, res, next) => {
+  try {
+    const { order } = req.body;
+    const orderItems = order.items;
+    const customer = await UserDetail.findOne({ userId: req.user._id });
+    const myCourseIds = customer.courseList.map((i) => i._id);
+    for (let index = 0; index < orderItems.length; index++) {
+      const ele = orderItems[index];
+      if (myCourseIds.includes(ele.itemId)) {
+        throw createHttpError(
+          400,
+          "Course(s) that you ordered already exist your courses"
+        );
+      }
+    }
+
+    res.status(200).json({
+      status: 200,
+      msg: "Check courses successfully!",
+      isExist: false,
+    });
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
+
 // client side
 const getOrdersByClientId = async (req, res, next) => {
   try {
@@ -615,4 +677,5 @@ export const orderController = {
   updateStatusOrder,
   getOrdersByClientId,
   getAllOrders,
+  checkExistMyCourse,
 };

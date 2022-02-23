@@ -88,6 +88,20 @@ const updateStatusOrder = (data) => {
   return fetch(`${url}order`, requestOptions);
 };
 
+const checkExistMyOrders = (data) => {
+  const token = getAccessToken();
+  let myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${token}`);
+  myHeaders.append("Content-Type", `application/json`);
+
+  let requestOptions = {
+    headers: myHeaders,
+    method: "GET",
+    body: JSON.stringify({ order: data }),
+  };
+  return fetch(`${url}check-exist-courses`, requestOptions);
+};
+
 const orderAPI = {
   paypalPayment,
   paymentRedirectMoney,
@@ -95,5 +109,6 @@ const orderAPI = {
   getAllOrders,
   getOrdersByClientId,
   updateStatusOrder,
+  checkExistMyOrders,
 };
 export default orderAPI;

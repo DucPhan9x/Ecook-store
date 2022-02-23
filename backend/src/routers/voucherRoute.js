@@ -9,6 +9,7 @@ const {
   deleteVoucherById,
   getListVoucherPerPage,
   getVoucherById,
+  getListVoucherClient,
 } = voucherController;
 
 export const voucherRoute = Router();
@@ -24,3 +25,4 @@ voucherRoute
   .delete(validatePermission.isEmployeeRole, deleteVoucherById);
 voucherRoute.route(`${baseUrl}/:voucherId`).get(getVoucherById);
 voucherRoute.route(`${baseUrl}?`).get(getListVoucherPerPage);
+voucherRoute.route(`${baseUrl}?`).get(getListVoucherClient);

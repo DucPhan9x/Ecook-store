@@ -73,7 +73,7 @@ const ModalConfirmCourseCart = ({ isModalVisible, close, products }) => {
               voucherData: data.voucherData,
               items: data.items.map((i) => ({
                 itemId: i._id,
-                quantity: i.quantity || 1,
+                quantity: 1,
                 unitPrice: getPriceItemNumber(
                   i.discountOff,
                   i.unitPrice,
