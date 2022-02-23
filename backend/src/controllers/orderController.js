@@ -377,31 +377,49 @@ const getAllOrders = async (req, res, next) => {
     let totalNumOfOrders;
     let orders;
     if (searchText) {
-      let regex = new RegExp([searchText].join(""), "i");
-      orders = await Order.find({
-        paymentMethod: { $regex: regex },
-        isRemoved: false,
-        statusId,
-      })
-        .skip(start)
-        .limit(numOfPerPage)
-        .sort(orderQuery);
-      totalNumOfOrders = await Order.find({
-        paymentMethod: { $regex: regex },
-        isRemoved: false,
-        statusId,
-      }).count();
+      if (statusId) {
+        let regex = new RegExp([searchText].join(""), "i");
+        orders = await Order.find({
+          paymentMethod: { $regex: regex },
+          statusId,
+        })
+          .skip(start)
+          .limit(numOfPerPage)
+          .sort(orderQuery);
+        totalNumOfOrders = await Order.find({
+          paymentMethod: { $regex: regex },
+          statusId,
+        }).count();
+      } else {
+        let regex = new RegExp([searchText].join(""), "i");
+        orders = await Order.find({
+          paymentMethod: { $regex: regex },
+        })
+          .skip(start)
+          .limit(numOfPerPage)
+          .sort(orderQuery);
+        totalNumOfOrders = await Order.find({
+          paymentMethod: { $regex: regex },
+        }).count();
+      }
     } else {
-      orders = await Order.find({ isRemoved: false, statusId })
-        .skip(start)
-        .limit(numOfPerPage)
-        .sort(orderQuery);
-      totalNumOfOrders = await Order.find({
-        isRemoved: false,
-        statusId,
-      }).count();
+      if (statusId) {
+        orders = await Order.find({ statusId })
+          .skip(start)
+          .limit(numOfPerPage)
+          .sort(orderQuery);
+        totalNumOfOrders = await Order.find({
+          statusId,
+        }).count();
+      } else {
+        orders = await Order.find({ statusId })
+          .skip(start)
+          .limit(numOfPerPage)
+          .sort(orderQuery);
+        totalNumOfOrders = await Order.find({}).count();
+      }
     }
-    const totalRows = await Order.find({ isRemoved: false }).count();
+    const totalRows = await Order.find().count();
 
     for (let idx = 0; idx < orders.length; idx++) {
       let order = orders[idx];
@@ -519,7 +537,6 @@ const getOrdersByClientId = async (req, res, next) => {
       let regex = new RegExp([searchText].join(""), "i");
       orders = await Order.find({
         paymentMethod: { $regex: regex },
-        isRemoved: false,
         statusId,
         customerId,
       })
@@ -528,23 +545,20 @@ const getOrdersByClientId = async (req, res, next) => {
         .sort(orderQuery);
       totalNumOfOrders = await Order.find({
         paymentMethod: { $regex: regex },
-        isRemoved: false,
         statusId,
         customerId,
       }).count();
     } else {
-      orders = await Order.find({ isRemoved: false, statusId, customerId })
+      orders = await Order.find({ statusId, customerId })
         .skip(start)
         .limit(numOfPerPage)
         .sort(orderQuery);
       totalNumOfOrders = await Order.find({
-        isRemoved: false,
         statusId,
         customerId,
       }).count();
     }
     const totalRows = await Order.find({
-      isRemoved: false,
       customerId,
     }).count();
 
@@ -593,29 +607,6 @@ const getOrdersByClientId = async (req, res, next) => {
 };
 
 // employee, admin
-const deleteOrders = async (req, res, next) => {
-  try {
-    const orderIds = req.body;
-    for (let i = 0; i < orderIds.length; i++) {
-      const orderId = orderIds[i];
-      const order = await Promise.all([
-        Order.findByIdAndUpdate(orderId, {
-          isRemoved: true,
-        }),
-      ]);
-      if (!order) {
-        throw createHttpError(400, "Order is not exist!");
-      }
-    }
-    res.status(200).json({
-      status: 200,
-      msg: "Delete order(s) successfully!",
-    });
-  } catch (error) {
-    console.log(error);
-    next(error);
-  }
-};
 
 export const orderController = {
   paypalPayment,
@@ -624,5 +615,4 @@ export const orderController = {
   updateStatusOrder,
   getOrdersByClientId,
   getAllOrders,
-  deleteOrders,
 };

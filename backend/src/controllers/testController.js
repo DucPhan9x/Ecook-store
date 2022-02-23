@@ -8,7 +8,10 @@ const submitTestOfExamination = async (req, res, next) => {
 
     const { courseId, videoUrlSubmit } = req.body;
 
-    const examination = await Examination.findOne({ courseId });
+    const examination = await Examination.findOne({
+      courseId,
+      isRemoved: false,
+    });
     if (examination) {
       throw createHttpError(404, "Examination is not exist!");
     }
@@ -39,8 +42,14 @@ const submitTestOfExamination = async (req, res, next) => {
 const updateTestOfExamination = async (req, res, next) => {
   try {
     const { isPass, evaluate, studentId, courseId } = req.body;
-    const existedCourse = await Course.findById(courseId);
-    const existedExamination = await Examination.findOne({ courseId });
+    const existedCourse = await Course.findOne({
+      _id: courseId,
+      isRemoved: false,
+    });
+    const existedExamination = await Examination.findOne({
+      courseId,
+      isRemoved: false,
+    });
     const test = await Test.findOne({
       studentId,
       examinationId: existedExamination._id,
@@ -87,7 +96,10 @@ const getListTest = async (req, res, next) => {
   try {
     let { page, orderBy, orderType, numOfPerPage, courseId, isPass } =
       req.query;
-    const existedExamination = await Examination.findOne({ courseId });
+    const existedExamination = await Examination.findOne({
+      courseId,
+      isRemoved: false,
+    });
     if (!existedExamination) {
       throw createHttpError(404, "Examination is not exist!");
     }

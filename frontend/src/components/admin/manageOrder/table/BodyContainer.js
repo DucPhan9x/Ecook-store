@@ -1,4 +1,4 @@
-import { Checkbox, TableBody, TableCell, TableRow } from "@material-ui/core";
+import { TableBody, TableCell, TableRow } from "@material-ui/core";
 import moment from "moment";
 import React from "react";
 
@@ -10,7 +10,6 @@ const BodyContainer = (props) => {
     page,
     rowsPerPage,
     selected,
-    setSelected,
     setSelectedItem,
     setIsOpenModal,
   } = props;
@@ -41,24 +40,6 @@ const BodyContainer = (props) => {
     });
     return stabilizedThis.map((el) => el[0]);
   }
-  const handleClick = (event, name) => {
-    const selectedIndex = selected.indexOf(name);
-    let newSelected = [];
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
-    }
-    setSelected(newSelected);
-  };
 
   return (
     <>
@@ -79,13 +60,7 @@ const BodyContainer = (props) => {
                 key={row._id}
                 selected={isItemSelected}
               >
-                <TableCell padding="checkbox">
-                  <Checkbox
-                    onClick={(event) => handleClick(event, row._id)}
-                    checked={isItemSelected}
-                    inputProps={{ "aria-labelledby": labelId }}
-                  />
-                </TableCell>
+                <TableCell padding="checkbox"></TableCell>
                 <TableCell
                   component="th"
                   id={labelId}

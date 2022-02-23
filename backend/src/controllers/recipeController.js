@@ -35,7 +35,10 @@ const updateRecipeById = async (req, res, next) => {
     const instructorId = req.user._id;
     const instructor = await UserDetail.findOne({ userId: instructorId });
 
-    const existedRecipe = await Recipe.findById(recipeId);
+    const existedRecipe = await Recipe.findOne({
+      _id: recipeId,
+      isRemoved: false,
+    });
 
     if (!existedRecipe) {
       throw createHttpError(404, "Recipe is not exist!");
@@ -67,14 +70,10 @@ const updateRecipeById = async (req, res, next) => {
 
 const deleteRecipeById = async (req, res, next) => {
   try {
-    const recipeIds = req.body;
+    const { recipeIds } = req.body;
     for (let i = 0; i < recipeIds.length; i++) {
       const recipeId = recipeIds[i];
-      const recipe = await Promise.all([
-        Recipe.findByIdAndUpdate(recipeId, {
-          isRemoved: true,
-        }),
-      ]);
+      const recipe = await Recipe.findOne({ _id: recipeId, isRemoved: false });
       if (!recipe) {
         throw createHttpError(400, "Recipe is not exist!");
       }
@@ -84,6 +83,12 @@ const deleteRecipeById = async (req, res, next) => {
           "You're not instructor that created this recipe!"
         );
       }
+
+      await Promise.all([
+        Recipe.findByIdAndUpdate(recipeId, {
+          isRemoved: true,
+        }),
+      ]);
     }
     res.status(200).json({
       status: 200,
@@ -248,7 +253,10 @@ const getListRecipeByInstructorId = async (req, res, next) => {
 const getRecipeById = async (req, res, next) => {
   try {
     const recipeId = req.params.recipeId;
-    let recipe = await Recipe.findById(recipeId);
+    let recipe = await Recipe.findOne({ _id: recipeId, isRemoved: false });
+    if (!recipe) {
+      throw createHttpError(400, "Recipe not found");
+    }
     let feedbacks = await Feedback.find({ itemId: recipeId });
     feedbacks = feedbacks.map((item) => {
       return {

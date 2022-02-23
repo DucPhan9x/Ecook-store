@@ -61,6 +61,11 @@ const getFoodById = async (req, res, next) => {
   try {
     const foodId = req.params.foodId;
     let food = await Food.findById(foodId);
+
+    if (!food) {
+      throw createHttpError(400, "Food not found");
+    }
+
     let feedbacks = await Feedback.find({ itemId: foodId });
     feedbacks = feedbacks.map((item) => {
       return {

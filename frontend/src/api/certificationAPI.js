@@ -38,7 +38,7 @@ const deleteCertificationById = (certificationIds) => {
   let requestOptions = {
     headers: myHeaders,
     method: "DELETE",
-    body: JSON.stringify(certificationIds),
+    body: JSON.stringify({ certificationIds }),
   };
 
   return fetch(`${url}certification`, requestOptions);

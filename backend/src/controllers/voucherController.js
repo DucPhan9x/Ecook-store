@@ -47,7 +47,10 @@ const updateVoucherById = async (req, res, next) => {
       remainingSlot,
       expiredDate,
     } = req.body;
-    const existedVoucher = await Voucher.findById(voucherId);
+    const existedVoucher = await Voucher.findOne({
+      _id: voucherId,
+      isRemoved: false,
+    });
 
     if (!existedVoucher) {
       throw createHttpError(404, "Voucher is not exist!");
@@ -76,17 +79,21 @@ const updateVoucherById = async (req, res, next) => {
 
 const deleteVoucherById = async (req, res, next) => {
   try {
-    const voucherIds = req.body;
+    const { voucherIds } = req.body;
     for (let i = 0; i < voucherIds.length; i++) {
       const voucherId = voucherIds[i];
-      const voucher = await Promise.all([
+      const voucher = await Voucher.findOne({
+        _id: voucherId,
+        isRemoved: false,
+      });
+      if (!voucher) {
+        throw createHttpError(400, "Voucher is not exist!");
+      }
+      await Promise.all([
         Voucher.findByIdAndUpdate(voucherId, {
           isRemoved: true,
         }),
       ]);
-      if (!voucher) {
-        throw createHttpError(400, "Voucher is not exist!");
-      }
     }
 
     res.status(200).json({

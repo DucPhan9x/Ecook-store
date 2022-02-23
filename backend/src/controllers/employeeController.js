@@ -144,7 +144,7 @@ const updateEmployeeById = async (req, res, next) => {
   try {
     const employeeId = req.params.employeeId;
     const { fullName, phoneNumber, dateOfBirth } = req.body;
-    await UserDetail.findOneAndUpdate(
+    const test = await UserDetail.findOneAndUpdate(
       { userId: employeeId },
       {
         fullName,
@@ -152,7 +152,13 @@ const updateEmployeeById = async (req, res, next) => {
         dateOfBirth: new Date(dateOfBirth),
       }
     );
+
+    if (!test) {
+      throw createHttpError(400, "Employee is not exist");
+    }
+
     const newEmployee = await UserDetail.findOne({ userId: employeeId });
+
     res.status(200).json({
       status: 200,
       msg: "Update an employee successfully!",

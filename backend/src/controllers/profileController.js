@@ -17,7 +17,6 @@ const getProfile = async (req, res, next) => {
     if (!user) {
       throw createHttpError(404, "User is not exists");
     }
-    console.log("user: " + JSON.stringify(user));
     res.status(200).json({
       status: 200,
       msg: "Get user profile successfully!",
@@ -67,7 +66,12 @@ const updateProfile = async (req, res, next) => {
 
 const updateAvatar = async (req, res, next) => {
   try {
-    const userDetail = await UserDetail.findOne({ userId: req.user._id });
+    const userDetail = await UserDetail.findOne({
+      userId: req.user._id,
+    });
+    if (!userDetail) {
+      throw createHttpError(404, "User is not exist");
+    }
     const asset_id = userDetail.imageUrl.split("/").pop().split(".")[0];
     if (asset_id) {
       await deleteImage(asset_id);

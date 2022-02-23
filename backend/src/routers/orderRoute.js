@@ -9,7 +9,6 @@ const {
   getOrdersByClientId,
   getAllOrders,
   updateStatusOrder,
-  deleteOrders,
   paymentRedirectMoney,
 } = orderController;
 
@@ -25,4 +24,3 @@ orderRoute.route(`${baseUrl}?`).get(getAllOrders);
 // client side
 orderRoute.route(`${baseUrl}/get-all-by-clientID?`).get(getOrdersByClientId);
 orderRoute.route(`${baseUrl}`).put(updateStatusOrder);
-orderRoute.route(`${baseUrl}`).delete(deleteOrders);

@@ -38,7 +38,7 @@ const deleteCourseById = (courseIds) => {
   let requestOptions = {
     headers: myHeaders,
     method: "PUT",
-    body: JSON.stringify(courseIds),
+    body: JSON.stringify({ courseIds }),
   };
 
   return fetch(`${url}course/delete`, requestOptions);

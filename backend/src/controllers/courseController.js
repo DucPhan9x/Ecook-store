@@ -54,8 +54,14 @@ const updateCourseById = async (req, res, next) => {
     } = req.body;
     const instructorId = req.user._id;
 
-    const existedCourse = await Course.findById(courseId);
-    const existedExamination = await Examination.findOne({ courseId });
+    const existedCourse = await Course.findOne({
+      _id: courseId,
+      isRemoved: false,
+    });
+    const existedExamination = await Examination.findOne({
+      courseId,
+      isRemoved: false,
+    });
     if (!existedCourse) {
       throw createHttpError(404, "Course is not exist!");
     }
@@ -100,21 +106,11 @@ const updateCourseById = async (req, res, next) => {
 
 const deleteCourseById = async (req, res, next) => {
   try {
-    const courseIds = req.body;
+    const { courseIds } = req.body;
     const instructorId = req.user._id;
     for (let i = 0; i < courseIds.length; i++) {
       const courseId = courseIds[i];
-      const course = await Promise.all([
-        Course.findByIdAndUpdate(courseId, {
-          isRemoved: true,
-        }),
-        Examination.findOneAndUpdate(
-          { courseId },
-          {
-            isRemoved: true,
-          }
-        ),
-      ]);
+      const course = await Course.findOne({ _id: courseId, isRemoved: false });
 
       if (!course) {
         throw createHttpError(400, "Course is not exist!");
@@ -125,11 +121,23 @@ const deleteCourseById = async (req, res, next) => {
           "You're not instructor that created this course!"
         );
       }
+      await Promise.all([
+        Course.findByIdAndUpdate(courseId, {
+          isRemoved: true,
+        }),
+        Examination.findOneAndUpdate(
+          { courseId },
+          {
+            isRemoved: true,
+          }
+        ),
+      ]);
     }
 
     res.status(200).json({
       status: 200,
       msg: "Delete course(s) successfully!",
+      courseIds,
     });
   } catch (error) {
     console.log(error);
@@ -292,9 +300,14 @@ const getListCourseByInstructorId = async (req, res, next) => {
 const getCourseById = async (req, res, next) => {
   try {
     const courseId = req.params.courseId;
-    let course = await Course.findById(courseId);
-    let examination = await Examination.findOne({ courseId });
-
+    let course = await Course.findOne({ _id: courseId, isRemoved: false });
+    let examination = await Examination.findOne({ courseId, isRemoved: false });
+    if (!course) {
+      throw createHttpError(400, "Course is not exist!");
+    }
+    if (!examination) {
+      throw createHttpError(400, "Examination is not exist!");
+    }
     let feedbacks = await Feedback.find({ itemId: courseId });
     feedbacks = feedbacks.map((item) => {
       return {
@@ -327,8 +340,6 @@ const getCourseById = async (req, res, next) => {
     next(error);
   }
 };
-
-// payment online
 
 export const courseController = {
   createNewCourse,

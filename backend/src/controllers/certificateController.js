@@ -10,11 +10,17 @@ import createHttpError from "http-errors";
 const createNewCertification = async (req, res, next) => {
   try {
     const { courseId, studentId, positionCreate, graded } = req.body;
-    const existedCourse = await Course.findById(courseId);
+    const existedCourse = await Course.findOne({
+      _id: courseId,
+      isRemoved: false,
+    });
     if (!existedCourse) {
       throw createHttpError(404, "Course is not exist!");
     }
-    const examination = await Examination.findOne({ courseId: courseId });
+    const examination = await Examination.findOne({
+      courseId: courseId,
+      isRemoved: false,
+    });
     if (!examination) {
       throw createHttpError(404, "Examination is not exist!");
     }
@@ -57,8 +63,12 @@ const updateCertification = async (req, res, next) => {
   try {
     const { certificationId, startDate, endDate, positionCreate, graded } =
       req.body;
-    const existedCertification = await Certification.findById({
-      certificationId,
+    const existedCertification = await Certification.findOne({
+      _id: certificationId,
+      isRemoved: false,
+    });
+    const existedCourse = await Course.findOne({
+      _id: certificationId,
     });
     if (!existedCourse) {
       throw createHttpError(404, "Course is not exist!");
@@ -93,22 +103,24 @@ const updateCertification = async (req, res, next) => {
 
 const deleteCertificationById = async (req, res, next) => {
   try {
-    const certificationIds = req.body;
+    const { certificationIds } = req.body;
     for (let i = 0; i < certificationIds.length; i++) {
       const certificationId = certificationIds[i];
-      const certification = await Promise.all([
+      const certification = await Certification.findById(certificationId);
+      if (!certification) {
+        throw createHttpError(400, "Certification is not exist!");
+      }
+      await Promise.all([
         Certification.findByIdAndUpdate(certificationId, {
           isRemoved: true,
         }),
       ]);
-      if (!certification) {
-        throw createHttpError(400, "Certification(s) is(are) not exist!");
-      }
     }
 
     res.status(200).json({
       status: 200,
-      msg: "Delete course(s) successfully!",
+      msg: "Delete certification(s) successfully!",
+      certificationIds,
     });
   } catch (error) {
     console.log(error);
@@ -172,6 +184,9 @@ const getCertificationById = async (req, res, next) => {
     const student = await UserDetail.findOne({
       userId: certification.studentId,
     });
+    if (!certification) {
+      throw createHttpError(400, "Certification is not exist!");
+    }
     const course = await Course.findById(certification.courseId);
 
     res.status(200).json({

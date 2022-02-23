@@ -38,7 +38,7 @@ const deleteRecipeById = (recipeIds) => {
   let requestOptions = {
     headers: myHeaders,
     method: "DELETE",
-    body: JSON.stringify(recipeIds),
+    body: JSON.stringify({ recipeIds }),
   };
 
   return fetch(`${url}recipe`, requestOptions);

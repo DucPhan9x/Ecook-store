@@ -100,6 +100,7 @@ const updateCartItem = async (req, res, next) => {
     res.status(200).json({
       status: 200,
       msg: "Update cart item(s) successfully!",
+      cartItems,
     });
   } catch (error) {
     console.log(error);
@@ -121,6 +122,7 @@ const deleteCartItem = async (req, res, next) => {
     res.status(200).json({
       status: 200,
       msg: "Delete cart item(s) successfully",
+      cartItems,
     });
   } catch (error) {
     console.log(error);
