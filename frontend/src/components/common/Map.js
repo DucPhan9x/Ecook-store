@@ -5,23 +5,103 @@ import {
   withScriptjs,
   GoogleMap,
   Marker,
+  Polyline,
 } from "react-google-maps";
 import InfoBox from "react-google-maps/lib/components/addons/InfoBox";
-const options = { closeBoxURL: "", enableEventPropagation: true };
+import Geocode from "react-geocode";
+import { useState } from "react";
+import { useEffect } from "react";
+import useNotification from "hooks/useNotification";
+import ECookIcon from "assets/images/logoECook.png";
 
-const Map = ({ imageUrlAvatar, address, zoom }) => {
+const options = { closeBoxURL: "", enableEventPropagation: true };
+const optionsPolyline = {
+  strokeColor: "red",
+  strokeOpacity: 0.8,
+  strokeWeight: 3,
+  fillColor: "#085daa",
+  fillOpacity: 0.35,
+  clickable: false,
+  draggable: false,
+  editable: false,
+  visible: true,
+  radius: 30000,
+  zIndex: 1,
+};
+Geocode.setApiKey(process.env.REACT_APP_API_MAP_KEY);
+Geocode.setLanguage("vi");
+Geocode.setRegion("VN");
+Geocode.enableDebug();
+
+const Map = ({ infoCustomer, address, zoom }) => {
+  // get lat lng from address
+  const [data, setData] = useState({ lat: 0, lng: 0 });
+  const [positions, setPositions] = useState([
+    {
+      lat: 16.0711691,
+      lng: 108.1483103,
+      label: "E-COOK System",
+    },
+  ]);
+
+  useEffect(() => {
+    console.log(address);
+    Geocode.fromAddress("54 nguyen luong bang da nang" || address).then(
+      (response) => {
+        const { lat, lng } = response.results[0].geometry.location;
+        setData({ lat, lng });
+        let temp = [...positions];
+        temp.push({ lat, lng, label: infoCustomer?.fullName });
+        setPositions(temp);
+      },
+      (error) => {
+        useNotification.Error({
+          title: "Message",
+          message: "Get lat/lgn from address failed!",
+        });
+      }
+    );
+    // eslint-disable-next-line
+  }, [address, infoCustomer]);
+
   return (
     <div>
-      <GoogleMap
-        defaultZoom={zoom}
-        defaultCenter={{ lat: 16.071367298751273, lng: 108.1483303695333 }}
-      >
-        <Marker position={{ lat: 16.071367298751273, lng: 108.1483303695333 }}>
-          <InfoBox options={options}>
-            <Avatar alt="Avatar" src={imageUrlAvatar} />
-          </InfoBox>
-        </Marker>
-      </GoogleMap>
+      {data.lat > 0 && data.lng > 0 && (
+        <GoogleMap
+          defaultZoom={zoom}
+          defaultCenter={{
+            lat: data.lat,
+            lng: data.lng,
+          }}
+        >
+          <Marker
+            position={{
+              lat: data.lat,
+              lng: data.lng,
+            }}
+          >
+            {positions &&
+              positions.map((position, index) => (
+                <Marker position={new window.google.maps.LatLng(position)}>
+                  <InfoBox options={options}>
+                    <Avatar
+                      alt="Avatar"
+                      src={
+                        position.label !== "E-COOK System"
+                          ? infoCustomer?.imageUrl ||
+                            "https://res.cloudinary.com/duc/image/upload/v1642704006/avatardefault_ux3ryj.png"
+                          : ECookIcon
+                      }
+                    />
+                  </InfoBox>
+                </Marker>
+              ))}
+          </Marker>
+          {positions?.length === 2 && (
+            <Polyline path={positions} options={optionsPolyline} />
+          )}
+        </GoogleMap>
+      )}
     </div>
   );
 };

@@ -40,8 +40,6 @@ const ModalEdit = ({ isModalVisible, handleSubmit, close, selectedItem }) => {
     close();
   };
 
-  console.log(process.env);
-
   return (
     <Modal
       className="modal-container-edit-order"
@@ -57,11 +55,7 @@ const ModalEdit = ({ isModalVisible, handleSubmit, close, selectedItem }) => {
       <div className="flex">
         <div className="gg-map-order-manage">
           <Map
-            googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${
-              false
-                ? process.env.REACT_APP_API_MAP_KEY
-                : "AIzaSyClKcvRulhEqBlzazZFLxrTNr5W_DMCps8"
-            }&callback=initMap`}
+            googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_API_MAP_KEY}&callback=initMap`}
             loadingElement={<div style={{ height: `100%` }} />}
             containerElement={
               <div
@@ -72,8 +66,8 @@ const ModalEdit = ({ isModalVisible, handleSubmit, close, selectedItem }) => {
                 }}
               />
             }
-            imageUrlAvatar={form.customer?.imageUrl}
-            zoom={15}
+            infoCustomer={form.customer}
+            zoom={16}
             address={form.address}
             mapElement={<div style={{ height: `100%` }} />}
           />
