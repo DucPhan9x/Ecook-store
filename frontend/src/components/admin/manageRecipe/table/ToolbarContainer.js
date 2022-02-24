@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import clsx from "clsx";
 import { lighten, makeStyles } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -7,6 +7,9 @@ import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import DeleteIcon from "@material-ui/icons/Delete";
 import FilterListIcon from "@material-ui/icons/FilterList";
+import DialogConfirm from "components/common/DialogConform";
+import { useDispatch } from "react-redux";
+import { deleteRecipeById } from "redux/actions/recipe";
 
 const useToolbarStyles = makeStyles((theme) => ({
   root: {
@@ -30,8 +33,10 @@ const useToolbarStyles = makeStyles((theme) => ({
 
 const ToolbarContainer = (props) => {
   const classes = useToolbarStyles();
-  const { selected, setRows, rows, setSelected } = props;
+  const { selected, setSelected } = props;
   const numSelected = selected.length;
+  const [openDialogConfirm, setOpenDialogConfirm] = useState(false);
+  const dispatch = useDispatch();
 
   return (
     <Toolbar
@@ -64,9 +69,7 @@ const ToolbarContainer = (props) => {
           <IconButton
             aria-label="delete"
             onClick={() => {
-              console.log("run api delete by selected: ", { selected });
-              setRows(rows.filter((item) => !selected.includes(item._id)));
-              setSelected([]);
+              setOpenDialogConfirm(true);
             }}
           >
             <DeleteIcon />
@@ -79,6 +82,17 @@ const ToolbarContainer = (props) => {
           </IconButton>
         </Tooltip>
       )}
+      <DialogConfirm
+        open={openDialogConfirm}
+        handleClose={() => setOpenDialogConfirm(false)}
+        message="xóa"
+        handleSubmit={() => {
+          dispatch(deleteRecipeById(selected));
+          // setRows(rows.filter((item) => !selected.includes(item._id)));
+          setSelected([]);
+          setOpenDialogConfirm(false);
+        }}
+      />
     </Toolbar>
   );
 };

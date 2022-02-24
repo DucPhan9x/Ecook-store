@@ -8,6 +8,7 @@ import HeaderContainer from "./HeaderContainer";
 import ToolbarContainer from "./ToolbarContainer";
 import BodyContainer from "./BodyContainer";
 import ModalManageFeedback from "components/common/modal/ModalManageFeedback";
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,23 +34,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function EnhancedTable({ data, setData }) {
+export default function EnhancedTable({ queries, setQueries }) {
   const classes = useStyles();
-  const [order, setOrder] = React.useState("asc");
-  const [orderBy, setOrderBy] = React.useState("createAt");
   const [selected, setSelected] = React.useState([]);
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
+  const { totalRows, recipeList } = useSelector((store) => store.recipe);
   const [rows, setRows] = useState([]);
   useEffect(() => {
-    setRows(data);
-  }, [data]);
+    setRows(recipeList);
+  }, [recipeList]);
 
   const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === "asc";
-    setOrder(isAsc ? "desc" : "asc");
-    setOrderBy(property);
+    const isAsc = queries.orderBy === property && queries.orderType === "asc";
+    setQueries({
+      ...queries,
+      orderBy: property,
+      orderType: isAsc ? "desc" : "asc",
+      page: 1,
+    });
   };
 
   const handleSelectAllClick = (event) => {
@@ -60,14 +62,12 @@ export default function EnhancedTable({ data, setData }) {
     }
     setSelected([]);
   };
-
   const handleChangePage = (event, newPage) => {
-    setPage(newPage);
+    setQueries({ ...queries, page: newPage + 1 });
   };
 
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
+    setQueries({ ...queries, numOfPerPage: event.target.value, page: 1 });
   };
 
   const [feedbackItemSelected, setFeedbackItemSelected] = useState("");
@@ -91,20 +91,20 @@ export default function EnhancedTable({ data, setData }) {
             <HeaderContainer
               classes={classes}
               numSelected={selected.length}
-              order={order}
-              orderBy={orderBy}
+              order={queries?.orderType}
+              orderBy={queries?.orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={rows.length}
+              rowCount={totalRows}
             />
             <BodyContainer
               rows={rows}
-              order={order}
-              orderBy={orderBy}
+              order={queries?.orderType}
+              orderBy={queries?.orderBy}
               selected={selected}
               setSelected={setSelected}
-              page={page}
-              rowsPerPage={rowsPerPage}
+              rowsPerPage={queries.numOfPerPage}
+              page={queries.page - 1}
               setFeedbackItemSelected={setFeedbackItemSelected}
             />
           </Table>
@@ -112,9 +112,9 @@ export default function EnhancedTable({ data, setData }) {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={rows.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
+          count={totalRows}
+          rowsPerPage={queries.numOfPerPage}
+          page={queries.page - 1}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />

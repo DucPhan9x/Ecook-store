@@ -1,5 +1,5 @@
 import { Paper } from "@material-ui/core";
-import { BackPreviousPage } from "components/common";
+import { BackPreviousPage, SpinLoading } from "components/common";
 import React, { useState } from "react";
 import { Form as ReForm } from "reactstrap";
 import { FormBox } from "components/common";
@@ -8,11 +8,16 @@ import NoImage from "assets/images/notImage.png";
 import UploadImage from "components/common/UploadImage";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import { Select } from "antd";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { createRecipe } from "redux/actions/recipe";
 
 const { Option } = Select;
 
 const AddRecipe = () => {
   const [error, setError] = React.useState({});
+  const { createRecipeState } = useSelector((store) => store.recipe);
+  const dispatch = useDispatch();
 
   const [form, setForm] = useState({
     name: "",
@@ -20,6 +25,7 @@ const AddRecipe = () => {
     materials: [],
     imageUrl: "",
     slotQuantity: 0,
+    imageFile: {},
   });
 
   function onChange(value, index) {
@@ -78,12 +84,13 @@ const AddRecipe = () => {
       return setError(errorState);
     }
     // API add recipe
-    console.log({ form });
+    console.log(form);
+    dispatch(createRecipe(form));
   };
 
   const handleChangeImage = (e) => {
     const temp = URL.createObjectURL(e.target.files[0]);
-    setForm({ ...form, imageUrl: temp });
+    setForm({ ...form, imageUrl: temp, imageFile: e.target.files[0] });
   };
 
   return (
@@ -253,6 +260,7 @@ const AddRecipe = () => {
                   placeholder: "Định lượng",
                   type: "number",
                   name: "slotQuantity",
+                  min: 0,
                   onChange: handleChange,
                   onFocus: handleFocus,
                   value: form.slotQuantity,
@@ -279,6 +287,7 @@ const AddRecipe = () => {
           </ReForm>
         </Paper>
       </div>
+      {createRecipeState.loading && <SpinLoading />}
     </div>
   );
 };

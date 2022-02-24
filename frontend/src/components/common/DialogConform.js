@@ -5,7 +5,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import Slide from "@material-ui/core/Slide";
-import WarningIcon from "@material-ui/icons/Warning";
+import WarningIcon from "assets/icons/warning-icon.png";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="down" ref={ref} {...props} timeout={500} />;
@@ -22,15 +22,30 @@ const DialogConfirm = ({ open, handleClose, message, handleSubmit }) => {
       aria-describedby="alert-dialog-slide-description"
     >
       <DialogContent>
-        <DialogContentText id="alert-dialog-slide-description flex items-center">
-          <WarningIcon /> Bạn có chắc muốn {message} ?
+        <DialogContentText
+          id="alert-dialog-slide-description flex items-center"
+          style={{ marginBottom: "-6px" }}
+        >
+          <img
+            style={{ width: 30, marginRight: 4, marginBottom: 2 }}
+            src={WarningIcon}
+            alt=""
+          />
+          <span style={{ fontSize: 20 }}>Bạn có chắc muốn {message} ?</span>
         </DialogContentText>
       </DialogContent>
-      <DialogActions>
-        <Button onClick={handleSubmit} color="primary">
+      <DialogActions
+        className="center full-width"
+        style={{ justifyContent: "center" }}
+      >
+        <Button onClick={handleSubmit} color="primary" style={{ fontSize: 17 }}>
           Đồng ý
         </Button>
-        <Button onClick={handleClose} color="secondary">
+        <Button
+          onClick={handleClose}
+          color="secondary"
+          style={{ fontSize: 17 }}
+        >
           Hủy bỏ
         </Button>
       </DialogActions>

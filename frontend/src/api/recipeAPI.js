@@ -5,12 +5,18 @@ const createRecipe = (data) => {
   const token = getAccessToken();
   let myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${token}`);
-  myHeaders.append("Content-Type", `application/json`);
+  let formData = new FormData();
+  formData.append("files", data?.imageFile);
+  formData.append("name", data?.name);
+  formData.append("materials", JSON.stringify(data?.materials));
+  formData.append("slotQuantity", Number(data?.slotQuantity));
+  formData.append("description", data?.description);
+  formData.append("contents", JSON.stringify(data?.contents));
 
   let requestOptions = {
     headers: myHeaders,
     method: "POST",
-    body: JSON.stringify(data),
+    body: formData,
   };
   return fetch(`${url}recipe`, requestOptions);
 };
@@ -19,12 +25,14 @@ const updateRecipeById = (data) => {
   const token = getAccessToken();
   let myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${token}`);
-  myHeaders.append("Content-Type", `application/json`);
+  let formData = new FormData();
+  formData.append("files", data?.imageFile);
+  formData.append("recipeUpdated", JSON.stringify(data?.recipeUpdated));
 
   let requestOptions = {
     headers: myHeaders,
     method: "PUT",
-    body: JSON.stringify(data),
+    body: formData,
   };
   return fetch(`${url}recipe`, requestOptions);
 };
@@ -83,7 +91,7 @@ const getListRecipeRelated = (data) => {
     method: "GET",
   };
   return fetch(
-    `${url}recipe/related-foodName?searchText=${data}`,
+    `${url}recipe/by/related-foodName?searchText=${data}`,
     requestOptions
   );
 };
@@ -100,7 +108,7 @@ const getListRecipeByInstructor = (data) => {
     method: "GET",
   };
   return fetch(
-    `${url}recipe/by-instructorId?page=${page}&searchText=${searchText}&orderBy=${orderBy}&orderType=${orderType}&numOfPerPage=${numOfPerPage}`,
+    `${url}recipe/by/instructor?page=${page}&searchText=${searchText}&orderBy=${orderBy}&orderType=${orderType}&numOfPerPage=${numOfPerPage}`,
     requestOptions
   );
 };

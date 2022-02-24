@@ -18,7 +18,7 @@ Rã đông sản phẩm ở nhiệt độ phòng.`,
       `Bước 3:
 Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm trắng.`,
     ],
-    material: [
+    materials: [
       { _id: uuid(), foodName: "Gà", unit: "kg", quantity: 0.5 },
       { _id: uuid(), foodName: "Xả", unit: "g", quantity: 500 },
       { _id: uuid(), foodName: "Ớt", unit: "g", quantity: 200 },
@@ -68,7 +68,7 @@ Rã đông sản phẩm ở nhiệt độ phòng.`,
       `Bước 3:
 Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm trắng.`,
     ],
-    material: [
+    materials: [
       { _id: uuid(), foodName: "Gà", unit: "kg", quantity: 0.5 },
       { _id: uuid(), foodName: "Xả", unit: "g", quantity: 500 },
       { _id: uuid(), foodName: "Ớt", unit: "g", quantity: 200 },
@@ -118,7 +118,7 @@ Rã đông sản phẩm ở nhiệt độ phòng.`,
       `Bước 3:
 Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm trắng.`,
     ],
-    material: [
+    materials: [
       { _id: uuid(), foodName: "Gà", unit: "kg", quantity: 0.5 },
       { _id: uuid(), foodName: "Xả", unit: "g", quantity: 500 },
       { _id: uuid(), foodName: "Ớt", unit: "g", quantity: 200 },
@@ -168,7 +168,7 @@ Rã đông sản phẩm ở nhiệt độ phòng.`,
       `Bước 3:
 Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm trắng.`,
     ],
-    material: [
+    materials: [
       { _id: uuid(), foodName: "Gà", unit: "kg", quantity: 0.5 },
       { _id: uuid(), foodName: "Xả", unit: "g", quantity: 500 },
       { _id: uuid(), foodName: "Ớt", unit: "g", quantity: 200 },
@@ -218,7 +218,7 @@ Rã đông sản phẩm ở nhiệt độ phòng.`,
       `Bước 3:
 Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm trắng.`,
     ],
-    material: [
+    materials: [
       { _id: uuid(), foodName: "Gà", unit: "kg", quantity: 0.5 },
       { _id: uuid(), foodName: "Xả", unit: "g", quantity: 500 },
       { _id: uuid(), foodName: "Ớt", unit: "g", quantity: 200 },
@@ -268,7 +268,7 @@ Rã đông sản phẩm ở nhiệt độ phòng.`,
       `Bước 3:
 Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm trắng.`,
     ],
-    material: [
+    materials: [
       { _id: uuid(), foodName: "Gà", unit: "kg", quantity: 0.5 },
       { _id: uuid(), foodName: "Xả", unit: "g", quantity: 500 },
       { _id: uuid(), foodName: "Ớt", unit: "g", quantity: 200 },
@@ -318,7 +318,7 @@ Rã đông sản phẩm ở nhiệt độ phòng.`,
       `Bước 3:
 Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm trắng.`,
     ],
-    material: [
+    materials: [
       { _id: uuid(), foodName: "Gà", unit: "kg", quantity: 0.5 },
       { _id: uuid(), foodName: "Xả", unit: "g", quantity: 500 },
       { _id: uuid(), foodName: "Ớt", unit: "g", quantity: 200 },
@@ -368,7 +368,7 @@ Rã đông sản phẩm ở nhiệt độ phòng.`,
       `Bước 3:
 Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm trắng.`,
     ],
-    material: [
+    materials: [
       { _id: uuid(), foodName: "Gà", unit: "kg", quantity: 0.5 },
       { _id: uuid(), foodName: "Xả", unit: "g", quantity: 500 },
       { _id: uuid(), foodName: "Ớt", unit: "g", quantity: 200 },
@@ -493,7 +493,7 @@ export const FOODS_DATA = [
           `Bước 3:
     Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm trắng.`,
         ],
-        material: [
+        materials: [
           { _id: uuid(), foodName: "Gà", unit: "kg", quantity: 0.5 },
           { _id: uuid(), foodName: "Xả", unit: "g", quantity: 500 },
           { _id: uuid(), foodName: "Ớt", unit: "g", quantity: 200 },
@@ -591,7 +591,7 @@ export const FOODS_DATA = [
           `Bước 3:
     Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm trắng.`,
         ],
-        material: [
+        materials: [
           { _id: uuid(), foodName: "Gà", unit: "kg", quantity: 0.5 },
           { _id: uuid(), foodName: "Xả", unit: "g", quantity: 500 },
           { _id: uuid(), foodName: "Ớt", unit: "g", quantity: 200 },
@@ -689,7 +689,7 @@ export const FOODS_DATA = [
           `Bước 3:
     Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm trắng.`,
         ],
-        material: [
+        materials: [
           { _id: uuid(), foodName: "Gà", unit: "kg", quantity: 0.5 },
           { _id: uuid(), foodName: "Xả", unit: "g", quantity: 500 },
           { _id: uuid(), foodName: "Ớt", unit: "g", quantity: 200 },
@@ -787,7 +787,7 @@ export const FOODS_DATA = [
           `Bước 3:
     Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm trắng.`,
         ],
-        material: [
+        materials: [
           { _id: uuid(), foodName: "Gà", unit: "kg", quantity: 0.5 },
           { _id: uuid(), foodName: "Xả", unit: "g", quantity: 500 },
           { _id: uuid(), foodName: "Ớt", unit: "g", quantity: 200 },
@@ -885,7 +885,7 @@ export const FOODS_DATA = [
           `Bước 3:
     Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm trắng.`,
         ],
-        material: [
+        materials: [
           { _id: uuid(), foodName: "Gà", unit: "kg", quantity: 0.5 },
           { _id: uuid(), foodName: "Xả", unit: "g", quantity: 500 },
           { _id: uuid(), foodName: "Ớt", unit: "g", quantity: 200 },
@@ -983,7 +983,7 @@ export const FOODS_DATA = [
           `Bước 3:
     Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm trắng.`,
         ],
-        material: [
+        materials: [
           { _id: uuid(), foodName: "Gà", unit: "kg", quantity: 0.5 },
           { _id: uuid(), foodName: "Xả", unit: "g", quantity: 500 },
           { _id: uuid(), foodName: "Ớt", unit: "g", quantity: 200 },
@@ -1081,7 +1081,7 @@ export const FOODS_DATA = [
           `Bước 3:
     Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm trắng.`,
         ],
-        material: [
+        materials: [
           { _id: uuid(), foodName: "Gà", unit: "kg", quantity: 0.5 },
           { _id: uuid(), foodName: "Xả", unit: "g", quantity: 500 },
           { _id: uuid(), foodName: "Ớt", unit: "g", quantity: 200 },
@@ -1180,7 +1180,7 @@ export const FOODS_DATA = [
           `Bước 3:
     Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm trắng.`,
         ],
-        material: [
+        materials: [
           { _id: uuid(), foodName: "Gà", unit: "kg", quantity: 0.5 },
           { _id: uuid(), foodName: "Xả", unit: "g", quantity: 500 },
           { _id: uuid(), foodName: "Ớt", unit: "g", quantity: 200 },
@@ -1278,7 +1278,7 @@ export const FOODS_DATA = [
           `Bước 3:
     Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm trắng.`,
         ],
-        material: [
+        materials: [
           { _id: uuid(), foodName: "Gà", unit: "kg", quantity: 0.5 },
           { _id: uuid(), foodName: "Xả", unit: "g", quantity: 500 },
           { _id: uuid(), foodName: "Ớt", unit: "g", quantity: 200 },
@@ -1376,7 +1376,7 @@ export const FOODS_DATA = [
           `Bước 3:
     Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm trắng.`,
         ],
-        material: [
+        materials: [
           { _id: uuid(), foodName: "Gà", unit: "kg", quantity: 0.5 },
           { _id: uuid(), foodName: "Xả", unit: "g", quantity: 500 },
           { _id: uuid(), foodName: "Ớt", unit: "g", quantity: 200 },
@@ -1474,7 +1474,7 @@ export const FOODS_DATA = [
           `Bước 3:
     Bày món ăn ra dĩa và thưởng thức. Ngon hơn khi ăn nóng cùng cơm trắng.`,
         ],
-        material: [
+        materials: [
           { _id: uuid(), foodName: "Gà", unit: "kg", quantity: 0.5 },
           { _id: uuid(), foodName: "Xả", unit: "g", quantity: 500 },
           { _id: uuid(), foodName: "Ớt", unit: "g", quantity: 200 },

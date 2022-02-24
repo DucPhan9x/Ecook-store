@@ -73,7 +73,7 @@ const getListFoodRelated = (data) => {
     headers: myHeaders,
     method: "GET",
   };
-  return fetch(`${url}food/related?searchText=${data}`, requestOptions);
+  return fetch(`${url}food/by/related?searchText=${data}`, requestOptions);
 };
 
 const getFoodById = (foodId) => {

@@ -1,5 +1,5 @@
 import { Paper } from "@material-ui/core";
-import { BackPreviousPage } from "components/common";
+import { BackPreviousPage, SpinLoading } from "components/common";
 import React, { useEffect, useState } from "react";
 import { Form as ReForm } from "reactstrap";
 import { FormBox } from "components/common";
@@ -9,7 +9,8 @@ import UploadImage from "components/common/UploadImage";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import { Select } from "antd";
 import { useParams } from "react-router";
-import { RECIPES_DATA } from "utils/dummyData";
+import { useDispatch, useSelector } from "react-redux";
+import { getRecipeById, updateRecipeById } from "redux/actions/recipe";
 
 const { Option } = Select;
 
@@ -31,16 +32,19 @@ const EditRecipe = () => {
   });
 
   const { recipeID } = useParams();
+  const dispatch = useDispatch();
+  const { getRecipeByIdState, updateRecipeState } = useSelector(
+    (store) => store.recipe
+  );
 
   useEffect(() => {
-    const data = RECIPES_DATA.find((r) => r._id === recipeID);
-    setForm({
-      name: data?.title,
-      contents: data?.contents,
-      materials: data?.material,
-      imageUrl: data?.imageUrl,
-    });
-  }, [recipeID]);
+    dispatch(getRecipeById(recipeID));
+  }, [recipeID, dispatch]);
+
+  useEffect(() => {
+    if (Object.keys(getRecipeByIdState?.data || {})?.length > 0)
+      setForm(getRecipeByIdState.data);
+  }, [getRecipeByIdState]);
 
   function onChange(value, index) {
     let temp = [...form.materials];
@@ -98,12 +102,17 @@ const EditRecipe = () => {
       return setError(errorState);
     }
     // API add recipe
-    console.log({ form });
+    dispatch(
+      updateRecipeById({
+        imageFile: form.imageFile,
+        recipeUpdated: { ...form, recipeId: form._id },
+      })
+    );
   };
 
   const handleChangeImage = (e) => {
     const temp = URL.createObjectURL(e.target.files[0]);
-    setForm({ ...form, imageUrl: temp });
+    setForm({ ...form, imageUrl: temp, imageFile: e.target.files[0] });
   };
 
   return (
@@ -111,7 +120,7 @@ const EditRecipe = () => {
       <div className="add-edit-recipe-container-top">
         <BackPreviousPage />
         <button onClick={handleSubmitForm} className="btn-admin">
-          Tạo mới
+          Cập nhật
         </button>
       </div>
       <div className="add-edit-recipe-container-bottom">
@@ -273,6 +282,7 @@ const EditRecipe = () => {
                   placeholder: "Định lượng",
                   type: "number",
                   name: "slotQuantity",
+                  min: 0,
                   onChange: handleChange,
                   onFocus: handleFocus,
                   value: form.slotQuantity,
@@ -299,6 +309,9 @@ const EditRecipe = () => {
           </ReForm>
         </Paper>
       </div>
+      {(getRecipeByIdState.loading || updateRecipeState?.loading) && (
+        <SpinLoading />
+      )}
     </div>
   );
 };

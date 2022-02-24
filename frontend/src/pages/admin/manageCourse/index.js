@@ -4,7 +4,10 @@ import SearchField from "components/common/input/SearchField";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import { useHistory } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { getListCoursePerPage } from "redux/actions/course";
+import {
+  getListCourseByInstructor,
+  getListCoursePerPage,
+} from "redux/actions/course";
 import { SpinLoading } from "components/common";
 
 const ManageCourse = () => {
@@ -23,13 +26,20 @@ const ManageCourse = () => {
     orderType: "asc",
     numOfPerPage: 5,
   });
+  const { information } = useSelector((store) => store.common)?.userDetail;
 
   useEffect(() => {
     // fetch data
     document.title = "Quản lý khóa học | ECook";
     window.scrollTo(0, 0);
-    dispatch(getListCoursePerPage(queries));
-  }, [queries, dispatch]);
+    // check roleId to fetch exactly data
+    if (information?.roleId === 4) {
+      dispatch(getListCourseByInstructor(queries));
+    } else {
+      if (information?.roleId === 2) dispatch(getListCoursePerPage(queries));
+    }
+  }, [queries, dispatch, information]);
+
   return (
     <div className="manage-food-page">
       <div className="manage-food-page-top">

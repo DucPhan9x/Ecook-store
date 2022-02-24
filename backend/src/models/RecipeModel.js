@@ -5,15 +5,24 @@ const recipeSchema = new Schema({
     type: String,
     required: true,
   },
+  imageUrl: {
+    type: String,
+  },
   instructorId: {
     type: Schema.Types.ObjectId,
   },
-  material: {
+  materials: {
     type: [materialSchema],
+  },
+  contents: {
+    type: [],
   },
   numOfStars: {
     type: Number,
     default: 0,
+  },
+  description: {
+    type: String,
   },
   numOfFeedbacks: {
     type: Number,

@@ -9,6 +9,8 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import FilterListIcon from "@material-ui/icons/FilterList";
 import { useDispatch } from "react-redux";
 import { deleteCourseById } from "redux/actions/course";
+import DialogConfirm from "components/common/DialogConform";
+import { useState } from "react";
 
 const useToolbarStyles = makeStyles((theme) => ({
   root: {
@@ -35,6 +37,7 @@ const ToolbarContainer = (props) => {
   const { selected, setSelected } = props;
   const numSelected = selected.length;
   const dispatch = useDispatch();
+  const [openDialogConfirm, setOpenDialogConfirm] = useState(false);
 
   return (
     <Toolbar
@@ -67,9 +70,7 @@ const ToolbarContainer = (props) => {
           <IconButton
             aria-label="delete"
             onClick={() => {
-              dispatch(deleteCourseById(selected));
-              // setRows(rows.filter((item) => !selected.includes(item._id)));
-              setSelected([]);
+              setOpenDialogConfirm(true);
             }}
           >
             <DeleteIcon />
@@ -82,6 +83,17 @@ const ToolbarContainer = (props) => {
           </IconButton>
         </Tooltip>
       )}
+      <DialogConfirm
+        open={openDialogConfirm}
+        handleClose={() => setOpenDialogConfirm(false)}
+        message="xóa"
+        handleSubmit={() => {
+          dispatch(deleteCourseById(selected));
+          // setRows(rows.filter((item) => !selected.includes(item._id)));
+          setSelected([]);
+          setOpenDialogConfirm(false);
+        }}
+      />
     </Toolbar>
   );
 };

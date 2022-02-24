@@ -21,4 +21,4 @@ foodRoute.route(`${baseUrl}/:foodId`).get(getFoodById);
 foodRoute
   .route(`${baseUrl}/statusRemoveTemp/:foodId/:isRemoveTemp`)
   .put(updateStatusRemoveTempFood);
-foodRoute.route(`${baseUrl}/related?`).get(getListFoodsRelated);
+foodRoute.route(`${baseUrl}/by/related?`).get(getListFoodsRelated);

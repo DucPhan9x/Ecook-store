@@ -27,8 +27,7 @@ courseRoute
   .put(validatePermission.isInstructorRole, deleteCourseById);
 courseRoute.route(`${baseUrl}/:courseId`).get(getCourseById);
 courseRoute.route(`${baseUrl}?`).get(getListCoursePerPage);
-courseRoute
-  .route(`${baseUrl}/by-instructorId?`)
-  .get(getListCourseByInstructorId);
-courseRoute.route(`${baseUrl}/related?`).get(getListCoursesRelated);
-courseRoute.route(`${baseUrl}/by-clientId`).get(getCoursesByClientId);
+courseRoute.route(`${baseUrl}/by/instructor?`).get(getListCourseByInstructorId);
+// client
+courseRoute.route(`${baseUrl}/by/related?`).get(getListCoursesRelated);
+courseRoute.route(`${baseUrl}/by/client`).get(getCoursesByClientId);

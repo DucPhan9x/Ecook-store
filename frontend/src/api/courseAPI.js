@@ -84,7 +84,7 @@ const getListCourseByInstructor = (data) => {
     method: "GET",
   };
   return fetch(
-    `${url}course/by-instructorId?page=${page}&searchText=${searchText}&orderBy=${orderBy}&orderType=${orderType}&numOfPerPage=${numOfPerPage}`,
+    `${url}course/by/instructor?page=${page}&searchText=${searchText}&orderBy=${orderBy}&orderType=${orderType}&numOfPerPage=${numOfPerPage}`,
     requestOptions
   );
 };
@@ -99,7 +99,7 @@ const getListCourseRelated = (data) => {
     headers: myHeaders,
     method: "GET",
   };
-  return fetch(`${url}course/related?searchText=${data}`, requestOptions);
+  return fetch(`${url}course/by/related?searchText=${data}`, requestOptions);
 };
 
 const getListCourseByClient = () => {
@@ -111,7 +111,7 @@ const getListCourseByClient = () => {
     headers: myHeaders,
     method: "GET",
   };
-  return fetch(`${url}course/by-clientId`, requestOptions);
+  return fetch(`${url}course/by/client`, requestOptions);
 };
 
 const courseAPI = {

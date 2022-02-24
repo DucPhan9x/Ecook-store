@@ -27,8 +27,6 @@ recipeRoute
 recipeRoute.route(`${baseUrl}/:recipeId`).get(getRecipeById);
 recipeRoute.route(`${baseUrl}?`).get(getListRecipePerPage);
 recipeRoute
-  .route(`${baseUrl}/related-foodName?`)
+  .route(`${baseUrl}/by/related-foodName?`)
   .get(getListRecipesRelatedFoodName);
-recipeRoute
-  .route(`${baseUrl}/by-instructorId?`)
-  .get(getListRecipeByInstructorId);
+recipeRoute.route(`${baseUrl}/by/instructor?`).get(getListRecipeByInstructorId);

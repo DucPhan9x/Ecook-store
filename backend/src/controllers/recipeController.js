@@ -1,21 +1,35 @@
-import { Recipe } from "../models";
+import { Feedback, Recipe, UserDetail } from "../models";
 import createHttpError from "http-errors";
+import { deleteImage, uploadSingle } from "../configs";
 
 const createNewRecipe = async (req, res, next) => {
   try {
-    const { name, material, slotQuantity } = req.body;
+    let { name, materials, slotQuantity, description, contents } = req.body;
+    materials = JSON.parse(materials);
+    contents = JSON.parse(contents);
     const instructorId = req.user._id;
     const instructor = await UserDetail.findOne({ userId: instructorId });
 
-    if (material.length <= 0) {
+    if (materials.length <= 0) {
       throw createHttpError(404, "Materials list are not exist!");
+    }
+    let filePath;
+    if (req.files[0]) {
+      filePath = req.files[0].path;
+    }
+    let image;
+    if (filePath) {
+      image = await uploadSingle(filePath);
     }
 
     const newRecipe = await Recipe.create({
       name,
       instructorId,
-      material,
+      materials,
       slotQuantity,
+      description,
+      contents,
+      imageUrl: image.url || "",
     });
 
     res.status(200).json({
@@ -30,8 +44,19 @@ const createNewRecipe = async (req, res, next) => {
 };
 
 const updateRecipeById = async (req, res, next) => {
+  console.log(req.body);
+
   try {
-    const { recipeId, name, material, slotQuantity } = req.body;
+    const {
+      recipeId,
+      name,
+      materials,
+      slotQuantity,
+      description,
+      contents,
+      imageUrl,
+    } = JSON.parse(req.body.recipeUpdated);
+    console.log(req.body);
     const instructorId = req.user._id;
     const instructor = await UserDetail.findOne({ userId: instructorId });
 
@@ -49,11 +74,29 @@ const updateRecipeById = async (req, res, next) => {
         "You're not instructor that created this recipe!"
       );
     }
+
+    let filePath;
+    if (req.files[0]) {
+      filePath = req.files[0].path;
+    }
+    let image;
+    if (filePath) {
+      image = await uploadSingle(filePath);
+
+      const asset_id = imageUrl.split("/").pop().split(".")[0];
+      if (asset_id) {
+        await deleteImage(asset_id);
+      }
+    }
+
     await Recipe.findByIdAndUpdate(recipeId, {
       name,
       instructorId,
-      material,
+      materials,
       slotQuantity,
+      contents,
+      description,
+      imageUrl: image ? image.url : imageUrl,
     });
     const newRecipe = await Recipe.findById(recipeId);
 
@@ -73,6 +116,7 @@ const deleteRecipeById = async (req, res, next) => {
     const { recipeIds } = req.body;
     for (let i = 0; i < recipeIds.length; i++) {
       const recipeId = recipeIds[i];
+      const instructorId = req.user._id;
       const recipe = await Recipe.findOne({ _id: recipeId, isRemoved: false });
       if (!recipe) {
         throw createHttpError(400, "Recipe is not exist!");
@@ -189,6 +233,7 @@ const getListRecipeByInstructorId = async (req, res, next) => {
   try {
     let { page, searchText, orderBy, orderType, numOfPerPage } = req.query;
     const instructorId = req.user._id;
+
     numOfPerPage = Number(numOfPerPage);
     page = page ? page : 1;
     searchText = searchText ? searchText : "";
