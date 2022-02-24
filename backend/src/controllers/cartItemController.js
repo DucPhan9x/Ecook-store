@@ -3,7 +3,7 @@ import { CartItem } from "../models";
 const getListCartItem = async (req, res, next) => {
   try {
     const customerId = req.user._id;
-    const { itemType } = req.body; // 1 food, 2 course
+    const { itemType } = req.params; // 1 food, 2 course
     let cartItems = await CartItem.find({
       customerId,
       itemType,
@@ -27,7 +27,7 @@ const getListCartItem = async (req, res, next) => {
     res.status(200).json({
       status: 200,
       msg: "Get cart items successfully!",
-      data,
+      cartItems: data,
     });
   } catch (error) {
     console.log(error);
@@ -85,12 +85,10 @@ const createNewCartItem = async (req, res, next) => {
 const updateCartItem = async (req, res, next) => {
   try {
     let { cartItems } = req.body;
-    cartItems = JSON.parse(cartItems);
-    const keys = Object.keys(cartItems);
     const cartItem = await Promise.all(
-      keys.map((x) => {
-        return CartItem.findByIdAndUpdate(x, {
-          quantity: cartItems[x],
+      cartItems.map((x, idx) => {
+        return CartItem.findByIdAndUpdate(cartItems[idx].id, {
+          quantity: cartItems[idx].quantity,
         });
       })
     );
@@ -132,7 +130,7 @@ const deleteCartItem = async (req, res, next) => {
 const deleteAllCartItem = async (req, res, next) => {
   try {
     const userId = req.user._id;
-    const { itemType } = req.body;
+    const { itemType } = req.params;
     await CartItem.remove({ customerId: userId, itemType });
     res.status(200).json({
       status: 200,

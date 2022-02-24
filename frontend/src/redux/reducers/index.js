@@ -16,6 +16,8 @@ import food from "./food";
 import course from "./course";
 import recipe from "./recipe";
 import certification from "./certification";
+import customer from "./customer";
+import employee from "./employee";
 
 export default combineReducers({
   login,
@@ -33,4 +35,6 @@ export default combineReducers({
   course,
   recipe,
   certification,
+  customer,
+  employee,
 });

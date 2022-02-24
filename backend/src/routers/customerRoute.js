@@ -7,7 +7,13 @@ const { getCustomerById, getListCustomers, banCustomerById } =
   customerController;
 
 export const customerRoute = Router();
-customerRoute.use(`${baseUrl}`, jwtMiddleware, validatePermission.isAdminRole);
-customerRoute.route(`${baseUrl}`).get(getListCustomers);
+customerRoute.use(`${baseUrl}`, jwtMiddleware);
+customerRoute.route(`${baseUrl}?`).get(getListCustomers);
 customerRoute.route(`${baseUrl}/:customerId`).get(getCustomerById);
-customerRoute.route(`${baseUrl}`).put(banCustomerById);
+customerRoute
+  .route(`${baseUrl}`)
+  .put(
+    validatePermission.isAdminRole,
+    validatePermission.isEmployeeRole,
+    banCustomerById
+  );

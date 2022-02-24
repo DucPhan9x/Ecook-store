@@ -6,6 +6,12 @@ const addFeedback = async (req, res, next) => {
     const user = req.user;
     const userDetail = await UserDetail.findOne({ userId: user._id });
     let { numOfStars, content, itemId, feedbackType } = req.body;
+    if (numOfStars < 3) {
+      throw createHttpError(
+        404,
+        "You don't enough number of stars to feedback"
+      );
+    }
     let Model;
     if (feedbackType === 1) {
       Model = Food;

@@ -200,10 +200,39 @@ const getCertificationById = async (req, res, next) => {
   }
 };
 
+const getCertificationByClientIdAndCourseId = async (req, res, next) => {
+  try {
+    const { customerId, courseId } = req.query;
+    let certification = await Certification.findOne({
+      studentId: customerId,
+      courseId,
+    });
+    const student = await UserDetail.findOne({
+      userId: customerId,
+    });
+    if (!certification) {
+      throw createHttpError(400, "Certification is not exist!");
+    }
+    const course = await Course.findById(courseId);
+    if (!certification) {
+      throw createHttpError(400, "Certification is not exist!");
+    }
+    res.status(200).json({
+      status: 200,
+      msg: "Get course successfully!",
+      certification: { ...certification._doc, student, course },
+    });
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
+
 export const certificateController = {
   createNewCertification,
   updateCertification,
   getCertificationById,
   getListCertificationPerPage,
   deleteCertificationById,
+  getCertificationByClientIdAndCourseId,
 };

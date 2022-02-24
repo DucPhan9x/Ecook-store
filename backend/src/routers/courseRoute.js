@@ -11,6 +11,7 @@ const {
   getCourseById,
   getListCourseByInstructorId,
   getListCoursesRelated,
+  getCoursesByClientId,
 } = courseController;
 
 export const courseRoute = Router();
@@ -30,3 +31,4 @@ courseRoute
   .route(`${baseUrl}/by-instructorId?`)
   .get(getListCourseByInstructorId);
 courseRoute.route(`${baseUrl}/related?`).get(getListCoursesRelated);
+courseRoute.route(`${baseUrl}/by-clientId`).get(getCoursesByClientId);

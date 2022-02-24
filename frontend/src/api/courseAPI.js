@@ -72,11 +72,56 @@ const getListCoursePerPage = (data) => {
   );
 };
 
+// instructor
+const getListCourseByInstructor = (data) => {
+  const token = getAccessToken();
+  let myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${token}`);
+  const { page, searchText, orderBy, orderType, numOfPerPage } = data;
+
+  let requestOptions = {
+    headers: myHeaders,
+    method: "GET",
+  };
+  return fetch(
+    `${url}course/by-instructorId?page=${page}&searchText=${searchText}&orderBy=${orderBy}&orderType=${orderType}&numOfPerPage=${numOfPerPage}`,
+    requestOptions
+  );
+};
+
+// client
+const getListCourseRelated = (data) => {
+  const token = getAccessToken();
+  let myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${token}`);
+
+  let requestOptions = {
+    headers: myHeaders,
+    method: "GET",
+  };
+  return fetch(`${url}course/related?searchText=${data}`, requestOptions);
+};
+
+const getListCourseByClient = () => {
+  const token = getAccessToken();
+  let myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${token}`);
+
+  let requestOptions = {
+    headers: myHeaders,
+    method: "GET",
+  };
+  return fetch(`${url}course/by-clientId`, requestOptions);
+};
+
 const courseAPI = {
   createCourse,
   updateCourseById,
   deleteCourseById,
   getCourseById,
   getListCoursePerPage,
+  getListCourseRelated,
+  getListCourseByInstructor,
+  getListCourseByClient,
 };
 export default courseAPI;

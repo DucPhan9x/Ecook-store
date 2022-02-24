@@ -1,7 +1,7 @@
 const { getAccessToken } = require("utils/authUtils");
 const url = process.env.REACT_APP_API_URL;
 
-const getRevenuesInfo = (getInfoBy) => {
+const getListFoodAndRecipe = () => {
   const token = getAccessToken();
   let myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${token}`);
@@ -10,10 +10,10 @@ const getRevenuesInfo = (getInfoBy) => {
     headers: myHeaders,
     method: "GET",
   };
-  return fetch(`${url}statistic/revenueInfo/${getInfoBy}`, requestOptions);
+  return fetch(`${url}homeClient/foods-recipes`, requestOptions);
 };
 
-const getGeneralInfo = () => {
+const getListCourseAndInstructor = () => {
   const token = getAccessToken();
   let myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${token}`);
@@ -22,11 +22,11 @@ const getGeneralInfo = () => {
     headers: myHeaders,
     method: "GET",
   };
-  return fetch(`${url}statistic/generalInfo`, requestOptions);
+  return fetch(`${url}homeClient/courses-instructors`, requestOptions);
 };
 
-const statisticAPI = {
-  getGeneralInfo,
-  getRevenuesInfo,
+const homeClientAPI = {
+  getListFoodAndRecipe,
+  getListCourseAndInstructor,
 };
-export default statisticAPI;
+export default homeClientAPI;

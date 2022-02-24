@@ -3,7 +3,7 @@ import { Course, Food, Recipe, Wishlist } from "../models";
 const getWishlist = async (req, res, next) => {
   try {
     const userId = req.user._id;
-    const { itemType } = req.body;
+    const { itemType } = req.params;
     let wishlist = await Wishlist.findOne({
       userId,
     });
@@ -26,7 +26,7 @@ const getWishlist = async (req, res, next) => {
     res.status(200).json({
       status: 200,
       msg: "Get wishlist successfully!",
-      data,
+      wishlists: data,
     });
   } catch (error) {
     console.log(error);
@@ -54,6 +54,7 @@ const updateWishlist = async (req, res, next) => {
     res.status(200).json({
       status: 200,
       msg: "Update wishlist successfully!",
+      isRemoveStatus: !!item,
     });
   } catch (error) {
     console.log(error);

@@ -12,6 +12,7 @@ const getProfile = async (req, res, next) => {
       "address",
       "dateOfBirth",
       "phoneNumber",
+      "expertise",
     ]);
 
     if (!user) {
@@ -28,6 +29,7 @@ const getProfile = async (req, res, next) => {
         dateOfBirth: userDetail.dateOfBirth,
         phoneNumber: userDetail.phoneNumber,
         address: userDetail.address,
+        expertise: userDetail.expertise,
         imageUrl: userDetail.imageUrl,
       },
     });
@@ -39,7 +41,7 @@ const getProfile = async (req, res, next) => {
 
 const updateProfile = async (req, res, next) => {
   try {
-    const { fullName, phoneNumber, dateOfBirth, address } = req.body;
+    const { fullName, phoneNumber, dateOfBirth, address, expertise } = req.body;
     const userId = req.user._id;
     const user = await User.findOne({ _id: userId });
     if (!user) {
@@ -52,6 +54,7 @@ const updateProfile = async (req, res, next) => {
         fullName,
         dateOfBirth,
         address,
+        expertise: user.roleId === 4 ? expertise || "" : "",
       }
     );
     res.status(200).json({

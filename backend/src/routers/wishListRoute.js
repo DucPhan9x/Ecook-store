@@ -7,7 +7,7 @@ const { getWishlist, updateWishlist } = wishlistController;
 
 export const wishlistRoute = Router();
 wishlistRoute.use(`${baseUrl}`, jwtMiddleware);
-wishlistRoute.route(`${baseUrl}`).get(getWishlist);
+wishlistRoute.route(`${baseUrl}/:itemType`).get(getWishlist);
 wishlistRoute
   .route(`${baseUrl}`)
   .put(validatePermission.isCustomerRole, updateWishlist);

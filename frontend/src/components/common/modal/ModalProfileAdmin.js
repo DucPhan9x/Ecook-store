@@ -30,6 +30,7 @@ const ModalProfileAdmin = ({ isModalVisible, close }) => {
     dateOfBirth: Date.now(),
     phoneNumber: "",
     address: "",
+    expertise: "",
   });
   const [formPassword, setFormPassword] = useState({
     password: "",
@@ -41,6 +42,7 @@ const ModalProfileAdmin = ({ isModalVisible, close }) => {
   const [errorInfo, setErrorInfo] = useState({});
   const [errorPassword, setErrorPassword] = useState({});
   const { loading } = useSelector((store) => store.common)?.userDetail;
+  const { profile } = useSelector((store) => store.common)?.userDetail;
 
   useEffect(() => {
     dispatch(
@@ -239,6 +241,25 @@ const ModalProfileAdmin = ({ isModalVisible, close }) => {
                         error={errorInfo.address}
                       />
                     </div>
+                    {profile?.roleId === 4 && (
+                      <div
+                        className="flex items-center"
+                        style={{ marginBottom: 12 }}
+                      >
+                        <label style={{ marginRight: 12 }}>Chuyên môn</label>
+                        <FormBox
+                          propsInput={{
+                            name: "expertise",
+                            placeholder: "Chuyên môn",
+                            onChange: handleChangeInfo,
+                            onFocus: handleFocusInfo,
+                            value: formInfo.expertise,
+                            disabled: false,
+                          }}
+                          error={errorInfo.expertise}
+                        />
+                      </div>
+                    )}
                   </ReForm>
                 ) : (
                   <ReForm style={{ height: 290 }}>

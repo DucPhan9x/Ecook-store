@@ -80,7 +80,7 @@ const getCustomerById = async (req, res, next) => {
     res.status(200).json({
       status: 200,
       msg: "Get an customer successfully!",
-      employee: {
+      customer: {
         _id: customer[0]._id,
         email: customer[0].email,
         roleId: customer[0].roleId,

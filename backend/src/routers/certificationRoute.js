@@ -9,6 +9,7 @@ const {
   getCertificationById,
   deleteCertificationById,
   getListCertificationPerPage,
+  getCertificationByClientIdAndCourseId,
 } = certificateController;
 
 export const certificationRoute = Router();
@@ -26,3 +27,6 @@ certificationRoute
 certificationRoute
   .route(`${baseUrl}`)
   .put(validatePermission.isInstructorRole, updateCertification);
+certificationRoute
+  .route(`${baseUrl}/client?`)
+  .get(getCertificationByClientIdAndCourseId);

@@ -1,32 +1,35 @@
 const { getAccessToken } = require("utils/authUtils");
 const url = process.env.REACT_APP_API_URL;
 
-const getRevenuesInfo = (getInfoBy) => {
+const getWishlist = (itemType) => {
   const token = getAccessToken();
   let myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${token}`);
   myHeaders.append("Content-Type", `application/json`);
+
   let requestOptions = {
     headers: myHeaders,
     method: "GET",
   };
-  return fetch(`${url}statistic/revenueInfo/${getInfoBy}`, requestOptions);
+  return fetch(`${url}wishlist/${itemType}`, requestOptions);
 };
 
-const getGeneralInfo = () => {
+const updateWishlist = (data) => {
   const token = getAccessToken();
   let myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${token}`);
   myHeaders.append("Content-Type", `application/json`);
+
   let requestOptions = {
     headers: myHeaders,
-    method: "GET",
+    method: "PUT",
+    body: JSON.stringify(data), // {itemId, itemType}
   };
-  return fetch(`${url}statistic/generalInfo`, requestOptions);
+  return fetch(`${url}wishlist`, requestOptions);
 };
 
-const statisticAPI = {
-  getGeneralInfo,
-  getRevenuesInfo,
+const wishlistAPI = {
+  getWishlist,
+  updateWishlist,
 };
-export default statisticAPI;
+export default wishlistAPI;

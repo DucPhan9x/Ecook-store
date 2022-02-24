@@ -139,6 +139,72 @@ const getListCoursePerPage = (data, res = () => {}) => {
   };
 };
 
+const getListCourseByInstructor = (data, res = () => {}) => {
+  return (dispatch) => {
+    dispatch({ type: types.GET_LIST_COURSE_PER_PAGE });
+    courseAPI
+      .getListCourseByInstructor(data)
+      .then((response) => response.json())
+      .then((result) => {
+        if (result.status === 200) {
+          dispatch({
+            type: types.GET_LIST_COURSE_PER_PAGE_SUCCEED,
+            payload: {
+              courses: result.courses,
+              totalPage: result.totalPage,
+              totalRows: result.totalRows,
+            },
+          });
+        } else {
+          dispatch({ type: types.GET_LIST_COURSE_PER_PAGE_FAIL });
+          useNotification.Error({
+            title: "Error",
+            message: result.msg || "Get course(s) failed!",
+          });
+        }
+      })
+      .catch((error) => {
+        dispatch({ type: types.GET_LIST_COURSE_PER_PAGE_FAIL });
+        useNotification.Error({
+          title: "Error",
+          message: "Error connected to server!",
+        });
+      });
+  };
+};
+
+const getListCourseByClient = (data, res = () => {}) => {
+  return (dispatch) => {
+    dispatch({ type: types.GET_LIST_COURSE_PER_PAGE });
+    courseAPI
+      .getListCourseByClient(data)
+      .then((response) => response.json())
+      .then((result) => {
+        if (result.status === 200) {
+          dispatch({
+            type: types.GET_LIST_COURSE_PER_PAGE_SUCCEED,
+            payload: {
+              courses: result.courses,
+            },
+          });
+        } else {
+          dispatch({ type: types.GET_LIST_COURSE_PER_PAGE_FAIL });
+          useNotification.Error({
+            title: "Error",
+            message: result.msg || "Get course(s) failed!",
+          });
+        }
+      })
+      .catch((error) => {
+        dispatch({ type: types.GET_LIST_COURSE_PER_PAGE_FAIL });
+        useNotification.Error({
+          title: "Error",
+          message: "Error connected to server!",
+        });
+      });
+  };
+};
+
 const getCourseById = (courseId) => {
   return (dispatch) => {
     dispatch({ type: types.GET_COURSE_BY_ID });
@@ -340,4 +406,6 @@ export {
   updateTestById,
   getTestById,
   getListTestPerPage,
+  getListCourseByInstructor,
+  getListCourseByClient,
 };

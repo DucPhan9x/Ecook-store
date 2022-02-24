@@ -6,5 +6,5 @@ const { getRevenuesInfo, getGeneralInfo } = statisticController;
 export const statisticRoute = Router();
 
 statisticRoute.use(baseUrl, jwtMiddleware);
-statisticRoute.route(`${baseUrl}/revenueInfo`).get(getRevenuesInfo);
+statisticRoute.route(`${baseUrl}/revenueInfo/:getInfoBy`).get(getRevenuesInfo);
 statisticRoute.route(`${baseUrl}/generalInfo`).get(getGeneralInfo);

@@ -6,14 +6,14 @@ const { getMonthsByquater, getQuaterByMonth, getDateInWeek } = dateFunction;
 
 const getRevenuesInfo = async (req, res, next) => {
   try {
-    const { getInfoBy } = req.body;
-    let data = [];
+    const { getInfoBy } = req.params;
+    var data = [];
     const today = new Date();
     let revenues = [];
-    let startDate;
-    let endDate;
+    var startDate;
+    var endDate;
     switch (getInfoBy) {
-      case "week":
+      case 0:
         const dateInWeek = getDateInWeek(today);
         startDate = dateInWeek[0];
         endDate = dateInWeek[1];
@@ -38,7 +38,7 @@ const getRevenuesInfo = async (req, res, next) => {
           return init;
         }, {});
         break;
-      case "month":
+      case 1:
         let month = today.getMonth();
         let year = today.getFullYear();
         month = Number(month);
@@ -73,7 +73,7 @@ const getRevenuesInfo = async (req, res, next) => {
           revenues,
         });
         break;
-      case "quater":
+      case 2:
         let quater = getQuaterByMonth(today.getMonth() + 1);
         year = today.getFullYear();
         quater = Number(quater);
@@ -105,7 +105,7 @@ const getRevenuesInfo = async (req, res, next) => {
         }, {});
         console.log(revenues);
         break;
-      case "year":
+      case 3:
         year = today.getFullYear();
         year = Number(year);
         startDate = new Date(year, 0, 1);
@@ -153,7 +153,10 @@ const getGeneralInfo = async (req, res, next) => {
     const totalRevenues = orders.reduce((pre, cur) => pre + cur.total, 0);
     const totalCustomers = await User.find({ roleId: 1 }).count();
     const totalOrders = await Order.find({ orderType: 1, statusId: 4 }).count();
-    const totalCourses = await Order.find({ orderType: 2, statusId: 4 }).count;
+    const totalCourses = await Order.find({
+      orderType: 2,
+      statusId: 4,
+    }).count();
 
     let popularFoodIds = await OrderItem.aggregate([
       {

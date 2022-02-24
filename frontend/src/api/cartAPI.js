@@ -1,7 +1,7 @@
 const { getAccessToken } = require("utils/authUtils");
 const url = process.env.REACT_APP_API_URL;
 
-const createEmployee = (data) => {
+const createNewCartItem = (data) => {
   const token = getAccessToken();
   let myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${token}`);
@@ -12,26 +12,10 @@ const createEmployee = (data) => {
     method: "POST",
     body: JSON.stringify(data),
   };
-  return fetch(`${url}employee`, requestOptions);
+  return fetch(`${url}cart-item`, requestOptions);
 };
 
-const getListEmployees = (data) => {
-  const token = getAccessToken();
-  let myHeaders = new Headers();
-  myHeaders.append("Authorization", `Bearer ${token}`);
-  const { searchText, employeeType } = data;
-
-  let requestOptions = {
-    headers: myHeaders,
-    method: "GET",
-  };
-  return fetch(
-    `${url}employee?searchText=${searchText}&employeeType=${employeeType}`,
-    requestOptions
-  );
-};
-
-const getEmployeeById = (employeeId) => {
+const getListCartItem = (itemType) => {
   const token = getAccessToken();
   let myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${token}`);
@@ -40,24 +24,10 @@ const getEmployeeById = (employeeId) => {
     headers: myHeaders,
     method: "GET",
   };
-  return fetch(`${url}employee/${employeeId}`, requestOptions);
+  return fetch(`${url}cart-item/${itemType}`, requestOptions);
 };
 
-const deleteEmployees = (employeeIds) => {
-  const token = getAccessToken();
-  let myHeaders = new Headers();
-  myHeaders.append("Authorization", `Bearer ${token}`);
-  myHeaders.append("Content-Type", `application/json`);
-
-  let requestOptions = {
-    headers: myHeaders,
-    method: "DELETE",
-    body: JSON.stringify({ employeeIds }),
-  };
-  return fetch(`${url}employee`, requestOptions);
-};
-
-const banOrUnBanEmployee = (data) => {
+const updateCartItem = (cartItems) => {
   const token = getAccessToken();
   let myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${token}`);
@@ -66,16 +36,44 @@ const banOrUnBanEmployee = (data) => {
   let requestOptions = {
     headers: myHeaders,
     method: "PUT",
-    body: JSON.stringify(data), // data: {courseIds, isBanned}
+    body: JSON.stringify({ cartItems }),
   };
-  return fetch(`${url}customer`, requestOptions);
+
+  return fetch(`${url}cart-item`, requestOptions);
 };
 
-const employeeAPI = {
-  createEmployee,
-  getListEmployees,
-  getEmployeeById,
-  deleteEmployees,
-  banOrUnBanEmployee,
+const deleteAllCartItem = (itemType) => {
+  const token = getAccessToken();
+  let myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${token}`);
+  myHeaders.append("Content-Type", `application/json`);
+
+  let requestOptions = {
+    headers: myHeaders,
+    method: "DELETE",
+  };
+  return fetch(`${url}cart-item/delete-all/${itemType}`, requestOptions);
 };
-export default employeeAPI;
+
+const deleteCartItem = (cartItems) => {
+  const token = getAccessToken();
+  let myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${token}`);
+  myHeaders.append("Content-Type", `application/json`);
+
+  let requestOptions = {
+    headers: myHeaders,
+    method: "DELETE",
+    body: JSON.stringify({ cartItems }),
+  };
+  return fetch(`${url}cart-item`, requestOptions);
+};
+
+const cartAPI = {
+  createNewCartItem,
+  updateCartItem,
+  getListCartItem,
+  deleteCartItem,
+  deleteAllCartItem,
+};
+export default cartAPI;

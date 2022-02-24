@@ -14,7 +14,9 @@ const {
 export const cartItemRoute = Router();
 cartItemRoute.use(`${baseUrl}`, jwtMiddleware);
 cartItemRoute.route(`${baseUrl}`).post(createNewCartItem);
-cartItemRoute.route(`${baseUrl}`).get(getListCartItem);
+cartItemRoute.route(`${baseUrl}/:itemType`).get(getListCartItem);
 cartItemRoute.route(`${baseUrl}`).put(updateCartItem);
-cartItemRoute.route(`${baseUrl}/delete-all`).delete(deleteAllCartItem);
+cartItemRoute
+  .route(`${baseUrl}/delete-all/:itemType`)
+  .delete(deleteAllCartItem);
 cartItemRoute.route(`${baseUrl}`).delete(deleteCartItem);

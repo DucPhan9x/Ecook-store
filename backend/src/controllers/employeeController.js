@@ -5,46 +5,39 @@ import Mongoose from "mongoose";
 
 const getListEmployees = async (req, res, next) => {
   try {
-    let { page, searchText, numOfPerPage, employeeType } = req.query;
-    numOfPerPage = Number(numOfPerPage);
-    page = page ? page : 1;
-    searchText = searchText ? searchText : "";
+    let { searchText, employeeType } = req.query;
 
-    const start = (page - 1) * numOfPerPage;
-    let totalNumOfEmployees;
     let employees;
     if (searchText) {
-      let regex = new RegExp([searchText].join(""), "i");
-      employees = await UserDetail.find({
-        fullName: { $regex: regex },
-        roleId: employeeType,
-      })
-        .skip(start)
-        .limit(numOfPerPage);
-      totalNumOfEmployees = await UserDetail.find({
-        fullName: { $regex: regex },
-        roleId: employeeType,
-      }).count();
+      if (employeeType) {
+        let regex = new RegExp([searchText].join(""), "i");
+        employees = await UserDetail.find({
+          fullName: { $regex: regex },
+          roleId: employeeType,
+        });
+      } else {
+        let regex = new RegExp([searchText].join(""), "i");
+        employees = await UserDetail.find({
+          fullName: { $regex: regex },
+          $and: [{ roleId: 3 }, { roleId: 4 }],
+        });
+      }
     } else {
-      employees = await UserDetail.find({ roleId: 1 })
-        .skip(start)
-        .limit(numOfPerPage);
-      totalNumOfEmployees = await UserDetail.find({
-        roleId: employeeType,
-      }).count();
+      if (employeeType) {
+        employees = await UserDetail.find({
+          roleId: employeeType,
+        });
+      } else {
+        employees = await UserDetail.find({
+          $and: [{ roleId: 3 }, { roleId: 4 }],
+        });
+      }
     }
-
-    const totalPage = parseInt(totalNumOfEmployees / numOfPerPage) + 1;
-    const totalRows = await UserDetail.find({
-      roleId: employeeType,
-    }).count();
 
     res.status(200).json({
       status: 200,
       msg: "Get list employee successfully!",
       employees,
-      totalPage,
-      totalRows,
     });
   } catch (error) {
     console.log(error);
@@ -198,7 +191,7 @@ const deleteEmployeeById = async (req, res, next) => {
 
 const banEmployeeById = async (req, res, next) => {
   try {
-    const { isBanned, employeeIds } = req.body.employeeIds;
+    const { isBanned, employeeIds } = req.body;
     for (var i = 0; i < employeeIds.length; i++) {
       const employee = await Promise.all([
         User.findOneAndUpdate({

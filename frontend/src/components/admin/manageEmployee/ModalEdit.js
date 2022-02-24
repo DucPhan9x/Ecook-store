@@ -3,7 +3,6 @@ import { Modal } from "antd";
 import { FormBox } from "components/common";
 import { Form as ReForm } from "reactstrap";
 import { isEmpty, isMobilePhone, isEmail } from "validator";
-import UploadImage from "components/common/UploadImage";
 import { Paper } from "@material-ui/core";
 import NoImage from "assets/images/notImage.png";
 
@@ -75,11 +74,6 @@ const ModalEdit = ({ isModalVisible, handleSubmit, close, selectedItem }) => {
   //   setError({});
   // };
 
-  const handleChangeImage = (e) => {
-    const temp = URL.createObjectURL(e.target.files[0]);
-    setForm({ ...form, imageUrl: temp });
-  };
-
   return (
     <Modal
       className="modal-container"
@@ -97,7 +91,6 @@ const ModalEdit = ({ isModalVisible, handleSubmit, close, selectedItem }) => {
           style={{ width: "40%", height: 200 }}
         >
           <img src={form?.imageUrl || NoImage} alt="avatar" />
-          <UploadImage onChangeImage={handleChangeImage} />
         </Paper>
         <div style={{ width: "60%" }}>
           <div className="field-input-information-employee">
@@ -108,7 +101,7 @@ const ModalEdit = ({ isModalVisible, handleSubmit, close, selectedItem }) => {
                 onChange: handleChange,
                 onFocus: handleFocus,
                 value: form.fullName,
-                disabled: false,
+                disabled: true,
               }}
               error={error.fullName}
             />
@@ -134,7 +127,7 @@ const ModalEdit = ({ isModalVisible, handleSubmit, close, selectedItem }) => {
                 onChange: handleChange,
                 onFocus: handleFocus,
                 value: form.phoneNumber,
-                disabled: false,
+                disabled: true,
               }}
               error={error.phoneNumber}
             />
@@ -147,7 +140,7 @@ const ModalEdit = ({ isModalVisible, handleSubmit, close, selectedItem }) => {
                 onChange: handleChange,
                 onFocus: handleFocus,
                 value: form.address,
-                disabled: false,
+                disabled: true,
               }}
               error={error.address}
             />
@@ -162,7 +155,7 @@ const ModalEdit = ({ isModalVisible, handleSubmit, close, selectedItem }) => {
                 onChange: handleChange,
                 onFocus: handleFocus,
                 value: form.password,
-                disabled: false,
+                disabled: true,
               }}
               error={error.password}
             />

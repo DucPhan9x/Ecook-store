@@ -63,6 +63,19 @@ const getListFoodPerPage = (data) => {
   );
 };
 
+// client
+const getListFoodRelated = (data) => {
+  const token = getAccessToken();
+  let myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${token}`);
+
+  let requestOptions = {
+    headers: myHeaders,
+    method: "GET",
+  };
+  return fetch(`${url}food/related?searchText=${data}`, requestOptions);
+};
+
 const getFoodById = (foodId) => {
   const token = getAccessToken();
   let myHeaders = new Headers();
@@ -81,5 +94,6 @@ const foodAPI = {
   updateStatusRemoveTempFood,
   getListFoodPerPage,
   getFoodById,
+  getListFoodRelated,
 };
 export default foodAPI;

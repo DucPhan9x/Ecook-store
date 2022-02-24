@@ -341,6 +341,22 @@ const getCourseById = async (req, res, next) => {
   }
 };
 
+// client
+const getCoursesByClientId = async (req, res, next) => {
+  try {
+    const customer = await UserDetail.findOne({ userId: req.user._id });
+
+    res.status(200).json({
+      status: 200,
+      msg: "Get courses successfully!",
+      courses: customer.courseList,
+    });
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
+
 export const courseController = {
   createNewCourse,
   updateCourseById,
@@ -349,4 +365,5 @@ export const courseController = {
   getCourseById,
   getListCoursesRelated,
   getListCourseByInstructorId,
+  getCoursesByClientId,
 };

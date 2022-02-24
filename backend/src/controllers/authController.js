@@ -115,7 +115,13 @@ const activeAccount = async (req, res, next) => {
     }
     user.isActive = true;
     await user.save();
-    return res.redirect(`${envVariables.frontendURL}/login`);
+    return res.redirect(
+      `${
+        user.roleId === 1
+          ? `${envVariables.frontendURL} /login`
+          : `${envVariables.frontendURL} /admin`
+      }`
+    );
   } catch (err) {
     next(err);
   }

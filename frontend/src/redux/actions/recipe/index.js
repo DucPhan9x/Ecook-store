@@ -136,6 +136,40 @@ const getListRecipePerPage = (data, res = () => {}) => {
   };
 };
 
+const getListRecipeByInstructor = (data, res = () => {}) => {
+  return (dispatch) => {
+    dispatch({ type: types.GET_LIST_RECIPE_PER_PAGE });
+    recipeAPI
+      .getListRecipeByInstructor(data)
+      .then((response) => response.json())
+      .then((result) => {
+        if (result.status === 200) {
+          dispatch({
+            type: types.GET_LIST_RECIPE_PER_PAGE_SUCCEED,
+            payload: {
+              recipes: result.recipes,
+              totalPage: result.totalPage,
+              totalRows: result.totalRows,
+            },
+          });
+        } else {
+          dispatch({ type: types.GET_LIST_RECIPE_PER_PAGE_FAIL });
+          useNotification.Error({
+            title: "Error",
+            message: result.msg || "Get recipe(s) failed!",
+          });
+        }
+      })
+      .catch((error) => {
+        dispatch({ type: types.GET_LIST_RECIPE_PER_PAGE_FAIL });
+        useNotification.Error({
+          title: "Error",
+          message: "Error connected to server!",
+        });
+      });
+  };
+};
+
 const getRecipeById = (recipeId) => {
   return (dispatch) => {
     dispatch({ type: types.GET_RECIPE_BY_ID });
@@ -172,4 +206,5 @@ export {
   getListRecipePerPage,
   getRecipeById,
   deleteRecipeById,
+  getListRecipeByInstructor,
 };

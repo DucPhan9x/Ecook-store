@@ -166,10 +166,41 @@ const getCertificationById = (certificationId) => {
   };
 };
 
+const getCertificationByClientIdAndCourseId = (data) => {
+  return (dispatch) => {
+    dispatch({ type: types.GET_CERTIFICATION_BY_ID });
+    certificationAPI
+      .getCertificationByClientIdAndCourseId(data)
+      .then((response) => response.json())
+      .then((result) => {
+        if (result.status === 200) {
+          dispatch({
+            type: types.GET_CERTIFICATION_BY_ID_SUCCEED,
+            payload: result.certification,
+          });
+        } else {
+          dispatch({ type: types.GET_CERTIFICATION_BY_ID_FAIL });
+          useNotification.Error({
+            title: "Error",
+            message: result.msg || "Get certification failed!",
+          });
+        }
+      })
+      .catch((error) => {
+        dispatch({ type: types.GET_CERTIFICATION_BY_ID_FAIL });
+        useNotification.Error({
+          title: "Error",
+          message: "Error connected to server!",
+        });
+      });
+  };
+};
+
 export {
   createCertification,
   updateCertificationById,
   getListCertificationPerPage,
   getCertificationById,
   deleteCertificationById,
+  getCertificationByClientIdAndCourseId,
 };
