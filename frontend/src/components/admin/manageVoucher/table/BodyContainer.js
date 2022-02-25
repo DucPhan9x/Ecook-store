@@ -3,44 +3,11 @@ import moment from "moment";
 import React from "react";
 
 const BodyContainer = (props) => {
-  const {
-    rows,
-    order,
-    orderBy,
-    page,
-    rowsPerPage,
-    selected,
-    setSelected,
-    setSelectedItem,
-    setIsOpenModalEdit,
-  } = props;
+  const { rows, selected, setSelected, setSelectedItem, setIsOpenModalEdit } =
+    props;
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
-  function descendingComparator(a, b, orderBy) {
-    if (b[orderBy] < a[orderBy]) {
-      return -1;
-    }
-    if (b[orderBy] > a[orderBy]) {
-      return 1;
-    }
-    return 0;
-  }
-  function getComparator(order, orderBy) {
-    return order === "desc"
-      ? (a, b) => descendingComparator(a, b, orderBy)
-      : (a, b) => -descendingComparator(a, b, orderBy);
-  }
-
-  function stableSort(array, comparator) {
-    const stabilizedThis = array.map((el, index) => [el, index]);
-    stabilizedThis.sort((a, b) => {
-      const order = comparator(a[0], b[0]);
-      if (order !== 0) return order;
-      return a[1] - b[1];
-    });
-    return stabilizedThis.map((el) => el[0]);
-  }
   const handleClick = (event, name) => {
     const selectedIndex = selected.indexOf(name);
     let newSelected = [];
@@ -63,9 +30,8 @@ const BodyContainer = (props) => {
   return (
     <>
       <TableBody>
-        {stableSort(rows, getComparator(order, orderBy))
-          .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-          .map((row, index) => {
+        {rows?.length > 0 &&
+          rows.map((row, index) => {
             const isItemSelected = isSelected(row._id);
             const labelId = `enhanced-table-checkbox-${index}`;
 
@@ -96,7 +62,7 @@ const BodyContainer = (props) => {
                 </TableCell>
                 <TableCell align="left">{row.name}</TableCell>
                 <TableCell align="left">{row.discountOff} %</TableCell>
-                <TableCell align="left">{row.maxDiscountOff} VND</TableCell>
+                <TableCell align="left">{row.discountMaximum} VND</TableCell>
                 <TableCell align="left">{row.minOrder} VND</TableCell>
                 <TableCell align="left">{row.remainingSlot}</TableCell>
                 <TableCell align="left">

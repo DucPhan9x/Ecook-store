@@ -12,8 +12,4 @@ customerRoute.route(`${baseUrl}?`).get(getListCustomers);
 customerRoute.route(`${baseUrl}/:customerId`).get(getCustomerById);
 customerRoute
   .route(`${baseUrl}`)
-  .put(
-    validatePermission.isAdminRole,
-    validatePermission.isEmployeeRole,
-    banCustomerById
-  );
+  .put(validatePermission.isAdministratorAndInstructorRole, banCustomerById);

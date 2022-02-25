@@ -65,7 +65,7 @@ export default function reducer(state = initialState, actions) {
         },
       };
 
-    case types.GET_LIST_COURSE_PER_PAGE_FAIL:
+    case types.GET_LIST_WISHLIST_FAIL:
       return {
         ...state,
         getListCartItemState: {

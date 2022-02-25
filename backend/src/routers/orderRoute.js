@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { orderController } from "../controllers";
-import { jwtMiddleware } from "../middlewares";
+import { jwtMiddleware, validatePermission } from "../middlewares";
 
 const baseUrl = "/api/v1/order";
 const {
@@ -24,5 +24,7 @@ orderRoute.route(`${baseUrl}/payment-direct-money`).post(paymentRedirectMoney);
 orderRoute.route(`${baseUrl}?`).get(getAllOrders);
 // client side
 orderRoute.route(`${baseUrl}/get-all-by-clientID?`).get(getOrdersByClientId);
-orderRoute.route(`${baseUrl}`).put(updateStatusOrder);
+orderRoute
+  .route(`${baseUrl}`)
+  .put(validatePermission.isAdministratorRole, updateStatusOrder);
 orderRoute.route(`${baseUrl}/check-exist-courses`).get(checkExistMyCourse);

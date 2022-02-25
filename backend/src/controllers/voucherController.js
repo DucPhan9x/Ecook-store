@@ -6,7 +6,7 @@ const createNewVoucher = async (req, res, next) => {
     const {
       name,
       discountOff,
-      maxDiscountOff,
+      discountMaximum,
       content,
       minOrder,
       remainingSlot,
@@ -16,12 +16,11 @@ const createNewVoucher = async (req, res, next) => {
     const newVoucher = await Voucher.create({
       name,
       discountOff,
-      maxDiscountOff,
+      discountMaximum,
       content,
       minOrder,
       remainingSlot,
       expiredDate,
-      slotQuantity,
     });
 
     res.status(200).json({
@@ -41,7 +40,7 @@ const updateVoucherById = async (req, res, next) => {
       voucherId,
       name,
       discountOff,
-      maxDiscountOff,
+      discountMaximum,
       content,
       minOrder,
       remainingSlot,
@@ -58,7 +57,7 @@ const updateVoucherById = async (req, res, next) => {
     await Voucher.findByIdAndUpdate(voucherId, {
       name,
       discountOff,
-      maxDiscountOff,
+      discountMaximum,
       content,
       minOrder,
       remainingSlot,
@@ -114,7 +113,7 @@ const getListVoucherPerPage = async (req, res, next) => {
     page = page ? page : 1;
     searchText = searchText ? searchText : "";
     orderBy = orderBy ? orderBy : "name";
-    orderType = orderType === "asc" ? 1 : 0;
+    orderType = orderType === "asc" ? 1 : -1;
     const orderQuery = { [orderBy]: orderType };
 
     const start = (page - 1) * numOfPerPage;

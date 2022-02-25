@@ -12,9 +12,5 @@ feedbackRoute
   .post(validatePermission.isCustomerRole, addFeedback);
 feedbackRoute
   .route(`${baseUrl}/reply`)
-  .post(
-    validatePermission.isEmployeeRole,
-    validatePermission.isAdminRole,
-    reply
-  );
+  .post(validatePermission.isAdministratorAndInstructorRole, reply);
 feedbackRoute.route(`${baseUrl}/:itemId`).get(getAllFeedbacks);

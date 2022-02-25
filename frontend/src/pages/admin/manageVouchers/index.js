@@ -1,22 +1,44 @@
 import { EnhancedTable, ModalAdd } from "components/admin/manageVoucher";
 import SearchField from "components/common/input/SearchField";
 import React, { useEffect, useState } from "react";
-import { VOUCHERS_DATA } from "utils/dummyData";
 import GiftVoucherIcon from "assets/icons/gift-voucher.png";
+import { useDispatch, useSelector } from "react-redux";
+import { createVoucher, getListVoucherPerPage } from "redux/actions/voucher";
+import { SpinLoading } from "components/common";
 
 const ManageVouchers = () => {
-  const [data, setData] = useState([]);
+  const [queries, setQueries] = useState({
+    page: 1,
+    searchText: "",
+    orderBy: "name",
+    orderType: "asc",
+    numOfPerPage: 5,
+  });
+
+  const {
+    loadingGetListVoucher,
+    createVoucherState,
+    updateVoucherState,
+    removeTempVoucherState,
+  } = useSelector((store) => store.voucher);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     // fetch data
     document.title = "Quản lý voucher | ECook";
     window.scrollTo(0, 0);
-    setData(VOUCHERS_DATA);
-  }, []);
+    //
+    dispatch(getListVoucherPerPage(queries));
+  }, [queries, dispatch]);
 
   const [isOpenModalAdd, setIsOpenModalAdd] = useState(false);
   return (
     <div className="manage-vouchers-container">
+      {(loadingGetListVoucher ||
+        createVoucherState.loading ||
+        updateVoucherState.loading ||
+        removeTempVoucherState.loading) && <SpinLoading />}
       <div className="manage-vouchers-container-top flex j-space-between">
         <button className="btn-admin" onClick={() => setIsOpenModalAdd(true)}>
           <img
@@ -26,13 +48,20 @@ const ManageVouchers = () => {
           />
           Tạo mới
         </button>
-        <SearchField onChange={(e) => console.log(e.target.value)} />
+        <SearchField
+          onSubmit={(value) =>
+            setQueries({ ...queries, searchText: value, page: 1 })
+          }
+        />
       </div>
-      <EnhancedTable data={data} />
+      <EnhancedTable queries={queries} setQueries={setQueries} />
       <ModalAdd
         isModalVisible={isOpenModalAdd}
         close={() => setIsOpenModalAdd(false)}
-        handleSubmit={(formData) => console.log({ formData })}
+        handleSubmit={(formData) => {
+          dispatch(createVoucher(formData));
+          setIsOpenModalAdd(false);
+        }}
       />
     </div>
   );

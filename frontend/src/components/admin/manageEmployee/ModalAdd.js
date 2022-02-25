@@ -3,7 +3,6 @@ import { Modal } from "antd";
 import { FormBox } from "components/common";
 import { Form as ReForm } from "reactstrap";
 import { isEmpty, isMobilePhone, isEmail } from "validator";
-import UploadImage from "components/common/UploadImage";
 import {
   FormControl,
   FormControlLabel,
@@ -11,7 +10,8 @@ import {
   Radio,
   RadioGroup,
 } from "@material-ui/core";
-import NoImage from "assets/images/notImage.png";
+import { useDispatch } from "react-redux";
+import { createEmployee } from "redux/actions/employee";
 
 const ModalAdd = ({ isModalVisible, handleSubmit, close }) => {
   const [error, setError] = React.useState({});
@@ -47,6 +47,7 @@ const ModalAdd = ({ isModalVisible, handleSubmit, close }) => {
 
     return errorState;
   };
+  const dispatch = useDispatch();
 
   const handleSubmitForm = (event) => {
     event.preventDefault();
@@ -55,6 +56,8 @@ const ModalAdd = ({ isModalVisible, handleSubmit, close }) => {
       return setError(errorState);
     }
     handleSubmit(form);
+    dispatch(createEmployee(form));
+    console.log(form);
     close();
     handleReset();
   };
@@ -77,14 +80,9 @@ const ModalAdd = ({ isModalVisible, handleSubmit, close }) => {
       password: "",
       address: "",
       imageUrl: "",
-      employeeType: 3,
+      employeeType: "3",
     });
     setError({});
-  };
-
-  const handleChangeImage = (e) => {
-    const temp = URL.createObjectURL(e.target.files[0]);
-    setForm({ ...form, imageUrl: temp });
   };
 
   const handleChangeFilterEmployeeType = (event) => {
@@ -107,12 +105,12 @@ const ModalAdd = ({ isModalVisible, handleSubmit, close }) => {
       <ReForm className="flex">
         <Paper
           className="add-edit-recipe-container-bottom--left"
-          style={{ width: "40%", height: 200 }}
+          style={{ width: "0%", height: 200 }}
         >
-          <img src={form?.imageUrl || NoImage} alt="avatar" />
-          <UploadImage onChangeImage={handleChangeImage} />
+          {/* <img src={form?.imageUrl || NoImage} alt="avatar" />
+          <UploadImage onChangeImage={handleChangeImage} /> */}
         </Paper>
-        <div style={{ width: "60%" }}>
+        <div style={{ width: "100%" }}>
           <div className="field-input-information-employee">
             <FormControl component="fieldset">
               <RadioGroup

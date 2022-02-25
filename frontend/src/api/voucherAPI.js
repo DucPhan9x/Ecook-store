@@ -81,7 +81,10 @@ const getListVoucherClient = (data) => {
     headers: myHeaders,
     method: "GET",
   };
-  return fetch(`${url}voucher?totalMoneyOrder=${data}`, requestOptions);
+  return fetch(
+    `${url}voucher/by/client?totalMoneyOrder=${data}`,
+    requestOptions
+  );
 };
 
 const orderAPI = {

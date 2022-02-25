@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { foodController } from "../controllers";
-import { jwtMiddleware } from "../middlewares";
+import { jwtMiddleware, validatePermission } from "../middlewares";
 
 const baseUrl = "/api/v1/food";
 const {
@@ -14,11 +14,21 @@ const {
 
 export const foodRoute = Router();
 foodRoute.use(`${baseUrl}`, jwtMiddleware);
-foodRoute.route(`${baseUrl}`).post(creatMultipleNewFood);
-foodRoute.route(`${baseUrl}/update`).put(updateFoodById);
+foodRoute
+  .route(`${baseUrl}`)
+  .post(
+    validatePermission.isAdministratorAndInstructorRole,
+    creatMultipleNewFood
+  );
+foodRoute
+  .route(`${baseUrl}/update`)
+  .put(validatePermission.isAdministratorAndInstructorRole, updateFoodById);
 foodRoute.route(`${baseUrl}?`).get(getListFoodPerPage);
 foodRoute.route(`${baseUrl}/:foodId`).get(getFoodById);
 foodRoute
   .route(`${baseUrl}/statusRemoveTemp/:foodId/:isRemoveTemp`)
-  .put(updateStatusRemoveTempFood);
+  .put(
+    validatePermission.isAdministratorAndInstructorRole,
+    updateStatusRemoveTempFood
+  );
 foodRoute.route(`${baseUrl}/by/related?`).get(getListFoodsRelated);

@@ -20,7 +20,7 @@ const headCells = [
     label: "Giảm giá",
   },
   {
-    id: "maxDiscountOff",
+    id: "discountMaximum",
     numeric: false,
     disablePadding: false,
     label: "Giảm giá tối đa",

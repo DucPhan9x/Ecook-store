@@ -107,7 +107,7 @@ const getListTest = async (req, res, next) => {
     numOfPerPage = Number(numOfPerPage);
     page = page ? page : 1;
     orderBy = orderBy ? orderBy : "createAt";
-    orderType = orderType === "asc" ? 1 : 0;
+    orderType = orderType === "asc" ? 1 : -1;
     const orderQuery = { [orderBy]: orderType };
 
     const start = (page - 1) * numOfPerPage;

@@ -1,16 +1,33 @@
 import { EnhancedTable } from "components/admin/manageCertification";
-import React from "react";
+import { SpinLoading } from "components/common";
+import React, { useState } from "react";
 import { useEffect } from "react";
-import { CERTIFICATIONS_DATA } from "utils/dummyData";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { getListCertificationPerPage } from "redux/actions/certification";
 
 const ManageCertifications = () => {
+  const [queries, setQueries] = useState({
+    page: 1,
+    orderBy: "createAt",
+    orderType: "asc",
+    numOfPerPage: 5,
+  });
+  const dispatch = useDispatch();
+  const { loadingGetListCertification } = useSelector(
+    (store) => store.certification
+  );
+
   useEffect(() => {
     document.title = "Quản lý chứng nhận | ECook";
     window.scrollTo(0, 0);
-  }, []);
+    dispatch(getListCertificationPerPage(queries));
+  }, [dispatch, queries]);
+
   return (
     <div className="manage-certification-container">
-      <EnhancedTable data={CERTIFICATIONS_DATA} />
+      <EnhancedTable setQueries={setQueries} queries={queries} />
+      {loadingGetListCertification && <SpinLoading />}
     </div>
   );
 };

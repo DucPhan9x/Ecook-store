@@ -118,8 +118,8 @@ const activeAccount = async (req, res, next) => {
     return res.redirect(
       `${
         user.roleId === 1
-          ? `${envVariables.frontendURL} /login`
-          : `${envVariables.frontendURL} /admin`
+          ? `${envVariables.frontendURL}login`
+          : `${envVariables.frontendURL}admin`
       }`
     );
   } catch (err) {
@@ -131,6 +131,7 @@ const login = async (req, res, next) => {
   const { email, password } = req.body;
   try {
     const userExisted = await User.findOne({ email, roleId: 1 });
+
     if (!userExisted) {
       throw createHttpError(400, "Email doesn't exist!");
     }
@@ -138,10 +139,18 @@ const login = async (req, res, next) => {
     if (!match) {
       throw createHttpError(400, "Password is incorrect!");
     }
+
     if (!userExisted.isActive) {
       throw createHttpError(
         400,
-        "Your account hasn't activated, please check email to active right now!"
+        "Tài khoản của bạn chưa được kích hoạt, vui lòng kiểm tra email để kích hoạt ngay bây giờ!"
+      );
+    }
+
+    if (userExisted.isRemoved) {
+      throw createHttpError(
+        400,
+        "Tài khoản của bạn bị khóa, vui lòng liên hệ system.ecook@gmail.com!"
       );
     }
     const userData = {
@@ -195,7 +204,13 @@ const loginAdmin = async (req, res, next) => {
     if (!userExisted.isActive) {
       throw createHttpError(
         400,
-        "Your account hasn't activated, please check email to active right now!"
+        "Tài khoản của bạn chưa được kích hoạt, vui lòng kiểm tra email để kích hoạt ngay bây giờ!"
+      );
+    }
+    if (userExisted.isRemoved) {
+      throw createHttpError(
+        400,
+        "Tài khoản của bạn bị khóa, vui lòng liên hệ system.ecook@gmail.com!"
       );
     }
     const userData = {

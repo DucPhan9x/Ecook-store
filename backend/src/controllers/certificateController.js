@@ -134,18 +134,18 @@ const getListCertificationPerPage = async (req, res, next) => {
     numOfPerPage = Number(numOfPerPage);
     page = page ? page : 1;
     orderBy = orderBy ? orderBy : "createAt";
-    orderType = orderType === "asc" ? 1 : 0;
+    orderType = orderType === "asc" ? 1 : -1;
     const orderQuery = { [orderBy]: orderType };
 
     const start = (page - 1) * numOfPerPage;
     let totalNumOfCertifications;
     let certifications;
-    certifications = await Certification.find({ isRemoved: true })
+    certifications = await Certification.find({ isRemoved: false })
       .skip(start)
       .limit(numOfPerPage)
       .sort(orderQuery);
     totalNumOfCertifications = await Certification.find({
-      isRemoved: true,
+      isRemoved: false,
     }).count();
     const totalPage = parseInt(totalNumOfCertifications / numOfPerPage) + 1;
 

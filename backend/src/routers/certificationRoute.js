@@ -16,7 +16,7 @@ export const certificationRoute = Router();
 certificationRoute.use(`${baseUrl}`, jwtMiddleware);
 certificationRoute
   .route(`${baseUrl}`)
-  .post(validatePermission.isCustomerRole, createNewCertification);
+  .post(validatePermission.isInstructorRole, createNewCertification);
 certificationRoute
   .route(`${baseUrl}/:certificationId`)
   .get(getCertificationById);

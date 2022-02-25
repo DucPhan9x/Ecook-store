@@ -10,6 +10,7 @@ import React from "react";
 import { useHistory } from "react-router";
 import FeedbackIcon from "@material-ui/icons/Feedback";
 import { useSelector } from "react-redux";
+import { Rate } from "antd";
 
 const BodyContainer = (props) => {
   const { rows, selected, setSelected, setFeedbackItemSelected } = props;
@@ -74,6 +75,9 @@ const BodyContainer = (props) => {
                   {row.amountStudent}
                   <SupervisorAccountIcon style={{ marginLeft: 8 }} />
                 </TableCell> */}
+              <TableCell align="left">
+                <Rate value={row.numOfStars} disabled />
+              </TableCell>
               <TableCell align="left">
                 {moment(row.createAt).format("DD/MM/YYYY")}
               </TableCell>

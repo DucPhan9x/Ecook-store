@@ -50,3 +50,19 @@ export const getFoodTypeId = (roleId) => {
       return 0;
   }
 };
+
+export const getFilterRevenues = (roleId) => {
+  switch (roleId) {
+    case 0:
+      return "Theo tuần";
+
+    case 1:
+      return "Theo tháng";
+
+    case 2:
+      return "Theo quý";
+
+    default:
+      return "Theo năm";
+  }
+};

@@ -5,7 +5,7 @@ import MailOutlineIcon from "@material-ui/icons/MailOutline";
 import Checkbox from "@material-ui/core/Checkbox";
 import LockIcon from "@material-ui/icons/Lock";
 
-const CardEmployee = ({ data, filterData, setFilterData }) => {
+const CardEmployee = ({ data, setData, items }) => {
   return (
     <Paper
       className="card-employee"
@@ -18,39 +18,42 @@ const CardEmployee = ({ data, filterData, setFilterData }) => {
           "https://res.cloudinary.com/duc/image/upload/v1642704006/avatardefault_ux3ryj.png"
         }
         alt=""
+        style={{ marginLeft: 15 }}
       />
       <div className="block-information-employee">
         <span className="block-information-employee--full-name">
-          {data?.fullName}
+          {data?.fullName || "Empty"}
         </span>
         <span
           className="block-information-employee--role"
           style={{
-            color:
-              data?.role === "employee" ? "rgb(95, 121, 131)" : "chocolate",
+            color: data?.roleId === 3 ? "rgb(95, 121, 131)" : "chocolate",
           }}
         >
-          {data?.role === "employee" ? "Nhân viên" : "Giáo viên"}
+          {data?.roleId === 3 ? "Nhân viên" : "Giáo viên"}
         </span>
         <span className="block-information-employee--phone-number">
-          <PhoneIcon /> {data?.phoneNumber}
+          <PhoneIcon /> {data?.phoneNumber || "Empty"}
         </span>
         <span className="block-information-employee--email">
-          <MailOutlineIcon /> {data?.email}
+          <MailOutlineIcon /> {data?.email || "Empty"}
         </span>
+        {!data.isActive && (
+          <span className="invalid-feedback-error">Chưa xác thực email !</span>
+        )}
       </div>
       <Checkbox
         className="radio-checked-container"
         checked={data?.isSelected}
         onChange={(e) => {
           e.stopPropagation();
-          let temp = [...filterData];
+          let temp = [...items];
           temp.forEach((item) => {
             if (item._id === data._id) {
               item.isSelected = e.target.checked;
             }
           });
-          setFilterData(temp);
+          setData(temp);
         }}
       />
 

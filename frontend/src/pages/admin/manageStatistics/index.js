@@ -15,6 +15,11 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import { getFilterRevenues } from "utils/convertUtils";
+import { useState } from "react";
+import { SpinLoading } from "components/common";
+// import { useDispatch } from "react-redux";
+// import statisticAPI from "api/statisticAPI";
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -40,12 +45,38 @@ export const options = {
 };
 
 const Statistics = () => {
+  const [filter, setFilter] = useState(0);
+  const [revenuesLoading, setRevenuesLoading] = useState(true);
+  const [generalLoading, setGeneralLoading] = useState(true);
+  // const [revenuesData, setRevenuesData] = useState();
+  // const [generalData, setGeneralData] = useState();
+  // const dispatch = useDispatch();
+
   useEffect(() => {
     document.title = "Thống kế doanh thu | ECook";
     window.scrollTo(0, 0);
+    // fetch data
+    // statisticAPI.getRevenuesInfo(filter).then(res => res.json()).then(res => {
+    //   if (res) {
+    //     setRevenuesData(res)
+    setTimeout(() => {
+      setRevenuesLoading(false);
+    }, 1000);
+    //   }
+    // })
+
+    // statisticAPI.getGeneralInfo().then(res => res.json()).then(res => {
+    //   if (res) {
+    //     setGeneralData(res)
+    setTimeout(() => {
+      setGeneralLoading(false);
+    }, 1000);
+    //   }
+    // })
   }, []);
   return (
     <div className="statistic-container">
+      {(revenuesLoading || generalLoading) && <SpinLoading />}
       <div className="statistic-container__top">
         <div className="statistic-container__top--item turnover">
           <div className="statistic-container__top--item__inner">
@@ -92,7 +123,8 @@ const Statistics = () => {
           <DropdownCommon
             label="Bộ lọc"
             options={["Theo tuần", "Theo tháng", "Theo quý", "Theo năm"]}
-            handleMenuClick={(e) => console.log(e)}
+            selectedItem={getFilterRevenues(filter)}
+            handleMenuClick={(e) => setFilter(Number(e.key))}
           />
           <Bar
             style={{ marginTop: 36 }}

@@ -94,7 +94,7 @@ const BodyContainer = (props) => {
                 </TableCell>
                 <TableCell align="left">{row.slotQuantity} người ăn</TableCell>
                 <TableCell align="left">
-                  <Rate value={row.feedbacks} />
+                  <Rate value={row.numOfStars} disabled />
                 </TableCell>
                 <TableCell align="left">
                   {moment(row.createAt).format("DD/MM/YYYY")}

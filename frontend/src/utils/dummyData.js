@@ -2981,14 +2981,14 @@ export const ORDERS_DATA = [
     shipmentFee: 5000, // tinh theo dia chi dat don mua
     merchandiseSubtotal: 316000, // tien san pham chua tinh ship
     total: 266000, // tong tien bao gom ship fee, backend tra ve
-    discountOff: 50000, // duoc tinh tu voucher object total- total*(discountOffVoucher?discountOffVoucher<maxDiscountOff:maxDiscountOff)
+    discountOff: 50000, // duoc tinh tu voucher object total- total*(discountOffVoucher?discountOffVoucher<discountMaximum:discountMaximum)
     voucher: {
       _id: uuid(),
       name: "VUIVECUOITHANG",
       discountOff: 20, // percent (%)
       content: "Giảm 20% tổng bill tối đa 50k (đơn tối thiểu 250k)",
       remainingSlot: 10,
-      maxDiscountOff: 50000,
+      discountMaximum: 50000,
       minOrder: 200000,
       expiredDate: Date.now(),
     },
@@ -3049,14 +3049,14 @@ export const ORDERS_DATA = [
     shipmentFee: 5000, // tinh theo dia chi dat don mua
     merchandiseSubtotal: 200000, // tien san pham chua tinh ship
     total: 165000, // tong tien bao gom ship fee, backend tra ve
-    discountOff: 40000, // duoc tinh tu voucher object total- total*(discountOffVoucher?discountOffVoucher<maxDiscountOff:maxDiscountOff)
+    discountOff: 40000, // duoc tinh tu voucher object total- total*(discountOffVoucher?discountOffVoucher<discountMaximum:discountMaximum)
     voucher: {
       _id: uuid(),
       name: "VUIVECUOITHANG",
       discountOff: 20, // percent (%)
       content: "Giảm 20% tổng bill tối đa 50k (đơn tối thiểu 250k)",
       remainingSlot: 10,
-      maxDiscountOff: 50000,
+      discountMaximum: 50000,
       minOrder: 200000,
       expiredDate: Date.now(),
     },
@@ -3117,14 +3117,14 @@ export const ORDERS_DATA = [
     shipmentFee: 5000, // tinh theo dia chi dat don mua
     merchandiseSubtotal: 200000, // tien san pham chua tinh ship
     total: 165000, // tong tien bao gom ship fee, backend tra ve
-    discountOff: 40000, // duoc tinh tu voucher object total- total*(discountOffVoucher?discountOffVoucher<maxDiscountOff:maxDiscountOff)
+    discountOff: 40000, // duoc tinh tu voucher object total- total*(discountOffVoucher?discountOffVoucher<discountMaximum:discountMaximum)
     voucher: {
       _id: uuid(),
       name: "VUIVECUOITHANG",
       discountOff: 20, // percent (%)
       content: "Giảm 20% tổng bill tối đa 50k (đơn tối thiểu 250k)",
       remainingSlot: 10,
-      maxDiscountOff: 50000,
+      discountMaximum: 50000,
       minOrder: 200000,
       expiredDate: Date.now(),
     },
@@ -3185,14 +3185,14 @@ export const ORDERS_DATA = [
     shipmentFee: 5000, // tinh theo dia chi dat don mua
     merchandiseSubtotal: 200000, // tien san pham chua tinh ship
     total: 165000, // tong tien bao gom ship fee, backend tra ve
-    discountOff: 40000, // duoc tinh tu voucher object total- total*(discountOffVoucher?discountOffVoucher<maxDiscountOff:maxDiscountOff)
+    discountOff: 40000, // duoc tinh tu voucher object total- total*(discountOffVoucher?discountOffVoucher<discountMaximum:discountMaximum)
     voucher: {
       _id: uuid(),
       name: "VUIVECUOITHANG",
       discountOff: 20, // percent (%)
       content: "Giảm 20% tổng bill tối đa 50k (đơn tối thiểu 250k)",
       remainingSlot: 10,
-      maxDiscountOff: 50000,
+      discountMaximum: 50000,
       minOrder: 200000,
       expiredDate: Date.now(),
     },
@@ -3253,14 +3253,14 @@ export const ORDERS_DATA = [
     shipmentFee: 5000, // tinh theo dia chi dat don mua
     merchandiseSubtotal: 200000, // tien san pham chua tinh ship
     total: 165000, // tong tien bao gom ship fee, backend tra ve
-    discountOff: 40000, // duoc tinh tu voucher object total- total*(discountOffVoucher?discountOffVoucher<maxDiscountOff:maxDiscountOff)
+    discountOff: 40000, // duoc tinh tu voucher object total- total*(discountOffVoucher?discountOffVoucher<discountMaximum:discountMaximum)
     voucher: {
       _id: uuid(),
       name: "VUIVECUOITHANG",
       discountOff: 20, // percent (%)
       content: "Giảm 20% tổng bill tối đa 50k (đơn tối thiểu 250k)",
       remainingSlot: 10,
-      maxDiscountOff: 50000,
+      discountMaximum: 50000,
       minOrder: 200000,
       expiredDate: Date.now(),
     },
@@ -3321,14 +3321,14 @@ export const ORDERS_DATA = [
     shipmentFee: 5000, // tinh theo dia chi dat don mua
     merchandiseSubtotal: 200000, // tien san pham chua tinh ship
     total: 165000, // tong tien bao gom ship fee, backend tra ve
-    discountOff: 40000, // duoc tinh tu voucher object total- total*(discountOffVoucher?discountOffVoucher<maxDiscountOff:maxDiscountOff)
+    discountOff: 40000, // duoc tinh tu voucher object total- total*(discountOffVoucher?discountOffVoucher<discountMaximum:discountMaximum)
     voucher: {
       _id: uuid(),
       name: "VUIVECUOITHANG",
       discountOff: 20, // percent (%)
       content: "Giảm 20% tổng bill tối đa 50k (đơn tối thiểu 250k)",
       remainingSlot: 10,
-      maxDiscountOff: 50000,
+      discountMaximum: 50000,
       minOrder: 200000,
       expiredDate: Date.now(),
     },
@@ -3389,14 +3389,14 @@ export const ORDERS_DATA = [
     shipmentFee: 5000, // tinh theo dia chi dat don mua
     merchandiseSubtotal: 200000, // tien san pham chua tinh ship
     total: 165000, // tong tien bao gom ship fee, backend tra ve
-    discountOff: 40000, // duoc tinh tu voucher object total- total*(discountOffVoucher?discountOffVoucher<maxDiscountOff:maxDiscountOff)
+    discountOff: 40000, // duoc tinh tu voucher object total- total*(discountOffVoucher?discountOffVoucher<discountMaximum:discountMaximum)
     voucher: {
       _id: uuid(),
       name: "VUIVECUOITHANG",
       discountOff: 20, // percent (%)
       content: "Giảm 20% tổng bill tối đa 50k (đơn tối thiểu 250k)",
       remainingSlot: 10,
-      maxDiscountOff: 50000,
+      discountMaximum: 50000,
       minOrder: 200000,
       expiredDate: Date.now(),
     },
@@ -3457,14 +3457,14 @@ export const ORDERS_DATA = [
     shipmentFee: 5000, // tinh theo dia chi dat don mua
     merchandiseSubtotal: 200000, // tien san pham chua tinh ship
     total: 165000, // tong tien bao gom ship fee, backend tra ve
-    discountOff: 40000, // duoc tinh tu voucher object total- total*(discountOffVoucher?discountOffVoucher<maxDiscountOff:maxDiscountOff)
+    discountOff: 40000, // duoc tinh tu voucher object total- total*(discountOffVoucher?discountOffVoucher<discountMaximum:discountMaximum)
     voucher: {
       _id: uuid(),
       name: "VUIVECUOITHANG",
       discountOff: 20, // percent (%)
       content: "Giảm 20% tổng bill tối đa 50k (đơn tối thiểu 250k)",
       remainingSlot: 10,
-      maxDiscountOff: 50000,
+      discountMaximum: 50000,
       minOrder: 200000,
       expiredDate: Date.now(),
     },
@@ -3525,14 +3525,14 @@ export const ORDERS_DATA = [
     shipmentFee: 5000, // tinh theo dia chi dat don mua
     merchandiseSubtotal: 200000, // tien san pham chua tinh ship
     total: 165000, // tong tien bao gom ship fee, backend tra ve
-    discountOff: 40000, // duoc tinh tu voucher object total- total*(discountOffVoucher?discountOffVoucher<maxDiscountOff:maxDiscountOff)
+    discountOff: 40000, // duoc tinh tu voucher object total- total*(discountOffVoucher?discountOffVoucher<discountMaximum:discountMaximum)
     voucher: {
       _id: uuid(),
       name: "VUIVECUOITHANG",
       discountOff: 20, // percent (%)
       content: "Giảm 20% tổng bill tối đa 50k (đơn tối thiểu 250k)",
       remainingSlot: 10,
-      maxDiscountOff: 50000,
+      discountMaximum: 50000,
       minOrder: 200000,
       expiredDate: Date.now(),
     },
@@ -3593,14 +3593,14 @@ export const ORDERS_DATA = [
     shipmentFee: 5000, // tinh theo dia chi dat don mua
     merchandiseSubtotal: 200000, // tien san pham chua tinh ship
     total: 165000, // tong tien bao gom ship fee, backend tra ve
-    discountOff: 40000, // duoc tinh tu voucher object total- total*(discountOffVoucher?discountOffVoucher<maxDiscountOff:maxDiscountOff)
+    discountOff: 40000, // duoc tinh tu voucher object total- total*(discountOffVoucher?discountOffVoucher<discountMaximum:discountMaximum)
     voucher: {
       _id: uuid(),
       name: "VUIVECUOITHANG",
       discountOff: 20, // percent (%)
       content: "Giảm 20% tổng bill tối đa 50k (đơn tối thiểu 250k)",
       remainingSlot: 10,
-      maxDiscountOff: 50000,
+      discountMaximum: 50000,
       minOrder: 200000,
       expiredDate: Date.now(),
     },
@@ -3728,7 +3728,7 @@ export const VOUCHERS_DATA = [
     discountOff: 50, // percent (%)
     content: "Giảm 50% tổng bill tối đa 50k (đơn tối thiểu 250k)",
     remainingSlot: 10,
-    maxDiscountOff: 50000,
+    discountMaximum: 50000,
     minOrder: 200000,
     expiredDate: Date.now(),
   },
@@ -3738,7 +3738,7 @@ export const VOUCHERS_DATA = [
     discountOff: 50, // percent (%)
     content: "Giảm 50% tổng bill tối đa 50k (đơn tối thiểu 250k)",
     remainingSlot: 10,
-    maxDiscountOff: 50000,
+    discountMaximum: 50000,
     minOrder: 200000,
     expiredDate: Date.now(),
   },
@@ -3748,7 +3748,7 @@ export const VOUCHERS_DATA = [
     discountOff: 50, // percent (%)
     content: "Giảm 50% tổng bill tối đa 50k (đơn tối thiểu 250k)",
     remainingSlot: 10,
-    maxDiscountOff: 50000,
+    discountMaximum: 50000,
     minOrder: 200000,
     expiredDate: Date.now(),
   },
@@ -3758,7 +3758,7 @@ export const VOUCHERS_DATA = [
     discountOff: 50, // percent (%)
     content: "Giảm 50% tổng bill tối đa 50k (đơn tối thiểu 250k)",
     remainingSlot: 10,
-    maxDiscountOff: 50000,
+    discountMaximum: 50000,
     minOrder: 200000,
     expiredDate: Date.now(),
   },
@@ -3768,7 +3768,7 @@ export const VOUCHERS_DATA = [
     discountOff: 50, // percent (%)
     content: "Giảm 50% tổng bill tối đa 50k (đơn tối thiểu 250k)",
     remainingSlot: 10,
-    maxDiscountOff: 50000,
+    discountMaximum: 50000,
     minOrder: 200000,
     expiredDate: Date.now(),
   },

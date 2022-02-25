@@ -16,6 +16,7 @@ const userSchema = new Schema({
   isActive: {
     type: Boolean,
     required: true,
+    default: false,
   },
   createAt: {
     type: Date,

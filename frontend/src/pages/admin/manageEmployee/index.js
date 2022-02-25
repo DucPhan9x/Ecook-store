@@ -2,7 +2,6 @@ import { Checkbox, Grid } from "@material-ui/core";
 import { CardEmployee } from "components/admin/manageEmployee";
 import SearchField from "components/common/input/SearchField";
 import React, { useEffect, useState } from "react";
-import { EMPLOYEES_DATA, INSTRUCTORS_DATA } from "utils/dummyData";
 import GroupAddIcon from "@material-ui/icons/GroupAdd";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
@@ -12,92 +11,96 @@ import ModalAdd from "components/admin/manageEmployee/ModalAdd";
 import ModalEdit from "components/admin/manageEmployee/ModalEdit";
 import { RemoveCircle } from "@material-ui/icons";
 import DialogConfirm from "components/common/DialogConform";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  banOrUnBanEmployees,
+  getListEmployeePerPage,
+} from "redux/actions/employee";
+import { SpinLoading } from "components/common";
 
 const ManageEmployee = () => {
-  const [employees, setEmployees] = useState([]);
+  const [data, setData] = useState([]);
   const [openModalEdit, setOpenModalEdit] = useState(false);
   const [openModalAdd, setOpenModalAdd] = useState(false);
-  const [employeeRole, setEmployeeRole] = React.useState("employee");
-  const [filterData, setFilterData] = React.useState([]);
-
+  const [queries, setQueries] = useState({
+    searchText: "",
+    employeeType: 0,
+  });
+  const { loadingGetListEmployee, employeeList, banUnBanEmployeesState } =
+    useSelector((store) => store.employee);
   const handleChange = (event) => {
-    setEmployeeRole(event.target.value);
     if (event.target.value === "both") {
-      setFilterData(employees);
+      // setFilterData(employees);
+      setQueries({ ...queries, employeeType: 0 });
     } else {
-      setFilterData(
-        employees?.filter((item) => item.role === event.target.value)
-      );
+      setQueries({
+        ...queries,
+        employeeType: event.target.value === "employee" ? 3 : 4,
+      });
+
+      // setFilterData(
+      //   employees?.filter((item) => item.role === event.target.value)
+      // );
     }
   };
+  const dispatch = useDispatch();
 
   useEffect(() => {
     document.title = "Quản lý nhân viên | ECook";
     window.scrollTo(0, 0);
-    setFilterData(employees);
-  }, [employees]);
+    //employee
+    dispatch(getListEmployeePerPage(queries));
+  }, [dispatch, queries]);
 
   useEffect(() => {
-    setEmployees(
-      EMPLOYEES_DATA.concat(INSTRUCTORS_DATA).map((item) => ({
-        ...item,
-        isSelected: false,
-      }))
-    );
-  }, []);
+    if (!employeeList.length) return;
+    setData(employeeList.map((item) => ({ ...item, isSelected: false })));
+  }, [employeeList]);
 
   const handleSubmit = (formData) => {
     console.log({ formData });
   };
 
   const [cardSelected, setCardSelected] = useState("");
-
+  const [isStatusBan, setIsStatusBan] = useState(false);
   const [openDialogConfirm, setOpenDialogConfirm] = useState(false);
 
   return (
     <div className="manage-employee-container">
       <div className="manage-employee-container-top">
         <div className="flex items-center">
-          <SearchField onChange={(e) => console.log(e.target.value)} />
+          <SearchField
+            onSubmit={(value) =>
+              setQueries({ ...queries, searchText: value, page: 1 })
+            }
+          />
+
           <button
             style={{ marginLeft: 12 }}
+            disabled={data.filter((item) => item.isSelected)?.length <= 0}
             className={`btn-admin ${
-              filterData.filter((item) => item.isSelected)?.length > 0
+              data.filter((item) => item.isSelected)?.length > 0
                 ? ""
                 : "btn-disabled"
             }`}
             onClick={() => {
-              if (!filterData.filter((item) => item.isSelected)?.length) return;
               setOpenDialogConfirm(true);
-            }}
-          >
-            <RemoveCircle color="secondary" />
-            Xóa
-          </button>
-          <button
-            style={{ marginLeft: 12 }}
-            className={`btn-admin ${
-              filterData.filter((item) => item.isSelected)?.length > 0
-                ? ""
-                : "btn-disabled"
-            }`}
-            onClick={() => {
-              if (!filterData.filter((item) => item.isSelected)?.length) return;
-              setOpenDialogConfirm(true);
+              setIsStatusBan(true);
             }}
           >
             <RemoveCircle color="secondary" />
             Khóa
           </button>
           <button
+            disabled={data.filter((item) => item.isSelected)?.length <= 0}
             style={{ marginLeft: 12 }}
             className={`btn-admin ${
-              filterData.filter((item) => item.isSelected)?.length > 0
+              data.filter((item) => item.isSelected)?.length > 0
                 ? ""
                 : "btn-disabled"
             }`}
             onClick={() => {
-              if (!filterData.filter((item) => item.isSelected)?.length) return;
+              setIsStatusBan(false);
               setOpenDialogConfirm(true);
             }}
           >
@@ -106,18 +109,16 @@ const ManageEmployee = () => {
           </button>
           <Checkbox
             className="radio-checked-container"
-            checked={
-              filterData?.filter((item) => !item.isSelected)?.length === 0
-            }
+            checked={data?.filter((item) => !item.isSelected)?.length === 0}
             onChange={(e) => {
               e.stopPropagation();
-              let temp = [...filterData];
+              let temp = [...data];
               const isAllSelected =
-                filterData?.filter((item) => !item.isSelected)?.length === 0;
+                data?.filter((item) => !item.isSelected)?.length === 0;
               temp.forEach((item) => {
                 item.isSelected = !isAllSelected;
               });
-              setFilterData(temp);
+              setData(temp);
             }}
           />
         </div>
@@ -125,7 +126,13 @@ const ManageEmployee = () => {
           <RadioGroup
             aria-label="role"
             name="role"
-            value={employeeRole}
+            value={
+              queries.employeeType === 0
+                ? "both"
+                : queries.employeeType === 3
+                ? "employee"
+                : "instructor"
+            }
             onChange={handleChange}
             className="flex flex-row"
           >
@@ -148,24 +155,20 @@ const ManageEmployee = () => {
         </button>
       </div>
       <Grid container spacing={2}>
-        {filterData?.map((em) => (
+        {data?.map((em) => (
           <Grid
             key={em._id}
             item
             xs={6}
             md={4}
-            lg={3}
+            lg={4}
             onClick={(e) => {
               if (e.target.type === "checkbox") return;
               setCardSelected(em);
               setOpenModalEdit(true);
             }}
           >
-            <CardEmployee
-              data={em}
-              filterData={filterData}
-              setFilterData={setFilterData}
-            />
+            <CardEmployee data={em} setData={setData} items={data} />
           </Grid>
         ))}
       </Grid>
@@ -183,17 +186,33 @@ const ManageEmployee = () => {
       <DialogConfirm
         open={openDialogConfirm}
         handleClose={() => setOpenDialogConfirm(false)}
-        message="xóa"
+        message={isStatusBan ? "khóa" : "mở khóa"}
         handleSubmit={() => {
-          setFilterData(filterData.filter((item) => !item.isSelected));
-          // call API
-          // useNotification.Error({
-          //   title: "Setup company error",
-          //   message: "aaaaaaaaaaaaa",
-          // });
+          if (isStatusBan) {
+            dispatch(
+              banOrUnBanEmployees({
+                employeeIds: data
+                  .filter((item) => item.isSelected)
+                  .map((item) => item._id),
+                isBanned: true,
+              })
+            );
+          } else {
+            dispatch(
+              banOrUnBanEmployees({
+                employeeIds: data
+                  .filter((item) => item.isSelected)
+                  .map((item) => item._id),
+                isBanned: false,
+              })
+            );
+          }
           setOpenDialogConfirm(false);
         }}
       />
+      {(loadingGetListEmployee || banUnBanEmployeesState?.loading) && (
+        <SpinLoading />
+      )}
     </div>
   );
 };

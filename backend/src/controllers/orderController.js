@@ -405,7 +405,7 @@ const getAllOrders = async (req, res, next) => {
     page = page ? page : 1;
     searchText = searchText ? searchText : "";
     orderBy = orderBy ? orderBy : "_id";
-    orderType = orderType === "asc" ? 1 : 0;
+    orderType = orderType === "asc" ? 1 : -1;
     const orderQuery = { [orderBy]: orderType };
 
     const start = (page - 1) * numOfPerPage;
@@ -589,7 +589,7 @@ const getOrdersByClientId = async (req, res, next) => {
     page = page ? page : 1;
     searchText = searchText ? searchText : "";
     orderBy = orderBy ? orderBy : "_id";
-    orderType = orderType === "asc" ? 1 : 0;
+    orderType = orderType === "asc" ? 1 : -1;
     const orderQuery = { [orderBy]: orderType };
 
     const start = (page - 1) * numOfPerPage;

@@ -3,6 +3,7 @@ import { Modal } from "antd";
 import { FormBox } from "components/common";
 import { Form as ReForm } from "reactstrap";
 import { isEmpty } from "validator";
+import moment from "moment";
 
 const ModalAdd = ({ isModalVisible, handleSubmit, close }) => {
   const [error, setError] = React.useState({});
@@ -10,10 +11,11 @@ const ModalAdd = ({ isModalVisible, handleSubmit, close }) => {
   const [form, setForm] = React.useState({
     name: "",
     discountOff: 0,
-    maxDiscountOff: 0,
+    discountMaximum: 0,
     minOrder: 0,
     remainingSlot: 0,
-    expiredDate: Date.now(),
+    content: "",
+    expiredDate: new Date(moment(Date.now()).add(1, "days")),
   });
 
   const validate = () => {
@@ -22,11 +24,14 @@ const ModalAdd = ({ isModalVisible, handleSubmit, close }) => {
     if (isEmpty(form.name)) {
       errorState.name = "Không được để trống!";
     }
+    if (isEmpty(form.content)) {
+      errorState.content = "Không được để trống!";
+    }
     if (!form.discountOff) {
       errorState.discountOff = "Thông tin chưa hợp lệ!";
     }
-    if (!form.maxDiscountOff) {
-      errorState.maxDiscountOff = "Thông tin chưa hợp lệ!";
+    if (!form.discountMaximum) {
+      errorState.discountMaximum = "Thông tin chưa hợp lệ!";
     }
     if (!form.minOrder) {
       errorState.minOrder = "Thông tin chưa hợp lệ!";
@@ -43,7 +48,7 @@ const ModalAdd = ({ isModalVisible, handleSubmit, close }) => {
     if (Object.keys(errorState).length > 0) {
       return setError(errorState);
     }
-    handleSubmit({ form });
+    handleSubmit(form);
     handleReset();
   };
   const handleChange = (event) => {
@@ -61,10 +66,11 @@ const ModalAdd = ({ isModalVisible, handleSubmit, close }) => {
     setForm({
       name: "",
       discountOff: 0,
-      maxDiscountOff: 0,
+      content: "",
+      discountMaximum: 0,
       minOrder: 0,
       remainingSlot: 0,
-      expiredDate: Date.now(),
+      expiredDate: new Date(moment(Date.now()).add(1, "days")),
     });
     setError({});
   };
@@ -99,6 +105,22 @@ const ModalAdd = ({ isModalVisible, handleSubmit, close }) => {
         </div>
         <div className="flex full-width j-space-between body-content-form">
           <div className="block-label-input-modal" style={{ marginRight: 12 }}>
+            <label>Nội dung</label>
+            <FormBox
+              propsInput={{
+                name: "content",
+                placeholder: "Nội dung",
+                onChange: handleChange,
+                onFocus: handleFocus,
+                value: form.content,
+                disabled: false,
+              }}
+              error={error.content}
+            />
+          </div>
+        </div>
+        <div className="flex full-width j-space-between body-content-form">
+          <div className="block-label-input-modal" style={{ marginRight: 12 }}>
             <label>Giảm giá (%)</label>
             <FormBox
               propsInput={{
@@ -121,14 +143,14 @@ const ModalAdd = ({ isModalVisible, handleSubmit, close }) => {
               propsInput={{
                 type: "number",
                 min: "0",
-                name: "maxDiscountOff",
+                name: "discountMaximum",
                 placeholder: "Giá giảm tối đa (VND)",
                 onChange: handleChange,
                 onFocus: handleFocus,
-                value: form.maxDiscountOff,
+                value: form.discountMaximum,
                 disabled: false,
               }}
-              error={error.maxDiscountOff}
+              error={error.discountMaximum}
             />
           </div>
         </div>
@@ -159,6 +181,7 @@ const ModalAdd = ({ isModalVisible, handleSubmit, close }) => {
                 name: "remainingSlot",
                 placeholder: "Số lượng sử dụng còn lại",
                 onChange: handleChange,
+                min: 0,
                 onFocus: handleFocus,
                 value: form.remainingSlot,
                 disabled: false,
@@ -176,7 +199,8 @@ const ModalAdd = ({ isModalVisible, handleSubmit, close }) => {
               placeholder: "Hạn áp dụng",
               onChange: handleChange,
               onFocus: handleFocus,
-              value: form.expiredDate,
+              value: moment(form.expiredDate).format("YYYY-MM-DD"),
+              min: moment(new Date()).add(1, "days").format("YYYY-MM-DD"),
               disabled: false,
             }}
             error={error.expiredDate}

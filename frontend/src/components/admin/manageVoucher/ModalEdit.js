@@ -12,10 +12,10 @@ const ModalEdit = ({ isModalVisible, handleSubmit, close, data }) => {
   const [form, setForm] = React.useState({
     name: "",
     discountOff: 0,
-    maxDiscountOff: 0,
+    discountMaximum: 0,
     minOrder: 0,
     remainingSlot: 0,
-    expiredDate: Date.now(),
+    expiredDate: new Date(moment(Date.now()).add(1, "days")),
   });
 
   useEffect(() => {
@@ -32,8 +32,8 @@ const ModalEdit = ({ isModalVisible, handleSubmit, close, data }) => {
     if (!form.discountOff) {
       errorState.discountOff = "Thông tin chưa hợp lệ!";
     }
-    if (!form.maxDiscountOff) {
-      errorState.maxDiscountOff = "Thông tin chưa hợp lệ!";
+    if (!form.discountMaximum) {
+      errorState.discountMaximum = "Thông tin chưa hợp lệ!";
     }
     if (!form.minOrder) {
       errorState.minOrder = "Thông tin chưa hợp lệ!";
@@ -114,14 +114,14 @@ const ModalEdit = ({ isModalVisible, handleSubmit, close, data }) => {
               propsInput={{
                 type: "number",
                 min: "0",
-                name: "maxDiscountOff",
+                name: "discountMaximum",
                 placeholder: "Giá giảm tối đa (VND)",
                 onChange: handleChange,
                 onFocus: handleFocus,
-                value: form.maxDiscountOff,
+                value: form.discountMaximum,
                 disabled: false,
               }}
-              error={error.maxDiscountOff}
+              error={error.discountMaximum}
             />
           </div>
         </div>
@@ -151,6 +151,7 @@ const ModalEdit = ({ isModalVisible, handleSubmit, close, data }) => {
                 type: "number",
                 name: "remainingSlot",
                 placeholder: "Số lượng sử dụng còn lại",
+                min: 0,
                 onChange: handleChange,
                 onFocus: handleFocus,
                 value: form.remainingSlot,
@@ -169,6 +170,7 @@ const ModalEdit = ({ isModalVisible, handleSubmit, close, data }) => {
               placeholder: "Hạn áp dụng",
               onChange: handleChange,
               onFocus: handleFocus,
+              min: moment(new Date()).add(1, "days").format("YYYY-MM-DD"),
               value: moment(form.expiredDate).format("YYYY-MM-DD"),
               disabled: false,
             }}

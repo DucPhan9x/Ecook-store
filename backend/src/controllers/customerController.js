@@ -8,40 +8,54 @@ const getListCustomers = async (req, res, next) => {
     numOfPerPage = Number(numOfPerPage);
     page = page ? page : 1;
     searchText = searchText ? searchText : "";
-    orderBy = orderBy ? orderBy : "_id";
-    orderType = orderType === "asc" ? 1 : 0;
+    orderBy = orderBy ? orderBy : "userId";
+    orderType = orderType === "asc" ? 1 : -1;
     const orderQuery = { [orderBy]: orderType };
 
     const start = (page - 1) * numOfPerPage;
     let totalNumOfCustomers;
     let customers;
+    let userIds = await User.find({ roleId: 1 });
+    userIds = userIds.map((i) => i._id);
+
+    console.log(userIds);
+
     if (searchText) {
       let regex = new RegExp([searchText].join(""), "i");
       customers = await UserDetail.find({
         fullName: { $regex: regex },
-        roleId: 1,
+        userId: { $in: userIds },
       })
         .skip(start)
         .limit(numOfPerPage)
         .sort(orderQuery);
       totalNumOfCustomers = await UserDetail.find({
         fullName: { $regex: regex },
-        roleId: 1,
+        userId: { $in: userIds },
       }).count();
     } else {
-      customers = await UserDetail.find({ roleId: 1 })
+      customers = await UserDetail.find({ userId: { $in: userIds } })
         .skip(start)
         .limit(numOfPerPage)
         .sort(orderQuery);
       totalNumOfCustomers = await UserDetail.find({
-        roleId: 1,
+        userId: { $in: userIds },
       }).count();
     }
 
     const totalPage = parseInt(totalNumOfCustomers / numOfPerPage) + 1;
     const totalRows = await UserDetail.find({
-      roleId: 1,
+      userId: { $in: userIds },
     }).count();
+
+    let users = customers.map((i) => User.findById(i.userId));
+    users = await Promise.all(users);
+
+    customers = customers.map((item, idx) => ({
+      ...item._doc,
+      email: users[idx].email,
+      _id: users[idx]._id,
+    }));
 
     res.status(200).json({
       status: 200,
@@ -99,17 +113,22 @@ const getCustomerById = async (req, res, next) => {
 const banCustomerById = async (req, res, next) => {
   try {
     const { customerIds, isBanned } = req.body;
+    console.log(req.body);
     for (var i = 0; i < customerIds.length; i++) {
       const customer = await Promise.all([
-        User.findOneAndUpdate({
-          _id: customerIds[i],
-          isRemoved: isBanned,
-        }),
+        User.findOneAndUpdate(
+          { _id: customerIds[i] },
+          {
+            isRemoved: isBanned,
+          }
+        ),
 
-        UserDetail.findOneAndUpdate({
-          userId: customerIds[i],
-          isRemoved: isBanned,
-        }),
+        UserDetail.findOneAndUpdate(
+          { userId: customerIds[i] },
+          {
+            isRemoved: isBanned,
+          }
+        ),
       ]);
       if (!customer) {
         throw createHttpError(400, "Customer is not exist!");

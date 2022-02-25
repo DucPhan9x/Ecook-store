@@ -18,6 +18,9 @@ import recipe from "./recipe";
 import certification from "./certification";
 import customer from "./customer";
 import employee from "./employee";
+import voucher from "./voucher";
+import cart from "./cart";
+import wishlist from "./wishlist";
 
 export default combineReducers({
   login,
@@ -37,4 +40,7 @@ export default combineReducers({
   certification,
   customer,
   employee,
+  voucher,
+  wishlist,
+  cart,
 });

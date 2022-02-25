@@ -1,13 +1,16 @@
 import * as types from "../../types/employee";
 
 const initialState = {
-  banUnBanEmployees: {
+  banUnBanEmployeesState: {
     loading: false,
   },
   deleteEmployees: {
     loading: false,
   },
-  getEmployeeById: {
+  getEmployeeByIdState: {
+    loading: false,
+  },
+  createEmployeeState: {
     loading: false,
   },
   employeeList: [],
@@ -22,7 +25,7 @@ export default function reducer(state = initialState, actions) {
     case types.BAN_OR_UN_BAN_EMPLOYEES:
       return {
         ...state,
-        banUnBanEmployees: {
+        banUnBanEmployeesState: {
           loading: true,
         },
       };
@@ -38,7 +41,7 @@ export default function reducer(state = initialState, actions) {
       return {
         ...state,
         employeeList: temp,
-        banUnBanEmployees: {
+        banUnBanEmployeesState: {
           loading: false,
         },
       };
@@ -47,7 +50,7 @@ export default function reducer(state = initialState, actions) {
     case types.BAN_OR_UN_BAN_EMPLOYEES_FAIL:
       return {
         ...state,
-        banUnBanEmployees: {
+        banUnBanEmployeesState: {
           loading: false,
         },
       };
@@ -103,14 +106,14 @@ export default function reducer(state = initialState, actions) {
     case types.GET_EMPLOYEE_BY_ID:
       return {
         ...state,
-        getEmployeeById: {
+        getEmployeeByIdState: {
           loading: true,
         },
       };
     case types.GET_EMPLOYEE_BY_ID_SUCCEED:
       return {
         ...state,
-        getEmployeeById: {
+        getEmployeeByIdState: {
           loading: false,
         },
       };
@@ -118,7 +121,35 @@ export default function reducer(state = initialState, actions) {
     case types.GET_EMPLOYEE_BY_ID_FAIL:
       return {
         ...state,
-        getEmployeeById: {
+        getEmployeeByIdState: {
+          loading: false,
+        },
+      };
+    // create employee
+    // get employee by Id
+    case types.CREATE_EMPLOYEE:
+      return {
+        ...state,
+        createEmployeeState: {
+          loading: true,
+        },
+      };
+    case types.CREATE_EMPLOYEE_SUCCEED:
+      const employee = actions.payload;
+      const temp = [...state.employeeList];
+      temp.push(employee);
+      return {
+        ...state,
+        createEmployeeState: {
+          loading: false,
+        },
+        employeeList: [...temp],
+      };
+
+    case types.CREATE_EMPLOYEE_FAIL:
+      return {
+        ...state,
+        createEmployeeState: {
           loading: false,
         },
       };

@@ -68,7 +68,7 @@ const banOrUnBanEmployee = (data) => {
     method: "PUT",
     body: JSON.stringify(data), // data: {courseIds, isBanned}
   };
-  return fetch(`${url}customer`, requestOptions);
+  return fetch(`${url}employee`, requestOptions);
 };
 
 const employeeAPI = {

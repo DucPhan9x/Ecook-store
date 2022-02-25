@@ -142,7 +142,7 @@ export default function reducer(state = initialState, actions) {
           loading: true,
         },
       };
-    case types.GET_LIST_COURSE_PER_PAGE_SUCCEED:
+    case types.GET_LIST_CART_SUCCEED:
       return {
         ...state,
         getListCartItemState: {
@@ -151,7 +151,7 @@ export default function reducer(state = initialState, actions) {
         },
       };
 
-    case types.GET_LIST_COURSE_PER_PAGE_FAIL:
+    case types.GET_LIST_CART_FAIL:
       return {
         ...state,
         getListCartItemState: {

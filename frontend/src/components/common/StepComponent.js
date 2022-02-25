@@ -25,8 +25,8 @@ const useStyles = makeStyles((theme) => ({
 
 function getSteps() {
   return [
-    "Chưa giao hàng",
-    "Đã nhận giao hàng",
+    "Đang chờ xác nhận",
+    "Đang chuẩn bị",
     "Đang giao hàng",
     "Đã giao hàng",
   ];

@@ -6,7 +6,7 @@ const voucherSchema = new Schema({
   discountOff: {
     type: Number,
   },
-  maxDiscountOff: {
+  discountMaximum: {
     type: Number,
   },
   content: {

@@ -14,6 +14,32 @@ const isAdminRole = async (req, res, next) => {
   }
 };
 
+const isAdministratorRole = async (req, res, next) => {
+  const user = req.user;
+  try {
+    if (user.roleId != 2 && user.roleId != 3) {
+      throw createHttpError(401, "You are not administrator account!");
+    }
+    next();
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
+
+const isAdministratorAndInstructorRole = async (req, res, next) => {
+  const user = req.user;
+  try {
+    if (user.roleId === 1) {
+      throw createHttpError(401, "You are not administrator account!");
+    }
+    next();
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
+
 const isCustomerRole = async (req, res, next) => {
   const user = req.user;
   try {
@@ -61,4 +87,6 @@ export const validatePermission = {
   isEmployeeRole,
   isInstructorRole,
   isCustomerRole,
+  isAdministratorAndInstructorRole,
+  isAdministratorRole,
 };

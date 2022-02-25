@@ -126,9 +126,40 @@ const getEmployeeById = (employeeId) => {
   };
 };
 
+const createEmployee = (data) => {
+  return (dispatch) => {
+    dispatch({ type: types.CREATE_EMPLOYEE });
+    employeeAPI
+      .createEmployee(data)
+      .then((response) => response.json())
+      .then((result) => {
+        if (result.status === 200) {
+          dispatch({
+            type: types.CREATE_EMPLOYEE_SUCCEED,
+            payload: result.employee,
+          });
+        } else {
+          dispatch({ type: types.CREATE_EMPLOYEE_FAIL });
+          useNotification.Error({
+            title: "Error",
+            message: result.msg || "Create employee failed!",
+          });
+        }
+      })
+      .catch((error) => {
+        dispatch({ type: types.CREATE_EMPLOYEE_FAIL });
+        useNotification.Error({
+          title: "Error",
+          message: "Error connected to server!",
+        });
+      });
+  };
+};
+
 export {
   getEmployeeById,
   getListEmployeePerPage,
   banOrUnBanEmployees,
   deleteEmployees,
+  createEmployee,
 };

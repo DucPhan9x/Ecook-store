@@ -20,7 +20,10 @@ export const jwtMiddleware = async (req, res, next) => {
       // check ban
       const user = await User.findById(userData._id);
       if (user.isRemoved) {
-        throw createHttpError(400, "Your account is banned!");
+        throw createHttpError(
+          400,
+          "Tài khoản của bạn bị khóa, vui lòng liên hệ system.ecook@gmail.com!"
+        );
       }
       next();
     } catch (error) {
