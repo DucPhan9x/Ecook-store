@@ -10,28 +10,39 @@ import ModalConfirm from "../ModalConfirm";
 import useNotification from "hooks/useNotification";
 
 const CourseCard = ({ data }) => {
-  const { _id, name, unitPrice, videoUrls, discountOff, discountMaximum } =
-    data;
+  const {
+    _id,
+    courseName,
+    unitPrice,
+    videoList,
+    discountOff,
+    discountMaximum,
+  } = data;
   const history = useHistory();
   const [isOpenModalConfirm, setIsOpenModalConfirm] = useState(false);
 
   return (
     <div className="course-card">
       <div className="course-card__inner">
-        <video
+        <iframe
           id={_id}
-          src={videoUrls?.length > 0 && videoUrls[0]?.videoUrl}
+          src={videoList?.length > 0 && videoList[0]?.videoUrl}
           frameBorder="0"
           allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
           title="Embedded youtube"
-          onClick={() => {
-            history.push(`/course?id=${_id}`);
-          }}
         />
         <div className="course-card__inner--information">
           <div className="block-title-price">
-            <span className="f-title">{name}</span>
+            <span
+              style={{ cursor: "pointer" }}
+              className="f-title"
+              onClick={() => {
+                history.push(`/course?id=${_id}`);
+              }}
+            >
+              {courseName}
+            </span>
             <div className="flex items-center">
               <span className={discountOff !== 0 ? "f-price" : "f-new-price"}>
                 {formatCurrency(unitPrice)}

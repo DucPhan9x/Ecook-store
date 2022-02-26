@@ -13,21 +13,26 @@ const {
 } = foodController;
 
 export const foodRoute = Router();
-foodRoute.use(`${baseUrl}`, jwtMiddleware);
 foodRoute
   .route(`${baseUrl}`)
   .post(
+    jwtMiddleware,
     validatePermission.isAdministratorAndInstructorRole,
     creatMultipleNewFood
   );
 foodRoute
   .route(`${baseUrl}/update`)
-  .put(validatePermission.isAdministratorAndInstructorRole, updateFoodById);
+  .put(
+    jwtMiddleware,
+    validatePermission.isAdministratorAndInstructorRole,
+    updateFoodById
+  );
 foodRoute.route(`${baseUrl}?`).get(getListFoodPerPage);
 foodRoute.route(`${baseUrl}/:foodId`).get(getFoodById);
 foodRoute
   .route(`${baseUrl}/statusRemoveTemp/:foodId/:isRemoveTemp`)
   .put(
+    jwtMiddleware,
     validatePermission.isAdministratorAndInstructorRole,
     updateStatusRemoveTempFood
   );

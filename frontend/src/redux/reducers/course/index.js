@@ -19,6 +19,10 @@ const initialState = {
   totalPage: 0,
   totalRows: 0,
 
+  courseListClient: [],
+  isLimited: false,
+  currentCount: 0,
+
   examinationByCourseId: {
     loading: false,
     data: {},
@@ -133,13 +137,30 @@ export default function reducer(state = initialState, actions) {
         ...state,
         loadingGetListCourse: true,
       };
-    case types.GET_LIST_COURSE_PER_PAGE_SUCCEED:
+    case types.GET_LIST_COURSE_PER_PAGE_SUCCEED: {
+      let temp = state.currentCount + actions.payload.courses.length;
+
       return {
         ...state,
         loadingGetListCourse: false,
         courseList: actions.payload.courses,
         totalPage: actions.payload.totalPage,
         totalRows: actions.payload.totalRows,
+
+        courseListClient: [
+          ...state.courseListClient,
+          ...actions.payload.courses,
+        ],
+        isLimited: temp === actions.payload.totalRows,
+        currentCount: temp,
+      };
+    }
+
+    case types.RESET_TO_SEARCH_COURSE:
+      return {
+        ...state,
+        courseListClient: [],
+        currentCount: 0,
       };
 
     case types.GET_LIST_COURSE_PER_PAGE_FAIL:

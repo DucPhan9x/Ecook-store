@@ -1,4 +1,4 @@
-import { Examination, Feedback, UserDetail } from "../models";
+import { Certification, Examination, Feedback, UserDetail } from "../models";
 import { Course } from "../models/CourseModel";
 import createHttpError from "http-errors";
 
@@ -187,14 +187,13 @@ const getListCoursePerPage = async (req, res, next) => {
       ...item._doc,
       instructor: instructorsData[index],
     }));
-    const totalRows = await Course.find({ isRemoved: false }).count();
 
     res.status(200).json({
       status: 200,
       msg: "Get courses successfully!",
       courses,
       totalPage,
-      totalRows,
+      totalRows: totalNumOfCourses,
     });
   } catch (error) {
     console.log(error);
@@ -206,8 +205,8 @@ const getListCoursePerPage = async (req, res, next) => {
 const getListCoursesRelated = async (req, res, next) => {
   try {
     let { searchText } = req.query;
-    numOfPerPage = Number(15);
-    page = 1;
+    const numOfPerPage = Number(15);
+    const page = 1;
     searchText = searchText;
 
     const start = (page - 1) * numOfPerPage;
@@ -215,10 +214,10 @@ const getListCoursesRelated = async (req, res, next) => {
     courses = await Course.find({
       $text: { $search: searchText },
       isRemoved: false,
+      courseName: { $nin: searchText },
     })
       .skip(start)
       .limit(numOfPerPage);
-
     res.status(200).json({
       status: 200,
       msg: "Get courses successfully!",
@@ -232,8 +231,16 @@ const getListCoursesRelated = async (req, res, next) => {
 
 const getListCourseByInstructorId = async (req, res, next) => {
   try {
-    let { page, searchText, orderBy, orderType, numOfPerPage } = req.query;
-    const instructorId = req.user._id;
+    let {
+      page,
+      searchText,
+      orderBy,
+      orderType,
+      numOfPerPage,
+      instructorIdReq,
+    } = req.query;
+    const instructorId =
+      req.user._id && req.user.roleId === 4 ? req.user._id : instructorIdReq;
 
     numOfPerPage = Number(numOfPerPage);
     page = page ? page : 1;
@@ -345,11 +352,31 @@ const getCourseById = async (req, res, next) => {
 const getCoursesByClientId = async (req, res, next) => {
   try {
     const customer = await UserDetail.findOne({ userId: req.user._id });
+    const { searchText, isFinish } = req.query;
+    //
+    let courseLists = customer.courseList;
+    let courseIds = courseLists.map((item) => item._id);
+    let certifications = await Promise.all(
+      courseIds.map((item) =>
+        Certification.findOne({
+          courseId: item,
+          studentId: req.user._id,
+        })
+      )
+    );
+    let coursesFinished = certifications.map((item) => item.courseId);
+    courseLists = courseLists.filter((item) => {
+      if (isFinish) {
+        coursesFinished.includes(item._id);
+      } else {
+        !coursesFinished.includes(item._id);
+      }
+    });
 
     res.status(200).json({
       status: 200,
       msg: "Get courses successfully!",
-      courses: customer.courseList,
+      courses: courseLists,
     });
   } catch (error) {
     console.log(error);

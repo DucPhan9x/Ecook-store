@@ -10,7 +10,8 @@ import ModalConfirm from "../ModalConfirm";
 import { getAccessToken } from "utils/authUtils";
 
 const FoodCard = ({ data }) => {
-  const { name, unitPrice, imageUrl, discountOff, discountMaximum } = data;
+  const { name, unitPrice, imageUrl, discountOff, discountMaximum, unit } =
+    data;
   const history = useHistory();
   const [isOpenModalConfirm, setIsOpenModalConfirm] = useState(false);
 
@@ -28,7 +29,9 @@ const FoodCard = ({ data }) => {
 
         <div className="food-card__inner--information">
           <div className="block-title-price">
-            <span className="f-title">{name}</span>
+            <span className="f-title">
+              {name} (1 {unit})
+            </span>
             <div className="flex items-center">
               <span className={discountOff !== 0 ? "f-price" : "f-new-price"}>
                 {formatCurrency(unitPrice)}

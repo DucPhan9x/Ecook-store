@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function RecipeCard({ data }) {
   const classes = useStyles();
-  const { title, feedbacks, contents, imageUrl } = data;
+  const { name, feedbacks, contents, imageUrl } = data;
   const history = useHistory();
 
   const [isOpenModalConfirm, setIsOpenModalConfirm] = useState(false);
@@ -66,12 +66,25 @@ export default function RecipeCard({ data }) {
               <VisibilityIcon />
             </IconButton>
           }
-          title={title}
+          title={name}
         />
-        <CardMedia className={classes.media} image={imageUrl} title={title} />
+        <CardMedia className={classes.media} image={imageUrl} title={name} />
         <CardContent style={{ maxHeight: 80, overflow: "hidden" }}>
-          <Typography variant="body2" color="textSecondary" component="p">
-            {contents}
+          <Typography
+            variant="body2"
+            color="textSecondary"
+            component="p"
+            style={{
+              maxWidth: 230,
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+            }}
+          >
+            {contents
+              .filter((i, idx) => idx < 3)
+              .map((i, idx) => `Bước ${idx + 1}. ${i}`)
+              .join(". ")}
           </Typography>
         </CardContent>
         <CardContent style={{ paddingTop: 0, paddingBottom: 0 }}>

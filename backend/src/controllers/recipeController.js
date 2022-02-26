@@ -56,7 +56,6 @@ const updateRecipeById = async (req, res, next) => {
       contents,
       imageUrl,
     } = JSON.parse(req.body.recipeUpdated);
-    console.log(req.body);
     const instructorId = req.user._id;
     const instructor = await UserDetail.findOne({ userId: instructorId });
 
@@ -158,16 +157,15 @@ const getListRecipePerPage = async (req, res, next) => {
     let totalNumOfRecipes;
     let recipes;
     if (searchText) {
-      let regex = new RegExp([searchText].join(""), "i");
       recipes = await Recipe.find({
-        name: { $regex: regex },
+        $text: { $search: searchText },
         isRemoved: false,
       })
         .skip(start)
         .limit(numOfPerPage)
         .sort(orderQuery);
       totalNumOfRecipes = await Recipe.find({
-        name: { $regex: regex },
+        $text: { $search: searchText },
         isRemoved: false,
       }).count();
     } else {
@@ -177,7 +175,6 @@ const getListRecipePerPage = async (req, res, next) => {
         .sort(orderQuery);
       totalNumOfRecipes = await Recipe.find({ isRemoved: false }).count();
     }
-    const totalRows = await Recipe.find({ isRemoved: false }).count();
     let instructorsData = recipes.map((item) =>
       UserDetail.findOne({ userId: item.instructorId })
     );
@@ -192,7 +189,7 @@ const getListRecipePerPage = async (req, res, next) => {
       msg: "Get recipes successfully!",
       recipes,
       totalPage,
-      totalRows,
+      totalRows: totalNumOfRecipes,
     });
   } catch (error) {
     console.log(error);
@@ -204,8 +201,8 @@ const getListRecipePerPage = async (req, res, next) => {
 const getListRecipesRelatedFoodName = async (req, res, next) => {
   try {
     let { searchText } = req.query;
-    numOfPerPage = Number(15);
-    page = 1;
+    const numOfPerPage = Number(15);
+    const page = 1;
     searchText = searchText;
 
     const start = (page - 1) * numOfPerPage;
@@ -213,6 +210,7 @@ const getListRecipesRelatedFoodName = async (req, res, next) => {
     recipes = await Recipe.find({
       $text: { $search: searchText },
       isRemoved: false,
+      name: { $nin: searchText },
     })
       .skip(start)
       .limit(numOfPerPage);
@@ -269,10 +267,6 @@ const getListRecipeByInstructorId = async (req, res, next) => {
         instructorId,
       }).count();
     }
-    const totalRows = await Recipe.find({
-      isRemoved: false,
-      instructorId,
-    }).count();
     let instructorsData = recipes.map((item) =>
       UserDetail.findOne({ userId: item.instructorId })
     );
@@ -287,7 +281,7 @@ const getListRecipeByInstructorId = async (req, res, next) => {
       msg: "Get recipes successfully!",
       recipes,
       totalPage,
-      totalRows,
+      totalRows: totalNumOfRecipes,
     });
   } catch (error) {
     console.log(error);

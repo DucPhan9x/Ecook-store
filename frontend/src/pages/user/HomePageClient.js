@@ -2,12 +2,6 @@ import React, { useEffect } from "react";
 import AssignmentIcon from "@material-ui/icons/Assignment";
 import FastfoodIcon from "@material-ui/icons/Fastfood";
 import { Tooltip } from "antd";
-import {
-  RECIPES_DATA,
-  FOODS_DATA,
-  COURSES_DATA,
-  INSTRUCTORS_DATA,
-} from "utils/dummyData";
 import RecipeCard from "components/common/card/RecipeCard";
 import FoodCard from "components/common/card/FoodCard";
 import CourseCard from "components/common/card/CourseCard";
@@ -23,18 +17,62 @@ import {
 import { setScreenView } from "redux/actions/control";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+import homeClientAPI from "api/homeClientAPI";
+import { useState } from "react";
+import { SpinLoading } from "components/common";
 
 const HomePageClient = () => {
   const history = useHistory();
   const { screenView } = useSelector((store) => store.control);
+  const [loading1, setLoading1] = useState(true);
   const dispatch = useDispatch();
+  const [data, setData] = useState({
+    recipes: [],
+    meats: [],
+    poultries: [],
+    seaFoods: [],
+    vegetables: [],
+  });
 
   useEffect(() => {
     document.title = "Trang chủ | ECook";
     window.scrollTo(0, 0);
-  }, []);
+    if (screenView === "food_recipe") {
+      setLoading1(true);
+
+      homeClientAPI
+        .getListFoodAndRecipe()
+        .then((r) => r.json())
+        .then((res) => {
+          setLoading1(false);
+          const { recipes, meats, poultries, seaFoods, vegetables } = res;
+          setData({
+            recipes,
+            meats,
+            poultries,
+            seaFoods,
+            vegetables,
+          });
+        });
+    } else {
+      setLoading1(true);
+
+      homeClientAPI
+        .getListCourseAndInstructor()
+        .then((r) => r.json())
+        .then((res) => {
+          setLoading1(false);
+          const { courses, instructors } = res;
+          setData({
+            courses,
+            instructors,
+          });
+        });
+    }
+  }, [screenView]);
   return (
     <div className="homepage-user">
+      {loading1 && <SpinLoading />}
       <div className="homepage-user--section-1" />
       <div className="homepage-user--section-2">
         <div className="block-action-switch">
@@ -67,7 +105,7 @@ const HomePageClient = () => {
               </span>
             </div>
             <div className="block--product-list--showing">
-              {RECIPES_DATA.map((r) => (
+              {data?.recipes?.map((r) => (
                 <RecipeCard data={r} key={r._id} />
               ))}
             </div>
@@ -81,12 +119,19 @@ const HomePageClient = () => {
           <div className="block--product-list">
             <div className="block--product-list--title">
               <span>Thịt</span>
-              <span onClick={() => history.push(ROUTE_CLIENT_FOODS_LIST)}>
+              <span
+                onClick={() =>
+                  history.push({
+                    pathname: ROUTE_CLIENT_FOODS_LIST,
+                    state: { typeId: 1 },
+                  })
+                }
+              >
                 Xem thêm
               </span>
             </div>
             <div className="block--product-list--showing">
-              {FOODS_DATA.map((r) => (
+              {data?.meats?.map((r) => (
                 <FoodCard data={r} key={r._id} />
               ))}
             </div>
@@ -94,13 +139,20 @@ const HomePageClient = () => {
 
           <div className="block--product-list">
             <div className="block--product-list--title">
-              <span>Gà, vịt</span>
-              <span onClick={() => history.push(ROUTE_CLIENT_FOODS_LIST)}>
+              <span>Gia cầm</span>
+              <span
+                onClick={() =>
+                  history.push({
+                    pathname: ROUTE_CLIENT_FOODS_LIST,
+                    state: { typeId: 3 },
+                  })
+                }
+              >
                 Xem thêm
               </span>
             </div>
             <div className="block--product-list--showing">
-              {FOODS_DATA.map((r) => (
+              {data?.poultries?.map((r) => (
                 <FoodCard data={r} key={r._id} />
               ))}
             </div>
@@ -109,12 +161,19 @@ const HomePageClient = () => {
           <div className="block--product-list">
             <div className="block--product-list--title">
               <span>Thủy hải sản</span>
-              <span onClick={() => history.push(ROUTE_CLIENT_FOODS_LIST)}>
+              <span
+                onClick={() =>
+                  history.push({
+                    pathname: ROUTE_CLIENT_FOODS_LIST,
+                    state: { typeId: 2 },
+                  })
+                }
+              >
                 Xem thêm
               </span>
             </div>
             <div className="block--product-list--showing">
-              {FOODS_DATA.map((r) => (
+              {data?.seaFoods?.map((r) => (
                 <FoodCard data={r} key={r._id} />
               ))}
             </div>
@@ -123,12 +182,19 @@ const HomePageClient = () => {
           <div className="block--product-list">
             <div className="block--product-list--title">
               <span>Rau củ quả</span>
-              <span onClick={() => history.push(ROUTE_CLIENT_FOODS_LIST)}>
+              <span
+                onClick={() =>
+                  history.push({
+                    pathname: ROUTE_CLIENT_FOODS_LIST,
+                    state: { typeId: 4 },
+                  })
+                }
+              >
                 Xem thêm
               </span>
             </div>
             <div className="block--product-list--showing">
-              {FOODS_DATA.map((r) => (
+              {data?.vegetables?.map((r) => (
                 <FoodCard data={r} key={r._id} />
               ))}
             </div>
@@ -144,7 +210,7 @@ const HomePageClient = () => {
               </span>
             </div>
             <div className="block--product-list--showing">
-              {COURSES_DATA.map((r) => (
+              {data?.courses?.map((r) => (
                 <CourseCard data={r} key={r._id} />
               ))}
             </div>
@@ -157,7 +223,7 @@ const HomePageClient = () => {
               </span>
             </div>
             <div className="block--product-list--showing">
-              {INSTRUCTORS_DATA.map((r) => (
+              {data?.instructors?.map((r) => (
                 <InstructorCard data={r} key={r._id} />
               ))}
             </div>

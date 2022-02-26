@@ -12,11 +12,16 @@ const initialState = {
   },
   getFoodByIdState: {
     loading: false,
+    data: {},
   },
   foodList: [],
   loadingGetListFood: false,
   totalPage: 0,
   totalRows: 0,
+  // CLIENT
+  foodListClient: [],
+  isLimited: false,
+  currentCount: 0,
 };
 
 export default function reducer(state = initialState, actions) {
@@ -114,13 +119,26 @@ export default function reducer(state = initialState, actions) {
         ...state,
         loadingGetListFood: true,
       };
-    case types.GET_LIST_FOOD_PER_PAGE_SUCCEED:
+    case types.GET_LIST_FOOD_PER_PAGE_SUCCEED: {
+      let temp = state.currentCount + actions.payload.foods.length;
       return {
         ...state,
         loadingGetListFood: false,
         foodList: actions.payload.foods,
         totalPage: actions.payload.totalPage,
         totalRows: actions.payload.totalRows,
+        //client
+        foodListClient: [...state.foodListClient, ...actions.payload.foods],
+        isLimited: temp === actions.payload.totalRows,
+        currentCount: temp,
+      };
+    }
+
+    case types.RESET_TO_SEARCH_FOOD:
+      return {
+        ...state,
+        foodListClient: [],
+        currentCount: 0,
       };
 
     case types.GET_LIST_FOOD_PER_PAGE_FAIL:
@@ -141,6 +159,7 @@ export default function reducer(state = initialState, actions) {
         ...state,
         getFoodByIdState: {
           loading: false,
+          data: actions.payload,
         },
       };
 

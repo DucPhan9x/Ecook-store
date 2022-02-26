@@ -201,22 +201,22 @@ function App() {
         <Route path="/recipe" component={withAuthClient(RecipeDetail)} exact />
         <Route
           path={ROUTE_CLIENT_RECIPES_LIST}
-          component={withAuthClient(RecipesList)}
+          component={withNoAuth(RecipesList)}
           exact
         />
         <Route
           path={ROUTE_CLIENT_COURSES_LIST}
-          component={withAuthClient(CoursesList)}
+          component={withNoAuth(CoursesList)}
           exact
         />
         <Route
           path={ROUTE_CLIENT_FOODS_LIST}
-          component={withAuthClient(FoodsList)}
+          component={withNoAuth(FoodsList)}
           exact
         />
         <Route
           path={ROUTE_CLIENT_INSTRUCTORS_LIST}
-          component={withAuthClient(InstructorsList)}
+          component={withNoAuth(InstructorsList)}
           exact
         />
         <Route path="/food" component={withNoAuth(FoodDetail)} exact />

@@ -167,10 +167,15 @@ const getFoodById = (foodId) => {
   };
 };
 
+const resetToSearchFood = () => {
+  return (dispatch) => dispatch({ type: types.RESET_TO_SEARCH_FOOD });
+};
+
 export {
   createFood,
   updateFoodById,
   removeTempFoodById,
   getListFoodPerPage,
   getFoodById,
+  resetToSearchFood,
 };

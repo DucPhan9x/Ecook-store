@@ -18,6 +18,9 @@ const initialState = {
   loadingGetListRecipe: false,
   totalPage: 0,
   totalRows: 0,
+  recipeListClient: [],
+  isLimited: false,
+  currentCount: 0,
 };
 
 export default function reducer(state = initialState, actions) {
@@ -113,20 +116,36 @@ export default function reducer(state = initialState, actions) {
         ...state,
         loadingGetListRecipe: true,
       };
-    case types.GET_LIST_RECIPE_PER_PAGE_SUCCEED:
+    case types.GET_LIST_RECIPE_PER_PAGE_SUCCEED: {
+      let temp = state.currentCount + actions.payload.recipes.length;
       return {
         ...state,
         loadingGetListRecipe: false,
         recipeList: actions.payload.recipes,
         totalPage: actions.payload.totalPage,
         totalRows: actions.payload.totalRows,
+        recipeListClient: [
+          ...state.recipeListClient,
+          ...actions.payload.recipes,
+        ],
+        isLimited: temp === actions.payload.totalRows,
+        currentCount: temp,
       };
+    }
 
     case types.GET_LIST_RECIPE_PER_PAGE_FAIL:
       return {
         ...state,
         loadingGetListRecipe: false,
       };
+
+    case types.RESET_TO_SEARCH_RECIPE:
+      return {
+        ...state,
+        recipeListClient: [],
+        currentCount: 0,
+      };
+
     // get food by Id
     case types.GET_RECIPE_BY_ID:
       return {

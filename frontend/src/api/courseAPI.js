@@ -77,14 +77,21 @@ const getListCourseByInstructor = (data) => {
   const token = getAccessToken();
   let myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${token}`);
-  const { page, searchText, orderBy, orderType, numOfPerPage } = data;
+  const {
+    page,
+    searchText,
+    orderBy,
+    orderType,
+    numOfPerPage,
+    instructorIdReq,
+  } = data;
 
   let requestOptions = {
     headers: myHeaders,
     method: "GET",
   };
   return fetch(
-    `${url}course/by/instructor?page=${page}&searchText=${searchText}&orderBy=${orderBy}&orderType=${orderType}&numOfPerPage=${numOfPerPage}`,
+    `${url}course/by/instructor?instructorIdReq=${instructorIdReq}&page=${page}&searchText=${searchText}&orderBy=${orderBy}&orderType=${orderType}&numOfPerPage=${numOfPerPage}`,
     requestOptions
   );
 };
@@ -102,7 +109,7 @@ const getListCourseRelated = (data) => {
   return fetch(`${url}course/by/related?searchText=${data}`, requestOptions);
 };
 
-const getListCourseByClient = () => {
+const getListCourseByClient = (data) => {
   const token = getAccessToken();
   let myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${token}`);
@@ -111,7 +118,10 @@ const getListCourseByClient = () => {
     headers: myHeaders,
     method: "GET",
   };
-  return fetch(`${url}course/by/client`, requestOptions);
+  return fetch(
+    `${url}course/by/client?searchText=${data.searchText}?isFinish=${data.isFinish}`,
+    requestOptions
+  );
 };
 
 const courseAPI = {

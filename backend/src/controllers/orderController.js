@@ -454,7 +454,6 @@ const getAllOrders = async (req, res, next) => {
         totalNumOfOrders = await Order.find({}).count();
       }
     }
-    const totalRows = await Order.find().count();
 
     for (let idx = 0; idx < orders.length; idx++) {
       let order = orders[idx];
@@ -493,7 +492,7 @@ const getAllOrders = async (req, res, next) => {
       msg: "Get orders successfully!",
       orders,
       totalPage,
-      totalRows,
+      totalRows: totalNumOfOrders,
     });
   } catch (error) {
     console.log(error);
@@ -620,9 +619,6 @@ const getOrdersByClientId = async (req, res, next) => {
         customerId,
       }).count();
     }
-    const totalRows = await Order.find({
-      customerId,
-    }).count();
 
     for (let idx = 0; idx < orders.length; idx++) {
       let order = orders[idx];
@@ -660,7 +656,7 @@ const getOrdersByClientId = async (req, res, next) => {
       msg: "Get orders successfully!",
       orders,
       totalPage,
-      totalRows,
+      totalRows: totalNumOfOrders,
     });
   } catch (error) {
     console.log(error);

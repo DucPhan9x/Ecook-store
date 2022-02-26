@@ -7,10 +7,17 @@ const withNoAuth =
   (Component, showFooter = false) =>
   (props) => {
     const isHomepage =
-      ["/food", "/course", "/instructor"].includes(window.location.pathname) ||
-      window.location.pathname === "/";
+      [
+        "/food",
+        "/course",
+        "/instructor",
+        "/foods-list",
+        "/courses-list",
+        "/recipes-list",
+        "/instructors-list",
+      ].includes(window.location.pathname) || window.location.pathname === "/";
     return (
-      <div className="app" style={{ minHeight: "100vh" }}>
+      <div className="app">
         {!getAccessToken() || isHomepage ? (
           <>
             <HeaderClient />

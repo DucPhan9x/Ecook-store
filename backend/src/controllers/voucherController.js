@@ -138,14 +138,13 @@ const getListVoucherPerPage = async (req, res, next) => {
         .sort(orderQuery);
       totalNumOfVouchers = await Voucher.find({ isRemoved: false }).count();
     }
-    const totalRows = await Voucher.find({ isRemoved: false }).count();
     const totalPage = parseInt(totalNumOfVouchers / numOfPerPage) + 1;
     res.status(200).json({
       status: 200,
       msg: "Get vouchers successfully!",
       vouchers,
       totalPage,
-      totalRows,
+      totalRows: totalNumOfVouchers,
     });
   } catch (error) {
     console.log(error);

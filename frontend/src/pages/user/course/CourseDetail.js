@@ -1,9 +1,8 @@
 import { Rating } from "@material-ui/lab";
-import { BackPreviousPage } from "components/common";
+import { SpinLoading } from "components/common";
 // import Comments from "components/common/Comments";
 // import useNotification from "hooks/useNotification";
 import React, { useEffect, useState } from "react";
-import { COURSES_DATA } from "utils/dummyData";
 import AssignmentIcon from "@material-ui/icons/Assignment";
 // import FeedbackIcon from "@material-ui/icons/Feedback";
 import ScrollToTop from "components/common/ScrollToTop";
@@ -21,10 +20,17 @@ import { useHistory } from "react-router-dom";
 import { getAccessToken } from "utils/authUtils";
 import useNotification from "hooks/useNotification";
 import ModalConfirm from "components/common/ModalConfirm";
+import { useDispatch, useSelector } from "react-redux";
+import { getCourseById } from "redux/actions/course";
+import courseAPI from "api/courseAPI";
 
 const CourseDetail = () => {
   const [course, setCourse] = useState({});
+  const [courseRelated, setCourseRelated] = useState([]);
   const [rate, setRate] = useState(0);
+  const [l1, setL1] = useState(true);
+  const dispatch = useDispatch();
+  const { getCourseByIdState } = useSelector((store) => store.course);
 
   const history = useHistory();
   useEffect(() => {
@@ -36,12 +42,28 @@ const CourseDetail = () => {
     if (!courseID) {
       return;
     }
-    let t = COURSES_DATA.find((item) => item._id === courseID);
-    if (t) {
-      setCourse(t);
-      setRate(t.numOfStars);
-    }
-  }, []);
+    dispatch(getCourseById(courseID));
+  }, [dispatch]);
+
+  useEffect(() => {
+    const t = getCourseByIdState.data || {};
+    setCourse(t);
+    setRate(t?.numOfStars || 0);
+  }, [getCourseByIdState]);
+
+  useEffect(() => {
+    if (!course.courseName) return;
+    setL1(true);
+    courseAPI
+      .getListCourseRelated(course.courseName)
+      .then((res) => res.json())
+      .then((res) => {
+        if (res) {
+          setCourseRelated(res.courses);
+          setL1(false);
+        }
+      });
+  }, [course]);
 
   const [isOpenModalConfirm, setIsOpenModalConfirm] = useState(false);
 
@@ -49,12 +71,12 @@ const CourseDetail = () => {
 
   return (
     <div className="course-detail-container">
-      <BackPreviousPage />
+      {(getCourseByIdState?.loading || l1) && <SpinLoading />}
       <div className="course-detail-container-top">
         <div className="course-detail-container-top__right">
           <div className="flex flex-col">
             <div className="flex flex-col course-detail-container-top__right--title">
-              <h3>{course?.name}</h3>
+              <h3>{course?.courseName}</h3>
               <Rating defaultValue={0} value={rate} max={5} readOnly />
               <span className="course-detail-container-top__right--title--description">
                 {course.description}
@@ -68,7 +90,7 @@ const CourseDetail = () => {
                 </span>
                 <IconButton
                   onClick={() =>
-                    history.push(`instructor?id=${course.instructor?._id}`)
+                    history.push(`instructor?id=${course.instructorId}`)
                   }
                 >
                   <VisibilityIcon />
@@ -80,7 +102,7 @@ const CourseDetail = () => {
               </div>
               <div>
                 <label>Tổng số video: </label>
-                <span>{course?.videoUrls?.length}</span>
+                <span>{course?.videoList?.length}</span>
               </div>
               <div
                 style={{
@@ -88,7 +110,9 @@ const CourseDetail = () => {
                 }}
               >
                 <label>Tổng thời gian khóa học: </label>
-                <span>{_.sum(course?.videoUrls?.map((v) => v.duration))}</span>
+                <span>
+                  {_.sum(course?.videoList?.map((v) => Number(v.duration)))} min
+                </span>
               </div>
               <div
                 style={{
@@ -119,8 +143,9 @@ const CourseDetail = () => {
         </div>
 
         <div className="course-detail-container-top__left">
-          <video
-            src={course?.videoUrls && course?.videoUrls[0]?.videoUrl}
+          <iframe
+            style={{ height: 200 }}
+            src={course?.videoList && course?.videoList[0]?.videoUrl}
             frameBorder="0"
             allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
@@ -194,54 +219,19 @@ const CourseDetail = () => {
           </div>
         </div>
       </div>
-      {/* <div className="course-detail-container-bottom">
-        <div className="flex items-center" style={{ marginBottom: 12 }}>
-          <span
-            style={{ marginRight: 36, color: "orangered", fontWeight: "bold" }}
-          >
-            <FeedbackIcon color="secondary" style={{ marginRight: 12 }} />
-            Đánh giá & Nhận xét
-          </span>
-          <Rating
-            value={formFeedback.rating}
-            onChange={(e, value) =>
-              setFormFeedback({ ...formFeedback, rating: value })
-            }
-          />
+      {courseRelated?.length > 0 && (
+        <div className="course-detail__related">
+          <div className="course-detail__related--title">
+            <AssignmentIcon color="secondary" />
+            <span>Khóa học liên quan</span>
+          </div>
+          <div className="course-detail__related--body">
+            {courseRelated.map((item) => (
+              <CourseCard key={item._id} data={item} />
+            ))}
+          </div>
         </div>
-        <Comments
-          data={course.feedbacksList}
-          formFeedback={formFeedback}
-          handleReply={(replyList) => {
-            // create reply , call API
-            console.log(replyList);
-          }}
-          handleFeedback={(comment) => {
-            // check if stars > 3 => call API send feedback
-            if (formFeedback.rating > 2) {
-              setFormFeedback({ ...formFeedback, comment });
-              console.log({ ...formFeedback, comment });
-              // CALL API add feedback for this recipe id
-            } else {
-              useNotification.Warning({
-                title: "Message",
-                message: "Bạn không thể bình luận vì đánh giá quá thấp",
-              });
-            }
-          }}
-        />
-      </div> */}
-      <div className="course-detail__related">
-        <div className="course-detail__related--title">
-          <AssignmentIcon color="secondary" />
-          <span>Khóa học liên quan</span>
-        </div>
-        <div className="course-detail__related--body">
-          {COURSES_DATA.map((item) => (
-            <CourseCard key={item._id} data={item} />
-          ))}
-        </div>
-      </div>
+      )}
       <ScrollToTop />
       <ModalConfirm
         title="Thông báo"

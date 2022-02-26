@@ -239,7 +239,6 @@ const getListFoodPerPage = async (req, res, next) => {
         totalNumOfFoods = await Food.find().count();
       }
     }
-    const totalRows = await Food.find({}).count();
 
     const totalPage = parseInt(totalNumOfFoods / numOfPerPage) + 1;
     res.status(200).json({
@@ -247,7 +246,7 @@ const getListFoodPerPage = async (req, res, next) => {
       msg: "Get foods successfully!",
       foods,
       totalPage,
-      totalRows,
+      totalRows: totalNumOfFoods,
     });
   } catch (error) {
     console.log(error);
@@ -259,15 +258,16 @@ const getListFoodPerPage = async (req, res, next) => {
 const getListFoodsRelated = async (req, res, next) => {
   try {
     let { searchText } = req.query;
-    numOfPerPage = Number(15);
-    page = 1;
+    const numOfPerPage = Number(15);
+    const page = 1;
     searchText = searchText;
 
     const start = (page - 1) * numOfPerPage;
     let foods;
     foods = await Food.find({
       $text: { $search: searchText },
-      isRemoved: false,
+      isRemoveTemp: false,
+      name: { $nin: searchText },
     })
       .skip(start)
       .limit(numOfPerPage);

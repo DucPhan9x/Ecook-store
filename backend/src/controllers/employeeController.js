@@ -13,7 +13,6 @@ const getListEmployees = async (req, res, next) => {
     let employees;
     employeeType = Number(employeeType);
     let role = employeeType || { $in: [3, 4] };
-    console.log(role);
     let userIds = await User.find({
       roleId: role,
     });
@@ -151,6 +150,9 @@ const getEmployeeById = async (req, res, next) => {
         phoneNumber: employee[0].userDetail[0].phoneNumber,
         fullName: employee[0].userDetail[0].fullName,
         dateOfBirth: employee[0].userDetail[0].dateOfBirth,
+        address: employee[0].userDetail[0].address,
+        expertise: employee[0].userDetail[0].expertise,
+        imageUrl: employee[0].userDetail[0].imageUrl,
       },
     });
   } catch (error) {

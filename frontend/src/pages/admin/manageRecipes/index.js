@@ -52,7 +52,6 @@ const ManageRecipes = () => {
               Tạo mới
             </button>
           </div>
-
           <SearchField
             onSubmit={(value) =>
               setQueries({ ...queries, searchText: value, page: 1 })

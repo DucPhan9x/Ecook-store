@@ -200,6 +200,10 @@ const getRecipeById = (recipeId) => {
   };
 };
 
+const resetToSearchRecipe = () => {
+  return (dispatch) => dispatch({ type: types.RESET_TO_SEARCH_RECIPE });
+};
+
 export {
   createRecipe,
   updateRecipeById,
@@ -207,4 +211,5 @@ export {
   getRecipeById,
   deleteRecipeById,
   getListRecipeByInstructor,
+  resetToSearchRecipe,
 };

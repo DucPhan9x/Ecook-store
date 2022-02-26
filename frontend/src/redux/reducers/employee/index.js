@@ -9,6 +9,7 @@ const initialState = {
   },
   getEmployeeByIdState: {
     loading: false,
+    data: {},
   },
   createEmployeeState: {
     loading: false,
@@ -115,6 +116,7 @@ export default function reducer(state = initialState, actions) {
         ...state,
         getEmployeeByIdState: {
           loading: false,
+          data: actions.payload,
         },
       };
 

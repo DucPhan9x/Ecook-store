@@ -5,7 +5,6 @@ import { jwtMiddleware, validatePermission } from "../middlewares";
 const baseUrl = "/api/v1/employee";
 const {
   createNewEmployee,
-  updateEmployeeById,
   getEmployeeById,
   getListEmployees,
   deleteEmployeeById,
@@ -13,15 +12,14 @@ const {
 } = employeeController;
 
 export const employeeRoute = Router();
-employeeRoute.use(`${baseUrl}`, jwtMiddleware);
 employeeRoute
   .route(`${baseUrl}`)
-  .post(validatePermission.isAdminRole, createNewEmployee);
+  .post(jwtMiddleware, validatePermission.isAdminRole, createNewEmployee);
 employeeRoute.route(`${baseUrl}?`).get(getListEmployees);
 employeeRoute.route(`${baseUrl}/:employeeId`).get(getEmployeeById);
 employeeRoute
   .route(`${baseUrl}`)
-  .delete(validatePermission.isAdminRole, deleteEmployeeById);
+  .delete(jwtMiddleware, validatePermission.isAdminRole, deleteEmployeeById);
 employeeRoute
   .route(`${baseUrl}`)
-  .put(validatePermission.isAdminRole, banEmployeeById);
+  .put(jwtMiddleware, validatePermission.isAdminRole, banEmployeeById);

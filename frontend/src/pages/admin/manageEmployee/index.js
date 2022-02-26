@@ -26,8 +26,12 @@ const ManageEmployee = () => {
     searchText: "",
     employeeType: 0,
   });
-  const { loadingGetListEmployee, employeeList, banUnBanEmployeesState } =
-    useSelector((store) => store.employee);
+  const {
+    loadingGetListEmployee,
+    employeeList,
+    banUnBanEmployeesState,
+    createEmployeeState,
+  } = useSelector((store) => store.employee);
   const handleChange = (event) => {
     if (event.target.value === "both") {
       // setFilterData(employees);
@@ -210,9 +214,9 @@ const ManageEmployee = () => {
           setOpenDialogConfirm(false);
         }}
       />
-      {(loadingGetListEmployee || banUnBanEmployeesState?.loading) && (
-        <SpinLoading />
-      )}
+      {(loadingGetListEmployee ||
+        banUnBanEmployeesState?.loading ||
+        createEmployeeState?.loading) && <SpinLoading />}
     </div>
   );
 };

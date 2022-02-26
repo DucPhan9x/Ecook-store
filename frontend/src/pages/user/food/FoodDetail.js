@@ -1,10 +1,9 @@
 import { Rating } from "@material-ui/lab";
 import Chip from "@material-ui/core/Chip";
-import { BackPreviousPage } from "components/common";
+import { BackPreviousPage, SpinLoading } from "components/common";
 import Comments from "components/common/Comments";
 import useNotification from "hooks/useNotification";
 import React, { useEffect, useState } from "react";
-import { FOODS_DATA } from "utils/dummyData";
 import AssignmentIcon from "@material-ui/icons/Assignment";
 import FeedbackIcon from "@material-ui/icons/Feedback";
 import ScrollToTop from "components/common/ScrollToTop";
@@ -16,12 +15,26 @@ import DescriptionIcon from "@material-ui/icons/Description";
 import { useHistory } from "react-router-dom";
 import { getAccessToken } from "utils/authUtils";
 import ModalConfirm from "components/common/ModalConfirm";
+import { useDispatch, useSelector } from "react-redux";
+import { getFoodById } from "redux/actions/food";
+import { getFoodType } from "utils/convertUtils";
+import foodAPI from "api/foodAPI";
+import NoImage from "assets/images/notImage.png";
+
+import recipeAPI from "api/recipeAPI";
 
 const FoodDetail = () => {
   const [food, setFood] = useState({});
   const history = useHistory();
   const [rate, setRate] = useState(0);
+  const [foodRelated, setFoodRelated] = useState([]);
+  const [recipesRelated, setRecipeRelated] = useState([]);
+  const [l1, setL1] = useState(true);
+  const [l2, setL2] = useState(true);
+
   const [isOpenModalConfirm, setIsOpenModalConfirm] = useState(false);
+  const dispatch = useDispatch();
+  const { getFoodByIdState } = useSelector((store) => store.food);
 
   useEffect(() => {
     document.title = "Chi tiết sản phẩm | ECook";
@@ -33,23 +46,54 @@ const FoodDetail = () => {
     if (!foodID) {
       return;
     }
-    let t = FOODS_DATA.find((item) => item._id === foodID);
-    if (t) {
-      setFood(t);
-      setRate(t.numOfStars);
+    dispatch(getFoodById(foodID));
+  }, [dispatch]);
+
+  useEffect(() => {
+    const t = getFoodByIdState.data || {};
+    setFood(t);
+    setRate(t?.numOfStars || 0);
+  }, [getFoodByIdState]);
+
+  useEffect(() => {
+    if (food.name) {
+      const t = food.name;
+      setL1(true);
+      foodAPI
+        .getListFoodRelated(t)
+        .then((res) => res.json())
+        .then((res) => {
+          if (res) {
+            setFoodRelated(res.foods);
+            setL1(false);
+          }
+        });
+
+      //
+      setL2(true);
+      recipeAPI
+        .getListRecipeRelated(t)
+        .then((res) => res.json())
+        .then((res) => {
+          if (res) {
+            setRecipeRelated(res.recipes);
+            setL2(false);
+          }
+        });
     }
-  }, []);
+  }, [food]);
 
   const [formFeedback, setFormFeedback] = useState({ rating: 0, comment: "" });
 
   return (
     <div className="food-detail-container">
+      {(getFoodByIdState?.loading || l1 || l2) && <SpinLoading />}
       <BackPreviousPage />
       <div className="food-detail-container-top">
         <div className="food-detail-container-top__left">
-          <img src={food?.imageUrl} alt="" />
+          <img src={food?.imageUrl || NoImage} alt="" />
           <div className="flex items-center minor-image">
-            <img src={food?.imageUrl} alt="" />
+            <img src={food?.imageUrl || NoImage} alt="" />
           </div>
         </div>
         <div className="food-detail-container-top__right">
@@ -57,10 +101,10 @@ const FoodDetail = () => {
             <div className="flex flex-col food-detail-container-top__right--title">
               <h3>{food?.name}</h3>
               <div>
-                <span>{food.type} - </span>
                 <span>
-                  {food.description} ({food.quantity} {food.unit})
+                  {getFoodType(food.typeId)} - (1 {food.unit})
                 </span>
+                <div>{food.description}</div>
               </div>
             </div>
 
@@ -145,20 +189,24 @@ const FoodDetail = () => {
               Những công thức thường được tìm kiếm
             </span>
             <div className="block__recipe__related--body">
-              {food.recipesRelated?.map((r) => (
-                <Chip
-                  key={r._id}
-                  onClick={() => {
-                    if (getAccessToken()) {
-                      history.push(`/recipe?id=recipe_123`);
-                    } else {
-                      setIsOpenModalConfirm(true);
-                    }
-                  }}
-                  label={r.title}
-                  variant="outlined"
-                />
-              ))}
+              {recipesRelated?.length > 0 ? (
+                recipesRelated?.map((r) => (
+                  <Chip
+                    key={r._id}
+                    onClick={() => {
+                      if (getAccessToken()) {
+                        history.push(`/recipe?id=${r._id}`);
+                      } else {
+                        setIsOpenModalConfirm(true);
+                      }
+                    }}
+                    label={r.name}
+                    variant="outlined"
+                  />
+                ))
+              ) : (
+                <div style={{ color: "gray" }}>Hiện tại chưa có</div>
+              )}
             </div>
           </div>
         </div>
@@ -207,17 +255,19 @@ const FoodDetail = () => {
         </div>
       )}
 
-      <div className="food-detail__related">
-        <div className="food-detail__related--title">
-          <AssignmentIcon color="secondary" />
-          <span>Sản phẩm liên quan</span>
+      {foodRelated?.length > 0 && (
+        <div className="food-detail__related">
+          <div className="food-detail__related--title">
+            <AssignmentIcon color="secondary" />
+            <span>Sản phẩm liên quan</span>
+          </div>
+          <div className="food-detail__related--body">
+            {foodRelated?.map((item) => (
+              <FoodCard key={item._id} data={item} />
+            ))}
+          </div>
         </div>
-        <div className="food-detail__related--body">
-          {FOODS_DATA.map((item) => (
-            <FoodCard key={item._id} data={item} />
-          ))}
-        </div>
-      </div>
+      )}
       <ScrollToTop />
       <ModalConfirm
         title="Thông báo"

@@ -1,22 +1,29 @@
 import { Rating } from "@material-ui/lab";
-import { BackPreviousPage } from "components/common";
+import { BackPreviousPage, SpinLoading } from "components/common";
 import Comments from "components/common/Comments";
 import useNotification from "hooks/useNotification";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import { RECIPES_DATA } from "utils/dummyData";
 import AssignmentIcon from "@material-ui/icons/Assignment";
 import FeedbackIcon from "@material-ui/icons/Feedback";
 import RecipeCard from "components/common/card/RecipeCard";
 import ScrollToTop from "components/common/ScrollToTop";
+import { useDispatch, useSelector } from "react-redux";
+import { getRecipeById } from "redux/actions/recipe";
+import recipeAPI from "api/recipeAPI";
+import NoImage from "assets/images/notImage.png";
 
 const RecipeDetail = () => {
   const [recipe, setRecipe] = useState({});
   const [rate, setRate] = useState(0);
+  const [l1, setL1] = useState(true);
+  const [recipeRelated, setRecipeRelated] = useState([]);
+  const dispatch = useDispatch();
+  const { getRecipeByIdState } = useSelector((store) => store.recipe);
+
   useEffect(() => {
     document.title = "Chi tiết công thức | ECook";
-
     window.scrollTo(0, 0);
 
     const params = new URLSearchParams(window.location.search);
@@ -24,29 +31,47 @@ const RecipeDetail = () => {
     if (!recipeID) {
       return;
     }
-    let t = RECIPES_DATA.find((item) => item._id === params.get("id"));
-    if (t) {
-      setRecipe(t);
-      setRate(t.feedbacks);
-    }
-  }, []);
+    dispatch(getRecipeById(recipeID));
+  }, [dispatch]);
+
+  useEffect(() => {
+    const t = getRecipeByIdState.data || {};
+    setRecipe(t);
+    setRate(t?.numOfStars || 0);
+  }, [getRecipeByIdState]);
+
+  useEffect(() => {
+    if (!recipe.name) return;
+    //
+    setL1(true);
+    recipeAPI
+      .getListRecipeRelated(recipe.name)
+      .then((res) => res.json())
+      .then((res) => {
+        if (res) {
+          setRecipeRelated(res.recipes);
+          setL1(false);
+        }
+      });
+  }, [recipe]);
 
   const [formFeedback, setFormFeedback] = useState({ rating: 0, comment: "" });
 
   return (
     <div className="recipe-detail-container">
+      {(getRecipeByIdState?.loading || l1) && <SpinLoading />}
       <BackPreviousPage />
       <div className="recipe-detail-container-top">
         <div className="recipe-detail-container-top__left">
-          <img src={recipe?.imageUrl} alt="" />
+          <img src={recipe?.imageUrl || NoImage} alt="" />
           <div className="flex items-center minor-image">
-            <img src={recipe?.imageUrl} alt="" />
+            <img src={recipe?.imageUrl || NoImage} alt="" />
           </div>
         </div>
         <div className="recipe-detail-container-top__right">
           <div className="flex">
             <h3 className="recipe-detail-container-top__right--title">
-              {recipe?.title}
+              {recipe?.name}
             </h3>
             <Rating defaultValue={0} value={rate} max={5} readOnly />
           </div>
@@ -61,7 +86,7 @@ const RecipeDetail = () => {
               Thành phần chính:
             </div>
             <div className="recipe-detail-container-top__right--materials-body">
-              {recipe?.material?.map((m, idx) => (
+              {recipe?.materials?.map((m, idx) => (
                 <div key={m._id}>
                   {idx + 1}. {m.foodName}
                   &nbsp;&nbsp;{m.quantity}
@@ -103,7 +128,7 @@ const RecipeDetail = () => {
           />
         </div>
         <Comments
-          data={recipe.feedbacksList}
+          data={recipe?.feedbacksList}
           formFeedback={formFeedback}
           handleReply={(replyList) => {
             // create reply , call API
@@ -124,17 +149,19 @@ const RecipeDetail = () => {
           }}
         />
       </div>
-      <div className="recipe-detail__related">
-        <div className="recipe-detail__related--title">
-          <AssignmentIcon color="secondary" />
-          <span>Công thức liên quan</span>
+      {recipeRelated?.length > 0 && (
+        <div className="recipe-detail__related">
+          <div className="recipe-detail__related--title">
+            <AssignmentIcon color="secondary" />
+            <span>Công thức liên quan</span>
+          </div>
+          <div className="recipe-detail__related--body">
+            {recipeRelated?.map((item) => (
+              <RecipeCard key={item._id} data={item} />
+            ))}
+          </div>
         </div>
-        <div className="recipe-detail__related--body">
-          {RECIPES_DATA.map((item) => (
-            <RecipeCard key={item._id} data={item} />
-          ))}
-        </div>
-      </div>
+      )}
       <ScrollToTop />
     </div>
   );

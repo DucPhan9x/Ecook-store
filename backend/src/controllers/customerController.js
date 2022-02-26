@@ -44,9 +44,6 @@ const getListCustomers = async (req, res, next) => {
     }
 
     const totalPage = parseInt(totalNumOfCustomers / numOfPerPage) + 1;
-    const totalRows = await UserDetail.find({
-      userId: { $in: userIds },
-    }).count();
 
     let users = customers.map((i) => User.findById(i.userId));
     users = await Promise.all(users);
@@ -61,7 +58,7 @@ const getListCustomers = async (req, res, next) => {
       status: 200,
       msg: "Get list customer successfully!",
       customers,
-      totalRows,
+      totalRows: totalNumOfCustomers,
       totalPage,
     });
   } catch (error) {

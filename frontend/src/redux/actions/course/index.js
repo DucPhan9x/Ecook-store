@@ -395,6 +395,10 @@ const getListTestPerPage = (data) => {
   };
 };
 
+const resetToSearchCourse = () => {
+  return (dispatch) => dispatch({ type: types.RESET_TO_SEARCH_COURSE });
+};
+
 export {
   createCourse,
   updateCourseById,
@@ -408,4 +412,5 @@ export {
   getListTestPerPage,
   getListCourseByInstructor,
   getListCourseByClient,
+  resetToSearchCourse,
 };
