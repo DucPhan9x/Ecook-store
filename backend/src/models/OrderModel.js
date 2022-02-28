@@ -17,7 +17,6 @@ const orderSchema = new Schema({
   },
   deliveryAt: {
     type: Date,
-    default: Date.now,
   },
   address: {
     type: String,

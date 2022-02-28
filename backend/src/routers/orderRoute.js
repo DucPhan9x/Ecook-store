@@ -27,4 +27,6 @@ orderRoute.route(`${baseUrl}/get-all-by-clientID?`).get(getOrdersByClientId);
 orderRoute
   .route(`${baseUrl}`)
   .put(validatePermission.isAdministratorRole, updateStatusOrder);
-orderRoute.route(`${baseUrl}/check-exist-courses`).get(checkExistMyCourse);
+orderRoute
+  .route(`${baseUrl}/check-exist-courses/:courseId`)
+  .get(checkExistMyCourse);

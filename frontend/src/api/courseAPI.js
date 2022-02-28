@@ -119,9 +119,22 @@ const getListCourseByClient = (data) => {
     method: "GET",
   };
   return fetch(
-    `${url}course/by/client?searchText=${data.searchText}?isFinish=${data.isFinish}`,
+    `${url}course/by/client?searchText=${data.searchText}&isFinish=${data.isFinish}`,
     requestOptions
   );
+};
+
+const checkExistMyCourse = (courseId) => {
+  const token = getAccessToken();
+  let myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${token}`);
+  myHeaders.append("Content-Type", `application/json`);
+
+  let requestOptions = {
+    headers: myHeaders,
+    method: "GET",
+  };
+  return fetch(`${url}order/check-exist-courses/${courseId}`, requestOptions);
 };
 
 const courseAPI = {
@@ -133,5 +146,6 @@ const courseAPI = {
   getListCourseRelated,
   getListCourseByInstructor,
   getListCourseByClient,
+  checkExistMyCourse,
 };
 export default courseAPI;

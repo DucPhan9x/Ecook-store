@@ -7,12 +7,19 @@ import {
   getPriceItem,
   getPriceItemNumber,
 } from "utils/priceUtils";
-import { VOUCHERS_DATA } from "utils/dummyData";
 import KeyboardArrowRightIcon from "@material-ui/icons/KeyboardArrowRight";
 import PaypalCheckoutButton from "components/common/PaypalCheckoutButton";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import ModalVoucher from "./ModalVoucher";
+import { useSelector } from "react-redux";
+import { SpinLoading } from "components/common";
 
-const ModalConfirmCourseCart = ({ isModalVisible, close, products }) => {
+const ModalConfirmCourseCart = ({
+  isModalVisible,
+  close,
+  products = [],
+  closeCartModal,
+}) => {
   const [data, setData] = useState({
     items: [],
     shipmentFee: 0,
@@ -25,7 +32,7 @@ const ModalConfirmCourseCart = ({ isModalVisible, close, products }) => {
     setData({
       total: products
         .map((item) => ({
-          ...item.course,
+          ...item.item,
           quantity: item.quantity || 1,
         }))
         .reduce(
@@ -39,15 +46,18 @@ const ModalConfirmCourseCart = ({ isModalVisible, close, products }) => {
             ),
           0
         ),
-      items: products.map((item) => ({
-        ...item.course,
+      items: products?.map((item) => ({
+        ...item.item,
         quantity: item.quantity,
+        _id: item._id,
+        itemId: item.itemId,
       })),
     });
   }, [products]);
 
   const [openPaypalButtonCheckout, setOpenPaypalButtonCheckout] =
     useState(false);
+  const orderStore = useSelector((store) => store.order);
 
   return (
     <Modal
@@ -59,6 +69,7 @@ const ModalConfirmCourseCart = ({ isModalVisible, close, products }) => {
     >
       {openPaypalButtonCheckout ? (
         <>
+          {orderStore?.paymentCourse.loading && <SpinLoading />}
           <div
             className="flex"
             style={{ marginBottom: 24, cursor: "pointer" }}
@@ -68,11 +79,15 @@ const ModalConfirmCourseCart = ({ isModalVisible, close, products }) => {
             <span style={{ color: "orangered" }}>Quay trở lại</span>
           </div>
           <PaypalCheckoutButton
+            closeCartModal={closeCartModal}
+            type="course"
             requestData={{
-              voucherId: data.voucherId || "",
-              voucherData: data.voucherData,
-              items: data.items.map((i) => ({
-                itemId: i._id,
+              voucherId: data?.voucherId || "",
+              voucherData: data?.voucherData,
+              shipmentFee: 0,
+              items: data?.items.map((i) => ({
+                itemId: i.itemId,
+                _id: i._id,
                 quantity: 1,
                 unitPrice: getPriceItemNumber(
                   i.discountOff,
@@ -88,29 +103,44 @@ const ModalConfirmCourseCart = ({ isModalVisible, close, products }) => {
           <div className="modal-confirm-food-cart-container">
             <div className="modal-confirm-food-cart-container__inner">
               <div className="block__items-detail">
-                <div className="block__items-detail-content">
-                  <div className="block__items-detail-content__inner">
-                    {data.items?.map((item) => (
-                      <div
-                        key={item._id}
-                        className="block__items-detail-content__inner--item"
-                      >
-                        <div className="block-details-item">
-                          <div className="flex flex-col">
-                            <span>{item.name}</span>
-                          </div>
-                          <div>
-                            {getPriceItem(
-                              item.discountOff,
-                              item.unitPrice,
-                              item.discountMaximum,
-                              item.quantity || 1
-                            )}
-                          </div>
+                <div className="block__items-detail-content__inner">
+                  {data?.items?.map((item) => (
+                    <div
+                      key={item._id}
+                      className="block__items-detail-content__inner--item"
+                    >
+                      <div className="block-details-item">
+                        <div className="flex items-center">
+                          <iframe
+                            style={{
+                              maxHeight: 200,
+                              maxWidth: 200,
+                              marginRight: 10,
+                              marginLeft: "-20px",
+                            }}
+                            id={item._id}
+                            src={
+                              item.videoList?.length > 0 &&
+                              item.videoList[0]?.videoUrl
+                            }
+                            frameBorder="0"
+                            allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                            title="Embedded youtube"
+                          />
+                          <span>{item.courseName}</span>
+                        </div>
+                        <div>
+                          {getPriceItem(
+                            item.discountOff,
+                            item.unitPrice,
+                            item.discountMaximum,
+                            item.quantity || 1
+                          )}
                         </div>
                       </div>
-                    ))}
-                  </div>
+                    </div>
+                  ))}
                 </div>
               </div>
               <div className="block-data-normal flex items-center">
@@ -118,7 +148,7 @@ const ModalConfirmCourseCart = ({ isModalVisible, close, products }) => {
                 <span>{data?.items.length} s/p</span>
               </div>
               <div className="block-data-normal flex items-center">
-                <label style={{ marginRight: 12 }}>Tổng tiền khóa học:</label>
+                <label style={{ marginRight: 12 }}>Tổng tiền:</label>
                 <span>{formatCurrency(data?.total)}</span>
               </div>
               <div
@@ -137,55 +167,23 @@ const ModalConfirmCourseCart = ({ isModalVisible, close, products }) => {
               </div>
             </div>
           </div>
-          <PaypalCheckoutButton
-            type="course"
-            requestData={{
-              voucherId: data.voucherId || "",
-              voucherData: data.voucherData,
-              items: data.items.map((i) => ({
-                itemId: i._id,
-                quantity: i.quantity,
-                unitPrice: getPriceItemNumber(
-                  i.discountOff,
-                  i.unitPrice,
-                  i.discountMaximum
-                ),
-              })),
-            }}
-          />
+          <div
+            className="btn-order-food"
+            onClick={() => setOpenPaypalButtonCheckout(true)}
+          >
+            Đặt hàng
+          </div>
         </>
       )}
 
-      <Modal
-        className="modal-container modal-confirm-food-cart"
-        title="Danh sách voucher hiện có"
-        visible={isOpenVoucher}
-        onCancel={() => setIsOpenVoucher(false)}
-        footer={false}
-      >
-        <div>
-          {VOUCHERS_DATA.map((item) => (
-            <div key={item._id} style={{ marginBottom: 10 }}>
-              <span
-                style={{ fontSize: 18, color: "gray", cursor: "pointer" }}
-                onClick={() => {
-                  navigator.clipboard.writeText(item.name);
-                  setData({
-                    ...data,
-                    voucher: item.name,
-                    voucherId: item._id,
-                    voucherData: item,
-                  });
-                  setIsOpenVoucher(false);
-                }}
-              >
-                {item.name}:{" "}
-              </span>
-              <span>{item.content}</span>
-            </div>
-          ))}
-        </div>
-      </Modal>
+      {isOpenVoucher && (
+        <ModalVoucher
+          isOpenModal={isOpenVoucher}
+          close={() => setIsOpenVoucher(false)}
+          data={data}
+          setData={setData}
+        />
+      )}
     </Modal>
   );
 };

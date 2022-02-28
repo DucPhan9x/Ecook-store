@@ -1,11 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Modal } from "antd";
 import { useState } from "react";
 import FoodsCart from "./FoodsCart";
 import CoursesCart from "./CoursesCart";
+import { useDispatch, useSelector } from "react-redux";
+import { getListCartItem } from "redux/actions/cart";
+import { SpinLoading } from "components/common";
 
 const ModalCart = ({ isModalVisible, close }) => {
   const [cartType, setCartType] = useState("food");
+  const dispatch = useDispatch();
+  const {
+    getListCartItemState,
+    updateCartItemState,
+    deleteCartItemState,
+    deleteAllCartItemState,
+  } = useSelector((store) => store.cart);
+
+  useEffect(() => {
+    dispatch(getListCartItem(cartType === "food" ? 1 : 2));
+  }, [dispatch, cartType]);
+
   return (
     <Modal
       className="modal-container modal-cart"
@@ -15,6 +30,10 @@ const ModalCart = ({ isModalVisible, close }) => {
       footer={false}
     >
       <div className="modal-body-cart-container">
+        {(getListCartItemState?.loading ||
+          updateCartItemState?.loading ||
+          deleteCartItemState?.loading ||
+          deleteAllCartItemState?.loading) && <SpinLoading />}
         <div className="modal-body-cart-container__inner">
           <div className="modal-body-cart-container__inner-top">
             <span

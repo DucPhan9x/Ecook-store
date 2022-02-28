@@ -1,5 +1,4 @@
 import { Checkbox, TableBody, TableCell, TableRow } from "@material-ui/core";
-import moment from "moment";
 import React from "react";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
 import LockIcon from "@material-ui/icons/Lock";
@@ -65,9 +64,9 @@ const BodyContainer = (props) => {
                 {row._id}
               </TableCell>
               <TableCell align="left">{row.fullName}</TableCell>
-              <TableCell align="left">
+              {/* <TableCell align="left">
                 {moment(row.dateOfBirth).format("DD/MM/YYYY")}
-              </TableCell>
+              </TableCell> */}
               <TableCell align="left">{row.phoneNumber}</TableCell>
               <TableCell align="left">{row.email}</TableCell>
               <TableCell align="left">{row.address}</TableCell>

@@ -4,45 +4,65 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { getPriceItem, getPriceItemNumber } from "utils/priceUtils";
 import ModalConfirm from "components/common/ModalConfirm";
-import { COURSES_CART } from "utils/dummyData";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import IconButton from "@material-ui/core/IconButton";
 import { Tooltip } from "antd";
 import FoodCartEmpty from "assets/images/empty-cart.svg";
 import ModalConfirmCourseCart from "./ModalConfirmCourseCart";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteAllCartItem, deleteCartItem } from "redux/actions/cart";
 
 const CoursesCart = ({ close }) => {
   const [data, setData] = useState([]);
   const [isOpenModalConfirmRemoveAll, setIsOpenModalConfirmRemoveAll] =
     useState(false);
-
   const [isOpenModalConfirmOrder, setIsOpenModalConfirmOrder] = useState(false);
+  const dispatch = useDispatch();
 
+  const { getListCartItemState } = useSelector((store) => store.cart);
   useEffect(() => {
-    setData(COURSES_CART.map((item) => ({ ...item, isCheckbox: false })));
-    // eslint-disable-next-line
-  }, []);
+    setData(getListCartItemState?.cartItems);
+  }, [getListCartItemState]);
+
   const [isCheckAll, setIsCheckAll] = useState(false);
   return (
     <>
       <div className="modal-body-cart-container__inner-body-top">
         <div className="block__check-all">
           <Checkbox
-            disabled={!data.length}
+            disabled={!data?.length}
             checked={isCheckAll}
             onChange={(e) => {
               let isChecked = e.target.checked;
               setIsCheckAll(isChecked);
-              setData(data.map((item) => ({ ...item, isCheckbox: isChecked })));
+              setData(
+                data?.map((item) => ({ ...item, isCheckbox: isChecked }))
+              );
             }}
           />
           <span className="selected--text">
-            {data?.filter((item) => item.isCheckbox)?.length} được chọn
+            {data?.filter((item) => item.isCheckbox)?.length || 0} được chọn
           </span>{" "}
+          {data?.filter((item) => item.isCheckbox)?.length > 0 && (
+            <Tooltip title="Xóa khỏi giỏ hàng" placement="top">
+              <IconButton
+                style={{ marginLeft: "auto" }}
+                onClick={() =>
+                  dispatch(
+                    deleteCartItem(
+                      data?.filter((item) => item.isCheckbox)?.map((i) => i._id)
+                    )
+                  )
+                }
+              >
+                <DeleteOutlineIcon />
+              </IconButton>
+            </Tooltip>
+          )}
         </div>
         <button
-          disabled={!data.length}
-          className={`btn btn-client ${!data.length ? "btn-disabled" : ""}`}
+          disabled={!data?.length}
+          className={`btn btn-client ${!data?.length ? "btn-disabled" : ""}`}
           onClick={() => {
             setIsOpenModalConfirmRemoveAll(true);
           }}
@@ -54,7 +74,7 @@ const CoursesCart = ({ close }) => {
         <div className="modal-body-cart-container__inner-body-bottom">
           <div className="food-cart-container">
             {data?.length > 0 ? (
-              data.map((c) => (
+              data?.map((c) => (
                 <div className="food-cart-container__inner" key={c._id}>
                   <Checkbox
                     checked={c.isCheckbox}
@@ -68,8 +88,11 @@ const CoursesCart = ({ close }) => {
                     }}
                   />
                   <div className="food-cart-container__inner--information">
-                    <video
-                      src={c?.course?.videoUrls[0].videoUrl}
+                    <iframe
+                      src={
+                        c?.item?.videoList?.length > 0 &&
+                        c?.item?.videoList[0].videoUrl
+                      }
                       frameBorder="0"
                       allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                       allowFullScreen
@@ -77,27 +100,26 @@ const CoursesCart = ({ close }) => {
                     />
                     <div className="food-cart-container__inner--information-top">
                       <span className="food-cart-container__inner--information-top--title">
-                        {c.course?.name} ({c?.course?.videoUrls?.length} bài)
+                        {c.item?.courseName} ({c?.item?.videoList?.length} bài)
                       </span>
                       <span className="food-cart-container__inner--information-top--description">
-                        {c.course?.description}
+                        {c.item?.description}
                       </span>
                       <span
                         className="food-cart-container__inner--information-top--price"
                         style={{ marginTop: "-12px", marginBottom: 12 }}
                       >
                         {getPriceItem(
-                          c.course?.discountOff,
-                          c.course?.unitPrice,
-                          c.course?.discountMaximum
+                          c.item?.discountOff,
+                          c.item?.unitPrice,
+                          c.item?.discountMaximum
                         )}
                       </span>
                     </div>
                     <Tooltip title="Xóa khỏi giỏ hàng" placement="top">
                       <IconButton
-                        onClick={() =>
-                          setData(data.filter((item) => item._id !== c._id))
-                        }
+                        style={{ marginLeft: "auto" }}
+                        onClick={() => dispatch(deleteCartItem([c._id]))}
                       >
                         <DeleteOutlineIcon />
                       </IconButton>
@@ -124,7 +146,7 @@ const CoursesCart = ({ close }) => {
               title="Xác nhận"
               message="Bạn có chắc muốn xóa tất cả?"
               handleOk={() => {
-                setData([]);
+                dispatch(deleteAllCartItem(2));
                 setIsOpenModalConfirmRemoveAll(false);
               }}
             />
@@ -133,35 +155,37 @@ const CoursesCart = ({ close }) => {
       </div>
       <div
         className={`modal-body-cart-container__inner-bottom ${
-          data.filter((item) => item.isCheckbox)?.length ? "" : "btn-disabled"
+          data?.filter((item) => item.isCheckbox)?.length ? "" : "btn-disabled"
         }`}
         onClick={() => {
           setIsOpenModalConfirmOrder(true);
         }}
       >
-        {data
-          .filter((item) => item.isCheckbox)
-          .reduce(
-            (f, s) =>
-              f +
-              getPriceItemNumber(
-                s.course?.discountOff,
-                s.course?.unitPrice,
-                s.course?.discountMaximum,
-                s.quantity
-              ),
-            0
-          )
-          ?.toLocaleString("vi-VI", {
-            style: "currency",
-            currency: "VND",
-          })}{" "}
+        {(
+          data
+            ?.filter((item) => item.isCheckbox)
+            .reduce(
+              (f, s) =>
+                f +
+                getPriceItemNumber(
+                  s.item?.discountOff,
+                  s.item?.unitPrice,
+                  s.item?.discountMaximum,
+                  s.quantity
+                ),
+              0
+            ) || 0
+        )?.toLocaleString("vi-VI", {
+          style: "currency",
+          currency: "VND",
+        })}{" "}
         - Thanh toán
       </div>
       <ModalConfirmCourseCart
         isModalVisible={isOpenModalConfirmOrder}
         close={() => setIsOpenModalConfirmOrder(false)}
-        products={data.filter((item) => item.isCheckbox)}
+        products={data?.filter((item) => item.isCheckbox)}
+        closeCartModal={close}
       />
     </>
   );

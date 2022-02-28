@@ -1,4 +1,4 @@
-import { CartItem } from "../models";
+import { CartItem, Course, Food } from "../models";
 
 const getListCartItem = async (req, res, next) => {
   try {
@@ -20,7 +20,7 @@ const getListCartItem = async (req, res, next) => {
     itemDetails = await Promise.all(itemDetails);
     let data = cartItems.map((i, index) => {
       return {
-        ...i,
+        ...i._doc,
         item: itemDetails[index],
       };
     });
@@ -72,7 +72,7 @@ const createNewCartItem = async (req, res, next) => {
         await addOneCartItem(userId, key, cartItems[x]);
       }
     }
-    res.status(200).json({
+    res.status(201).json({
       status: 201,
       msg: "Add cart item(s) successfully!",
     });

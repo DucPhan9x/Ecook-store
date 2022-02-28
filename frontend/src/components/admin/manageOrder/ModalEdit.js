@@ -1,16 +1,20 @@
 import React, { useEffect } from "react";
 import { Modal } from "antd";
 import { Form as ReForm } from "reactstrap";
-import { PopoverStickOnHover } from "components/common";
+import { PopoverStickOnHover, SpinLoading } from "components/common";
 import PhoneAndroidIcon from "@material-ui/icons/PhoneAndroid";
 import MailOutlineIcon from "@material-ui/icons/MailOutline";
 import moment from "moment";
 import StepComponent from "components/common/StepComponent";
 import Map from "components/common/Map";
+import { formatCurrency } from "utils/priceUtils";
+import { useSelector } from "react-redux";
 // import InfoIcon from "@material-ui/icons/Info";
 // import { IconButton } from "@material-ui/core";
 
 const ModalEdit = ({ isModalVisible, handleSubmit, close, selectedItem }) => {
+  const { updateStatusOrder } = useSelector((store) => store.order);
+
   const [form, setForm] = React.useState({
     _id: "",
     customer: {},
@@ -53,6 +57,7 @@ const ModalEdit = ({ isModalVisible, handleSubmit, close, selectedItem }) => {
       }}
     >
       <div className="flex">
+        {updateStatusOrder?.loading && <SpinLoading />}
         <div className="gg-map-order-manage">
           <Map
             googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_API_MAP_KEY}&callback=initMap`}
@@ -73,7 +78,7 @@ const ModalEdit = ({ isModalVisible, handleSubmit, close, selectedItem }) => {
           />
         </div>
         <div className="modal-detail-order-right">
-          <StepComponent />
+          <StepComponent step={form.statusId} formData={form} />
           <ReForm className="flex flex-col" style={{ padding: "0 12px" }}>
             <div className="block_field-modal-edit-order">
               <label>Mã hàng</label>
@@ -82,32 +87,8 @@ const ModalEdit = ({ isModalVisible, handleSubmit, close, selectedItem }) => {
             <div className="block_field-modal-edit-order">
               <label>Khách hàng</label>
               <span style={{ marginRight: 4 }}>
-                {form.customer?.name} - {form.customer.phoneNumber}
+                {form.customer?.fullName} - {form.customer.phoneNumber}
               </span>
-              {/* <PopoverStickOnHover
-                component={
-                  <div className="popover-show-info-student-container">
-                    <div className="popover-show-info-student-container--item">
-                      <PhoneAndroidIcon />
-                      <span>{form?.customer.phoneNumber}</span>
-                    </div>
-                    <div className="popover-show-info-student-container--item">
-                      <MailOutlineIcon />
-                      <span>{form?.customer.email}</span>
-                    </div>
-                  </div>
-                }
-                placement="top"
-                onMouseEnter={() => {}}
-                delay={200}
-              >
-                <IconButton>
-                  <InfoIcon
-                    style={{ cursor: "pointer", width: 18, height: 18 }}
-                    color="action"
-                  />
-                </IconButton>
-              </PopoverStickOnHover> */}
             </div>
             <div className="block_field-modal-edit-order">
               <label>Nhân viên</label>
@@ -132,7 +113,7 @@ const ModalEdit = ({ isModalVisible, handleSubmit, close, selectedItem }) => {
                   onMouseEnter={() => {}}
                   delay={200}
                 >
-                  <span>{form?.employee.name}</span>
+                  <span>{form?.employee.fullName}</span>
                 </PopoverStickOnHover>
               ) : (
                 <span>Chưa có</span>
@@ -150,12 +131,12 @@ const ModalEdit = ({ isModalVisible, handleSubmit, close, selectedItem }) => {
                 {form.items.map((item, index) => (
                   <div className="flex items-center">
                     <span>
-                      {index + 1}. &nbsp; {item.foodName} ({item.quantity}
+                      {index + 1}. &nbsp; {item.name} (1
                       {item.unit})
                     </span>
                     <span>
                       &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                      {item.quantity * item.unitPrice} VND
+                      {formatCurrency(item.quantity * item.unitPrice)}
                     </span>
                   </div>
                 ))}
@@ -167,11 +148,11 @@ const ModalEdit = ({ isModalVisible, handleSubmit, close, selectedItem }) => {
             </div>
             <div className="block_field-modal-edit-order">
               <label>Ngày lập đơn</label>
-              <span>{moment(form?.createdAt).format("DD/MM/YYYY")}</span>
+              <span>{moment(form?.createAt).format("DD/MM/YYYY")}</span>
             </div>
             <div className="block_field-modal-edit-order">
               <label>Phí ship</label>
-              <span>{form?.shipmentFee} VND</span>
+              <span>{formatCurrency(form?.shipmentFee)} VND</span>
             </div>
             {form?.voucher && (
               <div className="block_field-modal-edit-order">
@@ -188,7 +169,19 @@ const ModalEdit = ({ isModalVisible, handleSubmit, close, selectedItem }) => {
                     width: "fit-content",
                   }}
                 >
-                  {form?.discountOff} VND
+                  {formatCurrency(
+                    Number(
+                      (form.total + form.shipmentFee) *
+                        (form?.voucher?.discountOff / 100)
+                    ) > Number(form?.voucher?.discountMaximum)
+                      ? Number(form?.voucher?.discountMaximum)
+                      : Number(
+                          form.total +
+                            form.shipmentFee -
+                            (form.total + form.shipmentFee) *
+                              (form?.voucher?.discountOff / 100)
+                        )
+                  )}
                 </span>
               </div>
             )}
@@ -205,7 +198,7 @@ const ModalEdit = ({ isModalVisible, handleSubmit, close, selectedItem }) => {
                   fontWeight: "bold",
                 }}
               >
-                {form.total} VND
+                {formatCurrency(form.total)}
               </span>
             </div>
           </ReForm>

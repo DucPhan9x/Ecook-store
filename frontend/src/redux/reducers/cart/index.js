@@ -17,6 +17,11 @@ const initialState = {
   deleteCartItemState: {
     loading: false,
   },
+  buyNowState: {
+    loading: false,
+  },
+  statusModalCart: false,
+  itemIdBuyNow: "",
 };
 
 export default function reducer(state = initialState, actions) {
@@ -43,6 +48,37 @@ export default function reducer(state = initialState, actions) {
           loading: false,
         },
       };
+    case types.RESET_ITEM_BUY_NOW:
+      return {
+        ...state,
+        itemIdBuyNow: "",
+      };
+
+    //
+    case types.BUY_NOW:
+      const itemId = actions.payload;
+      let temp = [...state.getListCartItemState.cartItems];
+      const index = temp.findIndex((item) => item.itemId === itemId);
+      if (temp[index]) {
+        temp[index].isCheckbox = true;
+      }
+
+      return {
+        ...state,
+        statusModalCart: true,
+        getListCartItemState: {
+          cartItems: [...temp],
+        },
+        itemIdBuyNow: itemId,
+      };
+    case types.TOGGLE_MODAL_CART:
+      return {
+        ...state,
+        statusModalCart: actions.payload,
+        itemIdBuyNow: "",
+      };
+    //
+
     // UPDATE cart
     case types.UPDATE_CART:
       return {
@@ -88,7 +124,7 @@ export default function reducer(state = initialState, actions) {
     case types.DELETE_CART_SUCCEED: {
       const itemIds = actions.payload;
       let temp = [...state.getListCartItemState.cartItems];
-      temp = temp.filter((item) => !itemIds(item._id));
+      temp = temp.filter((item) => !itemIds.includes(item._id));
 
       return {
         ...state,
@@ -143,11 +179,16 @@ export default function reducer(state = initialState, actions) {
         },
       };
     case types.GET_LIST_CART_SUCCEED:
+      const itemIdBuyNow = state.itemIdBuyNow;
+
       return {
         ...state,
         getListCartItemState: {
           loading: false,
-          cartItems: actions.payload,
+          cartItems: actions.payload?.map((item) => ({
+            ...item,
+            isCheckbox: itemIdBuyNow === item.itemId,
+          })),
         },
       };
 

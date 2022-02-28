@@ -23,7 +23,7 @@ const updateWishlist = (data) => {
   let requestOptions = {
     headers: myHeaders,
     method: "PUT",
-    body: JSON.stringify(data), // {itemId, itemType}
+    body: JSON.stringify(data),
   };
   return fetch(`${url}wishlist`, requestOptions);
 };

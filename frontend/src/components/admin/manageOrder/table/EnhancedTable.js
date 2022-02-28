@@ -8,6 +8,8 @@ import HeaderContainer from "./HeaderContainer";
 import ToolbarContainer from "./ToolbarContainer";
 import BodyContainer from "./BodyContainer";
 import ModalEdit from "../ModalEdit";
+import { useSelector } from "react-redux";
+import { SpinLoading } from "components/common";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,25 +35,26 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function EnhancedTable({ data, setData }) {
+export default function EnhancedTable({ queries, setQueries }) {
   const classes = useStyles();
-  const [order, setOrder] = React.useState("asc");
-  const [orderBy, setOrderBy] = React.useState("createAt");
   const [selected, setSelected] = React.useState([]);
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const { getOrdersByAdmin } = useSelector((store) => store.order);
 
   const [rows, setRows] = useState([]);
   useEffect(() => {
-    setRows(data);
-  }, [data]);
+    setRows(getOrdersByAdmin.orderList);
+    console.log(getOrdersByAdmin.orderList);
+  }, [getOrdersByAdmin]);
 
   const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === "asc";
-    setOrder(isAsc ? "desc" : "asc");
-    setOrderBy(property);
+    const isAsc = queries.orderBy === property && queries.orderType === "asc";
+    setQueries({
+      ...queries,
+      orderBy: property,
+      orderType: isAsc ? "desc" : "asc",
+      page: 1,
+    });
   };
-
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
       const newSelecteds = rows.map((n) => n._id);
@@ -62,12 +65,11 @@ export default function EnhancedTable({ data, setData }) {
   };
 
   const handleChangePage = (event, newPage) => {
-    setPage(newPage);
+    setQueries({ ...queries, page: newPage + 1 });
   };
 
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
+    setQueries({ ...queries, numOfPerPage: event.target.value, page: 1 });
   };
 
   const [isOpenModal, setIsOpenModal] = useState(false);
@@ -75,6 +77,7 @@ export default function EnhancedTable({ data, setData }) {
 
   return (
     <div className={classes.root}>
+      {getOrdersByAdmin.loading && <SpinLoading />}
       <Paper className={classes.paper}>
         <ToolbarContainer
           selected={selected}
@@ -92,20 +95,20 @@ export default function EnhancedTable({ data, setData }) {
             <HeaderContainer
               classes={classes}
               numSelected={selected.length}
-              order={order}
-              orderBy={orderBy}
+              order={queries?.orderType}
+              orderBy={queries?.orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={rows.length}
+              rowCount={getOrdersByAdmin.totalRows}
             />
             <BodyContainer
               rows={rows}
-              order={order}
-              orderBy={orderBy}
+              order={queries?.orderType}
+              orderBy={queries?.orderBy}
               selected={selected}
               setSelected={setSelected}
-              page={page}
-              rowsPerPage={rowsPerPage}
+              page={queries.page - 1}
+              rowsPerPage={queries.numOfPerPage}
               setSelectedItem={setSelectedItem}
               setIsOpenModal={setIsOpenModal}
             />
@@ -114,9 +117,9 @@ export default function EnhancedTable({ data, setData }) {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={rows.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
+          count={getOrdersByAdmin.totalRows}
+          page={queries.page - 1}
+          rowsPerPage={queries.numOfPerPage}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />

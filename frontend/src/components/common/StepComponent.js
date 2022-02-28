@@ -3,6 +3,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepButton from "@material-ui/core/StepButton";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { updateStatusOrder } from "redux/actions/order";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,14 +35,25 @@ function getSteps() {
   ];
 }
 
-export default function StepComponent() {
+export default function StepComponent({ step, formData }) {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   const steps = getSteps();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    setActiveStep(step - 1);
+  }, [step]);
 
   const handleStep = (step) => () => {
     setActiveStep(step);
-    console.log(step);
+    dispatch(
+      updateStatusOrder({
+        orderId: formData?._id,
+        statusId: step + 1,
+        customerId: formData?.customerId,
+      })
+    );
   };
 
   return (
@@ -49,7 +63,9 @@ export default function StepComponent() {
           const stepProps = {};
           return (
             <Step key={label} {...stepProps}>
-              <StepButton onClick={handleStep(index)}>{label}</StepButton>
+              <StepButton disabled={step === 4} onClick={handleStep(index)}>
+                {label}
+              </StepButton>
             </Step>
           );
         })}

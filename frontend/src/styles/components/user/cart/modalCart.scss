@@ -83,7 +83,8 @@
     &--information {
       display: flex;
       align-items: center;
-      max-width: 520px;
+      // max-width: 520px;
+      width: 100%;
       margin-right: 20px;
       & > img {
         width: 100px;
@@ -92,7 +93,8 @@
         margin-left: 10px;
         margin-right: 26px;
       }
-      & > video {
+      & > video,
+      iframe {
         width: 180px;
         border-radius: 12px;
         margin-left: 10px;

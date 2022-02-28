@@ -25,6 +25,10 @@ const HomePageClient = () => {
   const history = useHistory();
   const { screenView } = useSelector((store) => store.control);
   const [loading1, setLoading1] = useState(true);
+  const { updateWishlistState } = useSelector((store) => store.wishlist);
+  const { createCartItemsState } = useSelector((store) => store.cart);
+  const { checkExistCourseState } = useSelector((store) => store.order);
+
   const dispatch = useDispatch();
   const [data, setData] = useState({
     recipes: [],
@@ -72,7 +76,10 @@ const HomePageClient = () => {
   }, [screenView]);
   return (
     <div className="homepage-user">
-      {loading1 && <SpinLoading />}
+      {(loading1 ||
+        updateWishlistState?.loading ||
+        createCartItemsState?.loading ||
+        checkExistCourseState?.loading) && <SpinLoading />}
       <div className="homepage-user--section-1" />
       <div className="homepage-user--section-2">
         <div className="block-action-switch">
@@ -81,6 +88,12 @@ const HomePageClient = () => {
             <Tooltip title="Công thức và sản phẩm">
               <FastfoodIcon
                 className="icon--food"
+                style={{
+                  borderBottom:
+                    screenView === "food_recipe" ? "4px solid orange" : "",
+                  paddingBottom: 2,
+                  fontSize: 32,
+                }}
                 onClick={() => {
                   dispatch(setScreenView("food_recipe"));
                 }}
@@ -88,6 +101,12 @@ const HomePageClient = () => {
             </Tooltip>
             <Tooltip title="Khóa học nấu ăn">
               <AssignmentIcon
+                style={{
+                  borderBottom:
+                    screenView !== "food_recipe" ? "4px solid orange" : "",
+                  paddingBottom: 2,
+                  fontSize: 32,
+                }}
                 className="icon--course"
                 onClick={() => dispatch(setScreenView("course_instructor"))}
               />

@@ -8,19 +8,35 @@ import {
   getPriceItemNumber,
 } from "utils/priceUtils";
 import LocalAtmIcon from "@material-ui/icons/LocalAtm";
-import { VOUCHERS_DATA } from "utils/dummyData";
 import KeyboardArrowRightIcon from "@material-ui/icons/KeyboardArrowRight";
 import PaypalCheckoutButton from "components/common/PaypalCheckoutButton";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import { Info } from "@material-ui/icons";
 import { Tooltip } from "antd";
+import useNotification from "hooks/useNotification";
+import {
+  ADDRESS_ECOOK_SYSTEM,
+  distanceBetween2Points,
+  getShipmentFee,
+} from "utils/payment";
+import Geocode from "react-geocode";
+import { useSelector } from "react-redux";
+import { isEmpty } from "lodash";
+import { FormBox, SpinLoading } from "components/common";
+import ModalVoucher from "./ModalVoucher";
+import { useDispatch } from "react-redux";
+import { paymentRedirectMoney } from "redux/actions/order";
 
-const ModalConfirmFoodCart = ({ isModalVisible, close, products }) => {
+const ModalConfirmFoodCart = ({
+  isModalVisible,
+  close,
+  products,
+  closeCartModal,
+}) => {
   const [data, setData] = useState({
     customerName: "",
     addressCustomer: "",
     phoneNumber: "",
-    email: "",
     total: 0,
     items: [],
     shipmentFee: 0,
@@ -29,18 +45,22 @@ const ModalConfirmFoodCart = ({ isModalVisible, close, products }) => {
   });
 
   const [isOpenVoucher, setIsOpenVoucher] = useState(false);
+  const [paymentFee, setPaymentFee] = useState(0);
+  const [distancePayment, setDistance] = useState(0);
+  const { information } = useSelector((store) => store.common)?.userDetail;
+
+  const [isOrder, setIsOrder] = useState(true);
+
   useEffect(() => {
     setData({
-      customerName: "Phan Trong Duc",
-      email: "trongduc@gmail.com",
-      phoneNumber: "0987675646",
-      addressCustomer: "62/07 Đồng Kè - Hòa Khánh Bắc - Liên Chiểu - Đà Nẵng",
+      customerName: information?.fullName,
+      email: information?.email,
+      phoneNumber: information?.phoneNumber,
+      addressCustomer: information?.address,
       paymentMethod: "Momo",
-      shipmentFee: 15000,
-      merchandiseSubtotal: 20000, // tien san pham chua tinh ship
       total: products
-        .map((item) => ({
-          ...item.food,
+        ?.map((item) => ({
+          ...item.item,
           quantity: item.quantity,
         }))
         .reduce(
@@ -54,15 +74,125 @@ const ModalConfirmFoodCart = ({ isModalVisible, close, products }) => {
             ),
           0
         ), // tong tien bao gom ship fee
-      items: products.map((item) => ({
-        ...item.food,
+      items: products?.map((item) => ({
+        ...item.item,
         quantity: item.quantity,
+        _id: item._id,
+        itemId: item.itemId,
       })),
     });
-  }, [products]);
+
+    //handle calculate shipment fee
+    if (information.address) {
+      handleUpdateShipmentFee(information.address);
+    }
+    // eslint-disable-next-line
+  }, [products, information]);
+
+  const handleUpdateShipmentFee = (addressTemp) => {
+    Geocode.fromAddress(addressTemp).then(
+      (response) => {
+        const { lat, lng } = response.results[0].geometry.location;
+        const distanceTe = distanceBetween2Points(
+          ADDRESS_ECOOK_SYSTEM.lat,
+          ADDRESS_ECOOK_SYSTEM.lng,
+          lat,
+          lng
+        );
+        setDistance(Number(distanceTe));
+        setPaymentFee(getShipmentFee(Number(distanceTe)));
+        if (getShipmentFee(Number(distanceTe)) === -1) setIsOrder(false);
+        else setIsOrder(true);
+      },
+      (error) => {
+        setPaymentFee(-1);
+        setDistance(-1);
+        setIsOrder(false);
+
+        useNotification.Error({
+          title: "Message",
+          message: "Địa chỉ không tồn tại, vui lòng kiểm tra!",
+        });
+      }
+    );
+  };
 
   const [openPaypalButtonCheckout, setOpenPaypalButtonCheckout] =
     useState(false);
+  const [error, setError] = useState({
+    customerName: "",
+    phoneNumber: "",
+    addressCustomer: "",
+  });
+
+  const handleChange = (event) => {
+    setData({ ...data, [event.target.name]: event.target.value });
+  };
+
+  const handleFocus = (event) => {
+    setError({
+      ...error,
+      [event.target.name]: "",
+    });
+  };
+
+  const validate = () => {
+    const errorState = {};
+    // check validate
+    if (isEmpty(data?.customerName)) {
+      errorState.customerName = "Vui lòng nhập vào, không được để trống!";
+    }
+    if (isEmpty(data?.phoneNumber + "")) {
+      errorState.phoneNumber = "Vui lòng nhập vào, không được để trống!";
+    }
+    if (isEmpty(data?.addressCustomer + "")) {
+      errorState.addressCustomer = "Vui lòng nhập vào, không được để trống!";
+    }
+    return errorState;
+  };
+
+  const dispatch = useDispatch();
+
+  const onSubmit = (event) => {
+    event.preventDefault();
+    const errorState = validate();
+    if (!isOrder) return;
+    if (Object.keys(errorState).length > 0) {
+      return setError(errorState);
+    }
+    if (data?.paymentMethod === "paypal") {
+      setOpenPaypalButtonCheckout(true);
+    } else {
+      dispatch(
+        paymentRedirectMoney(
+          {
+            order: {
+              address: data.addressCustomer,
+              items: data.items.map((i) => ({
+                itemId: i.itemId,
+                _id: i._id,
+                quantity: i.quantity,
+                unitPrice: getPriceItemNumber(
+                  i.discountOff,
+                  i.unitPrice,
+                  i.discountMaximum
+                ),
+              })),
+              voucherId: data.voucherId,
+              shipmentFee: paymentFee,
+            },
+          },
+          (res) => {
+            if (res.status === 200) {
+              close();
+              closeCartModal();
+            }
+          }
+        )
+      );
+    }
+  };
+  const orderStore = useSelector((store) => store.order);
 
   return (
     <Modal
@@ -74,6 +204,7 @@ const ModalConfirmFoodCart = ({ isModalVisible, close, products }) => {
     >
       {openPaypalButtonCheckout ? (
         <>
+          {orderStore?.paymentFood.loading && <SpinLoading />}
           <div
             className="flex"
             style={{ marginBottom: 24, cursor: "pointer" }}
@@ -83,14 +214,16 @@ const ModalConfirmFoodCart = ({ isModalVisible, close, products }) => {
             <span style={{ color: "orangered" }}>Quay trở lại</span>
           </div>
           <PaypalCheckoutButton
+            closeCartModal={closeCartModal}
             type="food"
             requestData={{
               address: data.addressCustomer,
-              shipmentFee: 15000, // will call API to calculate from address,
+              shipmentFee: paymentFee, // will call API to calculate from address,
               voucherId: data.voucherId || "",
               voucherData: data.voucherData,
               items: data.items.map((i) => ({
-                itemId: i._id,
+                itemId: i.itemId,
+                _id: i._id,
                 quantity: i.quantity,
                 unitPrice: getPriceItemNumber(
                   i.discountOff,
@@ -103,24 +236,62 @@ const ModalConfirmFoodCart = ({ isModalVisible, close, products }) => {
         </>
       ) : (
         <>
+          {orderStore?.paymentRedirectMoney.loading && <SpinLoading />}
           <div className="modal-confirm-food-cart-container">
             <div className="modal-confirm-food-cart-container__inner">
               <div className="modal-confirm-food-cart-container__inner-top">
                 <div className="block__order-info">
                   <label>Họ tên khách hàng:</label>
-                  <Input value={data?.customerName} />
+                  <FormBox
+                    propsInput={{
+                      name: "customerName",
+                      placeholder: "Số điện thoại",
+                      onChange: handleChange,
+                      onFocus: handleFocus,
+                      value: data.customerName,
+                      disabled: false,
+                    }}
+                    error={error.customerName}
+                  />
                 </div>
                 <div className="block__order-info">
                   <label>Địa chỉ giao hàng:</label>
-                  <Input value={data?.addressCustomer} />
+                  <div className="flex items-center address-order-field">
+                    <FormBox
+                      propsInput={{
+                        name: "addressCustomer",
+                        placeholder: "Địa chỉ giao hàng",
+                        onChange: handleChange,
+                        onFocus: handleFocus,
+                        value: data.addressCustomer,
+                        disabled: false,
+                      }}
+                      error={error.addressCustomer}
+                    />
+                    <button
+                      className="btn btn-client"
+                      style={{ width: "16%", marginLeft: 6 }}
+                      onClick={() =>
+                        handleUpdateShipmentFee(data.addressCustomer)
+                      }
+                    >
+                      Cập nhật
+                    </button>
+                  </div>
                 </div>
                 <div className="block__order-info">
                   <label>Số điện thoại:</label>
-                  <Input value={data?.phoneNumber} />
-                </div>
-                <div className="block__order-info">
-                  <label>Email:</label>
-                  <Input value={data?.email} />
+                  <FormBox
+                    propsInput={{
+                      name: "phoneNumber",
+                      placeholder: "Số điện thoại",
+                      onChange: handleChange,
+                      onFocus: handleFocus,
+                      value: data.phoneNumber,
+                      disabled: false,
+                    }}
+                    error={error.phoneNumber}
+                  />
                 </div>
               </div>
               <div className="block__items-detail">
@@ -154,7 +325,7 @@ const ModalConfirmFoodCart = ({ isModalVisible, close, products }) => {
               </div>
               <div className="block-data-normal flex items-center">
                 <label style={{ marginRight: 12 }}>Tổng sản phẩm: </label>
-                <span>{data?.items.length} s/p</span>
+                <span>{data?.items?.length} s/p</span>
               </div>
               <div className="block-data-normal flex items-center">
                 <label style={{ marginRight: 12 }}>Tổng tiền hàng:</label>
@@ -162,11 +333,22 @@ const ModalConfirmFoodCart = ({ isModalVisible, close, products }) => {
               </div>
               <div className="block-data-normal flex items-center">
                 <label style={{ marginRight: 12 }}>Phí vận chuyển:</label>
-                <span>{formatCurrency(data?.shipmentFee)}</span>
+                {paymentFee !== -1 ? (
+                  <span>{formatCurrency(paymentFee)}</span>
+                ) : (
+                  0
+                )}
+                {distancePayment !== -1 && (
+                  <span
+                    style={{ marginLeft: 6, fontSize: 14, color: "#292929" }}
+                  >
+                    ({distancePayment}km)
+                  </span>
+                )}
                 <Tooltip
                   title={`
                 * Quy định tính phí ship:                                 
-                .Dưới 2km: 0đ; 
+                .Dưới 2km: 0đ;
                 ; dưới 6km: 10.000đ
                 ; dưới 8km: Hệ thống sẽ thống theo công thức: 1.8*(số km)*1000(đ)
                 ; trên 8km: Cửa hàng không ship.
@@ -175,7 +357,7 @@ const ModalConfirmFoodCart = ({ isModalVisible, close, products }) => {
                 >
                   <Info
                     color="action"
-                    style={{ fontSize: 18, marginLeft: 30 }}
+                    style={{ fontSize: 18, marginLeft: "auto", marginRight: 6 }}
                   />
                 </Tooltip>
               </div>
@@ -216,51 +398,20 @@ const ModalConfirmFoodCart = ({ isModalVisible, close, products }) => {
               Tiền mặt
             </button>
           </div>
-          <div
-            className="btn-order-food"
-            onClick={() => {
-              if (data?.paymentMethod === "paypal") {
-                setOpenPaypalButtonCheckout(true);
-              } else {
-                close();
-              }
-            }}
-          >
+          <div className="btn-order-food" onClick={onSubmit}>
             Đặt hàng
           </div>
         </>
       )}
 
-      <Modal
-        className="modal-container modal-confirm-food-cart"
-        title="Danh sách voucher hiện có"
-        visible={isOpenVoucher}
-        onCancel={() => setIsOpenVoucher(false)}
-        footer={false}
-      >
-        <div>
-          {VOUCHERS_DATA.map((item) => (
-            <div key={item._id} style={{ marginBottom: 10 }}>
-              <span
-                style={{ fontSize: 18, color: "gray", cursor: "pointer" }}
-                onClick={() => {
-                  navigator.clipboard.writeText(item.name);
-                  setData({
-                    ...data,
-                    voucher: item.name,
-                    voucherId: item._id,
-                    voucherData: item,
-                  });
-                  setIsOpenVoucher(false);
-                }}
-              >
-                {item.name}:{" "}
-              </span>
-              <span>{item.content}</span>
-            </div>
-          ))}
-        </div>
-      </Modal>
+      {isOpenVoucher && (
+        <ModalVoucher
+          isOpenModal={isOpenVoucher}
+          close={() => setIsOpenVoucher(false)}
+          data={{ ...data, shipmentFee: paymentFee }}
+          setData={setData}
+        />
+      )}
     </Modal>
   );
 };

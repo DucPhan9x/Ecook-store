@@ -43,10 +43,11 @@ const updateWishlist = (data) => {
         if (result.status === 200) {
           dispatch({
             type: types.UPDATE_WISHLIST_SUCCEED,
+            payload: result.itemId,
           });
           useNotification.Success({
             title: "Message",
-            message: result.isRemoveStatus
+            message: !!result.itemId
               ? "Đã xóa khỏi danh sách yêu thích"
               : "Đã thêm vào danh sách yêu thích",
           });

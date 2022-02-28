@@ -62,14 +62,14 @@ const getOrdersByClientId = (data) => {
   let myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${token}`);
   myHeaders.append("Content-Type", `application/json`);
-  const { page, searchText, orderBy, orderType, numOfPerPage, statusId } = data;
+  const { page, searchText, numOfPerPage, statusId } = data;
 
   let requestOptions = {
     headers: myHeaders,
     method: "GET",
   };
   return fetch(
-    `${url}order/get-all-by-clientID?statusId=${statusId}&page=${page}&searchText=${searchText}&orderBy=${orderBy}&orderType=${orderType}&numOfPerPage=${numOfPerPage}`,
+    `${url}order/get-all-by-clientID?statusId=${statusId}&page=${page}&searchText=${searchText}&numOfPerPage=${numOfPerPage}`,
     requestOptions
   );
 };

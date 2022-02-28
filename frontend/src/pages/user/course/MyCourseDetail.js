@@ -1,4 +1,4 @@
-import { BackPreviousPage } from "components/common";
+import { BackPreviousPage, SpinLoading } from "components/common";
 import Comments from "components/common/Comments";
 import React, { useState } from "react";
 import { useEffect } from "react";
@@ -11,7 +11,8 @@ import { useHistory } from "react-router-dom";
 import FormControl from "@material-ui/core/FormControl";
 import { Modal } from "antd";
 import moment from "moment";
-import { COURSES_DATA } from "utils/dummyData";
+import { useDispatch, useSelector } from "react-redux";
+import { getCourseById } from "redux/actions/course";
 
 const MyCourseDetail = () => {
   const [formFeedback, setFormFeedback] = useState({ rating: 0, comment: "" });
@@ -19,27 +20,26 @@ const MyCourseDetail = () => {
   const [videoCurrent, setVideoCurrent] = useState({});
   const history = useHistory();
   const [openModalCertification, setOpenModalCertification] = useState(false);
-  const params = new URLSearchParams(window.location.search);
+  const dispatch = useDispatch();
+  const { getCourseByIdState } = useSelector((store) => store.course);
 
   useEffect(() => {
-    setData(COURSES_DATA.find((item) => item._id === params.get("id")));
-    setVideoCurrent({
-      title: "Nghêu hấp thái",
-      videoUrl:
-        "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-      duration: 30, // unit : min
-      createAt: Date.now(),
-      autoPlay: false,
-    });
-    // eslint-disable-next-line
-  }, []);
+    const params = new URLSearchParams(window.location.search);
+    const courseId = params.get("id");
+    dispatch(getCourseById(courseId));
+  }, [dispatch]);
 
-  console.log(videoCurrent);
+  useEffect(() => {
+    setData(getCourseByIdState?.data);
+    setVideoCurrent(getCourseByIdState?.data?.videoList[0]);
+  }, [getCourseByIdState]);
 
   return (
     <>
       <BackPreviousPage />
       <div className="my-course-detail-container">
+        {getCourseByIdState?.loading && <SpinLoading />}
+
         <div className="my-course-detail-container-left">
           <div className="my-course-detail-container-left__video-detail">
             {videoCurrent?.videoUrl?.includes("/www.youtube.com") ? (
@@ -102,7 +102,7 @@ const MyCourseDetail = () => {
               />
             </div>
             <Comments
-              data={data?.feedbacksList}
+              data={data?.feedbacks}
               formFeedback={formFeedback}
               handleReply={(replyList) => {
                 // create reply , call API
@@ -125,7 +125,7 @@ const MyCourseDetail = () => {
           </div>
         </div>
         <div className="my-course-detail-container-right">
-          {data?.videoUrls?.map((v, indx) => (
+          {data?.videoList?.map((v, indx) => (
             <div
               className={`my-course-detail-container-right--item flex items-center j-space-between ${
                 videoCurrent?.title === v.title ? "active" : ""

@@ -5,15 +5,18 @@ import { IconButton, Tooltip } from "@material-ui/core";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import { useHistory } from "react-router-dom";
 import { formatCurrency, getPriceItem } from "utils/priceUtils";
-import useNotification from "hooks/useNotification";
 import ModalConfirm from "../ModalConfirm";
 import { getAccessToken } from "utils/authUtils";
+import { useDispatch } from "react-redux";
+import { updateWishlist } from "redux/actions/wishlist";
+import { buyNow, createCartItems } from "redux/actions/cart";
 
 const FoodCard = ({ data }) => {
   const { name, unitPrice, imageUrl, discountOff, discountMaximum, unit } =
     data;
   const history = useHistory();
   const [isOpenModalConfirm, setIsOpenModalConfirm] = useState(false);
+  const dispatch = useDispatch();
 
   return (
     <div className="food-card">
@@ -49,10 +52,7 @@ const FoodCard = ({ data }) => {
               onClick={() => {
                 if (getAccessToken()) {
                   // call API add cart
-                  useNotification.Success({
-                    title: "",
-                    message: "Đã thêm vào bộ sưu tập",
-                  });
+                  dispatch(updateWishlist({ itemId: data._id, itemType: 1 }));
                 } else {
                   setIsOpenModalConfirm(true);
                 }
@@ -65,7 +65,23 @@ const FoodCard = ({ data }) => {
                 <IconButton
                   onClick={() => {
                     if (getAccessToken()) {
-                      // call API add cart
+                      // call API add cart => open food cart
+                      dispatch(
+                        createCartItems(
+                          {
+                            itemId: data._id,
+                            itemType: 1,
+                            quantity: 1,
+                          },
+                          (res) => {
+                            if (res.status === 201) {
+                              setTimeout(() => {
+                                dispatch(buyNow(data._id));
+                              }, 300);
+                            }
+                          }
+                        )
+                      );
                     } else {
                       setIsOpenModalConfirm(true);
                     }
@@ -79,10 +95,13 @@ const FoodCard = ({ data }) => {
                   onClick={() => {
                     if (getAccessToken()) {
                       // call API add cart
-                      useNotification.Success({
-                        title: "",
-                        message: "Đã thêm vào giỏ hàng",
-                      });
+                      dispatch(
+                        createCartItems({
+                          itemId: data._id,
+                          itemType: 1,
+                          quantity: 1,
+                        })
+                      );
                     } else {
                       setIsOpenModalConfirm(true);
                     }

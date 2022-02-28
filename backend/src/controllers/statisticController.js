@@ -6,12 +6,16 @@ const { getMonthsByquater, getQuaterByMonth, getDateInWeek } = dateFunction;
 
 const getRevenuesInfo = async (req, res, next) => {
   try {
-    const { getInfoBy } = req.params;
-    var data = [];
+    let getInfoBy = Number(req.params.getInfoBy);
     const today = new Date();
-    let revenues = [];
-    var startDate;
-    var endDate;
+    var revenues = [];
+    let startDate;
+    let endDate;
+    var year;
+    var month;
+    var orders;
+    var quater;
+    var labels = [];
     switch (getInfoBy) {
       case 0:
         const dateInWeek = getDateInWeek(today);
@@ -19,7 +23,7 @@ const getRevenuesInfo = async (req, res, next) => {
         endDate = dateInWeek[1];
         startDate.setHours(0, 0, 0, 0);
         endDate.setHours(23, 59, 59, 999);
-        let orders = await Order.find({
+        orders = await Order.find({
           createAt: {
             $gte: startDate,
             $lt: endDate,
@@ -37,17 +41,26 @@ const getRevenuesInfo = async (req, res, next) => {
           else init[cur.day] = init[cur.day] + cur.revenue;
           return init;
         }, {});
+        labels = [
+          "Chủ nhật",
+          "Thứ 2",
+          "Thứ 3",
+          "Thứ 4",
+          "Thứ 5",
+          "Thứ 6",
+          "Thứ 7",
+        ];
+
         break;
       case 1:
-        let month = today.getMonth();
-        let year = today.getFullYear();
+        month = today.getMonth();
+        year = today.getFullYear();
         month = Number(month);
         year = Number(year);
         startDate = new Date(year, month - 1, 1);
         endDate = new Date(year, month, 0);
         startDate.setHours(0, 0, 0, 0);
         endDate.setHours(23, 59, 59, 999);
-        console.log(startDate, endDate);
         orders = await Order.find({
           createAt: {
             $gte: startDate,
@@ -66,25 +79,25 @@ const getRevenuesInfo = async (req, res, next) => {
           else init[cur.date] = init[cur.date] + cur.revenue;
           return init;
         }, {});
-        console.log(revenues);
-        res.status(200).json({
-          status: 200,
-          msg: "Get revenues by month successfully!",
-          revenues,
-        });
+        const days = new Date(
+          today.getFullYear(),
+          today.getMonth() + 1,
+          0
+        ).getDate();
+        for (let i = 1; i <= days; i++) {
+          labels.push(`Ngày ${i}`);
+        }
         break;
       case 2:
-        let quater = getQuaterByMonth(today.getMonth() + 1);
+        quater = getQuaterByMonth(today.getMonth() + 1);
         year = today.getFullYear();
         quater = Number(quater);
         year = Number(year);
-        const months = getMonthsByquater(quater);
-        console.log(months);
-        let startDate = new Date(year, months[0] - 1, 1);
-        let endDate = new Date(year, months[2] - 1, 0);
+        let months = getMonthsByquater(quater);
+        startDate = new Date(year, months[0] - 1, 1);
+        endDate = new Date(year, months[2] - 1, 0);
         startDate.setHours(0, 0, 0, 0);
         endDate.setHours(23, 59, 59, 999);
-        console.log(startDate, endDate);
         orders = await Order.find({
           createAt: {
             $gte: startDate,
@@ -103,7 +116,7 @@ const getRevenuesInfo = async (req, res, next) => {
           else init[cur.month] = init[cur.month] + cur.revenue;
           return init;
         }, {});
-        console.log(revenues);
+        labels = months.map((item) => `Tháng ${item}`);
         break;
       case 3:
         year = today.getFullYear();
@@ -112,7 +125,6 @@ const getRevenuesInfo = async (req, res, next) => {
         endDate = new Date(year, 11, 0);
         startDate.setHours(0, 0, 0, 0);
         endDate.setHours(23, 59, 59, 999);
-        console.log(startDate, endDate);
         orders = await Order.find({
           createAt: {
             $gte: startDate,
@@ -131,15 +143,32 @@ const getRevenuesInfo = async (req, res, next) => {
           else init[cur.month] = init[cur.month] + cur.revenue;
           return init;
         }, {});
-        console.log(revenues);
+        labels = [
+          "Tháng 1",
+          "Tháng 2",
+          "Tháng 3",
+          "Tháng 4",
+          "Tháng 5",
+          "Tháng 6",
+          "Tháng 7",
+          "Tháng 8",
+          "Tháng 9",
+          "Tháng 10",
+          "Tháng 11",
+          "Tháng 12",
+        ];
         break;
       default:
         throw createHttpError(400, "Not found getInfoBy");
     }
+    const datasets = labels.map((_, index) => {
+      return revenues[index.toString()] || 0;
+    });
     res.status(200).json({
       status: 200,
       msg: "Get revenues successfully!",
-      revenues,
+      labels,
+      datasets,
     });
   } catch (error) {
     console.log(error);
@@ -150,18 +179,20 @@ const getRevenuesInfo = async (req, res, next) => {
 const getGeneralInfo = async (req, res, next) => {
   try {
     let orders = await Order.find();
-    const totalRevenues = orders.reduce((pre, cur) => pre + cur.total, 0);
+    const totalRevenues = orders
+      .filter((item) => item.statusId == 4)
+      .reduce((pre, cur) => pre + cur.total, 0);
     const totalCustomers = await User.find({ roleId: 1 }).count();
     const totalOrders = await Order.find({ orderType: 1, statusId: 4 }).count();
-    const totalCourses = await Order.find({
+    let totalCourses = await Order.find({
       orderType: 2,
       statusId: 4,
-    }).count();
-
+    });
+    totalCourses = totalCourses.reduce((pre, cur) => pre + cur.items.length, 0);
     let popularFoodIds = await OrderItem.aggregate([
       {
         $match: {
-          orderItemType: 1,
+          orderType: 1,
         },
       },
       {
@@ -191,7 +222,7 @@ const getGeneralInfo = async (req, res, next) => {
     let popularCourseIds = await OrderItem.aggregate([
       {
         $match: {
-          orderItemType: 2,
+          orderType: 2,
         },
       },
       {

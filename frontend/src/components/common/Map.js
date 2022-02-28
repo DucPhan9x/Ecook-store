@@ -28,10 +28,6 @@ const optionsPolyline = {
   radius: 30000,
   zIndex: 1,
 };
-Geocode.setApiKey(process.env.REACT_APP_API_MAP_KEY);
-Geocode.setLanguage("vi");
-Geocode.setRegion("VN");
-Geocode.enableDebug();
 
 const Map = ({ infoCustomer, address, zoom }) => {
   // get lat lng from address
@@ -45,8 +41,7 @@ const Map = ({ infoCustomer, address, zoom }) => {
   ]);
 
   useEffect(() => {
-    console.log(address);
-    Geocode.fromAddress("54 nguyen luong bang da nang" || address).then(
+    Geocode.fromAddress(address).then(
       (response) => {
         const { lat, lng } = response.results[0].geometry.location;
         setData({ lat, lng });

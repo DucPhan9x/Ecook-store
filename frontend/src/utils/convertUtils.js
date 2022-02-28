@@ -66,3 +66,12 @@ export const getFilterRevenues = (roleId) => {
       return "Theo năm";
   }
 };
+
+export const OPTION_FILTER = [
+  "Tất cả",
+  "Đang chờ xác nhận",
+  "Đang chuẩn bị",
+  "Đang giao hàng",
+  "Đã giao hàng",
+  // "Đã hủy",
+];

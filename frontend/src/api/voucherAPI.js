@@ -87,7 +87,7 @@ const getListVoucherClient = (data) => {
   );
 };
 
-const orderAPI = {
+const voucherAPI = {
   createVoucher,
   updateVoucherById,
   getListVoucherPerPage,
@@ -95,4 +95,4 @@ const orderAPI = {
   deleteVoucherById,
   getListVoucherClient,
 };
-export default orderAPI;
+export default voucherAPI;

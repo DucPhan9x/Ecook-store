@@ -66,7 +66,10 @@ const getListCourseAndInstructor = async (req, res, next) => {
     res.status(200).json({
       status: 200,
       msg: "Get list course and instructor successfully!",
-      courses,
+      courses: courses.map((item) => ({
+        ...item._doc,
+        videoList: [item.videoList[0]],
+      })),
       instructors,
     });
   } catch (error) {

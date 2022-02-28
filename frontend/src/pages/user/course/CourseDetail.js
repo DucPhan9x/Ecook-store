@@ -23,6 +23,9 @@ import ModalConfirm from "components/common/ModalConfirm";
 import { useDispatch, useSelector } from "react-redux";
 import { getCourseById } from "redux/actions/course";
 import courseAPI from "api/courseAPI";
+import { updateWishlist } from "redux/actions/wishlist";
+import { checkExistInMyCourses } from "redux/actions/order";
+import { buyNow, createCartItems } from "redux/actions/cart";
 
 const CourseDetail = () => {
   const [course, setCourse] = useState({});
@@ -66,12 +69,18 @@ const CourseDetail = () => {
   }, [course]);
 
   const [isOpenModalConfirm, setIsOpenModalConfirm] = useState(false);
-
+  const { updateWishlistState } = useSelector((store) => store.wishlist);
+  const { createCartItemsState } = useSelector((store) => store.cart);
+  const { checkExistCourseState } = useSelector((store) => store.order);
   // const [formFeedback, setFormFeedback] = useState({ rating: 0, comment: "" });
 
   return (
     <div className="course-detail-container">
-      {(getCourseByIdState?.loading || l1) && <SpinLoading />}
+      {(getCourseByIdState?.loading ||
+        l1 ||
+        updateWishlistState?.loading ||
+        createCartItemsState?.loading ||
+        checkExistCourseState?.loading) && <SpinLoading />}
       <div className="course-detail-container-top">
         <div className="course-detail-container-top__right">
           <div className="flex flex-col">
@@ -175,10 +184,9 @@ const CourseDetail = () => {
                 onClick={() => {
                   if (getAccessToken()) {
                     // call API add cart
-                    useNotification.Success({
-                      title: "",
-                      message: "Đã thêm vào bộ sưu tập",
-                    });
+                    dispatch(
+                      updateWishlist({ itemId: course._id, itemType: 3 })
+                    );
                   } else {
                     setIsOpenModalConfirm(true);
                   }
@@ -191,10 +199,26 @@ const CourseDetail = () => {
                 onClick={() => {
                   if (getAccessToken()) {
                     // call API add cart
-                    useNotification.Success({
-                      title: "",
-                      message: "Đã thêm vào giỏ hàng",
-                    });
+                    dispatch(
+                      checkExistInMyCourses(course._id, (res) => {
+                        if (res.status === 200) {
+                          if (!res.isExist) {
+                            dispatch(
+                              createCartItems({
+                                itemId: course._id,
+                                itemType: 2,
+                                quantity: 1,
+                              })
+                            );
+                          }
+                        } else {
+                          useNotification.Error({
+                            title: "Message",
+                            message: res.msg,
+                          });
+                        }
+                      })
+                    );
                   } else {
                     setIsOpenModalConfirm(true);
                   }
@@ -208,7 +232,35 @@ const CourseDetail = () => {
               className="btn btn--buy-now"
               onClick={() => {
                 if (getAccessToken()) {
-                  // call API add cart
+                  dispatch(
+                    checkExistInMyCourses(course._id, (res) => {
+                      if (res.status === 200) {
+                        if (!res.isExist) {
+                          dispatch(
+                            createCartItems(
+                              {
+                                itemId: course._id,
+                                itemType: 2,
+                                quantity: 1,
+                              },
+                              (res) => {
+                                if (res.status === 201) {
+                                  setTimeout(() => {
+                                    dispatch(buyNow(course._id));
+                                  }, 300);
+                                }
+                              }
+                            )
+                          );
+                        }
+                      } else {
+                        useNotification.Error({
+                          title: "Message",
+                          message: res.msg,
+                        });
+                      }
+                    })
+                  );
                 } else {
                   setIsOpenModalConfirm(true);
                 }

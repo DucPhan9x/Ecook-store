@@ -22,6 +22,8 @@ import foodAPI from "api/foodAPI";
 import NoImage from "assets/images/notImage.png";
 
 import recipeAPI from "api/recipeAPI";
+import { updateWishlist } from "redux/actions/wishlist";
+import { buyNow, createCartItems } from "redux/actions/cart";
 
 const FoodDetail = () => {
   const [food, setFood] = useState({});
@@ -84,10 +86,16 @@ const FoodDetail = () => {
   }, [food]);
 
   const [formFeedback, setFormFeedback] = useState({ rating: 0, comment: "" });
+  const { updateWishlistState } = useSelector((store) => store.wishlist);
+  const { createCartItemsState } = useSelector((store) => store.cart);
 
   return (
     <div className="food-detail-container">
-      {(getFoodByIdState?.loading || l1 || l2) && <SpinLoading />}
+      {(getFoodByIdState?.loading ||
+        l1 ||
+        l2 ||
+        updateWishlistState.loading ||
+        createCartItemsState.loading) && <SpinLoading />}
       <BackPreviousPage />
       <div className="food-detail-container-top">
         <div className="food-detail-container-top__left">
@@ -142,10 +150,7 @@ const FoodDetail = () => {
               onClick={() => {
                 if (getAccessToken()) {
                   // call API add cart
-                  useNotification.Success({
-                    title: "",
-                    message: "Đã thêm vào bộ sưu tập",
-                  });
+                  dispatch(updateWishlist({ itemId: food._id, itemType: 1 }));
                 } else {
                   setIsOpenModalConfirm(true);
                 }
@@ -158,10 +163,13 @@ const FoodDetail = () => {
               onClick={() => {
                 if (getAccessToken()) {
                   // call API add cart
-                  useNotification.Success({
-                    title: "",
-                    message: "Đã thêm vào giỏ hàng",
-                  });
+                  dispatch(
+                    createCartItems({
+                      itemId: food._id,
+                      itemType: 1,
+                      quantity: 1,
+                    })
+                  );
                 } else {
                   setIsOpenModalConfirm(true);
                 }
@@ -174,7 +182,22 @@ const FoodDetail = () => {
               className="btn btn--buy-now"
               onClick={() => {
                 if (getAccessToken()) {
-                  // call API add cart
+                  dispatch(
+                    createCartItems(
+                      {
+                        itemId: food._id,
+                        itemType: 1,
+                        quantity: 1,
+                      },
+                      (res) => {
+                        if (res.status === 201) {
+                          setTimeout(() => {
+                            dispatch(buyNow(food._id));
+                          }, 300);
+                        }
+                      }
+                    )
+                  );
                 } else {
                   setIsOpenModalConfirm(true);
                 }

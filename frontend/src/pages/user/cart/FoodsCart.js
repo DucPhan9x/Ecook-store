@@ -1,31 +1,36 @@
-import { Checkbox } from "@material-ui/core";
+import { Checkbox, IconButton, Tooltip } from "@material-ui/core";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import { FOODS_CART } from "utils/dummyData";
 import { getPriceItem, getPriceItemNumber } from "utils/priceUtils";
 import AddCircleSharpIcon from "@material-ui/icons/AddCircleSharp";
 import RemoveCircleSharpIcon from "@material-ui/icons/RemoveCircleSharp";
 import ModalConfirm from "components/common/ModalConfirm";
 import FoodCartEmpty from "assets/images/empty-cart.svg";
 import ModalConfirmFoodCart from "./ModalConfirmFoodCart";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import {
+  deleteAllCartItem,
+  deleteCartItem,
+  updateCartItem,
+} from "redux/actions/cart";
+import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 
 const FoodsCart = ({ close }) => {
   const [data, setData] = useState([]);
   const [isOpenModalConfirm, setIsOpenModalConfirm] = useState(false);
   const [isOpenModalConfirmRemoveAll, setIsOpenModalConfirmRemoveAll] =
     useState(false);
+  const dispatch = useDispatch();
 
+  const { getListCartItemState } = useSelector((store) => store.cart);
   useEffect(() => {
-    setData(FOODS_CART.map((item) => ({ ...item, isCheckbox: false })));
-    // eslint-disable-next-line
-  }, []);
+    setData(getListCartItemState?.cartItems);
+  }, [getListCartItemState]);
+
   const [isCheckAll, setIsCheckAll] = useState(false);
   const [itemSelected, setItemSelected] = useState({});
-  const handleRemoveSingleItem = (id) => {
-    let temp = [...data];
-    setData(temp.filter((item) => item._id !== id));
-  };
 
   const [isOpenModalConfirmOrder, setIsOpenModalConfirmOrder] = useState(false);
 
@@ -34,7 +39,7 @@ const FoodsCart = ({ close }) => {
       <div className="modal-body-cart-container__inner-body-top">
         <div className="block__check-all">
           <Checkbox
-            disabled={!data.length}
+            disabled={!data?.length}
             checked={isCheckAll}
             onChange={(e) => {
               let isChecked = e.target.checked;
@@ -43,12 +48,28 @@ const FoodsCart = ({ close }) => {
             }}
           />
           <span className="selected--text">
-            {data?.filter((item) => item.isCheckbox)?.length} được chọn
+            {data?.filter((item) => item.isCheckbox)?.length || 0} được chọn
           </span>
+          {data?.filter((item) => item.isCheckbox)?.length > 0 && (
+            <Tooltip title="Xóa khỏi giỏ hàng" placement="top">
+              <IconButton
+                style={{ marginLeft: "auto" }}
+                onClick={() =>
+                  dispatch(
+                    deleteCartItem(
+                      data?.filter((item) => item.isCheckbox)?.map((i) => i._id)
+                    )
+                  )
+                }
+              >
+                <DeleteOutlineIcon />
+              </IconButton>
+            </Tooltip>
+          )}
         </div>
         <button
-          disabled={!data.length}
-          className={`btn btn-client ${!data.length ? "btn-disabled" : ""}`}
+          disabled={!data?.length}
+          className={`btn btn-client ${!data?.length ? "btn-disabled" : ""}`}
           onClick={() => {
             setIsOpenModalConfirmRemoveAll(true);
           }}
@@ -59,8 +80,8 @@ const FoodsCart = ({ close }) => {
       <div className="modal-body-cart-container__inner-body">
         <div className="modal-body-cart-container__inner-body-bottom">
           <div className="food-cart-container">
-            {data.length > 0 ? (
-              data.map((c) => (
+            {data?.length > 0 ? (
+              data?.map((c) => (
                 <div className="food-cart-container__inner" key={c._id}>
                   <Checkbox
                     checked={c.isCheckbox}
@@ -74,20 +95,20 @@ const FoodsCart = ({ close }) => {
                     }}
                   />
                   <div className="food-cart-container__inner--information">
-                    <img src={c.food?.imageUrl} alt="" />
+                    <img src={c.item?.imageUrl} alt="" />
                     <div className="food-cart-container__inner--information-top">
                       <span className="food-cart-container__inner--information-top--title">
-                        {c.food?.name} ({c.food?.quantity}
-                        {c.food?.unit})
+                        {c.item?.name} (1
+                        {c.item?.unit})
                       </span>
                       <span className="food-cart-container__inner--information-top--description">
-                        {c.food?.description}
+                        {c.item?.description}
                       </span>
                       <span className="food-cart-container__inner--information-top--price">
                         {getPriceItem(
-                          c.food?.discountOff,
-                          c.food?.unitPrice,
-                          c.food?.discountMaximum,
+                          c.item?.discountOff,
+                          c.item?.unitPrice,
+                          c.item?.discountMaximum,
                           c.quantity
                         )}
                       </span>
@@ -104,10 +125,16 @@ const FoodsCart = ({ close }) => {
                         if (temp[indexSelected].quantity === 1) {
                           setIsOpenModalConfirm(true);
                           temp[indexSelected].quantity--;
-                          setData(temp);
                         } else {
                           temp[indexSelected].quantity--;
-                          setData(temp);
+                          dispatch(
+                            updateCartItem(
+                              temp.map((item) => ({
+                                id: item._id,
+                                quantity: item.quantity,
+                              }))
+                            )
+                          );
                         }
                       }}
                     />
@@ -120,6 +147,15 @@ const FoodsCart = ({ close }) => {
                         );
                         temp[indexSelected].quantity++;
                         setData(temp);
+                        // update database
+                        dispatch(
+                          updateCartItem(
+                            temp.map((item) => ({
+                              id: item._id,
+                              quantity: item.quantity,
+                            }))
+                          )
+                        );
                       }}
                     />
                   </div>
@@ -150,7 +186,8 @@ const FoodsCart = ({ close }) => {
               title="Xác nhận"
               message="Bạn có chắc muốn xóa?"
               handleOk={() => {
-                handleRemoveSingleItem(itemSelected?._id);
+                const idRemoved = itemSelected._id;
+                dispatch(deleteCartItem([idRemoved]));
                 setIsOpenModalConfirm(false);
               }}
             />
@@ -162,7 +199,7 @@ const FoodsCart = ({ close }) => {
               title="Xác nhận"
               message="Bạn có chắc muốn xóa tất cả?"
               handleOk={() => {
-                setData([]);
+                dispatch(deleteAllCartItem(1));
                 setIsOpenModalConfirmRemoveAll(false);
               }}
             />
@@ -171,36 +208,40 @@ const FoodsCart = ({ close }) => {
       </div>
       <div
         className={`modal-body-cart-container__inner-bottom ${
-          data.filter((item) => item.isCheckbox)?.length ? "" : "btn-disabled"
+          data?.filter((item) => item.isCheckbox)?.length ? "" : "btn-disabled"
         }`}
         onClick={() => {
           setIsOpenModalConfirmOrder(true);
         }}
       >
-        {data
-          .filter((item) => item.isCheckbox)
-          .reduce(
-            (f, s) =>
-              f +
-              getPriceItemNumber(
-                s.food?.discountOff,
-                s.food?.unitPrice,
-                s.food?.discountMaximum,
-                s.quantity
-              ),
-            0
-          )
-          ?.toLocaleString("vi-VI", {
-            style: "currency",
-            currency: "VND",
-          })}{" "}
+        {(
+          data
+            ?.filter((item) => item.isCheckbox)
+            .reduce(
+              (f, s) =>
+                f +
+                getPriceItemNumber(
+                  s.item?.discountOff,
+                  s.item?.unitPrice,
+                  s.item?.discountMaximum,
+                  s.quantity
+                ),
+              0
+            ) || 0
+        )?.toLocaleString("vi-VI", {
+          style: "currency",
+          currency: "VND",
+        })}{" "}
         - Thanh toán
       </div>
-      <ModalConfirmFoodCart
-        isModalVisible={isOpenModalConfirmOrder}
-        close={() => setIsOpenModalConfirmOrder(false)}
-        products={data.filter((item) => item.isCheckbox)}
-      />
+      {isOpenModalConfirmOrder && (
+        <ModalConfirmFoodCart
+          isModalVisible={true}
+          close={() => setIsOpenModalConfirmOrder(false)}
+          products={data?.filter((item) => item.isCheckbox)}
+          closeCartModal={close}
+        />
+      )}
     </>
   );
 };

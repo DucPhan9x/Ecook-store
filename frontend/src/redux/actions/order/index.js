@@ -1,8 +1,9 @@
+import courseAPI from "api/courseAPI";
 import orderAPI from "api/orderAPI";
 import useNotification from "hooks/useNotification";
 import * as types from "../../types/order";
 
-const paypalPayment = (data) => {
+const paypalPayment = (data, res = () => {}) => {
   return (dispatch) => {
     dispatch({ type: types.PAYPAL_EXECUTE });
     orderAPI
@@ -15,8 +16,9 @@ const paypalPayment = (data) => {
             payload: data,
           });
           useNotification.Success({
-            message: "Payment order successfully!",
+            message: "Đã đặt hàng thành công!",
           });
+          res(result);
         } else {
           dispatch({ type: types.PAYPAL_EXECUTE_FAIL });
           useNotification.Error({
@@ -35,7 +37,7 @@ const paypalPayment = (data) => {
   };
 };
 
-const paypalPaymentCourse = (data) => {
+const paypalPaymentCourse = (data, res = () => {}) => {
   return (dispatch) => {
     dispatch({ type: types.PAYPAL_EXECUTE_COURSE });
     orderAPI
@@ -48,8 +50,9 @@ const paypalPaymentCourse = (data) => {
             payload: data,
           });
           useNotification.Success({
-            message: "Payment course successfully!",
+            message: "Đã thanh toán thành công!",
           });
+          res(result);
         } else {
           dispatch({ type: types.PAYPAL_EXECUTE_COURSE_FAIL });
           useNotification.Error({
@@ -68,7 +71,7 @@ const paypalPaymentCourse = (data) => {
   };
 };
 
-const paymentRedirectMoney = (data) => {
+const paymentRedirectMoney = (data, res = () => {}) => {
   return (dispatch) => {
     dispatch({ type: types.PAYMENT_DIRECT_MONEY });
     orderAPI
@@ -81,8 +84,9 @@ const paymentRedirectMoney = (data) => {
             payload: data,
           });
           useNotification.Success({
-            message: "Payment direct money successfully!",
+            message: "Đã đặt hàng thành công!",
           });
+          res(result);
         } else {
           dispatch({ type: types.PAYMENT_DIRECT_MONEY_FAIL });
           useNotification.Error({
@@ -208,25 +212,17 @@ const getAllOrdersByClient = (data) => {
 const checkExistInMyCourses = (data, res = () => {}) => {
   return (dispatch) => {
     dispatch({ type: types.CHECK_EXIST_IN_MY_COURSES });
-    orderAPI
-      .checkExistMyOrders(data)
+    courseAPI
+      .checkExistMyCourse(data)
       .then((response) => response.json())
       .then((result) => {
-        if (result.status === 200) {
-          dispatch({
-            type: types.CHECK_EXIST_IN_MY_COURSES_SUCCEED,
-            payload: {
-              isExist: result.isExist,
-            },
-          });
-          res(!!result.isExist);
-        } else {
-          dispatch({ type: types.CHECK_EXIST_IN_MY_COURSES_FAIL });
-          useNotification.Error({
-            title: "Error",
-            message: result.msg,
-          });
-        }
+        dispatch({
+          type: types.CHECK_EXIST_IN_MY_COURSES_SUCCEED,
+          payload: {
+            isExist: result.isExist,
+          },
+        });
+        res(result);
       })
       .catch((error) => {
         dispatch({ type: types.CHECK_EXIST_IN_MY_COURSES_FAIL });

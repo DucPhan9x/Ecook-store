@@ -13,12 +13,12 @@ const headCells = [
     label: "ID",
   },
   { id: "fullName", numeric: false, disablePadding: false, label: "Họ tên" },
-  {
-    id: "dateOfBirth",
-    numeric: false,
-    disablePadding: false,
-    label: "Ngày sinh",
-  },
+  // {
+  //   id: "dateOfBirth",
+  //   numeric: false,
+  //   disablePadding: false,
+  //   label: "Ngày sinh",
+  // },
   {
     id: "phoneNumber",
     numeric: false,

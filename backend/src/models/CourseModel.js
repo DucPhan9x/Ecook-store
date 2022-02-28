@@ -6,10 +6,6 @@ const courseSchema = new Schema({
     type: String,
     required: true,
   },
-  studentBuyAt: {
-    type: Date,
-    default: Date.now,
-  },
   discountOff: {
     type: Number,
     required: true,

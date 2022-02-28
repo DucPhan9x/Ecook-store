@@ -7,7 +7,11 @@ import { formatCurrency, getPriceItem } from "utils/priceUtils";
 import { useHistory } from "react-router-dom";
 import { getAccessToken } from "utils/authUtils";
 import ModalConfirm from "../ModalConfirm";
+import { useDispatch } from "react-redux";
+import { updateWishlist } from "redux/actions/wishlist";
+import { buyNow, createCartItems } from "redux/actions/cart";
 import useNotification from "hooks/useNotification";
+import { checkExistInMyCourses } from "redux/actions/order";
 
 const CourseCard = ({ data }) => {
   const {
@@ -20,6 +24,7 @@ const CourseCard = ({ data }) => {
   } = data;
   const history = useHistory();
   const [isOpenModalConfirm, setIsOpenModalConfirm] = useState(false);
+  const dispatch = useDispatch();
 
   return (
     <div className="course-card">
@@ -60,10 +65,7 @@ const CourseCard = ({ data }) => {
               onClick={() => {
                 if (getAccessToken()) {
                   // call API add cart
-                  useNotification.Success({
-                    title: "",
-                    message: "Đã thêm vào bộ sưu tập",
-                  });
+                  dispatch(updateWishlist({ itemId: data._id, itemType: 3 }));
                 } else {
                   setIsOpenModalConfirm(true);
                 }
@@ -76,7 +78,35 @@ const CourseCard = ({ data }) => {
                 <IconButton
                   onClick={() => {
                     if (getAccessToken()) {
-                      // call API add cart
+                      dispatch(
+                        checkExistInMyCourses(_id, (res) => {
+                          if (res.status === 200) {
+                            if (!res.isExist) {
+                              dispatch(
+                                createCartItems(
+                                  {
+                                    itemId: _id,
+                                    itemType: 2,
+                                    quantity: 1,
+                                  },
+                                  (res) => {
+                                    if (res.status === 201) {
+                                      setTimeout(() => {
+                                        dispatch(buyNow(_id));
+                                      }, 300);
+                                    }
+                                  }
+                                )
+                              );
+                            }
+                          } else {
+                            useNotification.Error({
+                              title: "Message",
+                              message: res.msg,
+                            });
+                          }
+                        })
+                      );
                     } else {
                       setIsOpenModalConfirm(true);
                     }
@@ -90,10 +120,26 @@ const CourseCard = ({ data }) => {
                   onClick={() => {
                     if (getAccessToken()) {
                       // call API add cart
-                      useNotification.Success({
-                        title: "",
-                        message: "Đã thêm vào giỏ hàng",
-                      });
+                      dispatch(
+                        checkExistInMyCourses(_id, (res) => {
+                          if (res.status === 200) {
+                            if (!res.isExist) {
+                              dispatch(
+                                createCartItems({
+                                  itemId: data._id,
+                                  itemType: 2,
+                                  quantity: 1,
+                                })
+                              );
+                            }
+                          } else {
+                            useNotification.Error({
+                              title: "Message",
+                              message: res.msg,
+                            });
+                          }
+                        })
+                      );
                     } else {
                       setIsOpenModalConfirm(true);
                     }

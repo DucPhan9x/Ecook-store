@@ -3,7 +3,15 @@ body {
   font-family: "Merriweather", serif !important;
 }
 // definition new style
-
+.bold {
+  font-weight: bold;
+}
+.address-order-field {
+  width: 100%;
+  .form-box {
+    width: 86%;
+  }
+}
 .input {
   background: #fff;
   border: #ddd 1px solid;

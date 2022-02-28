@@ -2,20 +2,22 @@ import cartAPI from "api/cartAPI";
 import useNotification from "hooks/useNotification";
 import * as types from "../../types/cart";
 
-const createCartItems = (data) => {
+const createCartItems = (data, res = () => {}) => {
   return (dispatch) => {
     dispatch({ type: types.CREATE_CART });
     cartAPI
       .createNewCartItem(data)
       .then((response) => response.json())
       .then((result) => {
-        if (result.status === 200) {
+        if (result.status === 201) {
           dispatch({
             type: types.CREATE_CART_SUCCEED,
             payload: data,
           });
+          res(result);
           useNotification.Success({
-            message: "Add to cart successfully!",
+            title: "Message",
+            message: "Đã thêm vào giỏ hàng",
           });
         } else {
           dispatch({ type: types.CREATE_CART_FAIL });
@@ -26,6 +28,7 @@ const createCartItems = (data) => {
         }
       })
       .catch((error) => {
+        console.log(error);
         dispatch({ type: types.CREATE_CART_FAIL });
         useNotification.Error({
           title: "Error",
@@ -46,9 +49,6 @@ const getListCartItem = (itemType) => {
           dispatch({
             type: types.GET_LIST_CART_SUCCEED,
             payload: result.cartItems,
-          });
-          useNotification.Success({
-            message: "Get cart items successfully!",
           });
         } else {
           dispatch({ type: types.GET_LIST_CART_FAIL });
@@ -83,7 +83,7 @@ const updateCartItem = (cartItems) => {
           });
           useNotification.Success({
             title: "Message",
-            message: `Update cart items successfully!`,
+            message: `Cập nhật giỏ hàng thành công!`,
           });
         } else {
           dispatch({ type: types.UPDATE_CART_FAIL });
@@ -125,6 +125,7 @@ const deleteCartItem = (cartItems) => {
         }
       })
       .catch((error) => {
+        console.log(error);
         dispatch({ type: types.DELETE_CART_FAIL });
         useNotification.Error({
           title: "Error",
@@ -166,10 +167,30 @@ const deleteAllCartItem = (itemType) => {
   };
 };
 
+const buyNow = (data) => {
+  return (dispatch) =>
+    dispatch({
+      type: types.BUY_NOW,
+      payload: data,
+    });
+};
+const toggleModalCart = (status) => {
+  return (dispatch) =>
+    dispatch({ type: types.TOGGLE_MODAL_CART, payload: status });
+};
+
+const resetItemBuyNow = (status) => {
+  return (dispatch) =>
+    dispatch({ type: types.RESET_ITEM_BUY_NOW, payload: "" });
+};
+
 export {
   createCartItems,
   updateCartItem,
   getListCartItem,
   deleteAllCartItem,
   deleteCartItem,
+  buyNow,
+  toggleModalCart,
+  resetItemBuyNow,
 };

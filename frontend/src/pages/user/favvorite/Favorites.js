@@ -11,8 +11,11 @@ import FoodCard from "components/common/card/FoodCard";
 import RecipeCard from "components/common/card/RecipeCard";
 import CourseCard from "components/common/card/CourseCard";
 import { useEffect } from "react";
-import { COURSES_DATA, FOODS_DATA, RECIPES_DATA } from "utils/dummyData";
 import ScrollToTop from "components/common/ScrollToTop";
+import { useDispatch } from "react-redux";
+import { getListWishlist } from "redux/actions/wishlist";
+import { useSelector } from "react-redux";
+import { SpinLoading } from "components/common";
 
 const useStyles = makeStyles((theme) => ({
   link: {
@@ -32,23 +35,22 @@ const Favorites = () => {
   const classes = useStyles();
   const [data, setData] = useState([]);
   const [typeView, setTypeView] = useState(1); //1: food, 2: recipe, 3: course
+  const dispatch = useDispatch();
+  const { getWishlistState, updateWishlistState } = useSelector(
+    (store) => store.wishlist
+  );
+  const { createCartItemsState } = useSelector((store) => store.cart);
 
   useEffect(() => {
     document.title = "Bộ sưu tập | ECook";
     window.scrollTo(0, 0);
-  }, []);
+
+    dispatch(getListWishlist(typeView));
+  }, [dispatch, typeView]);
 
   useEffect(() => {
-    if (typeView === 1) {
-      setData(FOODS_DATA);
-    } else {
-      if (typeView === 2) {
-        setData(RECIPES_DATA);
-      } else {
-        setData(COURSES_DATA);
-      }
-    }
-  }, [typeView]);
+    setData(getWishlistState.wishlists);
+  }, [getWishlistState.wishlists]);
 
   function handleClick(key) {
     setTypeView(key);
@@ -56,6 +58,9 @@ const Favorites = () => {
 
   return (
     <div className="favorites-container">
+      {(getWishlistState?.loading ||
+        updateWishlistState?.loading ||
+        createCartItemsState?.loading) && <SpinLoading />}
       <div className="favorites-container-top">
         <Breadcrumbs aria-label="breadcrumb">
           <Link
@@ -86,7 +91,7 @@ const Favorites = () => {
       </div>
       <div className="favorites-container-bottom">
         <Grid container spacing={3}>
-          {data.map((item) => (
+          {data?.map((item) => (
             <Grid item xs={3}>
               {typeView === 1 ? (
                 <FoodCard data={item} />

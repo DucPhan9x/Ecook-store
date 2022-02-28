@@ -14,13 +14,17 @@ import { useHistory } from "react-router-dom";
 import { getAccessToken } from "utils/authUtils";
 import ModalConfirm from "../ModalConfirm";
 import { useState } from "react";
-import useNotification from "hooks/useNotification";
+import { useDispatch } from "react-redux";
+import { updateWishlist } from "redux/actions/wishlist";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     minWidth: 260,
     backgroundColor: "#f5ffca",
     borderRadius: 16,
+  },
+  title: {
+    textAlign: "left",
   },
   media: {
     height: 0,
@@ -45,6 +49,7 @@ export default function RecipeCard({ data }) {
   const classes = useStyles();
   const { name, feedbacks, contents, imageUrl } = data;
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const [isOpenModalConfirm, setIsOpenModalConfirm] = useState(false);
 
@@ -82,14 +87,14 @@ export default function RecipeCard({ data }) {
             }}
           >
             {contents
-              .filter((i, idx) => idx < 3)
+              ?.filter((i, idx) => idx < 3)
               .map((i, idx) => `Bước ${idx + 1}. ${i}`)
               .join(". ")}
           </Typography>
         </CardContent>
         <CardContent style={{ paddingTop: 0, paddingBottom: 0 }}>
           <Typography variant="body2" color="textSecondary" component="p">
-            ...xem tiếp
+            .....xem tiếp
           </Typography>
         </CardContent>
         <CardActions disableSpacing className="flex j-space-between">
@@ -99,11 +104,7 @@ export default function RecipeCard({ data }) {
             aria-label="add to favorites"
             onClick={() => {
               if (getAccessToken()) {
-                // call API add cart
-                useNotification.Success({
-                  title: "",
-                  message: "Đã thêm vào bộ sưu tập",
-                });
+                dispatch(updateWishlist({ itemId: data._id, itemType: 2 }));
               } else {
                 setIsOpenModalConfirm(true);
               }

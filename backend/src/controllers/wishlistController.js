@@ -8,13 +8,13 @@ const getWishlist = async (req, res, next) => {
       userId,
     });
     let itemIds = wishlist.itemIds
-      .filter((item) => item.itemType === itemType)
+      .filter((item) => item.itemType == itemType)
       .map((ele) => ele.itemId)
       .map((id) => {
-        if (itemType === 1) {
+        if (itemType == 1) {
           return Food.findById(id);
         } else {
-          if (itemType === 2) {
+          if (itemType == 2) {
             return Recipe.findById(id);
           } else {
             return Course.findById(id);
@@ -54,7 +54,7 @@ const updateWishlist = async (req, res, next) => {
     res.status(200).json({
       status: 200,
       msg: "Update wishlist successfully!",
-      isRemoveStatus: !!item,
+      itemId: item ? itemId : null,
     });
   } catch (error) {
     console.log(error);

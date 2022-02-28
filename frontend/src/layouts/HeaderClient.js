@@ -1,11 +1,5 @@
 import React, { useState } from "react";
-// import { Input } from "antd";
-import {
-  // SearchOutlined,
-  HeartTwoTone,
-  PhoneOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
+import { HeartTwoTone, PhoneOutlined, UserOutlined } from "@ant-design/icons";
 import CartIcon from "assets/icons/shopping-cart.png";
 import { useHistory } from "react-router";
 import { Tooltip } from "antd";
@@ -16,12 +10,15 @@ import { AvatarMenuClient } from "components/common";
 import { getAccessToken } from "utils/authUtils";
 import ModalConfirm from "components/common/ModalConfirm";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { toggleModalCart } from "redux/actions/cart";
 
 const HeaderClient = () => {
   const history = useHistory();
-  const [openFoodsCart, setOpenFoodsCart] = useState(false);
+  const dispatch = useDispatch();
   const [isOpenModalConfirm, setIsOpenModalConfirm] = useState(false);
   const { token } = useSelector((store) => store.common);
+  const { statusModalCart } = useSelector((store) => store.cart);
 
   return (
     <div className="header-client">
@@ -30,7 +27,6 @@ const HeaderClient = () => {
           <h3 onClick={() => history.push("/")}>
             <img style={{ height: 70, width: 180 }} src={Logo} alt="" />
           </h3>
-          {/* <Input placeholder="Tìm kiếm thông tin" prefix={<SearchOutlined />} /> */}
         </div>
         <div className="header-client__inner--right">
           <Tooltip title="Bộ sưu tập" placement="bottom">
@@ -51,7 +47,7 @@ const HeaderClient = () => {
               className="btn--cart-item"
               onClick={() => {
                 if (getAccessToken()) {
-                  setOpenFoodsCart(true);
+                  dispatch(toggleModalCart(true));
                 } else {
                   setIsOpenModalConfirm(true);
                 }
@@ -78,10 +74,12 @@ const HeaderClient = () => {
           )}
         </div>
       </div>
-      <ModalCart
-        isModalVisible={openFoodsCart}
-        close={() => setOpenFoodsCart(false)}
-      />
+      {statusModalCart && (
+        <ModalCart
+          isModalVisible={true}
+          close={() => dispatch(toggleModalCart(false))}
+        />
+      )}
       <ModalConfirm
         title="Thông báo"
         message="Bạn cần đăng nhập để tiếp tục, bạn muốn tiếp tục ?"

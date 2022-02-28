@@ -25,10 +25,10 @@ const paypalPayment = async (req, res, next) => {
 
     if (order.voucherId) {
       const voucher = order.voucherData;
-      if (merchandiseSubtotal.voucher.discountOff > voucher.discountMaximum) {
+      if (merchandiseSubtotal * voucher.discountOff > voucher.discountMaximum) {
         merchandiseSubtotal -= voucher.discountMaximum;
       } else {
-        merchandiseSubtotal -= merchandiseSubtotal.voucher.discountOff;
+        merchandiseSubtotal -= merchandiseSubtotal * voucher.discountOff;
       }
     }
 
@@ -92,10 +92,9 @@ const createNewOrder = async (req) => {
     const addressTemp = address.includes("-")
       ? address.replaceAll("-", ",")
       : address;
-    console.log({ addressTemp });
 
     const customerCoordinate = await geocoder.geocode(addressTemp);
-    const myCoordinate = await geocoder.geocode(my_address);
+    const myCoordinate = await geocoder.geocode(envVariables.MY_ADDRESS);
     const distance = distanceBetween2Points(
       customerCoordinate[0].latitude,
       customerCoordinate[0].longitude,
@@ -103,14 +102,11 @@ const createNewOrder = async (req) => {
       myCoordinate[0].longitude
     );
     const shipmentFee = getShipmentFee(distance);
-    console.log({ shipmentFee });
-
     await Promise.all(
       items.map((item) =>
         Food.findOne({ _id: Mongoose.Types.ObjectId(item.itemId) })
       )
     );
-    // order items da tinh discountOff voi discountMaximum(unitPrice)
     const orderItems = items;
 
     const merchandiseSubtotal = orderItems.reduce(
@@ -224,24 +220,21 @@ const createNewOrderCourse = async (req) => {
     await Order.create({ ...data, total });
 
     // add courses into courseList of student
+    const customer = await UserDetail.findOne({ userId: req.user._id });
+    let courseListBefore = customer.courseList;
+    courseListBefore = courseListBefore.concat(
+      courses.map((item) => ({
+        ...item,
+        studentBuyAt: new Date(),
+      }))
+    );
     await UserDetail.findOneAndUpdate(
       { userId: req.user._id },
-      { courseList: courses }
+      {
+        courseList: courseListBefore,
+      }
     );
 
-    // update studentBy
-    let courseIds = items.map((i) => i.itemId);
-    for (let i = 0; i < courseIds.length; i++) {
-      const courseId = courseIds[i];
-      const course = await Promise.all([
-        Course.findByIdAndUpdate(courseId, {
-          studentBuyAt: new Date(),
-        }),
-      ]);
-      if (!course) {
-        throw createHttpError(400, "Course is not exist!");
-      }
-    }
     // create payment code
   } catch (error) {
     console.log(error);
@@ -251,15 +244,8 @@ const createNewOrderCourse = async (req) => {
 
 const paymentRedirectMoney = async (req, res, next) => {
   try {
-    const { address, items, voucherId } = req.body.order;
-    await Promise.all(
-      items.map((item) =>
-        Food.findOne({ _id: Mongoose.Types.ObjectId(item.itemId) })
-      )
-    );
-
+    const { address, items, voucherId, shipmentFee } = req.body.order;
     const orderItems = items;
-
     const merchandiseSubtotal = orderItems.reduce(
       (total, currentValue, currentIndex) => {
         return (
@@ -316,6 +302,10 @@ const paymentRedirectMoney = async (req, res, next) => {
     if (!cartItems) {
       throw createHttpError(404, "Not found food in the cart(s)");
     }
+    res.status(200).json({
+      msg: "Đã đặt hàng thành công!",
+      status: 200,
+    });
   } catch (error) {
     console.log(error);
     throw createHttpError(400, error);
@@ -334,10 +324,10 @@ const paypalPaymentCourse = async (req, res, next) => {
 
     if (order.voucherId) {
       const voucher = order.voucherData;
-      if (merchandiseSubtotal.voucher.discountOff > voucher.discountMaximum) {
+      if (merchandiseSubtotal * voucher.discountOff > voucher.discountMaximum) {
         merchandiseSubtotal -= voucher.discountMaximum;
       } else {
-        merchandiseSubtotal -= merchandiseSubtotal.voucher.discountOff;
+        merchandiseSubtotal -= merchandiseSubtotal * voucher.discountOff;
       }
     }
 
@@ -404,7 +394,7 @@ const getAllOrders = async (req, res, next) => {
     numOfPerPage = Number(numOfPerPage);
     page = page ? page : 1;
     searchText = searchText ? searchText : "";
-    orderBy = orderBy ? orderBy : "_id";
+    orderBy = orderBy ? orderBy : "createAt";
     orderType = orderType === "asc" ? 1 : -1;
     const orderQuery = { [orderBy]: orderType };
 
@@ -412,11 +402,12 @@ const getAllOrders = async (req, res, next) => {
     let totalNumOfOrders;
     let orders;
     if (searchText) {
-      if (statusId) {
+      if (statusId != 0) {
         let regex = new RegExp([searchText].join(""), "i");
         orders = await Order.find({
           paymentMethod: { $regex: regex },
           statusId,
+          orderType: 1,
         })
           .skip(start)
           .limit(numOfPerPage)
@@ -424,51 +415,52 @@ const getAllOrders = async (req, res, next) => {
         totalNumOfOrders = await Order.find({
           paymentMethod: { $regex: regex },
           statusId,
+          orderType: 1,
         }).count();
       } else {
         let regex = new RegExp([searchText].join(""), "i");
         orders = await Order.find({
           paymentMethod: { $regex: regex },
+          orderType: 1,
         })
           .skip(start)
           .limit(numOfPerPage)
           .sort(orderQuery);
         totalNumOfOrders = await Order.find({
           paymentMethod: { $regex: regex },
+          orderType: 1,
         }).count();
       }
     } else {
-      if (statusId) {
-        orders = await Order.find({ statusId })
+      if (statusId != 0) {
+        orders = await Order.find({ statusId, orderType: 1 })
           .skip(start)
           .limit(numOfPerPage)
           .sort(orderQuery);
         totalNumOfOrders = await Order.find({
           statusId,
+          orderType: 1,
         }).count();
       } else {
-        orders = await Order.find({ statusId })
+        orders = await Order.find({ orderType: 1 })
           .skip(start)
           .limit(numOfPerPage)
           .sort(orderQuery);
-        totalNumOfOrders = await Order.find({}).count();
+        totalNumOfOrders = await Order.find({ orderType: 1 }).count();
       }
     }
 
     for (let idx = 0; idx < orders.length; idx++) {
       let order = orders[idx];
       let itemsData = await Promise.all(
-        order.items.map((i) => {
-          if (order.orderType === 1) {
-            return Food.findById(i.itemId);
-          } else return Course.findById(i.itemId);
-        })
+        order.items.map((i) => Food.findById(i.itemId))
       );
       itemsData = itemsData.map((x, indexX) => ({
-        item: x,
-        ...order.items[indexX],
+        ...order.items[indexX]._doc,
+        ...x._doc,
       }));
-      orders[idx].items = itemsData;
+      const voucher = await Voucher.findById(orders[idx].voucherId);
+      orders[idx] = { ...orders[idx]._doc, items: itemsData, voucher };
     }
 
     let employeesData = orders.map((item) =>
@@ -482,9 +474,17 @@ const getAllOrders = async (req, res, next) => {
     customersData = await Promise.all(customersData);
 
     orders = orders.map((item, index) => ({
-      ...item._doc,
-      employee: employeesData[index],
-      customer: customersData[index],
+      ...item,
+      employee: employeesData[index]
+        ? {
+            ...employeesData[index]._doc,
+            _id: employeesData[index].userId,
+          }
+        : {},
+      customer: {
+        ...customersData[index]._doc,
+        _id: customersData[index].userId,
+      },
     }));
     const totalPage = parseInt(totalNumOfOrders / numOfPerPage) + 1;
     res.status(200).json({
@@ -518,10 +518,13 @@ const updateStatusOrder = async (req, res, next) => {
       await Order.findByIdAndUpdate(orderId, {
         statusId,
         deliveryAt: new Date(),
+        isPaid: true,
+        employeeId,
       });
     } else {
       await Order.findByIdAndUpdate(orderId, {
         statusId,
+        employeeId,
       });
     }
 
@@ -543,7 +546,7 @@ const updateStatusOrder = async (req, res, next) => {
     res.status(200).json({
       status: 200,
       msg: "Update order successfully!",
-      order: { ...newOrder, employee, customer },
+      order: { ...newOrder._doc, employee, customer },
     });
   } catch (error) {
     console.log(error);
@@ -553,18 +556,17 @@ const updateStatusOrder = async (req, res, next) => {
 
 const checkExistMyCourse = async (req, res, next) => {
   try {
-    const { order } = req.body;
-    const orderItems = order.items;
+    const { courseId } = req.params;
     const customer = await UserDetail.findOne({ userId: req.user._id });
-    const myCourseIds = customer.courseList.map((i) => i._id);
-    for (let index = 0; index < orderItems.length; index++) {
-      const ele = orderItems[index];
-      if (myCourseIds.includes(ele.itemId)) {
-        throw createHttpError(
-          400,
-          "Course(s) that you ordered already exist your courses"
-        );
-      }
+    const myCourseIds = customer.courseList.map((item) => item._id.toString());
+    if (myCourseIds.includes(courseId)) {
+      throw createHttpError(400, "Bạn đã mua khóa học này!");
+    }
+
+    let cartItems = await CartItem.find({ customerId: req.user._id });
+    const coursesIds = cartItems.map((item) => item.itemId.toString());
+    if (coursesIds.includes(courseId)) {
+      throw createHttpError(400, "Đã có khóa học này trong giỏ hàng!");
     }
 
     res.status(200).json({
@@ -581,74 +583,103 @@ const checkExistMyCourse = async (req, res, next) => {
 // client side
 const getOrdersByClientId = async (req, res, next) => {
   try {
-    let { page, searchText, orderBy, orderType, numOfPerPage, statusId } =
-      req.query;
+    let { page, searchText, numOfPerPage, statusId } = req.query;
     const customerId = req.user._id;
     numOfPerPage = Number(numOfPerPage);
     page = page ? page : 1;
     searchText = searchText ? searchText : "";
-    orderBy = orderBy ? orderBy : "_id";
-    orderType = orderType === "asc" ? 1 : -1;
-    const orderQuery = { [orderBy]: orderType };
 
     const start = (page - 1) * numOfPerPage;
     let totalNumOfOrders;
     let orders;
     if (searchText) {
-      let regex = new RegExp([searchText].join(""), "i");
-      orders = await Order.find({
-        paymentMethod: { $regex: regex },
-        statusId,
-        customerId,
-      })
-        .skip(start)
-        .limit(numOfPerPage)
-        .sort(orderQuery);
-      totalNumOfOrders = await Order.find({
-        paymentMethod: { $regex: regex },
-        statusId,
-        customerId,
-      }).count();
+      if (statusId == 0) {
+        let regex = new RegExp([searchText].join(""), "i");
+        orders = await Order.find({
+          paymentMethod: { $regex: regex },
+          customerId,
+          orderType: 1,
+        })
+          .skip(start)
+          .limit(numOfPerPage);
+        totalNumOfOrders = await Order.find({
+          paymentMethod: { $regex: regex },
+          customerId,
+          orderType: 1,
+        }).count();
+      } else {
+        let regex = new RegExp([searchText].join(""), "i");
+        orders = await Order.find({
+          paymentMethod: { $regex: regex },
+          statusId,
+          customerId,
+          orderType: 1,
+        })
+          .skip(start)
+          .limit(numOfPerPage);
+        totalNumOfOrders = await Order.find({
+          paymentMethod: { $regex: regex },
+          statusId,
+          customerId,
+          orderType: 1,
+        }).count();
+      }
     } else {
-      orders = await Order.find({ statusId, customerId })
-        .skip(start)
-        .limit(numOfPerPage)
-        .sort(orderQuery);
-      totalNumOfOrders = await Order.find({
-        statusId,
-        customerId,
-      }).count();
+      if (statusId == 0) {
+        orders = await Order.find({ customerId, orderType: 1 })
+          .skip(start)
+          .limit(numOfPerPage);
+        totalNumOfOrders = await Order.find({
+          customerId,
+          orderType: 1,
+        }).count();
+      } else {
+        orders = await Order.find({ statusId, customerId, orderType: 1 })
+          .skip(start)
+          .limit(numOfPerPage);
+        totalNumOfOrders = await Order.find({
+          statusId,
+          customerId,
+          orderType: 1,
+        }).count();
+      }
     }
 
     for (let idx = 0; idx < orders.length; idx++) {
       let order = orders[idx];
       let itemsData = await Promise.all(
-        order.items.map((i) => {
-          if (order.orderType === 1) {
-            return Food.findById(i.itemId);
-          } else return Course.findById(i.itemId);
-        })
+        order.items.map((i) => Food.findById(i.itemId))
       );
       itemsData = itemsData.map((x, indexX) => ({
-        item: x,
-        ...order.items[indexX],
+        ...order.items[indexX]._doc,
+        ...x._doc,
       }));
-      orders[idx].items = itemsData;
+      const voucher = await Voucher.findById(orders[idx].voucherId);
+      orders[idx] = { ...orders[idx]._doc, items: itemsData, voucher };
     }
 
     let employeesData = orders.map((item) =>
       UserDetail.findOne({ userId: item.employeeId })
     );
     employeesData = await Promise.all(employeesData);
+
     let customersData = orders.map((item) =>
       UserDetail.findOne({ userId: item.customerId })
     );
     customersData = await Promise.all(customersData);
 
     orders = orders.map((item, index) => ({
-      ...item._doc,
-      employee: employeesData[index],
-      customer: customersData[index],
+      ...item,
+      employee: employeesData[index]
+        ? {
+            ...employeesData[index]._doc,
+            _id: employeesData[index].userId,
+          }
+        : {},
+      customer: {
+        ...customersData[index]._doc,
+        _id: customersData[index].userId,
+      },
     }));
     const totalPage = parseInt(totalNumOfOrders / numOfPerPage) + 1;
     res.status(200).json({

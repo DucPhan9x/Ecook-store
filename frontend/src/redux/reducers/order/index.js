@@ -23,6 +23,9 @@ const initialState = {
   updateStatusOrder: {
     loading: false,
   },
+  checkExistCourseState: {
+    loading: false,
+  },
 };
 
 export default function reducer(state = initialState, actions) {
@@ -46,6 +49,29 @@ export default function reducer(state = initialState, actions) {
       return {
         ...state,
         paymentFood: {
+          loading: false,
+        },
+      };
+
+    case types.CHECK_EXIST_IN_MY_COURSES:
+      return {
+        ...state,
+        checkExistCourseState: {
+          loading: true,
+        },
+      };
+    case types.CHECK_EXIST_IN_MY_COURSES_SUCCEED:
+      return {
+        ...state,
+        checkExistCourseState: {
+          loading: false,
+        },
+      };
+
+    case types.CHECK_EXIST_IN_MY_COURSES_FAIL:
+      return {
+        ...state,
+        checkExistCourseState: {
           loading: false,
         },
       };
@@ -160,13 +186,13 @@ export default function reducer(state = initialState, actions) {
       const { order } = actions.payload;
       let temp = [...state.getOrdersByAdmin.orderList];
       const index = temp.findIndex((it) => it._id === order._id);
-      temp[index] = order;
+      temp[index] = { ...order };
       return {
         ...state,
         updateStatusOrder: {
           loading: false,
         },
-        getOrdersByClient: {
+        getOrdersByAdmin: {
           loading: false,
           orderList: [...temp],
         },

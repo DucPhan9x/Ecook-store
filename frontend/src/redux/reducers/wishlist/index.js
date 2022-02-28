@@ -20,20 +20,17 @@ export default function reducer(state = initialState, actions) {
         },
       };
     case types.UPDATE_WISHLIST_SUCCEED: {
+      let temp = [...state.getWishlistState.wishlists];
+      const itemId = actions.payload;
+      if (itemId) {
+        temp = temp.filter((i) => i._id !== itemId);
+      }
+
       return {
         ...state,
         updateWishlistState: {
           loading: false,
         },
-      };
-    }
-
-    case types.REMOVE_WISHLIST: {
-      // always REMOVE
-      let temp = [...state.getWishlistState.wishlists];
-      temp = temp.filter((i) => i._id !== actions.payload);
-      return {
-        ...state,
         getWishlistState: {
           wishlists: [...temp],
         },

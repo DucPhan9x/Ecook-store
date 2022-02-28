@@ -9,6 +9,13 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "react-notifications-component/dist/theme.css";
 import ReactNotification from "react-notifications-component";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
+import Geocode from "react-geocode";
+
+//config map
+Geocode.setApiKey(process.env.REACT_APP_API_MAP_KEY);
+Geocode.setLanguage("vi");
+Geocode.setRegion("VN");
+Geocode.enableDebug();
 
 ReactDOM.render(
   <React.StrictMode>

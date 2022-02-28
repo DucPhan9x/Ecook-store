@@ -352,10 +352,12 @@ const getCourseById = async (req, res, next) => {
 const getCoursesByClientId = async (req, res, next) => {
   try {
     const customer = await UserDetail.findOne({ userId: req.user._id });
-    const { searchText, isFinish } = req.query;
+    let { searchText, isFinish } = req.query;
+    searchText = searchText || "";
     //
     let courseLists = customer.courseList;
     let courseIds = courseLists.map((item) => item._id);
+
     let certifications = await Promise.all(
       courseIds.map((item) =>
         Certification.findOne({
@@ -364,19 +366,36 @@ const getCoursesByClientId = async (req, res, next) => {
         })
       )
     );
-    let coursesFinished = certifications.map((item) => item.courseId);
-    courseLists = courseLists.filter((item) => {
-      if (isFinish) {
-        coursesFinished.includes(item._id);
-      } else {
-        !coursesFinished.includes(item._id);
+    let coursesFinished;
+
+    if (certifications > 0 && certifications[0]) {
+      coursesFinished = certifications.map((item) => item.courseId);
+      if (coursesFinished.length > 0) {
+        courseLists = courseLists.filter((item) => {
+          if (isFinish === "true") {
+            coursesFinished.includes(item._id);
+          } else {
+            !coursesFinished.includes(item._id);
+          }
+        });
       }
-    });
+    } else {
+      coursesFinished = [];
+      courseLists = courseLists.filter((item) => {
+        if (isFinish === "true") {
+          return coursesFinished.includes(item._id);
+        } else {
+          return true;
+        }
+      });
+    }
 
     res.status(200).json({
       status: 200,
       msg: "Get courses successfully!",
-      courses: courseLists,
+      courses: courseLists.filter((i) =>
+        i.courseName.toLowerCase().includes(searchText.toLowerCase())
+      ),
     });
   } catch (error) {
     console.log(error);
