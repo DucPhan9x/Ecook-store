@@ -1,30 +1,54 @@
 import { Paper } from "@material-ui/core";
-import { BackPreviousPage, FormBox } from "components/common";
+import { BackPreviousPage, FormBox, SpinLoading } from "components/common";
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { uuid } from "utils/stringUtils";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  createTest,
+  getExaminationByCourseId,
+  getTestById,
+} from "redux/actions/course";
 
 const Examination = () => {
   const [data, setData] = useState({});
   const [videoURL, setVideoURL] = useState("");
+  const dispatch = useDispatch();
+  const { examinationByCourseId, createTestState } = useSelector(
+    (store) => store.course
+  );
+  const [myTest, setMyTest] = useState({});
+  const params = new URLSearchParams(window.location.search);
+  const courseId = params.get("courseId");
+  const [l1, setL1] = useState(false);
 
   useEffect(() => {
     document.title = "Thi cuối khóa | ECook";
     window.scrollTo(0, 0);
 
-    setData({
-      _id: uuid(),
-      name: "Món Á cơ bản",
-      numOfStars: 4,
-      description: "Đây là khóa học chủ yếu tập trung vào các món ăn Châu Á.",
-      examinationContent: "Bò hầm tiêu xanh",
-      regulation:
-        "Thời gian 45 phút, quay video từ khâu sơ chế đến khi thành phẩm.",
-      criteria: "An toan ve sinh thuc pham, trang tri dep mat",
-      createAt: Date.now(),
-      amountStudent: 12,
-    });
-  }, []);
+    dispatch(getExaminationByCourseId(courseId));
+    setL1(true);
+    dispatch(
+      getTestById(courseId, (res) => {
+        setL1(false);
+        if (res.status === 200) {
+          setMyTest(res.test);
+        }
+      })
+    );
+  }, [dispatch, courseId]);
+
+  console.log(myTest);
+
+  useEffect(() => {
+    setData(examinationByCourseId?.data);
+  }, [examinationByCourseId]);
+
+  useEffect(() => {
+    if (Object.keys(myTest)?.length > 0) {
+      setVideoURL(myTest?.videoUrlSubmit);
+    }
+  }, [myTest]);
+
   return (
     <div className="examination-container">
       <BackPreviousPage />
@@ -35,7 +59,7 @@ const Examination = () => {
           </h2>
           <div className="block__data">
             <label>Đề bài</label>
-            <span>- {data?.examinationContent}</span>
+            <span>- {data?.content}</span>
           </div>
           <div className="block__data">
             <label>Quy định</label>
@@ -47,31 +71,66 @@ const Examination = () => {
           </div>
         </Paper>
         <Paper className="examination-container-body--right">
-          <div>
-            <label>Copy link bài thi vào đây:</label>
-            <FormBox
-              propsInput={{
-                name: "videoUrl",
-                placeholder: "https://...",
-                onChange: (e) => setVideoURL(e.target.value),
-                value: videoURL,
-                disabled: false,
-              }}
-            />
-          </div>
+          {!!!myTest?.videoUrlSubmit ? (
+            <div className="flex items-center" style={{ marginBottom: 12 }}>
+              <label style={{ marginRight: 5 }}>
+                Copy link bài thi vào đây:
+              </label>
+              <FormBox
+                propsInput={{
+                  name: "videoUrl",
+                  placeholder: "https://...",
+                  onChange: (e) => setVideoURL(e.target.value),
+                  value: videoURL,
+                  disabled: !!myTest?.videoUrlSubmit,
+                }}
+              />
+            </div>
+          ) : (
+            <div>
+              <iframe
+                src={myTest?.videoUrlSubmit}
+                frameBorder="0"
+                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                controls
+                title="Embedded youtube"
+              />
+              <div className="center" style={{ marginTop: 12, color: "gray" }}>
+                Bạn đã hoàn thành bài thi, đang chờ duyệt....
+              </div>
+            </div>
+          )}
+
           <div className="block--actions-submit">
             {/* <button className="btn btn-client block--actions-submit--item">
-              Lưu nháp
+              Nộp lại
             </button> */}
-            <button
-              className="btn btn-client"
-              style={{ color: "white", background: "blue" }}
-            >
-              Nộp bài
-            </button>
+            {!!!myTest?.videoUrlSubmit && (
+              <button
+                disabled={!!myTest?.videoUrlSubmit}
+                className={`btn btn-client ${
+                  !!myTest?.videoUrlSubmit ? "btn-disabled" : ""
+                }`}
+                style={{ color: "white", background: "blue" }}
+                onClick={() => {
+                  dispatch(
+                    createTest({
+                      courseId: courseId,
+                      videoUrlSubmit: videoURL,
+                    })
+                  );
+                }}
+              >
+                Nộp bài
+              </button>
+            )}
           </div>
         </Paper>
       </div>
+      {(examinationByCourseId?.loading || createTestState?.loading || l1) && (
+        <SpinLoading />
+      )}
     </div>
   );
 };

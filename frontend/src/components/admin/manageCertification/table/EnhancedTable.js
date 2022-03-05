@@ -167,7 +167,7 @@ export default function EnhancedTable({ queries, setQueries }) {
                 <label>Sinh ngày:</label>
                 <FormControl>
                   <span>
-                    {moment(certificationSelected?.student?.dayOfBirth).format(
+                    {moment(certificationSelected?.student?.dateOfBirth).format(
                       "DD/MM/YYYY"
                     )}
                   </span>
@@ -179,7 +179,7 @@ export default function EnhancedTable({ queries, setQueries }) {
                   <span>{certificationSelected?.course?.courseName}</span>
                 </FormControl>
               </div>
-              <div className="block-input-info-student-course">
+              {/* <div className="block-input-info-student-course">
                 <div className="flex">
                   <label>Từ ngày</label>
                   <FormControl>
@@ -200,11 +200,11 @@ export default function EnhancedTable({ queries, setQueries }) {
                     </span>
                   </FormControl>
                 </div>
-              </div>
+              </div> */}
               <div className="block-input-info-student-course">
                 <label>Xếp loại:</label>
                 <FormControl>
-                  <span>{certificationSelected.evaluate}</span>
+                  <span>{certificationSelected.graded}</span>
                 </FormControl>
               </div>
             </div>

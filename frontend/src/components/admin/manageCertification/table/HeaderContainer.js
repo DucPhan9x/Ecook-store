@@ -18,18 +18,18 @@ const headCells = [
     disablePadding: false,
     label: "Khóa học",
   },
-  {
-    id: "startDate",
-    numeric: false,
-    disablePadding: false,
-    label: "Ngày bắt đầu",
-  },
-  {
-    id: "endDate",
-    numeric: false,
-    disablePadding: false,
-    label: "Ngày kết thúc",
-  },
+  // {
+  //   id: "startDate",
+  //   numeric: false,
+  //   disablePadding: false,
+  //   label: "Ngày bắt đầu",
+  // },
+  // {
+  //   id: "endDate",
+  //   numeric: false,
+  //   disablePadding: false,
+  //   label: "Ngày kết thúc",
+  // },
   {
     id: "positionCreate",
     numeric: false,

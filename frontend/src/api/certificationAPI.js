@@ -76,14 +76,13 @@ const getCertificationByClientIdAndCourseId = (data) => {
   const token = getAccessToken();
   let myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${token}`);
-  const { customerId, courseId } = data;
 
   let requestOptions = {
     headers: myHeaders,
     method: "GET",
   };
   return fetch(
-    `${url}certification/client?customerId=${customerId}&courseId=${courseId}`,
+    `${url}certification/by/client?courseId=${data}`,
     requestOptions
   );
 };

@@ -7,7 +7,7 @@ import MailOutlineIcon from "@material-ui/icons/MailOutline";
 import moment from "moment";
 import StepComponent from "components/common/StepComponent";
 import Map from "components/common/Map";
-import { formatCurrency } from "utils/priceUtils";
+import { formatCurrency, getPriceItem } from "utils/priceUtils";
 import { useSelector } from "react-redux";
 // import InfoIcon from "@material-ui/icons/Info";
 // import { IconButton } from "@material-ui/core";
@@ -129,14 +129,21 @@ const ModalEdit = ({ isModalVisible, handleSubmit, close, selectedItem }) => {
                 style={{ alignItems: "flex-start" }}
               >
                 {form.items.map((item, index) => (
-                  <div className="flex items-center">
-                    <span>
+                  <div className="flex items-center j-space-between full-width">
+                    <span style={{ width: 300 }}>
                       {index + 1}. &nbsp; {item.name} (1
                       {item.unit})
                     </span>
                     <span>
                       &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                      {formatCurrency(item.quantity * item.unitPrice)}
+                      {formatCurrency(
+                        getPriceItem(
+                          item.discountOff,
+                          item.unitPrice,
+                          item.discountMaximum,
+                          item.quantity
+                        )
+                      )}
                     </span>
                   </div>
                 ))}
@@ -144,7 +151,15 @@ const ModalEdit = ({ isModalVisible, handleSubmit, close, selectedItem }) => {
             </div>
             <div className="block_field-modal-edit-order">
               <label style={{ whiteSpace: "nowrap" }}>Địa chỉ giao hàng</label>
-              <span>{form?.address}</span>
+              <span
+                style={{
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                }}
+              >
+                {form?.address}
+              </span>
             </div>
             <div className="block_field-modal-edit-order">
               <label>Ngày lập đơn</label>

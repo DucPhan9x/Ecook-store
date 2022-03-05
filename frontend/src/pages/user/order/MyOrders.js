@@ -11,11 +11,11 @@ import ModalDetailOrder from "./ModalDetailOrder";
 import PaidIcon from "assets/icons/paid.jpg";
 import UnPaidIcon from "assets/icons/unpaid.jpg";
 
-import { IconButton } from "@material-ui/core";
-import { PopoverStickOnHover, SpinLoading } from "components/common";
-import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
-import PhoneAndroidIcon from "@material-ui/icons/PhoneAndroid";
-import MailOutlineIcon from "@material-ui/icons/MailOutline";
+// import { IconButton } from "@material-ui/core";
+import { SpinLoading } from "components/common";
+// import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
+// import PhoneAndroidIcon from "@material-ui/icons/PhoneAndroid";
+// import MailOutlineIcon from "@material-ui/icons/MailOutline";
 import EmptyOrder from "assets/images/empty-order.png";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllOrdersByClient } from "redux/actions/order";
@@ -84,7 +84,7 @@ const RowContent = ({ row, index }) => {
       </td>
       <td style={{ width: 150 }}>
         <span>{employee?.fullName || "Chưa cập nhật"}</span>
-        {employee?._id && (
+        {/* {employee?._id && (
           <PopoverStickOnHover
             component={
               <div className="popover-show-info-student-container">
@@ -109,7 +109,7 @@ const RowContent = ({ row, index }) => {
               />
             </IconButton>
           </PopoverStickOnHover>
-        )}
+        )} */}
       </td>
       <td>{formatCurrency(total)}</td>
       <td style={{ width: 220 }}>

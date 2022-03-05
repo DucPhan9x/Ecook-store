@@ -40,12 +40,12 @@ const BodyContainer = (props) => {
                 </TableCell>
                 <TableCell align="left">{row.student?.fullName}</TableCell>
                 <TableCell align="left">{row.course?.courseName}</TableCell>
-                <TableCell align="left">
+                {/* <TableCell align="left">
                   {moment(row.startDate).format("DD/MM/YYYY")}
                 </TableCell>
                 <TableCell align="left">
                   {moment(row.endDate).format("DD/MM/YYYY")}
-                </TableCell>
+                </TableCell> */}
                 <TableCell align="left">{row.positionCreate}</TableCell>
                 <TableCell align="left">
                   {moment(row.createAt).format("DD/MM/YYYY")}

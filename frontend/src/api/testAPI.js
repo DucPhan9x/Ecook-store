@@ -20,7 +20,7 @@ const updateTestById = (data) => {
   let myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${token}`);
   myHeaders.append("Content-Type", `application/json`);
-
+  console.log(data);
   let requestOptions = {
     headers: myHeaders,
     method: "PUT",

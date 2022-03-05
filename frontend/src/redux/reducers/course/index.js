@@ -249,7 +249,7 @@ export default function reducer(state = initialState, actions) {
       };
     case types.UPDATE_TEST_SUCCEED: {
       const testsTemp = actions.payload;
-      let testListTemp = { ...state.getListTestState.testList };
+      let testListTemp = [...state.getListTestState.testList];
       const index = testListTemp.findIndex(
         (item) => item._id === testsTemp._id
       );

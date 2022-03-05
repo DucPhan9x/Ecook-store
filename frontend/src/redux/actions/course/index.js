@@ -143,7 +143,7 @@ const getListCourseByInstructor = (data, res = () => {}) => {
   return (dispatch) => {
     dispatch({ type: types.GET_LIST_COURSE_PER_PAGE });
     courseAPI
-      .getListCourseByInstructor(data)
+      .getListCourseByInstructorIdAdmin(data)
       .then((response) => response.json())
       .then((result) => {
         if (result.status === 200) {
@@ -306,14 +306,14 @@ const updateTestById = (data) => {
       .then((result) => {
         if (result.status === 200) {
           dispatch({
-            type: types.UPDATE_COURSE_BY_ID_SUCCEED,
+            type: types.UPDATE_TEST_SUCCEED,
             payload: result.test,
           });
           useNotification.Success({
             message: "Update test successfully!",
           });
         } else {
-          dispatch({ type: types.UPDATE_COURSE_BY_ID_FAIL });
+          dispatch({ type: types.UPDATE_TEST_FAIL });
           useNotification.Error({
             title: "Error",
             message: result.msg || "Update test failed!",
@@ -321,7 +321,8 @@ const updateTestById = (data) => {
         }
       })
       .catch((error) => {
-        dispatch({ type: types.UPDATE_COURSE_BY_ID_FAIL });
+        console.log(error);
+        dispatch({ type: types.UPDATE_TEST_FAIL });
         useNotification.Error({
           title: "Error",
           message: "Error connected to server!",
@@ -329,7 +330,7 @@ const updateTestById = (data) => {
       });
   };
 };
-const getTestById = (courseId) => {
+const getTestById = (courseId, res = () => {}) => {
   return (dispatch) => {
     dispatch({ type: types.GET_TEST_ID });
     testAPI
@@ -341,9 +342,7 @@ const getTestById = (courseId) => {
             type: types.GET_TEST_ID_SUCCEED,
             payload: result.test,
           });
-          useNotification.Success({
-            message: "Get test successfully!",
-          });
+          res(result);
         } else {
           dispatch({ type: types.GET_TEST_ID_FAIL });
           useNotification.Error({

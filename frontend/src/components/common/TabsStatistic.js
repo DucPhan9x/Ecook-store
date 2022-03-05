@@ -97,19 +97,19 @@ export default function TabsStatistic({ data }) {
             popularFoods?.map((food, index) => (
               <div key={index} className="item-favorite-block">
                 <img
-                  style={{ width: 120, height: 120, borderRadius: 12 }}
+                  style={{ width: 140, height: 140, borderRadius: 12 }}
                   src={food.imageUrl}
                   alt=""
                 />
                 <span>{food.name}</span>
                 <span>
-                  Lượt mua: {food.numOfFeedbacks}
+                  Lượt mua: {food.amountOfBuy}
                   <img
                     style={{
                       marginLeft: 4,
                       marginBottom: 8,
-                      width: 44,
-                      height: 44,
+                      width: 50,
+                      height: 50,
                     }}
                     src={DevelopIcon}
                     alt=""
@@ -157,12 +157,21 @@ export default function TabsStatistic({ data }) {
           {popularCourses?.length > 0 ? (
             popularCourses?.map((c, index) => (
               <div key={index} className="item-favorite-block">
-                <video controls style={{ width: 150, height: 150 }}>
-                  <source src={c.videoUrls[0].videoUrl} />
-                </video>
+                <iframe
+                  style={{ width: 300 }}
+                  src={c?.videoList[0]?.videoUrl}
+                  frameBorder="0"
+                  allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  controls
+                  title="Embedded youtube"
+                />
+                {/* <video controls style={{ width: 150, height: 150 }}>
+                  <source src={c?.videoList[0]?.videoUrl} />
+                </video> */}
                 <span>{c.name}</span>
                 <span>
-                  Số lượng học viên: {c.amountStudent}
+                  Số lượng học viên: {c.amountOfBuy}
                   <GroupIcon
                     style={{ marginLeft: 8, marginBottom: 6 }}
                     color="secondary"

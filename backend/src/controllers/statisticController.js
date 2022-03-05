@@ -7,7 +7,8 @@ const { getMonthsByquater, getQuaterByMonth, getDateInWeek } = dateFunction;
 const getRevenuesInfo = async (req, res, next) => {
   try {
     let getInfoBy = Number(req.params.getInfoBy);
-    const today = new Date();
+    let today = new Date();
+    today = new Date(today.getTime() + 7 * 60 * 60 * 1000);
     var revenues = [];
     let startDate;
     let endDate;
@@ -39,7 +40,9 @@ const getRevenuesInfo = async (req, res, next) => {
         }
         orders = orders.map((x) => {
           return {
-            day: new Date(x.deliveryAt).getDay(),
+            day: new Date(
+              new Date(x.deliveryAt).getTime() + 7 * 60 * 60 * 1000
+            ).getDay(),
             revenue: x.total,
           };
         });
@@ -67,8 +70,12 @@ const getRevenuesInfo = async (req, res, next) => {
         year = Number(year);
         console.log("Months: ", month);
 
-        startDate = new Date(year, month - 1, 1);
-        endDate = new Date(year, month, 0);
+        startDate = new Date(
+          new Date(year, month - 1, 1).getTime() - 7 * 60 * 60 * 1000
+        );
+        endDate = new Date(
+          new Date(year, month, 0).getTime() - 7 * 60 * 60 * 1000
+        );
         startDate.setHours(0, 0, 0, 0);
         endDate.setHours(23, 59, 59, 999);
         orders = await Order.find({
@@ -80,7 +87,10 @@ const getRevenuesInfo = async (req, res, next) => {
         });
         orders = orders.map((x) => {
           return {
-            date: new Date(x.deliveryAt).getDate() - 1,
+            date:
+              new Date(
+                new Date(x.deliveryAt).getTime() + 7 * 60 * 60 * 1000
+              ).getDate() - 1,
             revenue: x.total,
           };
         });
@@ -120,7 +130,9 @@ const getRevenuesInfo = async (req, res, next) => {
         });
         orders = orders.map((x) => {
           return {
-            month: new Date(x.deliveryAt).getMonth(),
+            month: new Date(
+              new Date(x.deliveryAt).getTime() + 7 * 60 * 60 * 1000
+            ).getMonth(),
             revenue: x.total,
           };
         });
@@ -148,7 +160,9 @@ const getRevenuesInfo = async (req, res, next) => {
         });
         orders = orders.map((x) => {
           return {
-            month: new Date(x.deliveryAt).getMonth(),
+            month: new Date(
+              new Date(x.deliveryAt).getTime() + 7 * 60 * 60 * 1000
+            ).getMonth(),
             revenue: x.total,
           };
         });
@@ -252,7 +266,7 @@ const getGeneralInfo = async (req, res, next) => {
         $sort: { count: -1 },
       },
     ]);
-
+    console.log("xx: ", popularCourseIds);
     if (popularCourseIds.length > 20)
       popularCourseIds = popularCourseIds.slice(0, 20);
     let popularCourses = await Promise.all(
@@ -261,7 +275,7 @@ const getGeneralInfo = async (req, res, next) => {
     popularCourses = popularCourses.map((item, index) => {
       return {
         ...item._doc,
-        amountOfBuy: popularFoodIds[index].count,
+        amountOfBuy: popularCourseIds[index].count,
       };
     });
 

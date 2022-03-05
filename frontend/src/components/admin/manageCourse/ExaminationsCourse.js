@@ -3,7 +3,6 @@ import {
   BackPreviousPage,
   PopoverStickOnHover,
   SpinLoading,
-  YoutubeEmbed,
 } from "components/common";
 import { DropdownCommon } from "components/common/dropdown";
 import React, { useEffect, useRef, useState } from "react";
@@ -18,19 +17,19 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import PhoneAndroidIcon from "@material-ui/icons/PhoneAndroid";
-import MailOutlineIcon from "@material-ui/icons/MailOutline";
 import BusinessIcon from "@material-ui/icons/Business";
 import { Modal } from "antd";
-import SignaturePad from "react-signature-canvas";
-import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
+// import SignaturePad from "react-signature-canvas";
+// import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import UploadImage from "components/common/UploadImage";
-import { isEmpty } from "validator";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import {
   getExaminationByCourseId,
   getListTestPerPage,
+  updateTestById,
 } from "redux/actions/course";
+import { createCertification } from "redux/actions/certification";
 
 const ExaminationsCourse = () => {
   const [data, setData] = useState({});
@@ -39,6 +38,9 @@ const ExaminationsCourse = () => {
   const { courseID } = useParams();
   const { examinationByCourseId, getListTestState, updateTestState } =
     useSelector((store) => store.course);
+  const { createCertificationState } = useSelector(
+    (store) => store.certification
+  );
   const [queries, setQueries] = useState({
     orderBy: "createAt",
     orderType: "asc",
@@ -48,6 +50,8 @@ const ExaminationsCourse = () => {
   });
 
   useEffect(() => {
+    document.title = "Quản lý bài thi";
+    window.scrollTo(0, 0);
     dispatch(getExaminationByCourseId(courseID));
   }, [courseID, dispatch]);
 
@@ -67,7 +71,15 @@ const ExaminationsCourse = () => {
   let padRef = useRef(null);
 
   const handleSubmitCertification = () => {
-    console.log("Submit, Call API post certification");
+    // courseId, studentId, positionCreate, graded, endDate
+    dispatch(
+      createCertification({
+        studentId: testSelected.student._id,
+        courseId: courseID,
+        positionCreate: form.positionCreate,
+        graded: form.evaluate,
+      })
+    );
   };
 
   function handleClear() {
@@ -100,18 +112,6 @@ const ExaminationsCourse = () => {
     setForm({ ...form, imageUrl: temp });
   };
 
-  const validate = () => {
-    const errorState = {};
-    // check validate
-    if (isEmpty(form.studentName)) {
-      errorState.studentName = "Vui lòng nhập vào, không được để trống!";
-    }
-    if (isEmpty(form.courseName)) {
-      errorState.courseName = "Vui lòng nhập vào, không được để trống!";
-    }
-
-    return errorState;
-  };
   const handleChange = (event) => {
     setForm({ ...form, [event.target.name]: event.target.value });
   };
@@ -122,22 +122,27 @@ const ExaminationsCourse = () => {
     });
   };
 
-  const handleUpdateEvaluate = (event) => {
+  const handleUpdateEvaluate = (event, c) => {
     event.preventDefault();
-    const errorState = validate();
-    if (Object.keys(errorState).length > 0) {
-      return setError(errorState);
-    }
-
+    dispatch(
+      updateTestById({
+        isPass: c.isPass,
+        evaluate: c.evaluate,
+        studentId: c.studentId,
+        courseId: courseID,
+      })
+    );
     // const formData = {
     //   email: form.email,
     //   password: form.password,
     // };
     // // handleSubmit(formData);
   };
+  const [testSelected, setTestSelected] = useState({});
 
   return (
     <div className="examinations-course-container">
+      {createCertificationState?.loading && <SpinLoading />}
       <h3 className="title-examination-course">
         Danh sách các bài thi cuối khóa học: {data?.courseName}
       </h3>
@@ -219,10 +224,10 @@ const ExaminationsCourse = () => {
                         <PhoneAndroidIcon />
                         <span>{c?.student.phoneNumber}</span>
                       </div>
-                      <div className="popover-show-info-student-container--item">
+                      {/* <div className="popover-show-info-student-container--item">
                         <MailOutlineIcon />
                         <span>{c?.student.email}</span>
-                      </div>
+                      </div> */}
                       <div className="popover-show-info-student-container--item">
                         <BusinessIcon />
                         <span>{c?.student.address}</span>
@@ -242,12 +247,19 @@ const ExaminationsCourse = () => {
                 </PopoverStickOnHover>
               </div>
               <span className="time-submit">
-                {moment(c?.creatAt).format("DD/MM/YYYY [-] HH:mm:ss")}
+                {moment(c?.createAt).format("DD/MM/YYYY [-] HH:mm:ss")}
               </span>
             </div>
             <div className="examinations-course-container-submit-video-bottom">
               <div className="examinations-course-container-submit-video-bottom--left flex flex-col">
-                <YoutubeEmbed videoUrl={c?.videoUrlSubmit} />
+                <iframe
+                  src={c?.videoUrlSubmit}
+                  frameBorder="0"
+                  allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  controls
+                  title="Embedded youtube"
+                />
               </div>
 
               <div className="examinations-course-container-submit-video-bottom--right flex">
@@ -259,13 +271,13 @@ const ExaminationsCourse = () => {
                       name="evaluate"
                       value={c.isPass ? "pass" : "fail"}
                       onChange={(e) => {
-                        let temp = [...data];
+                        let temp = [...tests];
                         temp.forEach((item) => {
                           if (item._id === c._id) {
                             item.isPass = e.target.value === "pass";
                           }
                         });
-                        // setData(temp);
+                        setTests(temp);
                       }}
                       className="flex flex-row"
                     >
@@ -293,11 +305,11 @@ const ExaminationsCourse = () => {
                         type: "textarea",
                         name: "feedbacks",
                         onChange: (e) => {
-                          let temp = [...data];
-                          temp[index].feedbacks = e.target.value;
-                          // setData(temp);
+                          let temp = [...tests];
+                          temp[index].evaluate = e.target.value;
+                          setTests(temp);
                         },
-                        value: c.feedbacks,
+                        value: c.evaluate,
                         disabled: false,
                       }}
                     />
@@ -305,7 +317,7 @@ const ExaminationsCourse = () => {
                   <ReForm>
                     <Button
                       className="btn-admin btn-update-exam"
-                      onClick={handleUpdateEvaluate}
+                      onClick={(e) => handleUpdateEvaluate(e, c)}
                     >
                       Cập nhật
                     </Button>
@@ -317,7 +329,10 @@ const ExaminationsCourse = () => {
                     !c.isPass ? "btn-disabled" : ""
                   }`}
                   disabled={!c.isPass}
-                  onClick={() => setOpenModalCertification(true)}
+                  onClick={() => {
+                    setTestSelected(c);
+                    setOpenModalCertification(true);
+                  }}
                 >
                   Cấp chứng nhận
                 </Button>
@@ -330,164 +345,168 @@ const ExaminationsCourse = () => {
           Không có bài thi nào được tìm thấy!
         </div>
       )}
-      <Modal
-        className="certification-form-container"
-        title="Chứng nhận nấu ăn"
-        visible={openModalCertification}
-        onOk={handleSubmitCertification}
-        onCancel={() => {
-          setOpenModalCertification(false);
-        }}
-      >
-        <div className="certification-form">
-          <div className="certification-form--title flex flex-col items-center">
-            <span>CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</span>
-            <span>Độc lập - Tự do - Hạnh phúc</span>
-          </div>
-          <div className="certification-form-people-sent flex flex-col items-center">
-            <span>Hệ thống đào tạo hướng dẫn nấu ăn</span>
-            <span>ECook</span>
-          </div>
-          <div className="chung-chi-title">GIẤY CHỨNG NHẬN</div>
-          <div className="certification-form--body">
-            <div
-              className="add-edit-recipe-container-bottom--left"
-              style={{ width: "25%", height: 180, border: "1px dashed gray" }}
-            >
-              {form?.imageUrl ? (
-                <img src={form?.imageUrl} alt="avatar" />
-              ) : (
-                <span style={{ fontSize: 20, color: "gray" }}>Ảnh 3x4</span>
-              )}
-              <UploadImage onChangeImage={handleChangeImage} />
+      {!!openModalCertification && (
+        <Modal
+          className="certification-form-container"
+          title="Chứng nhận nấu ăn"
+          visible={openModalCertification}
+          onOk={handleSubmitCertification}
+          onCancel={() => {
+            setOpenModalCertification(false);
+            setTestSelected({});
+          }}
+        >
+          <div className="certification-form">
+            <div className="certification-form--title flex flex-col items-center">
+              <span>CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</span>
+              <span>Độc lập - Tự do - Hạnh phúc</span>
             </div>
-            <div className="certification-form--body-main">
-              <div className="block-input-info-student-course">
-                <label>Học viên:</label>
-                <FormControl>
-                  <Input
-                    name="studentName"
-                    id="standard-adornment-weight"
-                    value={form.studentName}
-                    onFocus={handleFocus}
-                    onChange={handleChange}
-                  />
-                </FormControl>
+            <div className="certification-form-people-sent flex flex-col items-center">
+              <span>Hệ thống đào tạo hướng dẫn nấu ăn</span>
+              <span>ECook</span>
+            </div>
+            <div className="chung-chi-title">GIẤY CHỨNG NHẬN</div>
+            <div className="certification-form--body">
+              <div
+                className="add-edit-recipe-container-bottom--left"
+                style={{ width: "25%", height: 180, border: "1px dashed gray" }}
+              >
+                {testSelected?.student?.imageUrl ? (
+                  <img src={testSelected?.student?.imageUrl} alt="avatar" />
+                ) : (
+                  <span style={{ fontSize: 20, color: "gray" }}>Ảnh 3x4</span>
+                )}
+                <UploadImage onChangeImage={handleChangeImage} />
               </div>
-              <div className="block-input-info-student-course">
-                <label>Sinh ngày:</label>
-                <FormControl>
-                  <Input
-                    type="date"
-                    name="studentDayOfBirth"
-                    id="standard-adornment-weight"
-                    value={form.studentDayOfBirth}
-                    onChange={handleChange}
-                    onFocus={handleFocus}
-                  />
-                </FormControl>
-              </div>
-              <div className="block-input-info-student-course">
-                <label>Đã hoàn thành khóa học:</label>
-                <FormControl>
-                  <Input
-                    name="courseName"
-                    id="standard-adornment-weight"
-                    value={form.courseName}
-                    onChange={handleChange}
-                    onFocus={handleFocus}
-                  />
-                </FormControl>
-              </div>
-              <div className="block-input-info-student-course">
-                <div className="flex">
-                  <label>Từ ngày</label>
+              <div className="certification-form--body-main">
+                <div className="block-input-info-student-course">
+                  <label>Học viên:</label>
+                  <FormControl>
+                    <Input
+                      name="studentName"
+                      id="standard-adornment-weight"
+                      value={testSelected?.student?.fullName}
+                      onFocus={handleFocus}
+                      onChange={handleChange}
+                    />
+                  </FormControl>
+                </div>
+                <div className="block-input-info-student-course">
+                  <label>Sinh ngày:</label>
                   <FormControl>
                     <Input
                       type="date"
-                      style={{ paddingBottom: 0 }}
-                      name="startDate"
+                      name="studentDayOfBirth"
                       id="standard-adornment-weight"
-                      value={form.startDate}
+                      value={moment(testSelected?.student?.dateOfBirth).format(
+                        "YYYY-MM-DD"
+                      )}
                       onChange={handleChange}
                       onFocus={handleFocus}
                     />
                   </FormControl>
                 </div>
-                <div className="flex">
-                  <label style={{ padding: "0 2px" }}>đến ngày</label>
+                <div className="block-input-info-student-course">
+                  <label>Đã hoàn thành khóa học:</label>
                   <FormControl>
                     <Input
-                      type="date"
-                      style={{ paddingBottom: 0 }}
-                      name="endDate"
+                      name="courseName"
                       id="standard-adornment-weight"
-                      value={form.endDate}
+                      value={testSelected?.course?.courseName}
+                      onChange={handleChange}
+                      onFocus={handleFocus}
+                    />
+                  </FormControl>
+                </div>
+                {/* <div className="block-input-info-student-course">
+                  <div className="flex">
+                    <label>Từ ngày</label>
+                    <FormControl>
+                      <Input
+                        type="date"
+                        style={{ paddingBottom: 0 }}
+                        name="startDate"
+                        id="standard-adornment-weight"
+                        value={form.startDate}
+                        onChange={handleChange}
+                        onFocus={handleFocus}
+                      />
+                    </FormControl>
+                  </div>
+                  <div className="flex">
+                    <label style={{ padding: "0 2px" }}>đến ngày</label>
+                    <FormControl>
+                      <Input
+                        type="date"
+                        style={{ paddingBottom: 0 }}
+                        name="endDate"
+                        id="standard-adornment-weight"
+                        value={form.endDate}
+                        onChange={handleChange}
+                        onFocus={handleFocus}
+                      />
+                    </FormControl>
+                  </div>
+                </div> */}
+                <div className="block-input-info-student-course">
+                  <label>Xếp loại:</label>
+                  <FormControl>
+                    <Input
+                      name="evaluate"
+                      id="standard-adornment-weight"
+                      value={form.evaluate}
                       onChange={handleChange}
                       onFocus={handleFocus}
                     />
                   </FormControl>
                 </div>
               </div>
-              <div className="block-input-info-student-course">
-                <label>Xếp loại:</label>
-                <FormControl>
-                  <Input
-                    name="evaluate"
-                    id="standard-adornment-weight"
-                    value={form.evaluate}
-                    onChange={handleChange}
-                    onFocus={handleFocus}
-                  />
-                </FormControl>
-              </div>
             </div>
           </div>
-        </div>
-        <div className="block--signature-certification">
-          <div className="block--signature-certification--title">
-            <FormControl>
-              <Input
-                name="positionCreate"
-                id="standard-adornment-weight"
-                value={form.positionCreate}
-                onChange={handleChange}
-                onFocus={handleFocus}
-              />
-            </FormControl>
-            <span>,</span>
-            <span>ngày</span>
-            <FormControl>
-              <Input
-                name="createAt_date"
-                id="standard-adornment-weight"
-                value={form.createAt_date}
-                onChange={handleChange}
-                onFocus={handleFocus}
-              />
-            </FormControl>
-            <span>tháng</span>
-            <FormControl>
-              <Input
-                name="createAt_month"
-                id="standard-adornment-weight"
-                value={form.createAt_month}
-                onChange={handleChange}
-                onFocus={handleFocus}
-              />
-            </FormControl>
-            <span>năm</span>
-            <FormControl>
-              <Input
-                name="createAt_year"
-                id="standard-adornment-weight"
-                value={form.createAt_year}
-                onChange={handleChange}
-                onFocus={handleFocus}
-              />
-            </FormControl>
-          </div>
-          <div className="flex">
+          <div className="block--signature-certification">
+            <div className="block--signature-certification--title">
+              <FormControl>
+                <Input
+                  name="positionCreate"
+                  id="standard-adornment-weight"
+                  value={form.positionCreate}
+                  onChange={handleChange}
+                  onFocus={handleFocus}
+                />
+              </FormControl>
+              <span>,</span>
+              <span>ngày</span>
+              <FormControl>
+                <Input
+                  name="createAt_date"
+                  id="standard-adornment-weight"
+                  value={form.createAt_date}
+                  onChange={handleChange}
+                  onFocus={handleFocus}
+                />
+              </FormControl>
+              <span>tháng</span>
+              <FormControl>
+                <Input
+                  name="createAt_month"
+                  id="standard-adornment-weight"
+                  value={form.createAt_month}
+                  onChange={handleChange}
+                  onFocus={handleFocus}
+                />
+              </FormControl>
+              <span>năm</span>
+              <FormControl>
+                <Input
+                  name="createAt_year"
+                  id="standard-adornment-weight"
+                  value={form.createAt_year}
+                  onChange={handleChange}
+                  onFocus={handleFocus}
+                />
+              </FormControl>
+            </div>
+            {/* <div className="flex">
             <SignaturePad
               ref={padRef}
               onEnd={(e) => console.log(e)}
@@ -500,9 +519,10 @@ const ExaminationsCourse = () => {
             <IconButton onClick={handleClear} style={{ alignSelf: "center" }}>
               <DeleteOutlineIcon />
             </IconButton>
+          </div> */}
           </div>
-        </div>
-      </Modal>
+        </Modal>
+      )}
       {(examinationByCourseId?.loading ||
         getListTestState.loading ||
         updateTestState.loading) && <SpinLoading />}

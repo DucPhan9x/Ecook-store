@@ -84,8 +84,6 @@ const Statistics = () => {
       });
   }, [dispatch, filter]);
 
-  console.log(revenuesData);
-
   return (
     <div className="statistic-container">
       {(revenuesLoading || generalLoading) && <SpinLoading />}

@@ -166,22 +166,25 @@ const getCertificationById = (certificationId) => {
   };
 };
 
-const getCertificationByClientIdAndCourseId = (data) => {
+const getCertificationByClientIdAndCourseId = (data, res = () => {}) => {
   return (dispatch) => {
     dispatch({ type: types.GET_CERTIFICATION_BY_ID });
     certificationAPI
       .getCertificationByClientIdAndCourseId(data)
       .then((response) => response.json())
       .then((result) => {
+        res(result);
+
         if (result.status === 200) {
           dispatch({
             type: types.GET_CERTIFICATION_BY_ID_SUCCEED,
             payload: result.certification,
           });
+          res(result);
         } else {
           dispatch({ type: types.GET_CERTIFICATION_BY_ID_FAIL });
           useNotification.Error({
-            title: "Error",
+            title: "Thông báo",
             message: result.msg || "Get certification failed!",
           });
         }

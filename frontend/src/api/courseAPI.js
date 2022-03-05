@@ -95,6 +95,21 @@ const getListCourseByInstructor = (data) => {
     requestOptions
   );
 };
+const getListCourseByInstructorIdAdmin = (data) => {
+  const token = getAccessToken();
+  let myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${token}`);
+  const { page, searchText, orderBy, orderType, numOfPerPage } = data;
+
+  let requestOptions = {
+    headers: myHeaders,
+    method: "GET",
+  };
+  return fetch(
+    `${url}course/by/instructor/admin?page=${page}&searchText=${searchText}&orderBy=${orderBy}&orderType=${orderType}&numOfPerPage=${numOfPerPage}`,
+    requestOptions
+  );
+};
 
 // client
 const getListCourseRelated = (data) => {
@@ -146,6 +161,7 @@ const courseAPI = {
   getListCourseRelated,
   getListCourseByInstructor,
   getListCourseByClient,
+  getListCourseByInstructorIdAdmin,
   checkExistMyCourse,
 };
 export default courseAPI;

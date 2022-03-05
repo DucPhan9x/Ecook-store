@@ -3,7 +3,6 @@ import { Modal } from "antd";
 import CommentsManage from "../CommentsManage";
 
 const ModalManageFeedback = ({ isModalVisible, close, data }) => {
-  console.log(data);
   return (
     <Modal
       className="modal-container"

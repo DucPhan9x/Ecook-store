@@ -8,11 +8,9 @@ import { Rating } from "@material-ui/lab";
 import PlayCircleFilledIcon from "@material-ui/icons/PlayCircleFilled";
 import IconButton from "@material-ui/core/IconButton";
 import { useHistory } from "react-router-dom";
-import FormControl from "@material-ui/core/FormControl";
-import { Modal } from "antd";
-import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import { getCourseById } from "redux/actions/course";
+import Certification from "./Certification";
 
 const MyCourseDetail = () => {
   const [formFeedback, setFormFeedback] = useState({ rating: 0, comment: "" });
@@ -22,17 +20,24 @@ const MyCourseDetail = () => {
   const [openModalCertification, setOpenModalCertification] = useState(false);
   const dispatch = useDispatch();
   const { getCourseByIdState } = useSelector((store) => store.course);
-
+  const params = new URLSearchParams(window.location.search);
+  const courseId = params.get("id");
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const courseId = params.get("id");
     dispatch(getCourseById(courseId));
-  }, [dispatch]);
+  }, [dispatch, courseId]);
 
   useEffect(() => {
     setData(getCourseByIdState?.data);
-    setVideoCurrent(getCourseByIdState?.data?.videoList[0]);
+    console.log(getCourseByIdState?.data?.videoList);
+    if (getCourseByIdState?.data?.videoList?.length > 0) {
+      console.log(getCourseByIdState?.data?.videoList[0]);
+      setVideoCurrent({
+        index: 1,
+        video: getCourseByIdState?.data?.videoList[0],
+      });
+    }
   }, [getCourseByIdState]);
+  console.log(videoCurrent);
 
   return (
     <>
@@ -42,9 +47,9 @@ const MyCourseDetail = () => {
 
         <div className="my-course-detail-container-left">
           <div className="my-course-detail-container-left__video-detail">
-            {videoCurrent?.videoUrl?.includes("/www.youtube.com") ? (
+            {videoCurrent.video?.videoUrl?.includes("/www.youtube.com") ? (
               <iframe
-                src={videoCurrent?.videoUrl}
+                src={videoCurrent.video?.videoUrl}
                 frameBorder="0"
                 allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
@@ -53,24 +58,34 @@ const MyCourseDetail = () => {
               />
             ) : (
               <video
-                src={videoCurrent?.videoUrl}
+                src={videoCurrent.video?.videoUrl}
                 frameBorder="0"
                 allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
                 controls
                 title="Embedded youtube"
-                autoPlay={videoCurrent?.autoPlay}
+                autoPlay={videoCurrent.video?.autoPlay}
               />
             )}
-            <div className="center">
-              {data?.isPass ? (
+            <div className="flex items-center j-space-between">
+              <div>
+                <div style={{ color: "orangered", fontSize: 19 }}>
+                  Bài {videoCurrent.index}. {videoCurrent.video?.title}
+                </div>
+                <div
+                  style={{ color: "gray", fontSize: 15, fontStyle: "italic" }}
+                >
+                  Tác giả: {data?.instructor?.fullName}
+                </div>
+              </div>
+              <div className="center">
                 <button
                   className="btn btn-client btn--access-exam"
                   onClick={() => setOpenModalCertification(true)}
+                  style={{ marginRight: 12 }}
                 >
                   Xem chứng nhận
                 </button>
-              ) : (
                 <button
                   className="btn btn-client btn--access-exam"
                   onClick={() =>
@@ -79,7 +94,7 @@ const MyCourseDetail = () => {
                 >
                   Thi cuối khóa
                 </button>
-              )}
+              </div>
             </div>
           </div>
           <div>
@@ -128,7 +143,7 @@ const MyCourseDetail = () => {
           {data?.videoList?.map((v, indx) => (
             <div
               className={`my-course-detail-container-right--item flex items-center j-space-between ${
-                videoCurrent?.title === v.title ? "active" : ""
+                videoCurrent.video?.title === v.title ? "active" : ""
               }`}
               key={indx}
             >
@@ -159,7 +174,15 @@ const MyCourseDetail = () => {
               >
                 <IconButton
                   className="icon-show-video"
-                  onClick={() => setVideoCurrent({ ...v, autoPlay: true })}
+                  onClick={() =>
+                    setVideoCurrent({
+                      index: indx + 1,
+                      video: {
+                        ...v,
+                        autoPlay: true,
+                      },
+                    })
+                  }
                 >
                   <PlayCircleFilledIcon
                     color="action"
@@ -171,116 +194,13 @@ const MyCourseDetail = () => {
             </div>
           ))}
         </div>
-        <Modal
-          className="certification-form-container"
-          title="Chứng nhận nấu ăn"
-          footer={false}
-          visible={openModalCertification}
-          onOk={() => setOpenModalCertification(false)}
-          onCancel={() => {
-            setOpenModalCertification(false);
-          }}
-        >
-          <div className="certification-form">
-            <div className="certification-form--title flex flex-col items-center">
-              <span>CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</span>
-              <span>Độc lập - Tự do - Hạnh phúc</span>
-            </div>
-            <div className="certification-form-people-sent flex flex-col items-center">
-              <span>Hệ thống đào tạo hướng dẫn nấu ăn</span>
-              <span>ECook</span>
-            </div>
-            <div className="chung-chi-title">GIẤY CHỨNG NHẬN</div>
-            <div className="certification-form--body">
-              <div
-                className="add-edit-recipe-container-bottom--left"
-                style={{ width: "25%", height: 180, border: "1px dashed gray" }}
-              >
-                <img
-                  src={data?.certification?.student?.imageUrl}
-                  alt="avatar"
-                />
-              </div>
-              <div className="certification-form--body-main">
-                <div className="block-input-info-student-course">
-                  <label>Học viên:</label>
-                  <FormControl>
-                    <span>{data?.certification?.student?.fullName}</span>
-                  </FormControl>
-                </div>
-                <div className="block-input-info-student-course">
-                  <label>Sinh ngày:</label>
-                  <FormControl>
-                    <span>
-                      {moment(data?.certification?.student?.dayOfBirth).format(
-                        "DD/MM/YYYY"
-                      )}
-                    </span>
-                  </FormControl>
-                </div>
-                <div className="block-input-info-student-course">
-                  <label>Đã hoàn thành khóa học:</label>
-                  <FormControl>
-                    <span>{data?.certification?.course?.courseName}</span>
-                  </FormControl>
-                </div>
-                <div className="block-input-info-student-course">
-                  <div className="flex">
-                    <label>Từ ngày</label>
-                    <FormControl>
-                      <span>
-                        {moment(data?.certification?.startDate).format(
-                          "DD/MM/YYYY"
-                        )}
-                      </span>
-                    </FormControl>
-                  </div>
-                  <div className="flex">
-                    <label style={{ padding: "0 8px" }}>đến ngày</label>
-                    <FormControl>
-                      <span>
-                        {moment(data?.certification?.endDate).format(
-                          "DD/MM/YYYY"
-                        )}
-                      </span>
-                    </FormControl>
-                  </div>
-                </div>
-                <div className="block-input-info-student-course">
-                  <label>Xếp loại:</label>
-                  <FormControl>
-                    <span>{data?.certification?.evaluate}</span>
-                  </FormControl>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            className="block--signature-certification"
-            style={{ marginTop: 48 }}
-          >
-            <div className="block--signature-certification--title">
-              <FormControl>
-                <span>{data?.certification?.positionCreate}</span>
-              </FormControl>
-              <span>,</span>
-              <span>ngày</span>
-              <FormControl>
-                <span>{moment(data?.certification?.createAt).get("date")}</span>
-              </FormControl>
-              <span>tháng</span>
-              <FormControl>
-                <span>
-                  {moment(data?.certification?.createAt).get("month") + 1}
-                </span>
-              </FormControl>
-              <span>năm</span>
-              <FormControl>
-                <span>{moment(data?.certification?.createAt).get("year")}</span>
-              </FormControl>
-            </div>
-          </div>
-        </Modal>
+        {openModalCertification && (
+          <Certification
+            close={() => setOpenModalCertification(false)}
+            courseId={courseId}
+            isOpen={openModalCertification}
+          />
+        )}
       </div>
     </>
   );
