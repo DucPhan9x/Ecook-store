@@ -32,7 +32,8 @@ const getDateInWeek = (today) => {
   const day = today.getDay();
   const diff = today.getDate() - day + (day === 0 ? -6 : 1);
   const first = new Date(today.setDate(diff));
-  const last = new Date(today.setDate(diff + 6));
+  const miliSeconds = first.getTime() + 6 * 86400000;
+  const last = new Date(miliSeconds);
   return [first, last];
 };
 export const dateFunction = {

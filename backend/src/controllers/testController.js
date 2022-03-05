@@ -1,4 +1,4 @@
-import { Examination, UserDetail, Test } from "../models";
+import { Examination, UserDetail, Test, Course } from "../models";
 import createHttpError from "http-errors";
 
 const submitTestOfExamination = async (req, res, next) => {
@@ -12,7 +12,7 @@ const submitTestOfExamination = async (req, res, next) => {
       courseId,
       isRemoved: false,
     });
-    if (examination) {
+    if (!examination) {
       throw createHttpError(404, "Examination is not exist!");
     }
     const newTest = await Test.create({
@@ -46,20 +46,23 @@ const updateTestOfExamination = async (req, res, next) => {
       _id: courseId,
       isRemoved: false,
     });
+    if (!existedCourse) {
+      throw createHttpError(404, "Course is not exist!");
+    }
+
     const existedExamination = await Examination.findOne({
       courseId,
       isRemoved: false,
     });
+    if (!existedExamination) {
+      throw createHttpError(404, "Examination is not exist!");
+    }
+    console.log("xx: ", existedExamination);
     const test = await Test.findOne({
       studentId,
       examinationId: existedExamination._id,
     });
-    if (!existedCourse) {
-      throw createHttpError(404, "Course is not exist!");
-    }
-    if (!existedExamination) {
-      throw createHttpError(404, "Examination is not exist!");
-    }
+
     if (!test) {
       throw createHttpError(404, "Test is not exist!");
     }
@@ -132,9 +135,12 @@ const getListTest = async (req, res, next) => {
     );
     studentsData = await Promise.all(studentsData);
 
+    let courseData = await Course.findById(existedExamination.courseId);
+
     tests = tests.map((item, index) => ({
       ...item._doc,
-      student: studentsData[index],
+      student: { ...studentsData[index]._doc, _id: studentsData[index].userId },
+      course: courseData,
     }));
     res.status(200).json({
       status: 200,
@@ -165,15 +171,15 @@ const getTestByExamination = async (req, res, next) => {
       examinationId: existedExamination._id,
       studentId: req.user._id,
     });
-    if (!test) {
-      throw createHttpError(404, "Test is not exist!");
+    let student;
+    if (test) {
+      student = await UserDetail.findOne({ userId: test.studentId });
     }
-    const student = await UserDetail.findOne({ userId: test.studentId });
 
     res.status(200).json({
       status: 200,
       msg: "Get test successfully!",
-      test: { ...test, student },
+      test: test ? { ...test._doc, student } : {},
     });
   } catch (error) {
     console.log(error);

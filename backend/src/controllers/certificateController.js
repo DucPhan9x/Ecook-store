@@ -10,6 +10,7 @@ import createHttpError from "http-errors";
 const createNewCertification = async (req, res, next) => {
   try {
     const { courseId, studentId, positionCreate, graded } = req.body;
+
     const existedCourse = await Course.findOne({
       _id: courseId,
       isRemoved: false,
@@ -31,19 +32,22 @@ const createNewCertification = async (req, res, next) => {
     if (!test) {
       throw createHttpError(404, "Test is not exist!");
     }
+    const existedCertification = await Certification.findOne({
+      courseId,
+      studentId,
+    });
+    if (existedCertification) {
+      throw createHttpError(404, "Bạn đã tạo chứng nhận cho người này!!");
+    }
     const student = await UserDetail.findOne({ userId: studentId });
-    const courseOfStudent = student.courseList.find(
-      (item) => item._id === courseId
-    );
 
-    const startDate = courseOfStudent.studentBuyAt; //
-    const endDate = test.createAt; // create test model
+    // const startDate = courseOfStudent.studentBuyAt; //
 
     const newCertification = await Certification.create({
       courseId,
       studentId,
-      startDate,
-      endDate,
+      // startDate,
+      // endDate,
       positionCreate,
       graded,
     });
@@ -202,7 +206,9 @@ const getCertificationById = async (req, res, next) => {
 
 const getCertificationByClientIdAndCourseId = async (req, res, next) => {
   try {
-    const { customerId, courseId } = req.query;
+    const { courseId } = req.query;
+    console.log("xx: ", req.query);
+    const customerId = req.user._id;
     let certification = await Certification.findOne({
       studentId: customerId,
       courseId,
@@ -211,12 +217,9 @@ const getCertificationByClientIdAndCourseId = async (req, res, next) => {
       userId: customerId,
     });
     if (!certification) {
-      throw createHttpError(400, "Certification is not exist!");
+      throw createHttpError(400, "Bạn chưa được cấp chứng nhận!");
     }
     const course = await Course.findById(courseId);
-    if (!certification) {
-      throw createHttpError(400, "Certification is not exist!");
-    }
     res.status(200).json({
       status: 200,
       msg: "Get course successfully!",

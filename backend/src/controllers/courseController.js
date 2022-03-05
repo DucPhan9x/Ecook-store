@@ -239,8 +239,74 @@ const getListCourseByInstructorId = async (req, res, next) => {
       numOfPerPage,
       instructorIdReq,
     } = req.query;
-    const instructorId =
-      req.user._id && req.user.roleId === 4 ? req.user._id : instructorIdReq;
+    const instructorId = instructorIdReq;
+
+    numOfPerPage = Number(numOfPerPage);
+    page = page ? page : 1;
+    searchText = searchText ? searchText : "";
+    orderBy = orderBy ? orderBy : "unitPrice";
+    orderType = orderType === "asc" ? 1 : -1;
+    const orderQuery = { [orderBy]: orderType };
+
+    const start = (page - 1) * numOfPerPage;
+    let totalNumOfCourses;
+    let courses;
+    if (searchText) {
+      courses = await Course.find({
+        $text: { $search: searchText },
+        isRemoved: false,
+        instructorId,
+      })
+        .skip(start)
+        .limit(numOfPerPage)
+        .sort(orderQuery);
+      totalNumOfCourses = await Course.find({
+        $text: { $search: searchText },
+        isRemoved: false,
+        instructorId,
+      }).count();
+    } else {
+      courses = await Course.find({ isRemoved: false, instructorId })
+        .skip(start)
+        .limit(numOfPerPage)
+        .sort(orderQuery);
+      totalNumOfCourses = await Course.find({
+        isRemoved: false,
+        instructorId,
+      }).count();
+    }
+    const totalPage = parseInt(totalNumOfCourses / numOfPerPage) + 1;
+
+    let instructorsData = courses.map((item) =>
+      UserDetail.findOne({ userId: item.instructorId })
+    );
+    instructorsData = await Promise.all(instructorsData);
+    courses = courses.map((item, index) => ({
+      ...item._doc,
+      instructor: instructorsData[index],
+    }));
+    const totalRows = await Course.find({
+      isRemoved: false,
+      instructorId,
+    }).count();
+
+    res.status(200).json({
+      status: 200,
+      msg: "Get courses successfully!",
+      courses,
+      totalPage,
+      totalRows,
+    });
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
+
+const getListCourseByInstructorIdAdmin = async (req, res, next) => {
+  try {
+    let { page, searchText, orderBy, orderType, numOfPerPage } = req.query;
+    const instructorId = req.user._id;
 
     numOfPerPage = Number(numOfPerPage);
     page = page ? page : 1;
@@ -411,5 +477,6 @@ export const courseController = {
   getCourseById,
   getListCoursesRelated,
   getListCourseByInstructorId,
+  getListCourseByInstructorIdAdmin,
   getCoursesByClientId,
 };

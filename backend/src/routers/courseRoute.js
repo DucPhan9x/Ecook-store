@@ -10,6 +10,7 @@ const {
   getListCoursePerPage,
   getCourseById,
   getListCourseByInstructorId,
+  getListCourseByInstructorIdAdmin,
   getListCoursesRelated,
   getCoursesByClientId,
 } = courseController;
@@ -26,9 +27,13 @@ courseRoute
   .put(jwtMiddleware, validatePermission.isInstructorRole, deleteCourseById);
 courseRoute.route(`${baseUrl}/:courseId`).get(getCourseById);
 courseRoute.route(`${baseUrl}?`).get(getListCoursePerPage);
-courseRoute.route(`${baseUrl}/by/instructor?`).get(getListCourseByInstructorId);
+courseRoute
+  .route(`${baseUrl}/by/instructor/admin?`)
+  .get(jwtMiddleware, getListCourseByInstructorIdAdmin);
 // client
 courseRoute.route(`${baseUrl}/by/related?`).get(getListCoursesRelated);
+courseRoute.route(`${baseUrl}/by/instructor?`).get(getListCourseByInstructorId);
+
 courseRoute
   .route(`${baseUrl}/by/client?`)
   .get(jwtMiddleware, getCoursesByClientId);

@@ -28,5 +28,5 @@ certificationRoute
   .route(`${baseUrl}`)
   .put(validatePermission.isInstructorRole, updateCertification);
 certificationRoute
-  .route(`${baseUrl}/client?`)
+  .route(`${baseUrl}/by/client?`)
   .get(getCertificationByClientIdAndCourseId);

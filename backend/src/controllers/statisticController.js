@@ -1,7 +1,7 @@
 import createHttpError from "http-errors";
 import { Order, OrderItem, User, Food, Course } from "../models";
 import { dateFunction } from "../utils";
-
+import moment from "moment";
 const { getMonthsByquater, getQuaterByMonth, getDateInWeek } = dateFunction;
 
 const getRevenuesInfo = async (req, res, next) => {
@@ -21,18 +21,25 @@ const getRevenuesInfo = async (req, res, next) => {
         const dateInWeek = getDateInWeek(today);
         startDate = dateInWeek[0];
         endDate = dateInWeek[1];
+        console.log("startDate ", startDate);
+        console.log("endDate ", endDate);
         startDate.setHours(0, 0, 0, 0);
         endDate.setHours(23, 59, 59, 999);
+
         orders = await Order.find({
-          createAt: {
+          deliveryAt: {
             $gte: startDate,
             $lt: endDate,
           },
           statusId: 4,
         });
+        console.log("Orders: ", orders);
+        for (var i = 0; i < orders.length; i++) {
+          console.log("Date: ", new Date(orders[i].deliveryAt));
+        }
         orders = orders.map((x) => {
           return {
-            day: new Date(x.createAt).getDay(),
+            day: new Date(x.deliveryAt).getDay(),
             revenue: x.total,
           };
         });
@@ -41,6 +48,7 @@ const getRevenuesInfo = async (req, res, next) => {
           else init[cur.day] = init[cur.day] + cur.revenue;
           return init;
         }, {});
+        console.log("Revenues: ", revenues);
         labels = [
           "Chủ nhật",
           "Thứ 2",
@@ -53,16 +61,18 @@ const getRevenuesInfo = async (req, res, next) => {
 
         break;
       case 1:
-        month = today.getMonth();
+        month = today.getMonth() + 1;
         year = today.getFullYear();
         month = Number(month);
         year = Number(year);
+        console.log("Months: ", month);
+
         startDate = new Date(year, month - 1, 1);
         endDate = new Date(year, month, 0);
         startDate.setHours(0, 0, 0, 0);
         endDate.setHours(23, 59, 59, 999);
         orders = await Order.find({
-          createAt: {
+          deliveryAt: {
             $gte: startDate,
             $lt: endDate,
           },
@@ -70,7 +80,7 @@ const getRevenuesInfo = async (req, res, next) => {
         });
         orders = orders.map((x) => {
           return {
-            date: new Date(x.createAt).getDate(),
+            date: new Date(x.deliveryAt).getDate() - 1,
             revenue: x.total,
           };
         });
@@ -79,11 +89,13 @@ const getRevenuesInfo = async (req, res, next) => {
           else init[cur.date] = init[cur.date] + cur.revenue;
           return init;
         }, {});
+        console.log("revenues: ", revenues);
         const days = new Date(
           today.getFullYear(),
           today.getMonth() + 1,
           0
         ).getDate();
+        console.log(days);
         for (let i = 1; i <= days; i++) {
           labels.push(`Ngày ${i}`);
         }
@@ -94,12 +106,13 @@ const getRevenuesInfo = async (req, res, next) => {
         quater = Number(quater);
         year = Number(year);
         let months = getMonthsByquater(quater);
-        startDate = new Date(year, months[0] - 1, 1);
-        endDate = new Date(year, months[2] - 1, 0);
+        startDate = new Date(year, months[0], 1);
+        endDate = new Date(year, months[2], 0);
         startDate.setHours(0, 0, 0, 0);
         endDate.setHours(23, 59, 59, 999);
+
         orders = await Order.find({
-          createAt: {
+          deliveryAt: {
             $gte: startDate,
             $lt: endDate,
           },
@@ -107,7 +120,7 @@ const getRevenuesInfo = async (req, res, next) => {
         });
         orders = orders.map((x) => {
           return {
-            month: new Date(x.updateAt).getMonth() + 1,
+            month: new Date(x.deliveryAt).getMonth(),
             revenue: x.total,
           };
         });
@@ -116,6 +129,7 @@ const getRevenuesInfo = async (req, res, next) => {
           else init[cur.month] = init[cur.month] + cur.revenue;
           return init;
         }, {});
+
         labels = months.map((item) => `Tháng ${item}`);
         break;
       case 3:
@@ -126,7 +140,7 @@ const getRevenuesInfo = async (req, res, next) => {
         startDate.setHours(0, 0, 0, 0);
         endDate.setHours(23, 59, 59, 999);
         orders = await Order.find({
-          createAt: {
+          deliveryAt: {
             $gte: startDate,
             $lt: endDate,
           },
@@ -134,7 +148,7 @@ const getRevenuesInfo = async (req, res, next) => {
         });
         orders = orders.map((x) => {
           return {
-            month: new Date(x.createAt).getMonth() + 1,
+            month: new Date(x.deliveryAt).getMonth(),
             revenue: x.total,
           };
         });
@@ -189,15 +203,16 @@ const getGeneralInfo = async (req, res, next) => {
       statusId: 4,
     });
     totalCourses = totalCourses.reduce((pre, cur) => pre + cur.items.length, 0);
-    let popularFoodIds = await OrderItem.aggregate([
+    let popularFoodIds = await Order.aggregate([
       {
         $match: {
           orderType: 1,
         },
       },
+      { $unwind: "$items" },
       {
         $group: {
-          _id: "$itemId",
+          _id: "$items.itemId",
           count: { $sum: 1 },
         },
       },
@@ -206,7 +221,6 @@ const getGeneralInfo = async (req, res, next) => {
         $sort: { count: -1 },
       },
     ]);
-
     if (popularFoodIds.length > 20)
       popularFoodIds = popularFoodIds.slice(0, 20);
     let popularFoods = await Promise.all(
@@ -218,16 +232,18 @@ const getGeneralInfo = async (req, res, next) => {
         amountOfBuy: popularFoodIds[index].count,
       };
     });
+    console.log("popularFoodIds: ", popularFoods);
 
-    let popularCourseIds = await OrderItem.aggregate([
+    let popularCourseIds = await Order.aggregate([
       {
         $match: {
           orderType: 2,
         },
       },
+      { $unwind: "$items" },
       {
         $group: {
-          _id: "$itemId",
+          _id: "$items.itemId",
           count: { $sum: 1 },
         },
       },

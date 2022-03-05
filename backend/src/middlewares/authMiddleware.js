@@ -16,7 +16,6 @@ export const jwtMiddleware = async (req, res, next) => {
       const token = req.headers.authorization.split(" ")[1];
       const userData = await verifyToken(token, jwtSecret);
       req.user = userData;
-
       // check ban
       const user = await User.findById(userData._id);
       if (user.isRemoved) {
