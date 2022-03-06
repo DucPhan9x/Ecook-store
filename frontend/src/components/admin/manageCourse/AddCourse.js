@@ -1,5 +1,5 @@
 import { Paper } from "@material-ui/core";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import QueueIcon from "@material-ui/icons/Queue";
 import { Modal } from "antd";
 import { Form as ReForm } from "reactstrap";
@@ -34,6 +34,13 @@ const AddCourse = () => {
     criteria: "",
     createAt: Date.now(),
   });
+  useEffect(() => {
+    setFormVideo({
+      title: "",
+      videoUrl: "",
+      duration: 0,
+    });
+  }, []);
   const validateVideo = () => {
     const errorState = {};
     // check validate
@@ -133,6 +140,8 @@ const AddCourse = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   return (
     <div className="flex flex-col">
+      {createCourseState.loading && <SpinLoading />}
+
       <div className="flex j-space-between">
         <BackPreviousPage />
         <button className="btn-admin btn-add-course" onClick={handleSubmitForm}>
@@ -282,7 +291,7 @@ const AddCourse = () => {
                   </div>
                   <div>
                     <label>Thời lượng: </label>
-                    <span>{item.duration}</span>
+                    <span>{item.duration} phút</span>
                   </div>
                   <div
                     className="block-remove-video"
@@ -313,8 +322,12 @@ const AddCourse = () => {
         onOk={(e) => {
           //add into videoUrls
           handleSubmitFormVideo(e);
+          setFormVideo({});
         }}
-        onCancel={() => setIsModalVisible(false)}
+        onCancel={() => {
+          setIsModalVisible(false);
+          setFormVideo({});
+        }}
       >
         <ReForm>
           <div className="body-content-form-add-video">
@@ -359,7 +372,6 @@ const AddCourse = () => {
             />
           </div>
         </ReForm>
-        {createCourseState.loading && <SpinLoading />}
       </Modal>
     </div>
   );

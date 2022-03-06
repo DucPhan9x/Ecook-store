@@ -50,7 +50,7 @@ const ModalEdit = ({ isModalVisible, handleSubmit, close, data }) => {
     if (Object.keys(errorState).length > 0) {
       return setError(errorState);
     }
-    handleSubmit({ form });
+    handleSubmit(form);
   };
   const handleChange = (event) => {
     setForm({ ...form, [event.target.name]: event.target.value });

@@ -70,17 +70,20 @@ const BodyContainer = (props) => {
                 >
                   {row._id}
                 </TableCell>
-                <TableCell align="left">{row.name}</TableCell>
+                <TableCell align="left">{row?.name}</TableCell>
                 <TableCell
-                  style={{ maxWidth: 200, maxHeight: 50 }}
+                  style={{
+                    maxWidth: 200,
+                    maxHeight: 50,
+                  }}
                   align="left"
+                  className="text-ellipses"
                 >
-                  {row?.contents[0]}
-                  (Xem chi tiết)
+                  {row?.contents?.length > 0 && row?.contents[0]}
                 </TableCell>
                 <TableCell align="left">
                   {row?.materials
-                    ?.filter((item, index) => index < 3)
+                    ?.filter((item, index) => index < 2)
                     .map((item) => (
                       <div key={item._id}>
                         {item.foodName +
@@ -91,6 +94,7 @@ const BodyContainer = (props) => {
                           ")"}
                       </div>
                     ))}
+                  ...
                 </TableCell>
                 <TableCell align="left">{row.slotQuantity} người ăn</TableCell>
                 <TableCell align="left">

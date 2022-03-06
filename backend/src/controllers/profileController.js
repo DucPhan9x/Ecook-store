@@ -75,7 +75,10 @@ const updateAvatar = async (req, res, next) => {
     if (!userDetail) {
       throw createHttpError(404, "User is not exist");
     }
-    const asset_id = userDetail.imageUrl.split("/").pop().split(".")[0];
+    let asset_id;
+    if (userDetail.imageUrl) {
+      asset_id = userDetail.imageUrl.split("/").pop().split(".")[0];
+    }
     if (asset_id) {
       await deleteImage(asset_id);
     }

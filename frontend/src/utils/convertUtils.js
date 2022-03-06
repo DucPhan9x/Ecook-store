@@ -25,7 +25,7 @@ export const getFoodType = (roleId) => {
     case 3:
       return "Gia cầm";
     case 4:
-      return "Rau củ quả";
+      return "Rau củ, quả";
 
     default:
       return "Tất cả";

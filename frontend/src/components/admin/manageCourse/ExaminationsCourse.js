@@ -74,7 +74,7 @@ const ExaminationsCourse = () => {
     // courseId, studentId, positionCreate, graded, endDate
     dispatch(
       createCertification({
-        studentId: testSelected.student._id,
+        studentId: testSelected.studentId,
         courseId: courseID,
         positionCreate: form.positionCreate,
         graded: form.evaluate,

@@ -63,7 +63,11 @@ const RecipeDetail = () => {
       <BackPreviousPage />
       <div className="recipe-detail-container-top">
         <div className="recipe-detail-container-top__left">
-          <img src={recipe?.imageUrl || NoImage} alt="" />
+          <img
+            style={{ maxWidth: 350 }}
+            src={recipe?.imageUrl || NoImage}
+            alt=""
+          />
           <div className="flex items-center minor-image">
             <img src={recipe?.imageUrl || NoImage} alt="" />
           </div>
@@ -105,7 +109,7 @@ const RecipeDetail = () => {
                   key={idx}
                   className="recipe-detail-container-top__right--contents-body--item"
                 >
-                  {c}
+                  Bước {idx + 1}. {c}
                 </div>
               ))}
             </div>

@@ -27,7 +27,7 @@ const CourseCard = ({ data }) => {
   const dispatch = useDispatch();
 
   return (
-    <div className="course-card">
+    <div className="course-card" style={{ minWidth: 280 }}>
       <div className="course-card__inner">
         <iframe
           id={_id}

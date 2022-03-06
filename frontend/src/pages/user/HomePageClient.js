@@ -230,7 +230,9 @@ const HomePageClient = () => {
             </div>
             <div className="block--product-list--showing">
               {data?.courses?.map((r) => (
-                <CourseCard data={r} key={r._id} />
+                <div key={r._id} item xs={12}>
+                  <CourseCard data={r} />
+                </div>
               ))}
             </div>
           </div>
@@ -241,7 +243,7 @@ const HomePageClient = () => {
                 Xem thêm
               </span>
             </div>
-            <div className="block--product-list--showing">
+            <div container className="block--product-list--showing">
               {data?.instructors?.map((r) => (
                 <InstructorCard data={r} key={r._id} />
               ))}

@@ -374,10 +374,10 @@ const getCourseById = async (req, res, next) => {
   try {
     const courseId = req.params.courseId;
     let course = await Course.findOne({ _id: courseId, isRemoved: false });
-    let examination = await Examination.findOne({ courseId, isRemoved: false });
     if (!course) {
       throw createHttpError(400, "Course is not exist!");
     }
+    let examination = await Examination.findOne({ courseId, isRemoved: false });
     if (!examination) {
       throw createHttpError(400, "Examination is not exist!");
     }

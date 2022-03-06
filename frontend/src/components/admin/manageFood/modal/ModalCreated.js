@@ -135,7 +135,7 @@ const ModalCreated = ({ isModalVisible, handleSubmit, close }) => {
               }}
               value={form.type}
             >
-              {["Thịt heo, bò", "Gia cầm", "Thủy hải sản", "Rau củ quả"].map(
+              {["Thịt heo, bò", "Gia cầm", "Thủy hải sản", "Rau củ, quả"].map(
                 (item, index) => (
                   <Option value={item} key={index}>
                     {item}

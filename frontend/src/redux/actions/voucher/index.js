@@ -35,13 +35,14 @@ const createVoucher = (data) => {
   };
 };
 
-const updateVoucherById = (input) => {
+const updateVoucherById = (input, res = () => {}) => {
   return (dispatch) => {
     dispatch({ type: types.UPDATE_VOUCHER_BY_ID });
     voucherAPI
       .updateVoucherById(input)
       .then((response) => response.json())
       .then((result) => {
+        res(result);
         if (result.status === 200) {
           dispatch({
             type: types.UPDATE_VOUCHER_BY_ID_SUCCEED,

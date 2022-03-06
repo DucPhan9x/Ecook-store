@@ -7,7 +7,7 @@ import { Select } from "antd";
 import UploadImage from "components/common/UploadImage";
 import { Paper } from "@material-ui/core";
 import NoImage from "assets/images/notImage.png";
-import { getFoodType } from "utils/convertUtils";
+import { getFoodType, getFoodTypeId } from "utils/convertUtils";
 
 const { Option } = Select;
 const ModalUpdated = ({ isModalVisible, handleSubmit, close, data }) => {
@@ -115,11 +115,12 @@ const ModalUpdated = ({ isModalVisible, handleSubmit, close, data }) => {
                 })
               }
               onChange={(value) => {
-                setForm({ ...form, type: value });
+                console.log(value);
+                setForm({ ...form, typeId: getFoodTypeId(value) });
               }}
               value={getFoodType(form.typeId)}
             >
-              {["Thịt", "Gia cầm", "Thủy hải sản", "Rau củ quả"].map(
+              {["Thịt heo, bò", "Gia cầm", "Thủy hải sản", "Rau củ, quả"].map(
                 (item, index) => (
                   <Option value={item} key={index}>
                     {item}

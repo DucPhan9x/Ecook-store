@@ -34,15 +34,15 @@ export default function reducer(state = initialState, actions) {
         },
       };
     case types.CREATE_FOOD_SUCCEED:
-      const foodsCreated = actions.payload;
-      let temp = [...state.foodList];
-      temp = temp.concat(foodsCreated);
+      // const foodsCreated = actions.payload;
+      // let temp = [...state.foodList];
+      // temp = temp.concat(foodsCreated);
       return {
         ...state,
         createFoodState: {
           loading: false,
         },
-        foodList: temp,
+        // foodList: temp,
         totalRows: state.totalRows + 1,
       };
 

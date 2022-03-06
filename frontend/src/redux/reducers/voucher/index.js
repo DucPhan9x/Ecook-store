@@ -97,6 +97,7 @@ export default function reducer(state = initialState, actions) {
         removeTempVoucherState: {
           loading: false,
         },
+        totalRows: state.totalRows - 1,
       };
     }
 

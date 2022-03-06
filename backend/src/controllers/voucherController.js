@@ -63,7 +63,7 @@ const updateVoucherById = async (req, res, next) => {
       remainingSlot,
       expiredDate,
     });
-    const newVoucher = Voucher.findById(voucherId);
+    const newVoucher = await Voucher.findById(voucherId);
 
     res.status(200).json({
       status: 200,

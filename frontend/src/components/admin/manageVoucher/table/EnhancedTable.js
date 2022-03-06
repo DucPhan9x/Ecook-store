@@ -8,7 +8,8 @@ import HeaderContainer from "./HeaderContainer";
 import ToolbarContainer from "./ToolbarContainer";
 import BodyContainer from "./BodyContainer";
 import ModalEdit from "../ModalEdit";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { updateVoucherById } from "redux/actions/voucher";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -68,6 +69,7 @@ export default function EnhancedTable({ queries, setQueries }) {
   const handleChangeRowsPerPage = (event) => {
     setQueries({ ...queries, numOfPerPage: event.target.value, page: 1 });
   };
+  const dispatch = useDispatch();
 
   const [isOpenModalEdit, setIsOpenModalEdit] = useState(false);
   const [selectedItem, setSelectedItem] = useState({});
@@ -123,7 +125,18 @@ export default function EnhancedTable({ queries, setQueries }) {
       <ModalEdit
         isModalVisible={isOpenModalEdit}
         close={() => setIsOpenModalEdit(false)}
-        handleSubmit={(formData) => console.log({ formData })}
+        handleSubmit={(formData) =>
+          dispatch(
+            updateVoucherById(
+              { ...formData, voucherId: formData._id },
+              (res) => {
+                if (res.status === 200) {
+                  setIsOpenModalEdit(false);
+                }
+              }
+            )
+          )
+        }
         data={selectedItem}
       />
     </div>
