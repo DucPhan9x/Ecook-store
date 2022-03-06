@@ -303,9 +303,9 @@ const EditCourse = () => {
                     <label>Bài {index + 1}: </label>
                     <span>{item.title}</span>
                   </div>
-                  <div>
+                  <div style={{ marginTop: 3 }}>
                     <label>Thời lượng: </label>
-                    <span>{item.duration}</span>
+                    <span>{item.duration} phút</span>
                   </div>
                   <div
                     className="block-remove-video"
