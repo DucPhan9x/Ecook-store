@@ -51,32 +51,30 @@ const Certification = ({ close, courseId, isOpen }) => {
             className="add-edit-recipe-container-bottom--left"
             style={{ width: "25%", height: 180, border: "1px dashed gray" }}
           >
-            <img src={data?.certification?.student?.imageUrl} alt="avatar" />
+            <img src={data?.student?.imageUrl} alt="avatar" />
           </div>
           <div className="certification-form--body-main">
             <div className="block-input-info-student-course">
               <label>Học viên:</label>
               <FormControl>
-                <span>{data?.certification?.student?.fullName}</span>
+                <span>{data?.student?.fullName}</span>
               </FormControl>
             </div>
             <div className="block-input-info-student-course">
               <label>Sinh ngày:</label>
               <FormControl>
                 <span>
-                  {moment(data?.certification?.student?.dayOfBirth).format(
-                    "DD/MM/YYYY"
-                  )}
+                  {moment(data?.student?.dateOfBirth).format("DD/MM/YYYY")}
                 </span>
               </FormControl>
             </div>
             <div className="block-input-info-student-course">
               <label>Đã hoàn thành khóa học:</label>
               <FormControl>
-                <span>{data?.certification?.course?.courseName}</span>
+                <span>{data?.course?.courseName}</span>
               </FormControl>
             </div>
-            <div className="block-input-info-student-course">
+            {/* <div className="block-input-info-student-course">
               <div className="flex">
                 <label>Từ ngày</label>
                 <FormControl>
@@ -95,11 +93,11 @@ const Certification = ({ close, courseId, isOpen }) => {
                   </span>
                 </FormControl>
               </div>
-            </div>
+            </div> */}
             <div className="block-input-info-student-course">
               <label>Xếp loại:</label>
               <FormControl>
-                <span>{data?.certification?.evaluate}</span>
+                <span>{data?.graded}</span>
               </FormControl>
             </div>
           </div>
@@ -108,22 +106,20 @@ const Certification = ({ close, courseId, isOpen }) => {
       <div className="block--signature-certification" style={{ marginTop: 48 }}>
         <div className="block--signature-certification--title">
           <FormControl>
-            <span>{data?.certification?.positionCreate}</span>
+            <span>{data?.positionCreate}</span>
           </FormControl>
           <span>,</span>
           <span>ngày</span>
           <FormControl>
-            <span>{moment(data?.certification?.createAt).get("date")}</span>
+            <span>{moment(data?.createAt).get("date")}</span>
           </FormControl>
           <span>tháng</span>
           <FormControl>
-            <span>
-              {moment(data?.certification?.createAt).get("month") + 1}
-            </span>
+            <span>{moment(data?.createAt).get("month") + 1}</span>
           </FormControl>
           <span>năm</span>
           <FormControl>
-            <span>{moment(data?.certification?.createAt).get("year")}</span>
+            <span>{moment(data?.createAt).get("year")}</span>
           </FormControl>
         </div>
       </div>

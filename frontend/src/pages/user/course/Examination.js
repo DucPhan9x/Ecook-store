@@ -96,9 +96,30 @@ const Examination = () => {
                 controls
                 title="Embedded youtube"
               />
-              <div className="center" style={{ marginTop: 12, color: "gray" }}>
-                Bạn đã hoàn thành bài thi, đang chờ duyệt....
+              <div className="" style={{ marginTop: 20, marginBottom: 6 }}>
+                <span
+                  className=""
+                  style={{ color: "gray", fontSize: 15, marginRight: 4 }}
+                >
+                  Người đánh giá bài thi:
+                </span>
+                <span
+                  style={{
+                    fontStyle: "italic",
+                    color: "chocolate",
+                    fontWeight: 600,
+                  }}
+                >
+                  {myTest.instructor?.fullName} - {myTest.instructor?.email}
+                </span>
               </div>
+              {/* <div className="center" style={{ marginTop: 12, color: "gray" }}>
+                Bạn đã hoàn thành bài thi.
+              </div> */}
+              <span style={{ color: "gray", fontSize: 15, marginRight: 4 }}>
+                Nội dung đánh giá:
+              </span>
+              <span style={{ fontWeight: "bold" }}> {myTest?.evaluate}</span>
             </div>
           )}
 
