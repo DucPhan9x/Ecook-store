@@ -10,10 +10,18 @@ import { getAccessToken } from "utils/authUtils";
 import { useDispatch } from "react-redux";
 import { updateWishlist } from "redux/actions/wishlist";
 import { buyNow, createCartItems } from "redux/actions/cart";
+import EmptyFood from "assets/images/emptyFood.jpg";
 
 const FoodCard = ({ data }) => {
-  const { name, unitPrice, imageUrl, discountOff, discountMaximum, unit } =
-    data;
+  const {
+    name,
+    unitPrice,
+    imageUrl,
+    discountOff,
+    discountMaximum,
+    unit,
+    isRemoveTemp,
+  } = data;
   const history = useHistory();
   const [isOpenModalConfirm, setIsOpenModalConfirm] = useState(false);
   const dispatch = useDispatch();
@@ -23,9 +31,10 @@ const FoodCard = ({ data }) => {
       <div className="food-card__inner">
         <img
           onClick={() => {
+            if (isRemoveTemp) return;
             history.push(`/food?id=${data._id}`);
           }}
-          src={imageUrl}
+          src={!isRemoveTemp ? imageUrl : EmptyFood}
           alt=""
           className="food-card__inner--picture"
         />
@@ -63,6 +72,7 @@ const FoodCard = ({ data }) => {
             <div>
               <Tooltip title="Mua ngay" placement="top">
                 <IconButton
+                  disabled={isRemoveTemp}
                   onClick={() => {
                     if (getAccessToken()) {
                       // call API add cart => open food cart
@@ -92,6 +102,7 @@ const FoodCard = ({ data }) => {
               </Tooltip>
               <Tooltip title="Thêm vào giỏ hàng" placement="top">
                 <IconButton
+                  disabled={isRemoveTemp}
                   onClick={() => {
                     if (getAccessToken()) {
                       // call API add cart

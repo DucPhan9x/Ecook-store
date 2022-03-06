@@ -16,6 +16,7 @@ import {
   updateCartItem,
 } from "redux/actions/cart";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
+import EmptyFood from "assets/images/emptyFood.jpg";
 
 const FoodsCart = ({ close }) => {
   const [data, setData] = useState([]);
@@ -84,6 +85,7 @@ const FoodsCart = ({ close }) => {
               data?.map((c) => (
                 <div className="food-cart-container__inner" key={c._id}>
                   <Checkbox
+                    disabled={c.item.isRemoveTemp}
                     checked={c.isCheckbox}
                     onChange={(e) => {
                       let temp = [...data];
@@ -95,7 +97,10 @@ const FoodsCart = ({ close }) => {
                     }}
                   />
                   <div className="food-cart-container__inner--information">
-                    <img src={c.item?.imageUrl} alt="" />
+                    <img
+                      src={!c.item.isRemoveTemp ? c.item?.imageUrl : EmptyFood}
+                      alt=""
+                    />
                     <div className="food-cart-container__inner--information-top">
                       <span className="food-cart-container__inner--information-top--title">
                         {c.item?.name} (1
@@ -117,6 +122,8 @@ const FoodsCart = ({ close }) => {
                   <div className="food-cart-container__inner--action">
                     <RemoveCircleSharpIcon
                       onClick={() => {
+                        if (c.item.isRemoveTemp) return;
+
                         let temp = [...data];
                         const indexSelected = temp.findIndex(
                           (item) => item._id === c._id
@@ -141,6 +148,7 @@ const FoodsCart = ({ close }) => {
                     <span className="quantity--text">{c.quantity}</span>
                     <AddCircleSharpIcon
                       onClick={() => {
+                        if (c.item.isRemoveTemp) return;
                         let temp = [...data];
                         const indexSelected = temp.findIndex(
                           (item) => item._id === c._id

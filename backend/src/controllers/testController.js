@@ -1,4 +1,4 @@
-import { Examination, UserDetail, Test, Course } from "../models";
+import { Examination, UserDetail, Test, Course, User } from "../models";
 import createHttpError from "http-errors";
 
 const submitTestOfExamination = async (req, res, next) => {
@@ -136,11 +136,20 @@ const getListTest = async (req, res, next) => {
     studentsData = await Promise.all(studentsData);
 
     let courseData = await Course.findById(existedExamination.courseId);
+    const instructor = await UserDetail.findOne({
+      userId: courseData.instructorId,
+    });
+    const userInstructor = await User.findById(courseData.instructorId);
 
     tests = tests.map((item, index) => ({
       ...item._doc,
       student: { ...studentsData[index]._doc, _id: studentsData[index].userId },
       course: courseData,
+      instructor: {
+        ...instructor._doc,
+        _id: courseData.instructorId,
+        email: userInstructor.email,
+      },
     }));
     res.status(200).json({
       status: 200,
@@ -159,13 +168,20 @@ const getTestByExamination = async (req, res, next) => {
   try {
     const courseId = req.params.courseId;
     const existedCourse = await Course.findById(courseId);
-    const existedExamination = await Examination.findOne({ courseId });
     if (!existedCourse) {
       throw createHttpError(404, "Course is not exist!");
     }
+    const existedExamination = await Examination.findOne({ courseId });
+
     if (!existedExamination) {
       throw createHttpError(404, "Examination is not exist!");
     }
+    let courseData = await Course.findById(existedExamination.courseId);
+
+    const instructor = await UserDetail.findOne({
+      userId: courseData.instructorId,
+    });
+    const userInstructor = await User.findById(courseData.instructorId);
 
     const test = await Test.findOne({
       examinationId: existedExamination._id,
@@ -179,7 +195,17 @@ const getTestByExamination = async (req, res, next) => {
     res.status(200).json({
       status: 200,
       msg: "Get test successfully!",
-      test: test ? { ...test._doc, student } : {},
+      test: test
+        ? {
+            ...test._doc,
+            student,
+            instructor: {
+              ...instructor._doc,
+              _id: courseData.instructorId,
+              email: userInstructor.email,
+            },
+          }
+        : {},
     });
   } catch (error) {
     console.log(error);

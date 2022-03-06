@@ -96,6 +96,12 @@ const Examination = () => {
                 controls
                 title="Embedded youtube"
               />
+              <div
+                className="center"
+                style={{ color: "orangered", fontWeight: "bold" }}
+              >
+                Bạn đã hoàn thành bài thi!
+              </div>
               <div className="" style={{ marginTop: 20, marginBottom: 6 }}>
                 <span
                   className=""

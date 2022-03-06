@@ -77,6 +77,7 @@ const CoursesCart = ({ close }) => {
               data?.map((c) => (
                 <div className="food-cart-container__inner" key={c._id}>
                   <Checkbox
+                    disabled={c.item.isRemoved}
                     checked={c.isCheckbox}
                     onChange={(e) => {
                       let temp = [...data];
