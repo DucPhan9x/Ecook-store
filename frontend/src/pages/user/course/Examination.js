@@ -53,7 +53,10 @@ const Examination = () => {
     <div className="examination-container">
       <BackPreviousPage />
       <div className="examination-container-body">
-        <Paper className="examination-container-body--left">
+        <Paper
+          className="examination-container-body--left"
+          style={{ height: 350 }}
+        >
           <h2 className="examination-container-body--left--title">
             Nội dung bài thi
           </h2>
@@ -70,7 +73,10 @@ const Examination = () => {
             <span>- {data?.criteria}</span>
           </div>
         </Paper>
-        <Paper className="examination-container-body--right">
+        <Paper
+          className="examination-container-body--right"
+          style={{ height: 350 }}
+        >
           {!!!myTest?.videoUrlSubmit ? (
             <div className="flex items-center" style={{ marginBottom: 12 }}>
               <label style={{ marginRight: 5 }}>
@@ -98,7 +104,11 @@ const Examination = () => {
               />
               <div
                 className="center"
-                style={{ color: "orangered", fontWeight: "bold" }}
+                style={{
+                  color: "orangered",
+                  fontWeight: "bold",
+                  marginTop: 12,
+                }}
               >
                 Bạn đã hoàn thành bài thi!
               </div>
