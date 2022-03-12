@@ -112,7 +112,7 @@ const InstructorDetail = () => {
                       label={r.courseName}
                       className="chip-course-detail"
                       variant="outlined"
-                      style={{ marginRight: 6 }}
+                      style={{ margin: 6 }}
                     />
                   ))
                 ) : (

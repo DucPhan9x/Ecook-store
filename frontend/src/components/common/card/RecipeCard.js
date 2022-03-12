@@ -25,6 +25,9 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     textAlign: "left",
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipses",
   },
   media: {
     height: 0,
@@ -90,11 +93,6 @@ export default function RecipeCard({ data }) {
               ?.filter((i, idx) => idx < 3)
               .map((i, idx) => `Bước ${idx + 1}. ${i}`)
               .join(". ")}
-          </Typography>
-        </CardContent>
-        <CardContent style={{ paddingTop: 0, paddingBottom: 0 }}>
-          <Typography variant="body2" color="textSecondary" component="p">
-            .....xem tiếp
           </Typography>
         </CardContent>
         <CardActions disableSpacing className="flex j-space-between">

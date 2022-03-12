@@ -95,6 +95,14 @@ body {
     }
   }
 }
+.MuiCardHeader-title {
+  width: 180px; /* or inline-block */
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-height: 3.6em;
+  line-height: 1.8em;
+}
 .text-ellipses {
   display: block; /* or inline-block */
   text-overflow: ellipsis;

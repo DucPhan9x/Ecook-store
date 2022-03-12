@@ -36,17 +36,18 @@ const CourseDetail = () => {
   const { getCourseByIdState } = useSelector((store) => store.course);
 
   const history = useHistory();
+  const params = new URLSearchParams(window.location.search);
+  const courseID = params.get("id");
+
   useEffect(() => {
     document.title = "Chi tiết khóa học | ECook";
     window.scrollTo(0, 0);
 
-    const params = new URLSearchParams(window.location.search);
-    const courseID = params.get("id") || "course_123";
     if (!courseID) {
       return;
     }
     dispatch(getCourseById(courseID));
-  }, [dispatch]);
+  }, [dispatch, courseID]);
 
   useEffect(() => {
     const t = getCourseByIdState.data || {};

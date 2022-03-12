@@ -37,19 +37,16 @@ const FoodDetail = () => {
   const [isOpenModalConfirm, setIsOpenModalConfirm] = useState(false);
   const dispatch = useDispatch();
   const { getFoodByIdState } = useSelector((store) => store.food);
+  const params = new URLSearchParams(window.location.search);
+  const foodID = params.get("id");
 
   useEffect(() => {
     document.title = "Chi tiết sản phẩm | ECook";
 
     window.scrollTo(0, 0);
 
-    const params = new URLSearchParams(window.location.search);
-    const foodID = params.get("id");
-    if (!foodID) {
-      return;
-    }
     dispatch(getFoodById(foodID));
-  }, [dispatch]);
+  }, [dispatch, foodID]);
 
   useEffect(() => {
     const t = getFoodByIdState.data || {};
@@ -215,6 +212,7 @@ const FoodDetail = () => {
               {recipesRelated?.length > 0 ? (
                 recipesRelated?.map((r) => (
                   <Chip
+                    style={{ margin: 5 }}
                     key={r._id}
                     onClick={() => {
                       if (getAccessToken()) {

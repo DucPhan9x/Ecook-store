@@ -21,18 +21,18 @@ const RecipeDetail = () => {
   const [recipeRelated, setRecipeRelated] = useState([]);
   const dispatch = useDispatch();
   const { getRecipeByIdState } = useSelector((store) => store.recipe);
+  const params = new URLSearchParams(window.location.search);
+  const recipeID = params.get("id");
 
   useEffect(() => {
     document.title = "Chi tiết công thức | ECook";
     window.scrollTo(0, 0);
 
-    const params = new URLSearchParams(window.location.search);
-    const recipeID = params.get("id");
     if (!recipeID) {
       return;
     }
     dispatch(getRecipeById(recipeID));
-  }, [dispatch]);
+  }, [dispatch, recipeID]);
 
   useEffect(() => {
     const t = getRecipeByIdState.data || {};
@@ -93,8 +93,8 @@ const RecipeDetail = () => {
               {recipe?.materials?.map((m, idx) => (
                 <div key={m._id}>
                   {idx + 1}. {m.foodName}
-                  &nbsp;&nbsp;{m.quantity}
-                  &nbsp;&nbsp;{m.unit}
+                  &nbsp;&nbsp;({m.quantity}
+                  &nbsp;{m.unit})
                 </div>
               ))}
             </div>
@@ -109,7 +109,17 @@ const RecipeDetail = () => {
                   key={idx}
                   className="recipe-detail-container-top__right--contents-body--item"
                 >
-                  Bước {idx + 1}. {c}
+                  <span
+                    style={{
+                      fontWeight: "bold",
+                      color: "#292929",
+                      marginRight: 6,
+                      fontSize: 18,
+                    }}
+                  >
+                    Bước {idx + 1}.
+                  </span>
+                  <span>{c}</span>
                 </div>
               ))}
             </div>
