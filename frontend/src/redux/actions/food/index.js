@@ -111,6 +111,7 @@ const getListFoodPerPage = (data, res = () => {}) => {
       .then((response) => response.json())
       .then((result) => {
         if (result.status === 200) {
+          res(result);
           dispatch({
             type: types.GET_LIST_FOOD_PER_PAGE_SUCCEED,
             payload: {
@@ -129,6 +130,41 @@ const getListFoodPerPage = (data, res = () => {}) => {
       })
       .catch((error) => {
         dispatch({ type: types.GET_LIST_FOOD_PER_PAGE_FAIL });
+        useNotification.Error({
+          title: "Error",
+          message: "Error connected to server!",
+        });
+      });
+  };
+};
+
+const exportCSVFoodList = (data, res = () => {}) => {
+  return (dispatch) => {
+    dispatch({ type: types.EXPORT_FOOD_LIST });
+    foodAPI
+      .getListFoodPerPage(data)
+      .then((response) => response.json())
+      .then((result) => {
+        if (result.status === 200) {
+          res(result);
+          dispatch({
+            type: types.EXPORT_FOOD_LIST_SUCCEED,
+            payload: {
+              foods: result.foods,
+              totalPage: result.totalPage,
+              totalRows: result.totalRows,
+            },
+          });
+        } else {
+          dispatch({ type: types.EXPORT_FOOD_LIST_FAIL });
+          useNotification.Error({
+            title: "Error",
+            message: result.msg || "Get food(s) failed!",
+          });
+        }
+      })
+      .catch((error) => {
+        dispatch({ type: types.EXPORT_FOOD_LIST_FAIL });
         useNotification.Error({
           title: "Error",
           message: "Error connected to server!",
@@ -178,4 +214,5 @@ export {
   getListFoodPerPage,
   getFoodById,
   resetToSearchFood,
+  exportCSVFoodList,
 };

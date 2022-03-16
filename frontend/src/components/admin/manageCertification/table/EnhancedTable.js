@@ -11,6 +11,10 @@ import FormControl from "@material-ui/core/FormControl";
 import { Modal } from "antd";
 import moment from "moment";
 import { useSelector } from "react-redux";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
+import GetAppIcon from "@material-ui/icons/GetApp";
+import { IconButton } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -136,7 +140,7 @@ export default function EnhancedTable({ queries, setQueries }) {
           setOpenModalCertification(false);
         }}
       >
-        <div className="certification-form">
+        <div className="certification-form" id={certificationSelected?._id}>
           <div className="certification-form--title flex flex-col items-center">
             <span>CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</span>
             <span>Độc lập - Tự do - Hạnh phúc</span>
@@ -179,28 +183,6 @@ export default function EnhancedTable({ queries, setQueries }) {
                   <span>{certificationSelected?.course?.courseName}</span>
                 </FormControl>
               </div>
-              {/* <div className="block-input-info-student-course">
-                <div className="flex">
-                  <label>Từ ngày</label>
-                  <FormControl>
-                    <span>
-                      {moment(certificationSelected.startDate).format(
-                        "DD/MM/YYYY"
-                      )}
-                    </span>
-                  </FormControl>
-                </div>
-                <div className="flex">
-                  <label style={{ padding: "0 8px" }}>đến ngày</label>
-                  <FormControl>
-                    <span>
-                      {moment(certificationSelected.endDate).format(
-                        "DD/MM/YYYY"
-                      )}
-                    </span>
-                  </FormControl>
-                </div>
-              </div> */}
               <div className="block-input-info-student-course">
                 <label>Xếp loại:</label>
                 <FormControl>
@@ -234,19 +216,27 @@ export default function EnhancedTable({ queries, setQueries }) {
               <span>{moment(certificationSelected?.createAt).get("year")}</span>
             </FormControl>
           </div>
-          {/* <div className="flex">
-            <SignaturePad
-              ref={padRef}
-              canvasProps={{
-                width: "100%",
-                height: "100%",
-                className: "sigCanvas",
-              }}
-            />
-            <IconButton onClick={handleClear} style={{ alignSelf: "center" }}>
-              <DeleteOutlineIcon />
-            </IconButton>
-          </div> */}
+          <IconButton
+            style={{
+              position: "absolute",
+              top: "-478px",
+              right: "250px",
+            }}
+            onClick={() => {
+              const input = document.getElementById(certificationSelected?._id);
+              html2canvas(input).then((canvas) => {
+                const imgData = canvas.toDataURL("image/png");
+                document.body.appendChild(canvas);
+                const pdf = new jsPDF();
+                pdf.addImage(imgData, "JPEG", 10, 30);
+                pdf.save(
+                  `Chứng nhận_${certificationSelected?.student?.fullName}_${certificationSelected?._id}.pdf`
+                );
+              });
+            }}
+          >
+            <GetAppIcon style={{ fontSize: 20 }} />
+          </IconButton>
         </div>
       </Modal>
     </div>

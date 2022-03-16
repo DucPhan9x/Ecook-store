@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { EnhancedTable } from "components/admin/manageFood";
-import InputIcon from "@material-ui/icons/Input";
+// import InputIcon from "@material-ui/icons/Input";
 import PrintIcon from "@material-ui/icons/Print";
 import SearchField from "components/common/input/SearchField";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import ModalCreated from "components/admin/manageFood/modal/ModalCreated";
 import { DropdownCommon } from "components/common/dropdown";
 import { useDispatch } from "react-redux";
-import { createFood, getListFoodPerPage } from "redux/actions/food";
+import {
+  createFood,
+  exportCSVFoodList,
+  getListFoodPerPage,
+} from "redux/actions/food";
 import { useSelector } from "react-redux";
 import { getFoodType, getFoodTypeId } from "utils/convertUtils";
 import { SpinLoading } from "components/common";
+import moment from "moment";
 
 const ManageFood = () => {
   const [isOpenModalCreated, setIsOpenModalCreated] = useState(false);
@@ -20,6 +25,7 @@ const ManageFood = () => {
     createFoodState,
     removeTempFoodState,
     updateFoodState,
+    totalRows,
   } = useSelector((store) => store.food);
   const [queries, setQueries] = useState({
     page: 1,
@@ -36,22 +42,58 @@ const ManageFood = () => {
     // fetch data
     dispatch(getListFoodPerPage(queries));
   }, [queries, dispatch]);
+  const [loading, setLoading] = useState(false);
+
+  const handleExportCSV = () => {
+    setLoading(true);
+    dispatch(
+      exportCSVFoodList({ ...queries, numOfPerPage: totalRows }, (res) => {
+        if (res.status === 200) {
+          setLoading(false);
+
+          let csv =
+            "ID,Tên,Loại,Giá cả,Lượt đánh giá,Ngày nhập hàng,Trạng thái mặt hàng\n";
+          let temp = [];
+          temp = res?.foods?.map((data) => ({
+            ID: data?._id || "",
+            Tên: data?.name || "",
+            Loại: getFoodType(data?.typeId) || "",
+            "Giá cả": data?.unitPrice + "(" + data?.unit + ")" || "",
+            "Lượt đánh giá": data?.numOfStars + "*",
+            "Ngày nhập hàng": moment(data?.createAt).format("DD/MM/YYYY"),
+            "Trạng thái mặt hàng": data?.isRemoveTemp ? "Hết hàng" : "Còn hàng",
+          }));
+          temp.forEach(function (row) {
+            csv += Object.keys(row)
+              .map((key) => '"' + row[key] + '"')
+              .join(",");
+            csv += "\n";
+          });
+
+          let hiddenElement = document.createElement("a");
+          hiddenElement.href = "data:text/csv;charset=utf-8," + encodeURI(csv);
+          hiddenElement.target = "_blank";
+          hiddenElement.download = "FoodList.csv";
+          hiddenElement.click();
+        } else {
+          setLoading(false);
+        }
+      })
+    );
+  };
 
   return (
     <div className="manage-food-page">
       <div className="manage-food-page-top">
         <div className="manage-food-page-top-left">
-          <button
+          {/* <button
             className="btn-admin"
             onClick={() => console.log("connect file to get csv")}
           >
             <InputIcon color="action" />
             Nhập hàng
-          </button>
-          <button
-            className="btn-admin"
-            onClick={() => console.log("xuat csv file")}
-          >
+          </button> */}
+          <button className="btn-admin" onClick={handleExportCSV}>
             <PrintIcon color="action" />
             Xuất hàng
           </button>
@@ -114,7 +156,8 @@ const ManageFood = () => {
       {(loadingGetListFood ||
         createFoodState.loading ||
         removeTempFoodState.loading ||
-        updateFoodState.loading) && <SpinLoading />}
+        updateFoodState.loading ||
+        loading) && <SpinLoading />}
     </div>
   );
 };

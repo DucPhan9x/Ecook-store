@@ -1,4 +1,4 @@
-import { Paper } from "@material-ui/core";
+import { IconButton, Paper } from "@material-ui/core";
 import { BackPreviousPage, SpinLoading } from "components/common";
 import React, { useEffect, useState } from "react";
 import { Form as ReForm } from "reactstrap";
@@ -11,6 +11,7 @@ import { Select } from "antd";
 import { useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { getRecipeById, updateRecipeById } from "redux/actions/recipe";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 const { Option } = Select;
 
@@ -210,6 +211,18 @@ const EditRecipe = () => {
                     <Option value="ml">ml</Option>
                     <Option value="others">Khác(tự ghi chú)</Option>
                   </Select>
+                  <IconButton
+                    onClick={() => {
+                      let temp = [...form.materials];
+                      temp = temp.filter((item) => item._id !== m._id);
+                      setForm({
+                        ...form,
+                        materials: temp,
+                      });
+                    }}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
                 </div>
               ))}
               {error.materials && (
@@ -240,24 +253,38 @@ const EditRecipe = () => {
             <div className="block-input-info-course">
               <label>Quy trình thực hiện(ghi rõ từng bước)</label>
               {form.contents?.map((c, idx) => (
-                <FormBox
-                  key={idx}
-                  propsInput={{
-                    placeholder: `Bước ${idx + 1}`,
-                    name: "contents",
-                    onChange: (e) => {
+                <div className="flex row-edit-recipe">
+                  <FormBox
+                    key={idx}
+                    propsInput={{
+                      placeholder: `Bước ${idx + 1}`,
+                      name: "contents",
+                      onChange: (e) => {
+                        let temp = [...form.contents];
+                        temp[idx] = e.target.value;
+                        setForm({
+                          ...form,
+                          contents: [...temp],
+                        });
+                      },
+                      onFocus: handleFocus,
+                      value: c,
+                      disabled: false,
+                    }}
+                  />
+                  <IconButton
+                    onClick={() => {
                       let temp = [...form.contents];
-                      temp[idx] = e.target.value;
+                      temp = temp.filter((item, index) => index !== idx);
                       setForm({
                         ...form,
-                        contents: [...temp],
+                        contents: temp,
                       });
-                    },
-                    onFocus: handleFocus,
-                    value: c,
-                    disabled: false,
-                  }}
-                />
+                    }}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                </div>
               ))}
               {error.contents && (
                 <span className="invalid-feedback-error">{error.contents}</span>
@@ -300,7 +327,8 @@ const EditRecipe = () => {
                   name: "description",
                   onChange: handleChange,
                   onFocus: handleFocus,
-                  value: form.description,
+                  value:
+                    form.description !== "undefined" ? form.description : "",
                   disabled: false,
                 }}
                 error={error.description}

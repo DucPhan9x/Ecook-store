@@ -6,6 +6,10 @@ import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getCertificationByClientIdAndCourseId } from "redux/actions/certification";
 import { SpinLoading } from "components/common";
+import { IconButton } from "@material-ui/core";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
+import GetAppIcon from "@material-ui/icons/GetApp";
 
 const Certification = ({ close, courseId, isOpen }) => {
   const [data, setData] = useState({});
@@ -35,7 +39,7 @@ const Certification = ({ close, courseId, isOpen }) => {
       onOk={close}
       onCancel={close}
     >
-      <div className="certification-form">
+      <div className="certification-form" id={data?._id}>
         {l1 && <SpinLoading />}
         <div className="certification-form--title flex flex-col items-center">
           <span>CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</span>
@@ -74,26 +78,6 @@ const Certification = ({ close, courseId, isOpen }) => {
                 <span>{data?.course?.courseName}</span>
               </FormControl>
             </div>
-            {/* <div className="block-input-info-student-course">
-              <div className="flex">
-                <label>Từ ngày</label>
-                <FormControl>
-                  <span>
-                    {moment(data?.certification?.startDate).format(
-                      "DD/MM/YYYY"
-                    )}
-                  </span>
-                </FormControl>
-              </div>
-              <div className="flex">
-                <label style={{ padding: "0 8px" }}>đến ngày</label>
-                <FormControl>
-                  <span>
-                    {moment(data?.certification?.endDate).format("DD/MM/YYYY")}
-                  </span>
-                </FormControl>
-              </div>
-            </div> */}
             <div className="block-input-info-student-course">
               <label>Xếp loại:</label>
               <FormControl>
@@ -122,6 +106,27 @@ const Certification = ({ close, courseId, isOpen }) => {
             <span>{moment(data?.createAt).get("year")}</span>
           </FormControl>
         </div>
+        <IconButton
+          style={{
+            position: "absolute",
+            top: "-478px",
+            right: "250px",
+          }}
+          onClick={() => {
+            const input = document.getElementById(data?._id);
+            html2canvas(input).then((canvas) => {
+              const imgData = canvas.toDataURL("image/png");
+              document.body.appendChild(canvas);
+              const pdf = new jsPDF();
+              pdf.addImage(imgData, "JPEG", 10, 30);
+              pdf.save(
+                `Chứng nhận_${data?.student?.fullName}_${data?._id}.pdf`
+              );
+            });
+          }}
+        >
+          <GetAppIcon style={{ fontSize: 20 }} />
+        </IconButton>
       </div>
     </Modal>
   );
