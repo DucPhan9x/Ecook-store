@@ -32,16 +32,26 @@ const getRevenuesInfo = async (req, res, next) => {
             $gte: startDate,
             $lt: endDate,
           },
+          orderType: 1,
           statusId: 4,
         });
+        let temp = await Order.find({
+          createAt: {
+            $gte: startDate,
+            $lt: endDate,
+          },
+          orderType: 2,
+          statusId: 4,
+        });
+        orders = orders.concat(temp);
         console.log("Orders: ", orders);
-        for (var i = 0; i < orders.length; i++) {
-          console.log("Date: ", new Date(orders[i].deliveryAt));
-        }
         orders = orders.map((x) => {
           return {
             day: new Date(
-              new Date(x.deliveryAt).getTime() + 7 * 60 * 60 * 1000
+              new Date(
+                x.orderType === 1 ? x.deliveryAt : x.createAt
+              ).getTime() +
+                7 * 60 * 60 * 1000
             ).getDay(),
             revenue: x.total,
           };
@@ -83,13 +93,26 @@ const getRevenuesInfo = async (req, res, next) => {
             $gte: startDate,
             $lt: endDate,
           },
+          orderType: 1,
           statusId: 4,
         });
+        let temp1 = await Order.find({
+          createAt: {
+            $gte: startDate,
+            $lt: endDate,
+          },
+          orderType: 2,
+          statusId: 4,
+        });
+        orders = orders.concat(temp1);
         orders = orders.map((x) => {
           return {
             date:
               new Date(
-                new Date(x.deliveryAt).getTime() + 7 * 60 * 60 * 1000
+                new Date(
+                  x.orderType === 1 ? x.deliveryAt : x.createAt
+                ).getTime() +
+                  7 * 60 * 60 * 1000
               ).getDate() - 1,
             revenue: x.total,
           };
@@ -120,18 +143,30 @@ const getRevenuesInfo = async (req, res, next) => {
         endDate = new Date(year, months[2], 0);
         startDate.setHours(0, 0, 0, 0);
         endDate.setHours(23, 59, 59, 999);
-
+        let temp2 = await Order.find({
+          createAt: {
+            $gte: startDate,
+            $lt: endDate,
+          },
+          orderType: 2,
+          statusId: 4,
+        });
         orders = await Order.find({
           deliveryAt: {
             $gte: startDate,
             $lt: endDate,
           },
+          orderType: 1,
           statusId: 4,
         });
+        orders = orders.concat(temp2);
         orders = orders.map((x) => {
           return {
             month: new Date(
-              new Date(x.deliveryAt).getTime() + 7 * 60 * 60 * 1000
+              new Date(
+                x.orderType === 1 ? x.deliveryAt : x.createAt
+              ).getTime() +
+                7 * 60 * 60 * 1000
             ).getMonth(),
             revenue: x.total,
           };
@@ -156,8 +191,18 @@ const getRevenuesInfo = async (req, res, next) => {
             $gte: startDate,
             $lt: endDate,
           },
+          orderType: 1,
           statusId: 4,
         });
+        let temp3 = await Order.find({
+          createAt: {
+            $gte: startDate,
+            $lt: endDate,
+          },
+          orderType: 2,
+          statusId: 4,
+        });
+        orders = orders.concat(temp3);
         orders = orders.map((x) => {
           return {
             month: new Date(

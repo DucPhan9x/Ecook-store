@@ -226,7 +226,6 @@ export default function EnhancedTable({ queries, setQueries }) {
               const input = document.getElementById(certificationSelected?._id);
               html2canvas(input).then((canvas) => {
                 const imgData = canvas.toDataURL("image/png");
-                document.body.appendChild(canvas);
                 const pdf = new jsPDF();
                 pdf.addImage(imgData, "JPEG", 10, 30);
                 pdf.save(

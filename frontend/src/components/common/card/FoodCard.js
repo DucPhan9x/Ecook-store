@@ -41,7 +41,7 @@ const FoodCard = ({ data }) => {
 
         <div className="food-card__inner--information">
           <div className="block-title-price">
-            <span className="f-title">
+            <span className="f-title" style={{ marginBottom: 15 }}>
               {name} (1 {unit})
             </span>
             <div className="flex items-center">

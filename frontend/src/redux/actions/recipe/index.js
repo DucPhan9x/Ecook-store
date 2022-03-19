@@ -170,13 +170,14 @@ const getListRecipeByInstructor = (data, res = () => {}) => {
   };
 };
 
-const getRecipeById = (recipeId) => {
+const getRecipeById = (recipeId, res = () => {}) => {
   return (dispatch) => {
     dispatch({ type: types.GET_RECIPE_BY_ID });
     recipeAPI
       .getRecipeById(recipeId)
       .then((response) => response.json())
       .then((result) => {
+        res(result);
         if (result.status === 200) {
           dispatch({
             type: types.GET_RECIPE_BY_ID_SUCCEED,

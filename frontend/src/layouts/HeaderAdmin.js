@@ -8,8 +8,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleSidebar } from "redux/actions/control";
 import AvatarMenu from "components/common/AvatarMenu";
-import Badge from "@material-ui/core/Badge";
-import NotificationsIcon from "@material-ui/icons/Notifications";
 import ModalProfileAdmin from "components/common/modal/ModalProfileAdmin";
 
 const drawerWidth = 250;
@@ -69,11 +67,6 @@ const HeaderAdmin = () => {
           style={{ marginLeft: isOpenSidebar ? "auto" : "unset" }}
           className="flex"
         >
-          <IconButton aria-label="show 17 new notifications" color="inherit">
-            <Badge badgeContent={17} color="secondary">
-              <NotificationsIcon color="action" />
-            </Badge>
-          </IconButton>
           <AvatarMenu openModalProfile={() => setOpenProfile(true)} />
         </div>
       </Toolbar>

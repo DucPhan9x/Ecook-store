@@ -116,7 +116,6 @@ const Certification = ({ close, courseId, isOpen }) => {
             const input = document.getElementById(data?._id);
             html2canvas(input).then((canvas) => {
               const imgData = canvas.toDataURL("image/png");
-              document.body.appendChild(canvas);
               const pdf = new jsPDF();
               pdf.addImage(imgData, "JPEG", 10, 30);
               pdf.save(

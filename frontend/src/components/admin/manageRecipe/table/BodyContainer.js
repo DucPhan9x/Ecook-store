@@ -11,6 +11,8 @@ import { useHistory } from "react-router";
 import { ROUTE_ADMIN_DASHBOARD_RECIPES } from "utils/routes";
 import { Rate } from "antd";
 import FeedbackIcon from "@material-ui/icons/Feedback";
+import { useDispatch } from "react-redux";
+import { getRecipeById } from "redux/actions/recipe";
 
 const BodyContainer = (props) => {
   const { rows, selected, setSelected, setFeedbackItemSelected } = props;
@@ -36,6 +38,7 @@ const BodyContainer = (props) => {
     setSelected(newSelected);
   };
   const history = useHistory();
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -98,7 +101,7 @@ const BodyContainer = (props) => {
                 </TableCell>
                 <TableCell align="left">{row.slotQuantity} người ăn</TableCell>
                 <TableCell align="left">
-                  <Rate value={row.numOfStars} disabled />
+                  <Rate value={Math.round(row.numOfStars)} disabled />
                 </TableCell>
                 <TableCell align="left">
                   {moment(row.createAt).format("DD/MM/YYYY")}
@@ -119,7 +122,16 @@ const BodyContainer = (props) => {
                     style={{ marginLeft: 12 }}
                     onClick={(e) => {
                       e.stopPropagation();
-                      setFeedbackItemSelected(row);
+                      dispatch(
+                        getRecipeById(row._id, (res) => {
+                          if (res.status === 200) {
+                            setFeedbackItemSelected({
+                              open: true,
+                              feedbacks: res?.recipe?.feedbacks || [],
+                            });
+                          }
+                        })
+                      );
                     }}
                   >
                     <FeedbackIcon color="primary" />

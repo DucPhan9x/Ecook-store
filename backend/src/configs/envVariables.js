@@ -14,7 +14,8 @@ export const envVariables = {
   jwtSecret: process.env.JWTSERCRET || "ecooksystem",
   nodemailerEmail: process.env.NODE_EMAILER_EMAIL || "system.ecook@gmail.com",
   nodemailerPassword: process.env.NODE_EMAILER_PASSWORD || "Trongduc@22851999",
-  frontendURL: process.env.FRONTEND_URL || "http://localhost:3000/",
+  frontendURL:
+    process.env.FRONTEND_URL || "https://wonderful-kirch-0d9680.netlify.app/",
   cloud_name: process.env.CLOUD_NAME || "duc",
   api_key_cloud: process.env.API_KEY_CLOUD || "812936253661222",
   api_secret_cloud:

@@ -155,7 +155,7 @@ const MyOrders = () => {
       <div className="flex items-center j-space-between full-width">
         <SearchField
           onSubmit={(value) => {
-            setQueries({ ...queries, searchText: value });
+            setQueries({ ...queries, searchText: value, page: 1 });
           }}
         />
         <div className="flex items-center">
@@ -164,7 +164,7 @@ const MyOrders = () => {
             selectedItem={OPTION_FILTER[queries.statusId]}
             options={OPTION_FILTER}
             handleMenuClick={(e) => {
-              setQueries({ ...queries, statusId: Number(e.key) });
+              setQueries({ ...queries, statusId: Number(e.key), page: 1 });
             }}
           />
         </div>

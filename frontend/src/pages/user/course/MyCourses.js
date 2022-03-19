@@ -1,7 +1,6 @@
 import { Grid } from "@material-ui/core";
 import { SpinLoading } from "components/common";
 import MyCourseCard from "components/common/card/MyCourseCard";
-import { DropdownCommon } from "components/common/dropdown";
 import SearchField from "components/common/input/SearchField";
 import React, { useEffect } from "react";
 import { useState } from "react";
@@ -33,7 +32,7 @@ const MyCourses = () => {
         style={{ marginTop: 20 }}
         className="flex j-space-between items-center"
       >
-        <DropdownCommon
+        {/* <DropdownCommon
           label="Bộ lọc"
           selectedItem={
             ["Đã hoàn thành khóa học", "Chưa hoàn thành"][
@@ -47,7 +46,7 @@ const MyCourses = () => {
               isFinish: Number(e.key) === 0,
             })
           }
-        />
+        /> */}
         <SearchField
           onSubmit={(value) => {
             setQueries({ ...queries, searchText: value });

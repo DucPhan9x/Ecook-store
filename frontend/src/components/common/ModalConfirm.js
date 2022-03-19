@@ -36,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
     background: "#f4f4f4",
   },
   btnAction: {
+    fontSize: 18,
     color: "red",
     width: "50%",
     cursor: "pointer",
@@ -67,7 +68,7 @@ export default function ModalConfirm({
       <Fade in={isOpenModal}>
         <div className={classes.paper}>
           <h4 style={{ fontWeight: "bold", color: "orangered" }}>{title}</h4>
-          <span>{message}</span>
+          <span style={{ lineHeight: 1.5, fontSize: 18 }}>{message}</span>
           <div className={classes.footer}>
             <div className={classes.btnAction} onClick={() => close()}>
               Đóng

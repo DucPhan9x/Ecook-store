@@ -196,15 +196,21 @@ const ExaminationsCourse = () => {
               <FlareIcon />
               Nội dung bài thi:
             </label>
-            <span>- {data?.content}</span>
-            <span>- {data?.regulation}</span>
+            <span style={{ lineHeight: 2, fontSize: 18 }}>
+              - {data?.content}
+            </span>
+            <span style={{ lineHeight: 2, fontSize: 18 }}>
+              - {data?.regulation}
+            </span>
           </div>
           <div className="examinations-course-container-content-bottom-contents">
             <label>
               <FlareIcon />
               Tiêu chí đánh giá:
             </label>
-            <span>- {data?.criteria}</span>
+            <span style={{ lineHeight: 2, fontSize: 18 }}>
+              - {data?.criteria}
+            </span>
           </div>
         </div>
       </Paper>

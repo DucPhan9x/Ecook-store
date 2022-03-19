@@ -169,14 +169,18 @@ export default function TabsStatistic({ data }) {
                 {/* <video controls style={{ width: 150, height: 150 }}>
                   <source src={c?.videoList[0]?.videoUrl} />
                 </video> */}
-                <span>{c.name}</span>
-                <span>
-                  Số lượng học viên: {c.amountOfBuy}
-                  <GroupIcon
-                    style={{ marginLeft: 8, marginBottom: 6 }}
-                    color="secondary"
-                  />
-                </span>
+                <div className="flex flex-col">
+                  <span className="text-ellipses" style={{ maxWidth: 160 }}>
+                    {c.courseName}
+                  </span>
+                  <span>
+                    Số lượng học viên: {c.amountOfBuy}
+                    <GroupIcon
+                      style={{ marginLeft: 8, marginBottom: 6 }}
+                      color="secondary"
+                    />
+                  </span>
+                </div>
               </div>
             ))
           ) : (

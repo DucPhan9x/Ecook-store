@@ -23,7 +23,12 @@ const MyCourseCard = ({ data }) => {
               history.push(`/my-course?id=${_id}`);
             }}
           >
-            <span className="f-title">{courseName}</span>
+            <span
+              className="f-title"
+              style={{ marginBottom: 10, marginTop: 5 }}
+            >
+              {courseName}
+            </span>
             <div className="flex items-center" style={{ color: "gray" }}>
               {description}
             </div>

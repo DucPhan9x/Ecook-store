@@ -205,13 +205,14 @@ const getListCourseByClient = (data, res = () => {}) => {
   };
 };
 
-const getCourseById = (courseId) => {
+const getCourseById = (courseId, res = () => {}) => {
   return (dispatch) => {
     dispatch({ type: types.GET_COURSE_BY_ID });
     courseAPI
       .getCourseById(courseId)
       .then((response) => response.json())
       .then((result) => {
+        res(result);
         if (result.status === 200) {
           dispatch({
             type: types.GET_COURSE_BY_ID_SUCCEED,

@@ -7,7 +7,7 @@ import LockIcon from "@material-ui/icons/Lock";
 import FeedbackIcon from "@material-ui/icons/Feedback";
 import { getFoodType } from "utils/convertUtils";
 import { useDispatch } from "react-redux";
-import { removeTempFoodById } from "redux/actions/food";
+import { getFoodById, removeTempFoodById } from "redux/actions/food";
 
 const BodyContainer = (props) => {
   const {
@@ -81,7 +81,7 @@ const BodyContainer = (props) => {
                 {row.unitPrice + "(" + row.unit + ")"}
               </TableCell>
               <TableCell align="left">
-                <Rate value={row.numOfStars} disabled />
+                <Rate value={Math.round(row.numOfStars)} disabled />
               </TableCell>
               <TableCell align="left">
                 {moment(row.createAt).format("DD/MM/YYYY")}
@@ -156,7 +156,16 @@ const BodyContainer = (props) => {
                   style={{ marginLeft: 12 }}
                   onClick={(e) => {
                     e.stopPropagation();
-                    setFeedbackItemSelected(row);
+                    dispatch(
+                      getFoodById(row._id, (res) => {
+                        if (res.status === 200) {
+                          setFeedbackItemSelected({
+                            open: true,
+                            feedbacks: res?.food?.feedbacks || [],
+                          });
+                        }
+                      })
+                    );
                   }}
                 >
                   <FeedbackIcon color="primary" />

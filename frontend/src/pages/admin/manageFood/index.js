@@ -26,6 +26,7 @@ const ManageFood = () => {
     removeTempFoodState,
     updateFoodState,
     totalRows,
+    getFoodByIdState,
   } = useSelector((store) => store.food);
   const [queries, setQueries] = useState({
     page: 1,
@@ -157,6 +158,7 @@ const ManageFood = () => {
         createFoodState.loading ||
         removeTempFoodState.loading ||
         updateFoodState.loading ||
+        getFoodByIdState?.loading ||
         loading) && <SpinLoading />}
     </div>
   );

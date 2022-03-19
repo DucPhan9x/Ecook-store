@@ -4,10 +4,13 @@ import "moment/locale/vi";
 import { useEffect, useState } from "react";
 import { uuid } from "utils/stringUtils";
 import ReplyIcon from "@material-ui/icons/Reply";
+import { useSelector } from "react-redux";
+import ECookIcon from "assets/images/logoECook.png";
 
 const { TextArea } = Input;
 
 const CommentList = ({ comments, setComments, onSubmit, currentUser }) => {
+  // eslint-disable-next-line
   const [valueReplys, setValueReplys] = useState([]);
 
   useEffect(() => {
@@ -23,31 +26,34 @@ const CommentList = ({ comments, setComments, onSubmit, currentUser }) => {
       renderItem={(props) => (
         <div>
           <Comment {...props} />
-          <div
-            style={{
-              marginLeft: 40,
-              marginTop: "-8px",
-              cursor: "pointer",
-              height: 20,
-            }}
-            className="flex items-center"
-            onClick={() => {
-              let temp = [...comments];
-              temp.forEach((item) => {
-                if (item.feedbackId === props.feedbackId) {
-                  item.openReply = !item.openReply;
-                } else {
-                  item.openReply = false;
-                }
-              });
-              setComments(temp);
-            }}
-          >
-            <ReplyIcon color="action" style={{ fontSize: 18 }} />
-            <div style={{ marginLeft: 4, fontSize: 12, color: "gray" }}>
-              Trả lời
+          {props.replyList?.length > 0 && (
+            <div
+              style={{
+                marginLeft: 40,
+                marginTop: "-8px",
+                cursor: "pointer",
+                height: 20,
+              }}
+              className="flex items-center"
+              onClick={() => {
+                let temp = [...comments];
+                temp.forEach((item) => {
+                  if (item.feedbackId === props.feedbackId) {
+                    item.openReply = !item.openReply;
+                  } else {
+                    item.openReply = false;
+                  }
+                });
+                setComments(temp);
+              }}
+            >
+              <ReplyIcon color="action" style={{ fontSize: 18 }} />
+              <div style={{ marginLeft: 4, fontSize: 12, color: "gray" }}>
+                Phản hồi
+              </div>
             </div>
-          </div>
+          )}
+
           {/* reply list */}
           {props.openReply && (
             <div style={{ marginLeft: 50, marginTop: "5px", marginBottom: 12 }}>
@@ -57,13 +63,13 @@ const CommentList = ({ comments, setComments, onSubmit, currentUser }) => {
                   style={{ marginBottom: 4 }}
                   key={rep._id}
                 >
-                  <Avatar src={rep?.user?.imageUrl} alt="User" />
+                  <Avatar src={ECookIcon} alt="User" />
                   <span style={{ marginLeft: 6 }}>{rep.content} </span>
                 </div>
               ))}
             </div>
           )}
-          <div style={{ marginLeft: 50, marginTop: 6 }}>
+          {/* <div style={{ marginLeft: 50, marginTop: 6 }}>
             {props.openReply && (
               <Form.Item>
                 <TextArea
@@ -108,7 +114,7 @@ const CommentList = ({ comments, setComments, onSubmit, currentUser }) => {
                 />
               </Form.Item>
             )}
-          </div>
+          </div> */}
         </div>
       )}
     />
@@ -126,7 +132,6 @@ const Editor = ({ onChange, onSubmit, submitting, value, formFeedback }) => (
         loading={submitting}
         onClick={onSubmit}
         type="primary"
-        disabled={formFeedback?.rating < 3}
       >
         Đánh giá
       </Button>
@@ -138,14 +143,7 @@ const Comments = ({ handleFeedback, data, formFeedback, handleReply }) => {
   const [comments, setComments] = useState([]);
   const [submitting, setSubmitting] = useState(false);
   const [value, setValue] = useState("");
-
-  // fetch API get current user
-  const currentUser = {
-    userId: uuid(), // user feedback
-    fullName: "Duc Trong",
-    imageUrl:
-      "https://res.cloudinary.com/duc/image/upload/v1629482114/avatar_o86nuc.jpg",
-  };
+  const { information } = useSelector((store) => store.common)?.userDetail;
 
   useEffect(() => {
     if (!data?.length) return;
@@ -154,7 +152,7 @@ const Comments = ({ handleFeedback, data, formFeedback, handleReply }) => {
         author: item.user?.fullName,
         avatar: item.user?.imageUrl,
         content: <p>{item?.content}</p>,
-        datetime: moment(item?.creatAt).fromNow(),
+        datetime: moment(new Date(item?.createAt).getTime()).fromNow(),
         openReply: false,
         feedbackId: item._id,
         replyList: item.reply,
@@ -179,10 +177,10 @@ const Comments = ({ handleFeedback, data, formFeedback, handleReply }) => {
       setComments([
         ...comments,
         {
-          author: currentUser.fullName,
-          avatar: currentUser.imageUrl,
+          author: information.fullName,
+          avatar: information.imageUrl,
           content: <p>{value}</p>,
-          datetime: moment(Date.now() - 365 * 24 * 3600 * 1000).fromNow(),
+          datetime: moment(Date.now()).fromNow(),
           openReply: false,
           feedbackId: uuid(),
           replyList: [],
@@ -194,10 +192,10 @@ const Comments = ({ handleFeedback, data, formFeedback, handleReply }) => {
           content: item.content.props.children,
         })),
         {
-          author: currentUser.fullName,
-          avatar: currentUser.imageUrl,
+          author: information.fullName,
+          avatar: information.imageUrl,
           content: value,
-          datetime: moment(Date.now() - 365 * 24 * 3600 * 1000).fromNow(),
+          datetime: moment(Date.now()).fromNow(),
           openReply: false,
           feedbackId: uuid(),
           replyList: [],
@@ -213,11 +211,13 @@ const Comments = ({ handleFeedback, data, formFeedback, handleReply }) => {
           comments={comments}
           setComments={setComments}
           onSubmit={handleReply}
-          currentUser={currentUser}
+          currentUser={information}
         />
       )}
       <Comment
-        avatar={<Avatar src={currentUser.imageUrl} alt="Han Solo" />}
+        avatar={
+          <Avatar src={information.imageUrl} alt={information?.fullName} />
+        }
         content={
           <Editor
             formFeedback={formFeedback}

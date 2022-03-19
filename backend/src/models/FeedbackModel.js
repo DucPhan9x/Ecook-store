@@ -11,7 +11,7 @@ const feedbackSchema = new Schema({
     type: Number,
   },
   content: {
-    type: Number,
+    type: String,
   },
   createAt: {
     type: Date,

@@ -70,7 +70,10 @@ export default function EnhancedTable({ queries, setQueries }) {
     setQueries({ ...queries, numOfPerPage: event.target.value, page: 1 });
   };
 
-  const [feedbackItemSelected, setFeedbackItemSelected] = useState("");
+  const [feedbackItemSelected, setFeedbackItemSelected] = useState({
+    open: false,
+    feedbacks: [],
+  });
 
   return (
     <div className={classes.root}>
@@ -119,11 +122,13 @@ export default function EnhancedTable({ queries, setQueries }) {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-      <ModalManageFeedback
-        isModalVisible={feedbackItemSelected}
-        close={() => setFeedbackItemSelected("")}
-        data={feedbackItemSelected}
-      />
+      {feedbackItemSelected?.open && (
+        <ModalManageFeedback
+          isModalVisible={feedbackItemSelected?.open}
+          close={() => setFeedbackItemSelected({ open: false, feedbacks: [] })}
+          data={feedbackItemSelected}
+        />
+      )}
     </div>
   );
 }

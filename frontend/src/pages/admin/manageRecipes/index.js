@@ -27,6 +27,7 @@ const ManageRecipes = () => {
     createRecipeState,
     removeTempRecipeState,
     updateRecipeState,
+    getRecipeByIdState,
   } = useSelector((store) => store.recipe);
 
   useEffect(() => {
@@ -63,7 +64,8 @@ const ManageRecipes = () => {
       {(loadingGetListRecipe ||
         createRecipeState.loading ||
         updateRecipeState.loading ||
-        removeTempRecipeState.loading) && <SpinLoading />}
+        removeTempRecipeState.loading ||
+        getRecipeByIdState?.loading) && <SpinLoading />}
     </div>
   );
 };

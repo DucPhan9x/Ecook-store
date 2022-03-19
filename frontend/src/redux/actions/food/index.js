@@ -173,13 +173,14 @@ const exportCSVFoodList = (data, res = () => {}) => {
   };
 };
 
-const getFoodById = (foodId) => {
+const getFoodById = (foodId, res = () => {}) => {
   return (dispatch) => {
     dispatch({ type: types.GET_FOOD_BY_ID });
     foodAPI
       .getFoodById(foodId)
       .then((response) => response.json())
       .then((result) => {
+        res(result);
         if (result.status === 200) {
           dispatch({
             type: types.GET_FOOD_BY_ID_SUCCEED,

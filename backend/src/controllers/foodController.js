@@ -1,4 +1,4 @@
-import { Feedback, Food } from "../models";
+import { Feedback, Food, UserDetail } from "../models";
 import { deleteImage, uploadSingle } from "../configs";
 import createHttpError from "http-errors";
 
@@ -67,10 +67,15 @@ const getFoodById = async (req, res, next) => {
     }
 
     let feedbacks = await Feedback.find({ itemId: foodId });
-    feedbacks = feedbacks.map((item) => {
+    let users = feedbacks.map((item) =>
+      UserDetail.findOne({ userId: item.userId })
+    );
+    users = await Promise.all(users);
+    feedbacks = feedbacks.map((item, idx) => {
       return {
         _id: item._id,
         userId: item.userId,
+        user: users[idx],
         content: item.content,
         numOfStars: item.numOfStars,
         createAt: item.createAt,

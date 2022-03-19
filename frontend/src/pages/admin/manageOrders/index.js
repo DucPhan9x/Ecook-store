@@ -39,7 +39,7 @@ const ManageOrders = () => {
           selectedItem={OPTION_FILTER[queries.statusId]}
           options={OPTION_FILTER}
           handleMenuClick={(e) => {
-            setQueries({ ...queries, statusId: Number(e.key) });
+            setQueries({ ...queries, statusId: Number(e.key), page: 1 });
           }}
         />
         <SearchField

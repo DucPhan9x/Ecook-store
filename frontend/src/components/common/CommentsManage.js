@@ -58,7 +58,7 @@ const CommentList = ({ comments, setComments, onSubmit, currentUser }) => {
                   style={{ marginBottom: 4 }}
                   key={rep._id}
                 >
-                  <Avatar src={rep?.user?.imageUrl} alt="User" />
+                  <Avatar src={ECookIcon} alt="User" />
                   <span style={{ marginLeft: 6 }}>{rep.content} </span>
                 </div>
               ))}
@@ -85,8 +85,10 @@ const CommentList = ({ comments, setComments, onSubmit, currentUser }) => {
                           });
                           item.replyList = tempReply;
                           onSubmit({
-                            idFeedback: item.feedbackId,
-                            replyList: tempReply,
+                            feedbackId: item.feedbackId,
+                            content: valueReplys.find(
+                              (v) => v.id === props.feedbackId
+                            )?.replyContent,
                           });
                         }
                       });
@@ -133,7 +135,7 @@ const CommentsManage = ({ data, handleReply }) => {
         author: item.user?.fullName,
         avatar: item.user?.imageUrl,
         content: <p>{item?.content}</p>,
-        datetime: moment(item?.creatAt).fromNow(),
+        datetime: moment(item?.createAt).fromNow(),
         openReply: false,
         feedbackId: item._id,
         replyList: item.reply,

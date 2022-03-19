@@ -9,8 +9,9 @@ import moment from "moment";
 import React from "react";
 import { useHistory } from "react-router";
 import FeedbackIcon from "@material-ui/icons/Feedback";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Rate } from "antd";
+import { getCourseById } from "redux/actions/course";
 
 const BodyContainer = (props) => {
   const { rows, selected, setSelected, setFeedbackItemSelected } = props;
@@ -37,6 +38,7 @@ const BodyContainer = (props) => {
   };
 
   const history = useHistory();
+  const dispatch = useDispatch();
   const { information } = useSelector((store) => store.common)?.userDetail;
 
   return (
@@ -76,7 +78,7 @@ const BodyContainer = (props) => {
                   <SupervisorAccountIcon style={{ marginLeft: 8 }} />
                 </TableCell> */}
               <TableCell align="left">
-                <Rate value={row.numOfStars} disabled />
+                <Rate value={Math.round(row.numOfStars)} disabled />
               </TableCell>
               <TableCell align="left">
                 {moment(row.createAt).format("DD/MM/YYYY")}
@@ -105,7 +107,16 @@ const BodyContainer = (props) => {
                   style={{ marginLeft: 12 }}
                   onClick={(e) => {
                     e.stopPropagation();
-                    setFeedbackItemSelected(row);
+                    dispatch(
+                      getCourseById(row._id, (res) => {
+                        if (res.status === 200) {
+                          setFeedbackItemSelected({
+                            open: true,
+                            feedbacks: res?.course?.feedbacks || [],
+                          });
+                        }
+                      })
+                    );
                   }}
                 >
                   <FeedbackIcon color="primary" />

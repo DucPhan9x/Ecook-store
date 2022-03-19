@@ -1,7 +1,6 @@
 import { Rating } from "@material-ui/lab";
 import { BackPreviousPage, SpinLoading } from "components/common";
 import Comments from "components/common/Comments";
-import useNotification from "hooks/useNotification";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -13,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getRecipeById } from "redux/actions/recipe";
 import recipeAPI from "api/recipeAPI";
 import NoImage from "assets/images/notImage.png";
+import { addFeedback } from "redux/actions/feedbackReply";
 
 const RecipeDetail = () => {
   const [recipe, setRecipe] = useState({});
@@ -80,7 +80,10 @@ const RecipeDetail = () => {
             <Rating defaultValue={0} value={rate} max={5} readOnly />
           </div>
 
-          <div className="recipe-detail-container-top__right--slotQuantity">
+          <div
+            className="recipe-detail-container-top__right--slotQuantity"
+            style={{ fontSize: 18 }}
+          >
             <span>Định lượng: </span>
             {recipe?.slotQuantity} người ăn
           </div>
@@ -91,7 +94,7 @@ const RecipeDetail = () => {
             </div>
             <div className="recipe-detail-container-top__right--materials-body">
               {recipe?.materials?.map((m, idx) => (
-                <div key={m._id}>
+                <div key={m._id} style={{ fontSize: 18, marginBottom: 8 }}>
                   {idx + 1}. {m.foodName}
                   &nbsp;&nbsp;({m.quantity}
                   &nbsp;{m.unit})
@@ -107,6 +110,7 @@ const RecipeDetail = () => {
               {recipe?.contents?.map((c, idx) => (
                 <div
                   key={idx}
+                  style={{ marginBottom: 8, fontSize: 18 }}
                   className="recipe-detail-container-top__right--contents-body--item"
                 >
                   <span
@@ -142,7 +146,7 @@ const RecipeDetail = () => {
           />
         </div>
         <Comments
-          data={recipe?.feedbacksList}
+          data={recipe?.feedbacks}
           formFeedback={formFeedback}
           handleReply={(replyList) => {
             // create reply , call API
@@ -150,16 +154,15 @@ const RecipeDetail = () => {
           }}
           handleFeedback={(comment) => {
             // check if stars > 3 => call API send feedback
-            if (formFeedback.rating > 2) {
-              setFormFeedback({ ...formFeedback, comment });
-              console.log({ ...formFeedback, comment });
-              // CALL API add feedback for this recipe id
-            } else {
-              useNotification.Warning({
-                title: "Message",
-                message: "Bạn không thể bình luận vì đánh giá quá thấp",
-              });
-            }
+            setFormFeedback({ ...formFeedback, comment });
+            const input = {
+              numOfStars: formFeedback.rating,
+              content: comment[comment?.length - 1].content,
+              itemId: recipeID,
+              feedbackType: 2,
+            };
+            dispatch(addFeedback(input));
+            // CALL API add feedback for this recipe id
           }}
         />
       </div>

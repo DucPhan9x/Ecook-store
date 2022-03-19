@@ -2,7 +2,6 @@ import { Rating } from "@material-ui/lab";
 import Chip from "@material-ui/core/Chip";
 import { BackPreviousPage, SpinLoading } from "components/common";
 import Comments from "components/common/Comments";
-import useNotification from "hooks/useNotification";
 import React, { useEffect, useState } from "react";
 import AssignmentIcon from "@material-ui/icons/Assignment";
 import FeedbackIcon from "@material-ui/icons/Feedback";
@@ -24,6 +23,7 @@ import NoImage from "assets/images/notImage.png";
 import recipeAPI from "api/recipeAPI";
 import { updateWishlist } from "redux/actions/wishlist";
 import { buyNow, createCartItems } from "redux/actions/cart";
+import { addFeedback } from "redux/actions/feedbackReply";
 
 const FoodDetail = () => {
   const [food, setFood] = useState({});
@@ -253,7 +253,7 @@ const FoodDetail = () => {
             />
           </div>
           <Comments
-            data={food.feedbacksList}
+            data={food.feedbacks}
             formFeedback={formFeedback}
             handleReply={(replyList) => {
               // create reply , call API
@@ -261,16 +261,15 @@ const FoodDetail = () => {
             }}
             handleFeedback={(comment) => {
               // check if stars > 3 => call API send feedback
-              if (formFeedback.rating > 2) {
-                setFormFeedback({ ...formFeedback, comment });
-                console.log({ ...formFeedback, comment });
-                // CALL API add feedback for this recipe id
-              } else {
-                useNotification.Warning({
-                  title: "Message",
-                  message: "Bạn không thể bình luận vì đánh giá quá thấp",
-                });
-              }
+              setFormFeedback({ ...formFeedback, comment });
+              const input = {
+                numOfStars: formFeedback.rating,
+                content: comment[comment?.length - 1].content,
+                itemId: foodID,
+                feedbackType: 1,
+              };
+              dispatch(addFeedback(input));
+              // CALL API add feedback for this recipe id
             }}
           />
         </div>

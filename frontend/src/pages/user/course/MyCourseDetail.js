@@ -2,7 +2,6 @@ import { BackPreviousPage, SpinLoading } from "components/common";
 import Comments from "components/common/Comments";
 import React, { useState } from "react";
 import { useEffect } from "react";
-import useNotification from "hooks/useNotification";
 import FeedbackIcon from "@material-ui/icons/Feedback";
 import { Rating } from "@material-ui/lab";
 import PlayCircleFilledIcon from "@material-ui/icons/PlayCircleFilled";
@@ -11,6 +10,7 @@ import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getCourseById } from "redux/actions/course";
 import Certification from "./Certification";
+import { addFeedback } from "redux/actions/feedbackReply";
 
 const MyCourseDetail = () => {
   const [formFeedback, setFormFeedback] = useState({ rating: 0, comment: "" });
@@ -125,16 +125,15 @@ const MyCourseDetail = () => {
               }}
               handleFeedback={(comment) => {
                 // check if stars > 3 => call API send feedback
-                if (formFeedback.rating > 2) {
-                  setFormFeedback({ ...formFeedback, comment });
-                  console.log({ ...formFeedback, comment });
-                  // CALL API add feedback for this recipe id
-                } else {
-                  useNotification.Warning({
-                    title: "Message",
-                    message: "Bạn không thể bình luận vì đánh giá quá thấp",
-                  });
-                }
+                setFormFeedback({ ...formFeedback, comment });
+                const input = {
+                  numOfStars: formFeedback.rating,
+                  content: comment[comment?.length - 1].content,
+                  itemId: courseId,
+                  feedbackType: 3,
+                };
+                dispatch(addFeedback(input));
+                // CALL API add feedback for this recipe id
               }}
             />
           </div>

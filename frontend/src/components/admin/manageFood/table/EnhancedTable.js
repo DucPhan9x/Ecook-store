@@ -78,7 +78,10 @@ export default function EnhancedTable({ queries, setQueries }) {
   const [itemSelected, setItemSelected] = useState("");
   const [itemSeeDetail, setItemSeeDetail] = useState("");
   const dispatch = useDispatch();
-  const [feedbackItemSelected, setFeedbackItemSelected] = useState("");
+  const [feedbackItemSelected, setFeedbackItemSelected] = useState({
+    open: false,
+    feedbacks: [],
+  });
 
   return (
     <div className={classes.root}>
@@ -155,11 +158,13 @@ export default function EnhancedTable({ queries, setQueries }) {
           setItemSeeDetail("");
         }}
       />
-      <ModalManageFeedback
-        isModalVisible={feedbackItemSelected}
-        close={() => setFeedbackItemSelected("")}
-        data={feedbackItemSelected}
-      />
+      {feedbackItemSelected?.open && (
+        <ModalManageFeedback
+          isModalVisible={feedbackItemSelected?.open}
+          close={() => setFeedbackItemSelected({ open: false, feedbacks: [] })}
+          data={feedbackItemSelected}
+        />
+      )}
     </div>
   );
 }

@@ -148,7 +148,7 @@ const Sidebar = () => {
                 <img src={LIST_ICON[index]} alt="" />
               </ListItemIcon>
               <ListItemText
-                style={{ marginLeft: "-8px" }}
+                style={{ marginLeft: "-4px" }}
                 primary={text.name}
               />
             </ListItem>

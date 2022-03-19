@@ -382,10 +382,15 @@ const getCourseById = async (req, res, next) => {
       throw createHttpError(400, "Examination is not exist!");
     }
     let feedbacks = await Feedback.find({ itemId: courseId });
-    feedbacks = feedbacks.map((item) => {
+    let users = feedbacks.map((item) =>
+      UserDetail.findOne({ userId: item.userId })
+    );
+    users = await Promise.all(users);
+    feedbacks = feedbacks.map((item, index) => {
       return {
         _id: item._id,
         userId: item.userId,
+        user: users[index],
         content: item.content,
         numOfStars: item.numOfStars,
         createAt: item.createAt,

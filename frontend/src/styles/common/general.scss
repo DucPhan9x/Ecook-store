@@ -47,6 +47,10 @@ body {
 .items-center {
   align-items: center;
 }
+.ant-list-items {
+  max-height: 200px;
+  overflow-y: scroll;
+}
 .btn-disabled {
   background: rgb(187, 181, 181) !important;
   color: rgb(59, 45, 35) !important;

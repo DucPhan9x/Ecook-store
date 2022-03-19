@@ -18,6 +18,7 @@ const ManageCourse = () => {
     createCourseState,
     removeTempCourseState,
     updateCourseState,
+    getCourseByIdState,
   } = useSelector((store) => store.course);
   const [queries, setQueries] = useState({
     page: 1,
@@ -65,7 +66,8 @@ const ManageCourse = () => {
       {(loadingGetListCourse ||
         createCourseState.loading ||
         updateCourseState.loading ||
-        removeTempCourseState.loading) && <SpinLoading />}
+        removeTempCourseState.loading ||
+        getCourseByIdState?.loading) && <SpinLoading />}
     </div>
   );
 };

@@ -37,8 +37,10 @@ const useStyles = makeStyles((theme) => ({
 export default function EnhancedTable({ queries, setQueries }) {
   const classes = useStyles();
   const [selected, setSelected] = React.useState([]);
-  const [feedbackItemSelected, setFeedbackItemSelected] = useState("");
-
+  const [feedbackItemSelected, setFeedbackItemSelected] = useState({
+    open: false,
+    feedbacks: [],
+  });
   const { totalRows, courseList } = useSelector((store) => store.course);
 
   const [rows, setRows] = useState([]);
@@ -119,11 +121,13 @@ export default function EnhancedTable({ queries, setQueries }) {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-      <ModalManageFeedback
-        isModalVisible={feedbackItemSelected}
-        close={() => setFeedbackItemSelected("")}
-        data={feedbackItemSelected}
-      />
+      {feedbackItemSelected?.open && (
+        <ModalManageFeedback
+          isModalVisible={feedbackItemSelected?.open}
+          close={() => setFeedbackItemSelected({ open: false, feedbacks: [] })}
+          data={feedbackItemSelected}
+        />
+      )}
     </div>
   );
 }

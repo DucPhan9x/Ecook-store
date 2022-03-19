@@ -40,7 +40,7 @@ const CourseCard = ({ data }) => {
         <div className="course-card__inner--information">
           <div className="block-title-price">
             <span
-              style={{ cursor: "pointer" }}
+              style={{ cursor: "pointer", marginBottom: 15 }}
               className="f-title"
               onClick={() => {
                 history.push(`/course?id=${_id}`);
